@@ -1,16 +1,45 @@
+/* Dark background for the whole site */
 body {
   background-color: #0d1b2a; /* deep navy */
-  color: #ffffff;           /* white text for contrast */
+  color: #ffffff;           /* white text */
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #f0f0f0; /* lighter headings */
+/* Hero banner section */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 300px; /* adjust height as needed */
+  background: url('/images/banner.png') center/cover no-repeat;
 }
 
-a {
-  color: #4da8da; /* soft blue links */
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    rgba(13, 27, 42, 0.6), /* dark overlay */
+    rgba(13, 27, 42, 0.9)
+  );
 }
 
-a:hover {
-  color: #82c0ff; /* brighter hover effect */
+/* Hero text overlay */
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #ffffff;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #dbe9f4;
 }
