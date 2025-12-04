@@ -1,5 +1,5 @@
 ---
-title: "Resources"
+title: "Arduino Resources"
 layout: default
 ---
 
@@ -18,8 +18,8 @@ Here you’ll find tools, references, and guides to support your projects.
 
 ## 📐 Calculators & References
 - [Ohm’s Law Calculator](https://www.digikey.com/en/resources/conversion-calculators/conversion-calculator-ohms-law)  
-- [Resistor Color Code Chart](https://www.digikey.com/en/resources/conversion-calculators/resistor-color-code)  
-- [PWM Duty Cycle Calculator](https://www.allaboutcircuits.com/tools/pwm-duty-cycle-calculator/)  
+- [Resistor Color Code Chart](https://www.digikey.com.mx/es/resources/conversion-calculators/conversion-calculator-resistor-color-code?srsltid=AfmBOoqks9ksxkQW0CttRaDHQRsMbO6FzH4jzWbeWmqLpUTPQfBfg47F)  
+- [PWM Duty Cycle Calculator](https://www.omnicalculator.com/other/duty-cycle)  
 
 ---
 
@@ -31,7 +31,7 @@ Here you’ll find tools, references, and guides to support your projects.
 ---
 
 ## 🖼️ Diagrams & Worksheets
-- ![Week 1 Wiring](images/week1-wiring.png)  
-- ![Week 2 Wiring](images/week2-wiring.png)  
-- ![Week 3 Wiring](images/week3-wiring.png)  
-- ![Week 4 Wiring](images/week4-wiring.png)  
+![Week 1 Wiring](/images/week1-wiring.png)
+![Week 2 Wiring](/images/week2-wiring.png)
+![Week 3 Wiring](/images/week3-wiring.png)
+![Week 4 Wiring](/images/week4-wiring.png)
