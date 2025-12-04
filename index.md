@@ -3,14 +3,19 @@ title: "Arduino Curriculum"
 layout: default
 ---
 
+---
+title: "Arduino Curriculum"
+layout: default
+---
+
 <div class="hero-banner">
   <div class="hero-text">
     <h1>Arduino Curriculum</h1>
     <p>Hands-on lessons for bilingual secondary students</p>
     <div class="cta-buttons">
-      <a href="/lessons/week1" class="cta-button">Start Week 1</a>
-      <a href="/worksheets/week1-worksheet" class="cta-button secondary">Download Worksheet</a>
-      <a href="/resources" class="cta-button tertiary">View Resources</a>
+      <a href="{{ "/lessons/week1.html" | relative_url }}" class="cta-button">Start Week 1</a>
+      <a href="{{ "/worksheets/week1-worksheet.html" | relative_url }}" class="cta-button secondary">Download Worksheet</a>
+      <a href="{{ "/resources.html" | relative_url }}" class="cta-button tertiary">View Resources</a>
     </div>
   </div>
 </div>
