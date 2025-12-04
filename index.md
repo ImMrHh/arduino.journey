@@ -3,14 +3,14 @@ title: "Arduino Curriculum"
 layout: default
 ---
 
-<link rel="stylesheet" href="/assets/css/style.css">
-
 <div class="hero-banner">
   <div class="hero-text">
     <h1>Arduino Curriculum</h1>
     <p>Hands-on lessons for bilingual secondary students</p>
+    <a href="/lessons/week1" class="cta-button">Start Week 1</a>
   </div>
 </div>
+
 
 
 
