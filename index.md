@@ -2,9 +2,17 @@
 title: "Arduino Curriculum"
 layout: default
 ---
+
 <link rel="stylesheet" href="/assets/css/style.css">
 
-![Banner](images/banner.png)
+<div class="hero-banner">
+  <div class="hero-text">
+    <h1>Arduino Curriculum</h1>
+    <p>Hands-on lessons for bilingual secondary students</p>
+  </div>
+</div>
+
+
 
 # 🎓 Arduino Curriculum
 
