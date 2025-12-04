@@ -1,11 +1,9 @@
 ---
-layout: home
 title: "Arduino Curriculum"
-permalink: /
-header:
-  overlay_image: /images/banner.png
-  overlay_filter: 0.3
+layout: default
 ---
+
+![Banner](images/banner.png)
 
 # 🎓 Arduino Curriculum
 
@@ -45,7 +43,5 @@ This site contains weekly lessons, wiring diagrams, code snippets, and printable
 ---
 
 ## 🌟 About This Curriculum
-This project is designed for Middle School students exploring coding, electronics, and creative technology.  
+This project is designed for 9th grade students exploring coding, electronics, and creative technology.  
 Each week builds resilience, curiosity, and problem‑solving skills.
-
----
