@@ -7,12 +7,13 @@ layout: default
   <div class="hero-text">
     <h1>Arduino Curriculum</h1>
     <p>Hands-on lessons for bilingual secondary students</p>
-    <a href="/lessons/week1" class="cta-button">Start Week 1</a>
+    <div class="cta-buttons">
+      <a href="/lessons/week1" class="cta-button">Start Week 1</a>
+      <a href="/worksheets/week1-worksheet" class="cta-button secondary">Download Worksheet</a>
+      <a href="/resources" class="cta-button tertiary">View Resources</a>
+    </div>
   </div>
 </div>
-
-
-
 
 # 🎓 Arduino Curriculum
 
