@@ -9,8 +9,8 @@ Welcome to our hands-on Arduino journey! This site contains weekly lessons, wiri
 
 ## 🔹 Week 1: Intro to Arduino & Blink
 - [Lesson overview](week1.md)
+- [Worksheet](week1-worksheet.md)
 - [Wiring diagram](images/week1-wiring.png)
-- [Printable worksheet](images/week1-worksheet.png)
 
 ## 🔹 Week 2: Button Control
 - [Lesson overview](week2.md)
