@@ -1,32 +1,51 @@
 ---
-layout: default
-title: Arduino Curriculum
+layout: home
+title: "Arduino Curriculum"
+permalink: /
+header:
+  overlay_image: /images/banner.png
+  overlay_filter: 0.3
 ---
 
-# 🎓 Arduino Curriculum for Secondary Students
+# 🎓 Arduino Curriculum
 
-Welcome to our hands-on Arduino journey! This site contains weekly lessons, wiring diagrams, code snippets, and printable resources.
+Welcome to our hands‑on Arduino journey!  
+This site contains weekly lessons, wiring diagrams, code snippets, and printable worksheets for secondary students learning technology in a bilingual classroom.
 
-## 🔹 Week 1: Intro to Arduino & Blink
-- [Lesson overview](week1.md)
-- [Worksheet](week1-worksheet.md)
-- [Wiring diagram](images/week1-wiring.png)
+---
 
-## 🔹 Week 2: Button Control
-- [Lesson overview](week2.md)
-- [Wiring diagram](images/week2-wiring.png)
+## 📚 Weekly Lessons
 
-## 🔹 Week 3: Potentiometer & PWM
-- [Lesson overview](week3.md)
-- [Wiring diagram](images/week3-wiring.png)
+### 🔹 Week 1: Intro to Arduino & Blink
+- [Lesson overview](lessons/week1.md)
+- [Worksheet](worksheets/week1-worksheet.md)
+- ![Wiring diagram](images/week1-wiring.png)
 
-## 🔹 Week 4: Serial Monitor & Sensors
-- [Lesson overview](week4.md)
-- [Wiring diagram](images/week4-wiring.png)
+### 🔹 Week 2: Button Control
+- [Lesson overview](lessons/week2.md)
+- [Worksheet](worksheets/week2-worksheet.md)
+- ![Wiring diagram](images/week2-wiring.png)
+
+### 🔹 Week 3: Potentiometer & PWM
+- [Lesson overview](lessons/week3.md)
+- [Worksheet](worksheets/week3-worksheet.md)
+- ![Wiring diagram](images/week3-wiring.png)
+
+### 🔹 Week 4: Serial Monitor & Sensors
+- [Lesson overview](lessons/week4.md)
+- [Worksheet](worksheets/week4-worksheet.md)
+- ![Wiring diagram](images/week4-wiring.png)
 
 ---
 
 ## 🧰 Resources
 - [Arduino IDE](https://www.arduino.cc/en/software)
-- [Ohm’s Law calculator](https://www.calculator.net/ohms-law-calculator.html)
+- [Ohm’s Law calculator](https://www.digikey.com.mx/en/resources/conversion-calculators/conversion-calculator-ohms)
 
+---
+
+## 🌟 About This Curriculum
+This project is designed for Middle School students exploring coding, electronics, and creative technology.  
+Each week builds resilience, curiosity, and problem‑solving skills.
+
+---
