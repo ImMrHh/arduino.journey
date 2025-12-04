@@ -1,15 +1,9 @@
 title: "Arduino Curriculum"
 description: "Hands-on Arduino lessons for secondary students"
-theme: minima
-
-# Use a remote theme (Minimal Mistakes)
-remote_theme: "mmistakes/minimal-mistakes"
-plugins:
-  - jekyll-remote-theme
+theme: jekyll-theme-cayman
 
 # Navigation links
 nav:
-  nav:
   - title: "Home"
     url: /
   - title: "Week 1 Lesson"
@@ -28,6 +22,7 @@ nav:
     url: /lessons/week4
   - title: "Week 4 Worksheet"
     url: /worksheets/week4-worksheet
+
 
 
 # Author info (optional)
