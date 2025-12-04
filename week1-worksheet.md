@@ -20,7 +20,7 @@
 - Pin 8 → resistor → LED anode (long leg)  
 - LED cathode (short leg) → GND
 
-*(Sketch the circuit here or refer to the wiring diagram provided in class.)*
+*(Refer to the wiring diagram provided in class.)*
 
 ---
 
