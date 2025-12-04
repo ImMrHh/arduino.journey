@@ -3,15 +3,10 @@ title: "Arduino Curriculum"
 layout: default
 ---
 
----
-title: "Arduino Curriculum"
-layout: default
----
-
 <div class="hero-banner">
   <div class="hero-text">
-    <h1>Arduino Curriculum</h1>
-    <p>Hands-on lessons for bilingual secondary students</p>
+    <h1>Resources</h1>
+    <p>Tools and references for your Arduino projects</p>
     <div class="cta-buttons">
       <a href="{{ "/lessons/week1.html" | relative_url }}" class="cta-button">Start Week 1</a>
       <a href="{{ "/worksheets/week1-worksheet.html" | relative_url }}" class="cta-button secondary">Download Worksheet</a>
@@ -30,8 +25,8 @@ This site contains weekly lessons, wiring diagrams, code snippets, and printable
 ## 📚 Weekly Lessons
 
 ### 🔹 Week 1: Intro to Arduino & Blink
-- [Lesson overview](lessons/week1.md)
-- [Worksheet](worksheets/week1-worksheet.md)
+- [Lesson overview]({{ "/lessons/week1.html" | relative_url }})
+- [Worksheet]({{ "/worksheets/week1-worksheet.html" | relative_url }})
 - ![Wiring diagram](images/week1-wiring.png)
 
 ### 🔹 Week 2: Button Control
