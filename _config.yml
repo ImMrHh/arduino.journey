@@ -4,7 +4,6 @@ theme: minima
 
 # Use a remote theme (Minimal Mistakes)
 remote_theme: "mmistakes/minimal-mistakes"
-
 plugins:
   - jekyll-remote-theme
 
