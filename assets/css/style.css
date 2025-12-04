@@ -1,3 +1,20 @@
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #4da8da; /* soft blue */
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #82c0ff; /* brighter hover effect */
+}
+
 /* Dark background for the whole site */
 body {
   background-color: #0d1b2a; /* deep navy */
