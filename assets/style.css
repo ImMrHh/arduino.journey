@@ -1,0 +1,16 @@
+body {
+  background-color: #0d1b2a; /* deep navy */
+  color: #ffffff;           /* white text for contrast */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #f0f0f0; /* lighter headings */
+}
+
+a {
+  color: #4da8da; /* soft blue links */
+}
+
+a:hover {
+  color: #82c0ff; /* brighter hover effect */
+}
