@@ -2,6 +2,7 @@
 title: "Arduino Curriculum"
 layout: default
 ---
+<link rel="stylesheet" href="/assets/css/style.css">
 
 ![Banner](images/banner.png)
 
