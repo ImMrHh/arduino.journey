@@ -1,0 +1,29 @@
+title: "Arduino Curriculum"
+description: "Hands-on Arduino lessons for secondary students"
+theme: minima
+
+# Use a remote theme (Minimal Mistakes)
+remote_theme: "mmistakes/minimal-mistakes"
+
+plugins:
+  - jekyll-remote-theme
+
+# Navigation links
+nav:
+  - title: "Home"
+    url: /
+  - title: "Week 1"
+    url: /week1
+  - title: "Week 1 Worksheet"
+    url: /week1-worksheet
+  - title: "Week 2"
+    url: /week2
+  - title: "Week 3"
+    url: /week3
+  - title: "Week 4"
+    url: /week4
+
+# Author info (optional)
+author:
+  name: "Henrik"
+  bio: "Secondary school technology teacher"
