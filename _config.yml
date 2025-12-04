@@ -1,7 +1,8 @@
 title: "Arduino Curriculum"
+theme: jekyll-theme-cayman
 include: ["assets/css"]
 description: "Hands-on Arduino lessons for secondary students"
-theme: jekyll-theme-cayman
+
 
 # Navigation links
 nav:
