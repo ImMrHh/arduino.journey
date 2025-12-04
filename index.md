@@ -1,6 +1,7 @@
 ---
 title: "Arduino Curriculum"
-layout: default---
+layout: default
+---
 
 <div class="hero-banner">
   <div class="hero-text">
@@ -9,7 +10,10 @@ layout: default---
     <div class="cta-buttons">
       <a href="{{ "/lessons/week1.html" | relative_url }}" class="cta-button">Start Week 1</a>
       <a href="{{ "/worksheets/week1-worksheet.html" | relative_url }}" class="cta-button secondary">Download Worksheet</a>
-      <a href="{{ "/resources/" | relative_url }}" class="cta-button tertiary">View Resources</a> </div> </div> </div>
+      <a href="{{ "/resources/" | relative_url }}" class="cta-button tertiary">View Resources</a>
+    </div>
+  </div>
+</div>
 
 # 🎓 Arduino Curriculum
 
