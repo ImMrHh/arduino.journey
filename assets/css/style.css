@@ -1,8 +1,12 @@
+.cta-buttons {
+  margin-top: 20px;
+}
+
 .cta-button {
   display: inline-block;
-  margin-top: 20px;
+  margin: 8px;
   padding: 12px 24px;
-  background-color: #4da8da; /* soft blue */
+  background-color: #4da8da; /* primary blue */
   color: #ffffff;
   font-size: 1.1rem;
   font-weight: bold;
@@ -13,6 +17,24 @@
 
 .cta-button:hover {
   background-color: #82c0ff; /* brighter hover effect */
+}
+
+/* Secondary button */
+.cta-button.secondary {
+  background-color: #2a9d8f; /* teal */
+}
+
+.cta-button.secondary:hover {
+  background-color: #3fbfb0;
+}
+
+/* Tertiary button */
+.cta-button.tertiary {
+  background-color: #e76f51; /* coral */
+}
+
+.cta-button.tertiary:hover {
+  background-color: #f28c73;
 }
 
 /* Dark background for the whole site */
