@@ -10,20 +10,28 @@ plugins:
 
 # Navigation links
 nav:
+  nav:
   - title: "Home"
     url: /
-  - title: "Week 1"
-    url: /week1
+  - title: "Week 1 Lesson"
+    url: /lessons/week1
   - title: "Week 1 Worksheet"
-    url: /week1-worksheet
-  - title: "Week 2"
-    url: /week2
-  - title: "Week 3"
-    url: /week3
-  - title: "Week 4"
-    url: /week4
+    url: /worksheets/week1-worksheet
+  - title: "Week 2 Lesson"
+    url: /lessons/week2
+  - title: "Week 2 Worksheet"
+    url: /worksheets/week2-worksheet
+  - title: "Week 3 Lesson"
+    url: /lessons/week3
+  - title: "Week 3 Worksheet"
+    url: /worksheets/week3-worksheet
+  - title: "Week 4 Lesson"
+    url: /lessons/week4
+  - title: "Week 4 Worksheet"
+    url: /worksheets/week4-worksheet
+
 
 # Author info (optional)
 author:
   name: "Henrik"
-  bio: "Secondary school technology teacher"
+  bio: "Secondary school(Middle-School) technology teacher"
