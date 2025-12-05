@@ -21,6 +21,7 @@ body {
   align-items: center;     /* centers horizontally */
   text-align: center;
   padding: 2rem 1rem;      /* breathing room */
+  overflow: hidden;
 }
 
 .hero-banner::after {
@@ -33,7 +34,7 @@ body {
     rgba(0,0,0,0.85) 100%
   );
   z-index: 1;
-  pointer-events: none; /* overlay won’t block clicks */
+  pointer-events: none;
 }
 
 .hero-text {
@@ -70,13 +71,14 @@ body {
   text-decoration: none;
   color: #fff !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
   text-align: center;
 }
 
 .cta-button:hover {
   transform: translateY(-1px);
   cursor: pointer;
+  box-shadow: 0 0 12px rgba(0,0,0,0.25);
 }
 
 .cta-subtitle {
@@ -87,22 +89,22 @@ body {
   color: rgba(255,255,255,0.9);
 }
 
-/* Specific button colors */
+/* Specific button colors + glow */
 .lessons-btn { background-color: #0077cc; }
-.lessons-btn:hover { background-color: #005fa3; }
+.lessons-btn:hover { background-color: #005fa3; box-shadow: 0 0 12px rgba(0,119,204,0.6); }
 
 .worksheets-btn { background-color: #28a745; }
-.worksheets-btn:hover { background-color: #1e7e34; }
+.worksheets-btn:hover { background-color: #1e7e34; box-shadow: 0 0 12px rgba(40,167,69,0.6); }
 
 .tools-btn { background-color: #ff8800; }
-.tools-btn:hover { background-color: #cc6d00; }
+.tools-btn:hover { background-color: #cc6d00; box-shadow: 0 0 12px rgba(255,136,0,0.6); }
 
 /* =========================
    Responsive Buttons & Hero
    ========================= */
 @media (max-width: 600px) {
   .hero-banner {
-    min-height: auto;   /* let content define height */
+    min-height: auto;
     padding: 1.5rem 1rem;
   }
 
@@ -147,15 +149,16 @@ nav {
   padding: 0.5em 0;
   text-align: center;
   position: relative;
-  z-index: 10;   /* ensures nav sits above hero overlay */
+  z-index: 10;
 }
 
 nav a {
   text-decoration: none;
   font-weight: 600;
   margin: 0 12px;
-  transition: color 0.2s ease, border-bottom 0.2s ease;
-  padding-bottom: 2px;
+  transition: color 0.2s ease, border-bottom 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
 /* Neutral Home */
@@ -165,10 +168,12 @@ nav a[href="{{ '/' | relative_url }}"] {
 nav a[href="{{ '/' | relative_url }}"]:hover {
   color: #000;
   border-bottom: 2px solid #444;
+  box-shadow: 0 0 8px rgba(68,68,68,0.3);
 }
 nav a[href="{{ '/' | relative_url }}"].active {
   border-bottom: 3px solid #444;
   font-weight: 700;
+  background-color: rgba(68,68,68,0.1);
 }
 
 /* Lessons (blue) */
@@ -178,10 +183,12 @@ nav a[href*="lessons"] {
 nav a[href*="lessons"]:hover {
   color: #005fa3;
   border-bottom: 2px solid #005fa3;
+  box-shadow: 0 0 8px rgba(0,119,204,0.4);
 }
 nav a[href*="lessons"].active {
   border-bottom: 3px solid #0077cc;
   font-weight: 700;
+  background-color: rgba(0,119,204,0.15);
 }
 
 /* Worksheets (green) */
@@ -191,10 +198,12 @@ nav a[href*="worksheets"] {
 nav a[href*="worksheets"]:hover {
   color: #1e7e34;
   border-bottom: 2px solid #1e7e34;
+  box-shadow: 0 0 8px rgba(40,167,69,0.4);
 }
 nav a[href*="worksheets"].active {
   border-bottom: 3px solid #28a745;
   font-weight: 700;
+  background-color: rgba(40,167,69,0.15);
 }
 
 /* Tools (orange) */
@@ -204,8 +213,42 @@ nav a[href*="tools"] {
 nav a[href*="tools"]:hover {
   color: #cc6d00;
   border-bottom: 2px solid #cc6d00;
+  box-shadow: 0 0 8px rgba(255,136,0,0.4);
 }
 nav a[href*="tools"].active {
   border-bottom: 3px solid #ff8800;
   font-weight: 700;
+  background-color: rgba(255,136,0,0.15);
+}
+
+/* =========================
+   Animations (Staggered)
+   ========================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-text h1 {
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.1s;
+}
+
+.hero-text p {
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.cta-buttons {
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.6s;
 }
