@@ -13,3 +13,16 @@ Here you’ll find weekly lesson overviews, wiring diagrams, and code snippets.
 - [Week 2: Button Control]({{ "/lessons/week2/" | relative_url }})
 - [Week 3: Potentiometer & PWM]({{ "/lessons/week3/" | relative_url }})
 - [Week 4: Serial Monitor & Sensors]({{ "/lessons/week4/" | relative_url }})
+
+<style>
+@media (max-width: 600px) {
+  body {
+    font-size: 18px;
+    padding: 0 1rem;
+  }
+  main, .content, .page-content {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+</style>
