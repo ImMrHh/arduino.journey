@@ -1,6 +1,13 @@
-<nav style="max-width:900px; margin: 0.75em auto; padding: 0.5em 0; text-align:center;">
-  <a href="{{ '/' | relative_url }}">Home</a> |
-  <a href="{{ '/lessons/' | relative_url }}">Lessons</a> |
-  <a href="{{ '/worksheets/' | relative_url }}">Worksheets</a> |
-  <a href="{{ '/tools/' | relative_url }}">Tools</a>
+<nav>
+  <a href="{{ '/' | relative_url }}" 
+     class="{% if page.url == '/' %}active{% endif %}">Home</a> |
+
+  <a href="{{ '/lessons/' | relative_url }}" 
+     class="{% if page.url contains '/lessons/' %}active{% endif %}">Lessons</a> |
+
+  <a href="{{ '/worksheets/' | relative_url }}" 
+     class="{% if page.url contains '/worksheets/' %}active{% endif %}">Worksheets</a> |
+
+  <a href="{{ '/tools/' | relative_url }}" 
+     class="{% if page.url contains '/tools/' %}active{% endif %}">Tools</a>
 </nav>
