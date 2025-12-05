@@ -99,4 +99,6 @@ nav a {
   font-weight: 600;
   margin: 0 8px;
 }
-nav a:hover { text-decoration: underline; }
+nav a:hover {
+  text-decoration: underline;
+}
