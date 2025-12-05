@@ -82,3 +82,10 @@ body {
 .cta-button.tertiary:hover {
   background-color: #c94c35;
 }
+
+body img {
+  max-width: min(90vw, 600px); /* scales to 90% of viewport width, capped at 600px */
+  height: auto;                /* keeps proportions */
+  display: block;              /* avoids inline spacing issues */
+  margin: 1em auto;            /* centers the image */
+}
