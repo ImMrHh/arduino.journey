@@ -17,7 +17,7 @@ Here you’ll find practice sheets and exercises for each week.
 - [Week 2 Worksheet](/worksheets/week2-worksheet.md)
 
 ## Week 3
-- [Week 3 Worksheet](/worksheets/week3-worksheet.md) *(coming soon)*
+- [Week 3 Worksheet](/worksheets/week3-worksheet.md)
 
 ## Week 4
 - [Week 4 Worksheet](/worksheets/week4-worksheet.md) *(coming soon)*
