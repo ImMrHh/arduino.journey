@@ -1,14 +1,7 @@
-
----
-
-## 📂 `worksheets/week2-worksheet.md`
-
-
 ---
 layout: default
 title: Week 2 Worksheet
 permalink: /worksheets/week2-worksheet/
-
 ---
 
 # Week 2 Worksheet: Button Control
@@ -33,4 +26,4 @@ permalink: /worksheets/week2-worksheet/
 ---
 
 ## 🖼️ Diagram
-![Wiring diagram showing potentiometer connected to analog pin A0](../images/week2-wiring.png){: style="max-width:600px; display:block; margin:1em auto;" }
+![Wiring diagram showing button connected to digital pin 2](../images/week2-wiring.png){: style="max-width:600px; display:block; margin:1em auto;" }
