@@ -8,6 +8,21 @@ body {
 }
 
 /* =========================
+   Index Size
+   ========================= */
+.index-page h1 {
+  font-size: 1.8rem;
+}
+.index-page h2 {
+  font-size: 1.4rem;
+}
+.index-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* =========================
    Hero Banner
    ========================= */
 .hero-banner {
