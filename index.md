@@ -8,20 +8,23 @@ layout: default
     <h1>Arduino Curriculum</h1>
     <p>Hands-on lessons for middle school students</p>
     <div class="cta-buttons">
-  <a href="{{ '/lessons/' | relative_url }}" class="cta-button lessons-btn">
-    View Lessons
-    <span class="cta-subtitle">Learn concepts step by step</span>
-  </a>
-  <a href="{{ '/worksheets/' | relative_url }}" class="cta-button worksheets-btn">
-    Practice Worksheets
-    <span class="cta-subtitle">Apply skills with exercises</span>
-  </a>
-  <a href="{{ '/tools/' | relative_url }}" class="cta-button tools-btn">
-    Interactive Tools
-    <span class="cta-subtitle">Explore calculators & utilities</span>
-  </a>
-   </div>
+      <a href="{{ '/lessons/' | relative_url }}" class="cta-button lessons-btn">
+        View Lessons
+        <span class="cta-subtitle">Learn concepts step by step</span>
+      </a>
+      <a href="{{ '/worksheets/' | relative_url }}" class="cta-button worksheets-btn">
+        Practice Worksheets
+        <span class="cta-subtitle">Apply skills with exercises</span>
+      </a>
+      <a href="{{ '/tools/' | relative_url }}" class="cta-button tools-btn">
+        Interactive Tools
+        <span class="cta-subtitle">Explore calculators & utilities</span>
+      </a>
+    </div>
+  </div>
 </div>
+
+---
 
 # 🎓 Arduino Curriculum
 
@@ -33,24 +36,24 @@ This site contains weekly lessons, wiring diagrams, code snippets, and printable
 ## 📚 Weekly Lessons
 
 ### 🔹 Week 1: Intro to Arduino & Blink
-- [Lesson overview]({{ "/lessons/week1.html" | relative_url }})
-- [Worksheet]({{ "/worksheets/week1-worksheet.html" | relative_url }})
-- ![Wiring diagram](images/week1-wiring.png)
+- [Lesson overview]({{ "/lessons/week1/" | relative_url }})
+- [Worksheet]({{ "/worksheets/week1-worksheet/" | relative_url }})
+- ![Wiring diagram]({{ "/images/week1-wiring.png" | relative_url }})
 
 ### 🔹 Week 2: Button Control
-- [Lesson overview](lessons/week2.md)
-- [Worksheet](worksheets/week2-worksheet.md)
-- ![Wiring diagram](images/week2-wiring.png)
+- [Lesson overview]({{ "/lessons/week2/" | relative_url }})
+- [Worksheet]({{ "/worksheets/week2-worksheet/" | relative_url }})
+- ![Wiring diagram]({{ "/images/week2-wiring.png" | relative_url }})
 
 ### 🔹 Week 3: Potentiometer & PWM
-- [Lesson overview](lessons/week3.md)
-- [Worksheet](worksheets/week3-worksheet.md)
-- ![Wiring diagram](images/week3-wiring.png)
+- [Lesson overview]({{ "/lessons/week3/" | relative_url }})
+- [Worksheet]({{ "/worksheets/week3-worksheet/" | relative_url }})
+- ![Wiring diagram]({{ "/images/week3-wiring.png" | relative_url }})
 
 ### 🔹 Week 4: Serial Monitor & Sensors
-- [Lesson overview](lessons/week4.md)
-- [Worksheet](worksheets/week4-worksheet.md)
-- ![Wiring diagram](images/week4-wiring.png)
+- [Lesson overview]({{ "/lessons/week4/" | relative_url }})
+- [Worksheet]({{ "/worksheets/week4-worksheet/" | relative_url }})
+- ![Wiring diagram]({{ "/images/week4-wiring.png" | relative_url }})
 
 ---
 
