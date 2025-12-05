@@ -25,7 +25,7 @@ title: Week 1 – Intro to Arduino & Blink
 ## 🧰 Breadboard Overview
 Here’s an image showing how the breadboard is internally connected:
 
-![Annotated Breadboard Diagram](/images/breadboardinit.png)
+![Annotated Breadboard Diagram](../images/breadboardinit.png)
 - Power rails run along the sides (red = +, blue = –).
 - Each row of 5 holes in the middle is connected internally.
 - The center gap separates the left and right halves, useful for ICs
