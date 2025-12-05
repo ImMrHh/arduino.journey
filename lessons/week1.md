@@ -46,7 +46,7 @@ Here’s an image showing how the breadboard is internally connected:
 Pin 8 → resistor → LED anode (long leg)  
 LED cathode (short leg) → GND
 
-![Week 1 Wiring Diagram](images/week1-wiring.png)
+![Week 1 Wiring Diagram](../images/week1-wiring.png)
 
 ---
 
