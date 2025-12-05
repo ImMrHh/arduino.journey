@@ -13,7 +13,7 @@ body {
 .hero-banner {
   position: relative;
   width: 100%;
-  height: 320px; /* unified height */
+  height: min(90vw, 320px); /* scales to 90% of viewport width, capped at 320px */
   background: url('/images/banner.png') center/cover no-repeat;
 }
 
@@ -33,7 +33,10 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
   color: #ffffff;
-  z-index: 2; /* ensures text/buttons sit above overlay */
+  z-index: 2;
+
+  font-size: clamp(1.2rem, 4vw, 2.2rem); /* responsive font size */
+  line-height: 1.3;
 }
 
 /* =========================
