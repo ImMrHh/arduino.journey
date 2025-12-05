@@ -36,23 +36,23 @@ This site contains weekly lessons, wiring diagrams, code snippets, and printable
 ## 📚 Weekly Lessons
 
 ### 🔹 Week 1: Intro to Arduino & Blink
-- [Lesson overview]({{ "/lessons/week1/" | relative_url }})
-- [Worksheet]({{ "/worksheets/week1-worksheet/" | relative_url }})
+- [Lesson overview]({{ "/lessons/week1.html" | relative_url }})
+- [Worksheet]({{ "/worksheets/week1-worksheet.html" | relative_url }})
 - ![Wiring diagram]({{ "/images/week1-wiring.png" | relative_url }})
 
 ### 🔹 Week 2: Button Control
-- [Lesson overview]({{ "/lessons/week2/" | relative_url }})
-- [Worksheet]({{ "/worksheets/week2-worksheet/" | relative_url }})
+- [Lesson overview]({{ "/lessons/week2.html" | relative_url }})
+- [Worksheet]({{ "/worksheets/week2-worksheet.html" | relative_url }})
 - ![Wiring diagram]({{ "/images/week2-wiring.png" | relative_url }})
 
 ### 🔹 Week 3: Potentiometer & PWM
-- [Lesson overview]({{ "/lessons/week3/" | relative_url }})
-- [Worksheet]({{ "/worksheets/week3-worksheet/" | relative_url }})
+- [Lesson overview]({{ "/lessons/week3.html" | relative_url }})
+- [Worksheet]({{ "/worksheets/week3-worksheet.html" | relative_url }})
 - ![Wiring diagram]({{ "/images/week3-wiring.png" | relative_url }})
 
 ### 🔹 Week 4: Serial Monitor & Sensors
-- [Lesson overview]({{ "/lessons/week4/" | relative_url }})
-- [Worksheet]({{ "/worksheets/week4-worksheet/" | relative_url }})
+- [Lesson overview]({{ "/lessons/week4.html" | relative_url }})
+- [Worksheet]({{ "/worksheets/week4-worksheet.html" | relative_url }})
 - ![Wiring diagram]({{ "/images/week4-wiring.png" | relative_url }})
 
 ---
