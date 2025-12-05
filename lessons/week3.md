@@ -79,7 +79,7 @@ void loop() {
 
 ### Navigation
 
-[⬅️ Back to Lessons Menu](lessons.md) | [Go to Worksheet ➡️](worksheets/week3-worksheet.md)
+[⬅️ Back to Lessons Menu]({{ "/lessons/" | relative_url }}) | [Go to Worksheet ➡️]({{ "/worksheets/" | relative_url }})
 
 
 ---

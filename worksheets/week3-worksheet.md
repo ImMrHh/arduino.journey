@@ -39,5 +39,5 @@ Try adding a second LED that lights up only when the potentiometer value is abov
 
 Write a short paragraph about what you learned this week regarding analog inputs and PWM control.
 
-
+### Navigation
 [Back to Lessons]({{ "/lessons/" | relative_url }}) [Back to Worksheets]({{ "/worksheets/" | relative_url }})
