@@ -10,17 +10,36 @@ body {
 /* =========================
    Index Size
    ========================= */
-.index-page h1 {
-  font-size: 1.8rem;
-}
-.index-page h2 {
-  font-size: 1.4rem;
-}
 .index-page {
   max-width: 900px;
   margin: 0 auto;
   padding: 1rem;
+  font-size: 1rem;
 }
+
+.index-page h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.index-page h2 {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .index-page {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  .index-page h1 {
+    font-size: 1.6rem;
+  }
+  .index-page h2 {
+    font-size: 1.2rem;
+  }
+}
+
 
 /* =========================
    Hero Banner
