@@ -3,10 +3,12 @@
 
 ## 📂 `worksheets/week2-worksheet.md`
 
-```markdown
+
 ---
-title: "Week 2 Worksheet"
 layout: default
+title: Week 2 Worksheet
+permalink: /worksheets/week2-worksheet/
+
 ---
 
 # Week 2 Worksheet: Button Control
@@ -31,4 +33,4 @@ layout: default
 ---
 
 ## 🖼️ Diagram
-![Week 2 Wiring Diagram](/images/week2-wiring.png)
+![Wiring diagram showing potentiometer connected to analog pin A0](../images/week2-wiring.png){: style="max-width:600px; display:block; margin:1em auto;" }
