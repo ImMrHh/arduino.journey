@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
 </head>
 <body>
+  <nav style="max-width:900px; margin: 0.75em auto; padding: 0.5em 0; text-align:center;">
+  <a href="{{ '/' | relative_url }}">Home</a> |
+  <a href="{{ '/lessons/' | relative_url }}">Lessons</a> |
+  <a href="{{ '/tools/' | relative_url }}">Tools</a>
+</nav>
   {{ content }}
 </body>
 </html>

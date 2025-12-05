@@ -92,3 +92,11 @@ body img {
   display: block;              /* avoids inline spacing issues */
   margin: 1em auto;            /* centers the image */
 }
+
+nav a {
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 0 8px;
+}
+nav a:hover { text-decoration: underline; }
