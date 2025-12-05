@@ -1,24 +1,40 @@
-# Week 3 Worksheet
+# 📝 Worksheet — Week 3
 
-## Part A: Vocabulary
+### Questions
 
-### Interactive Vocabulary Flashcards
+1. What is the purpose of a potentiometer in an Arduino circuit?
+2. How does PWM control the brightness of an LED?
+3. Why do we need to map the analog input range to the PWM output range?
+4. Write a short code snippet to read a potentiometer value and print it to the Serial Monitor.
 
-<div style="display:flex; flex-wrap: wrap; gap: 1rem;">
-  <button onclick="alert('Potentiometer: A variable resistor that adjusts voltage by changing resistance.')" style="background: linear-gradient(45deg, #6a11cb, #2575fc); color: white; border: none; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 0 10px #2575fc; cursor: pointer; font-weight: bold;"> Potentiometer </button>
-  <button onclick="alert('PWM (Pulse Width Modulation): A technique to simulate analog output by switching a digital signal on and off rapidly.')" style="background: linear-gradient(45deg, #fc5c7d, #6a82fb); color: white; border: none; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 0 10px #fc5c7d; cursor: pointer; font-weight: bold;"> PWM </button>
-</div>
+### Activities
 
-## Part B: Practice
-
-1. Draw the wiring diagram for this project.
-2. Label the potentiometer pins and LED connections.
-
-## Part C: Reflection
-
-* How does turning the potentiometer affect the LED brightness?
-* Why do we use `map()` in the code?
+* Build the circuit with a potentiometer and LED as described.
+* Modify the code to change the LED brightness based on the potentiometer position.
+* Experiment with different delay values and observe the LED behavior.
 
 ---
+
+### Flash Cards
+
+| Term           | Definition                                                                                   |
+| -------------- | --------------------------------------------------------------------------------------------|
+| Potentiometer  | A variable resistor used to measure position by changing resistance and output voltage.     |
+| PWM            | Pulse Width Modulation, a technique to simulate analog voltage by switching digital signals. |
+| analogRead()   | Arduino function to read analog voltage values from sensors (0-1023).                      |
+| map()          | Function to convert a number from one range to another, e.g., 0-1023 to 0-255.             |
+
+---
+
+### Bonus Challenge
+
+Try adding a second LED that lights up only when the potentiometer value is above a certain threshold.
+
+---
+
+### Reflection
+
+Write a short paragraph about what you learned this week regarding analog inputs and PWM control.
+
 
 [Back to Lessons]({{ "/lessons/" | relative_url }}) [Back to Worksheets]({{ "/worksheets/" | relative_url }})
