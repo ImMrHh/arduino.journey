@@ -2,7 +2,7 @@
 ---
 
 **week4-worksheet.md** (worksheet page):
-```markdown
+
 ## 📝 Worksheet — Week 4
 
 ### Part A: Vocabulary
