@@ -136,3 +136,13 @@ nav a {
 nav a:hover {
   text-decoration: underline;
 }
+
+nav {
+  position: relative;
+  z-index: 10;   /* ensures nav sits above hero overlay */
+  margin-bottom: 12px; /* adds breathing room before banner */
+}
+
+.hero-banner::after {
+  pointer-events: none; /* overlay won’t block clicks */
+}
