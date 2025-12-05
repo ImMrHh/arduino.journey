@@ -35,7 +35,7 @@ A potentiometer is a variable resistor with three terminals. Turning the knob ch
 
 * Connect the two outer pins of the potentiometer to 5V and GND.
 * Connect the middle pin (wiper) to an analog input pin on the Arduino (e.g., A0).
-* ![Week 3 Wiring Diagram](/images/week3-wiring.png)
+* ![Week 3 Wiring Diagram](../images/week3-wiring.png)
 
 ### 3. Reading Analog Values
 

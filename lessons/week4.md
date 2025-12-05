@@ -22,7 +22,7 @@ In this lesson, students will:
 2. Open Arduino IDE and set up Serial communication in `setup()`.
 3. Write code to read sensor values and print them to the Serial Monitor.
 4. Upload and test: observe sensor readings in real time.
-![Week 4 Wiring Diagram](/images/week4-wiring.png)
+![Week 4 Wiring Diagram](../images/week4-wiring.png)
 
 ### Code
 ```cpp

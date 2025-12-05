@@ -25,7 +25,7 @@ In this lesson, we’ll learn how to use a pushbutton as a digital input to cont
 - Connect the LED to **pin 8** with a resistor to **GND**.
 - Use Arduino’s **internal pull-up resistor** to simplify wiring.
 
-![Week 2 Wiring Diagram](/images/week2-wiring.png)
+![Week 2 Wiring Diagram](../images/week2-wiring.png)
 
 ---
 
