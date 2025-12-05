@@ -8,11 +8,19 @@ layout: default
     <h1>Arduino Curriculum</h1>
     <p>Hands-on lessons for middle school students</p>
     <div class="cta-buttons">
-      <a href="{{ "/lessons/week1.html" | relative_url }}" class="cta-button">Start Week 1</a>
-      <a href="{{ "/worksheets/week1-worksheet.html" | relative_url }}" class="cta-button secondary">Download Worksheet</a>
-      <a href="{{ "/resources/" | relative_url }}" class="cta-button tertiary">View Resources</a>
-    </div>
-  </div>
+  <a href="{{ '/lessons/' | relative_url }}" class="cta-button lessons-btn">
+    View Lessons
+    <span class="cta-subtitle">Learn concepts step by step</span>
+  </a>
+  <a href="{{ '/worksheets/' | relative_url }}" class="cta-button worksheets-btn">
+    Practice Worksheets
+    <span class="cta-subtitle">Apply skills with exercises</span>
+  </a>
+  <a href="{{ '/tools/' | relative_url }}" class="cta-button tools-btn">
+    Interactive Tools
+    <span class="cta-subtitle">Explore calculators & utilities</span>
+  </a>
+   </div>
 </div>
 
 # 🎓 Arduino Curriculum

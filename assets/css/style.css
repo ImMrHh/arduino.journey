@@ -44,55 +44,82 @@ body {
    ========================= */
 .cta-buttons {
   margin-top: 20px;
+  text-align: center;
 }
 
 .cta-button {
   display: inline-block;
   margin: 8px;
   padding: 12px 24px;
-  background-color: #0077cc; /* primary blue */
-  color: #ffffff !important; /* keep readable after visit */
+  border-radius: 6px;
   font-size: 1.1rem;
   font-weight: 600;
   text-decoration: none;
-  border-radius: 6px;
+  color: #ffffff !important; /* keep readable after visit */
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   transition: background-color 0.2s ease, transform 0.1s ease;
-  z-index: 3; /* ensures buttons are clickable above overlay */
+  text-align: center;
 }
 
 .cta-button:hover {
-  background-color: #005fa3;
-  transform: translateY(-1px); /* fixed typo */
+  transform: translateY(-1px);
   cursor: pointer;
 }
 
-.cta-button:visited {
-  color: #ffffff; /* keep text visible */
+/* Subtitles inside buttons */
+.cta-subtitle {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-top: 4px;
+  color: rgba(255,255,255,0.9);
 }
 
-/* Secondary + tertiary buttons */
-.cta-button.secondary {
-  background-color: #2a9d8f;
-}
-.cta-button.secondary:hover {
-  background-color: #1f7a6f;
+/* Specific button colors */
+.lessons-btn { background-color: #0077cc; }
+.lessons-btn:hover { background-color: #005fa3; }
+
+.worksheets-btn { background-color: #28a745; }
+.worksheets-btn:hover { background-color: #1e7e34; }
+
+.tools-btn { background-color: #ff8800; }
+.tools-btn:hover { background-color: #cc6d00; }
+
+/* =========================
+   Responsive Buttons
+   ========================= */
+@media (max-width: 600px) {
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-button {
+    width: 90%;
+    max-width: 320px;
+    margin: 10px 0;
+  }
+
+  .cta-subtitle {
+    font-size: 0.8rem;
+    margin-top: 2px;
+  }
 }
 
-.cta-button.tertiary {
-  background-color: #e76f51;
-}
-.cta-button.tertiary:hover {
-  background-color: #c94c35;
-}
-
+/* =========================
+   Images
+   ========================= */
 body img {
-  max-width: min(90vw, 600px); /* scales to 90% of viewport width, capped at 600px */
-  height: auto;                /* keeps proportions */
-  display: block;              /* avoids inline spacing issues */
-  margin: 1em auto;            /* centers the image */
+  max-width: min(90vw, 600px);
+  height: auto;
+  display: block;
+  margin: 1em auto;
 }
 
+/* =========================
+   Navigation
+   ========================= */
 nav a {
   color: #0077cc;
   text-decoration: none;
