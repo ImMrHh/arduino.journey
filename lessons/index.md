@@ -2,12 +2,10 @@
 title: "Lessons"
 layout: default
 ---
-
 <div class="index-page">
-  # Lessons
+  <h1>Lessons</h1>
   ...
 </div>
-
 
 # 📚 Lessons
 
