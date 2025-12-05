@@ -75,10 +75,10 @@ void loop() {
 }
 ```
 
-## Resources
+### Navigation
 
-- [Week 3 Worksheet](../worksheets/week3-worksheet.md)
-- [Previous Lessons]({{ "/lessons/" | relative_url }})
+[⬅️ Back to Lessons Menu](lessons.md) | [Go to Worksheet ➡️](week3-worksheet.md)
+
 
 ---
 
