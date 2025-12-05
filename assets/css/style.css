@@ -13,14 +13,14 @@ body {
 .hero-banner {
   position: relative;
   width: 100%;
-  min-height: 280px; /* baseline height */
+  min-height: 280px;
   background: url('/images/banner.png') center/cover no-repeat;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centers vertically */
-  align-items: center;     /* centers horizontally */
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 2rem 1rem;      /* breathing room */
+  padding: 2rem 1rem;
   overflow: hidden;
 }
 
@@ -219,6 +219,18 @@ nav a[href*="tools"].active {
   border-bottom: 3px solid #ff8800;
   font-weight: 700;
   background-color: rgba(255,136,0,0.15);
+}
+
+/* =========================
+   Section Divider
+   ========================= */
+.section-divider {
+  height: 4px;
+  width: 80%;
+  margin: 2rem auto;
+  border-radius: 2px;
+  background: linear-gradient(to right, #0077cc, #28a745, #ff8800);
+  opacity: 0.7;
 }
 
 /* =========================
