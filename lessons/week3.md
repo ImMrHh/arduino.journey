@@ -35,6 +35,7 @@ A potentiometer is a variable resistor with three terminals. Turning the knob ch
 
 * Connect the two outer pins of the potentiometer to 5V and GND.
 * Connect the middle pin (wiper) to an analog input pin on the Arduino (e.g., A0).
+* ![Week 2 Wiring Diagram](/images/week3-wiring.png)
 
 ### 3. Reading Analog Values
 
@@ -47,6 +48,7 @@ PWM allows us to simulate varying voltage levels by switching the LED on and off
 ### 5. Mapping Values
 
 Since `analogRead` returns 0-1023 and `analogWrite` expects 0-255, use the `map()` function to convert the range.
+
 
 ```cpp
 int sensorValue = analogRead(A0);
@@ -77,7 +79,7 @@ void loop() {
 
 ### Navigation
 
-[⬅️ Back to Lessons Menu](lessons.md) | [Go to Worksheet ➡️](week3-worksheet.md)
+[⬅️ Back to Lessons Menu](lessons.md) | [Go to Worksheet ➡️](worksheets/week3-worksheet.md)
 
 
 ---

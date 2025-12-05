@@ -13,6 +13,9 @@
 * Modify the code to change the LED brightness based on the potentiometer position.
 * Experiment with different delay values and observe the LED behavior.
 
+## 🖼️ Diagram
+![Wiring diagram showing potentiometer connected to 5v, GND and Analogue pin 0](../images/week3-wiring.png){: style="max-width:600px; display:block; margin:1em auto;" }
+
 ---
 
 ### Flash Cards
