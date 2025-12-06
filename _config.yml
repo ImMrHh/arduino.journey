@@ -4,40 +4,6 @@ include: ["assets/css"]
 description: "Hands-on Arduino lessons for secondary students"
 
 
-# Navigation links
-nav:
- nav:
-  - title: "Home"
-    url: /
-
-  - title: "Lessons"
-    url: /lessons/overview
-
-  - title: "Worksheets"
-    url: /worksheets/index
-
-  - title: "Tools"
-    url: tools
-
-  - title: "Week 1 Lesson"
-    url: /lessons/week1
-  - title: "Week 1 Worksheet"
-    url: /worksheets/week1-worksheet
-  - title: "Week 2 Lesson"
-    url: /lessons/week2
-  - title: "Week 2 Worksheet"
-    url: /worksheets/week2-worksheet
-  - title: "Week 3 Lesson"
-    url: /lessons/week3
-  - title: "Week 3 Worksheet"
-    url: /worksheets/week3-worksheet
-  - title: "Week 4 Lesson"
-    url: /lessons/week4
-  - title: "Week 4 Worksheet"
-    url: /worksheets/week4-worksheet
-
-
-
 # Author info (optional)
 author:
   name: "Henrik"
