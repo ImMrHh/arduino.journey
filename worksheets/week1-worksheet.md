@@ -1,39 +1,24 @@
-## Week 1 Worksheet – Intro to Arduino & Blink
-
-### 🧩 Interactive Clickable Hotspot Activity
-
-Click on the correct parts of the LED circuit in the wiring diagram below. When you click a hotspot, it will show the component name.
-
-<div style="position: relative; width: 400px; height: 300px; background-image: url('../images/week1-wiring.png'); background-size: contain; background-repeat: no-repeat; border: 1px solid #ccc; margin-bottom: 1em;">
-  <button onclick="alert('LED Anode (long leg)')" style="position: absolute; top: 40px; left: 290px; width: 140px; height: 30px; opacity: 0; cursor: pointer;" aria-label="LED Anode hotspot"></button>
-  <button onclick="alert('LED Cathode (short leg)')" style="position: absolute; top: 120px; left: 290px; width: 140px; height: 30px; opacity: 0; cursor: pointer;" aria-label="LED Cathode hotspot"></button>
-  <button onclick="alert('Resistor')" style="position: absolute; top: 80px; left: 160px; width: 140px; height: 30px; opacity: 0; cursor: pointer;" aria-label="Resistor hotspot"></button>
-  <button onclick="alert('Digital Pin 8')" style="position: absolute; top: 10px; left: 160px; width: 140px; height: 30px; opacity: 0; cursor: pointer;" aria-label="Digital Pin 8 hotspot"></button>
-  <button onclick="alert('Ground (GND)')" style="position: absolute; top: 160px; left: 160px; width: 140px; height: 30px; opacity: 0; cursor: pointer;" aria-label="Ground hotspot"></button>
-</div>
-
-*Tip: If a label disappears after clicking, refresh the page to try again.*
-
+# Week 1 worksheet – Intro to Arduino & Blink
 
 ---
 
 ## 🎯 Objectives
-
-- Understand what Arduino is and how it controls inputs/outputs.
-- Wire an LED with a current-limiting resistor safely to a digital pin.
-- Upload the Blink sketch and successfully modify timing.
-- Use Ohm’s Law to justify resistor choices.
+- **Understanding:** What Arduino is and how it controls inputs and outputs.
+- **Safety:** Wire an LED with a current-limiting resistor safely to a digital pin.
+- **Uploading:** Upload the Blink sketch and successfully modify timing.
+- **Reasoning:** Use Ohm’s Law to justify resistor choices.
 
 ---
 
-## 🔌 Wiring Guide
+## 🔌 Wiring guide
+- **Connection:** Pin 8 → resistor → LED anode (long leg).
+- **Ground:** LED cathode (short leg) → GND.
 
-- Pin 8 → resistor → LED anode (long leg)  
-- LED cathode (short leg) → GND
-![Blink Wiring Diagram](../images/week1-wiring.png)
+![Week 1 wiring diagram](../images/week1-wiring.png)
+
 ---
 
-## 💻 Starter Code
+## 💻 Starter code
 
 ```cpp
 // Week 1: Blink (Pin 8)
@@ -48,3 +33,47 @@ void loop() {
   delay(500);            // Wait 0.5 seconds
 }
 ```
+
+---
+
+## 🧠 Core concepts
+- **Digital output:** HIGH ≈ 5 V, LOW ≈ 0 V.
+- **Pin mode:** Use `pinMode(pin, OUTPUT)` for digital outputs.
+- **Sketch structure:** `setup()` runs once; `loop()` repeats forever.
+- **Resistor role:** Limits current to protect the LED and the Arduino pin.
+
+> Tip: A typical red LED has a forward voltage around 2.0 V. Aim for 10–20 mA for safe brightness.
+
+---
+
+## 🧩 Challenge tasks
+1. **Timing tweak:** Set both delays to 200 ms and observe the change in blink speed.
+2. **Pattern design:** Create a short–short–long blink pattern (200 ms, 200 ms, 600 ms).
+3. **Ohm’s Law justification:** Estimate a safe resistor value using
+   
+
+\[
+   R = \frac{V}{I} \quad \Rightarrow \quad R \approx \frac{(5 - 2)}{0.015} \approx 200\ \Omega
+   \]
+
+
+
+---
+
+## 🔧 Troubleshooting tips
+- **Polarity:** Long leg (anode) to resistor/pin; short leg (cathode) to GND.
+- **Resistor required:** Never power an LED directly from a digital pin.
+- **Connections:** Reseat jumper wires; ensure the resistor spans separate breadboard rows.
+- **Upload checks:** Select the correct board and COM port before uploading.
+
+---
+
+## 🤔 Reflection questions
+- **Timing:** What changes when you modify `delay` values?
+- **Protection:** Why is the resistor necessary with the LED?
+- **Structure:** Why does `setup()` run once and `loop()` repeat forever?
+
+---
+
+## 💡 Real‑world application
+- **Spot the blink:** Where do you see blinking indicators (routers, bikes, cars, wearables), and what purpose do they serve?
