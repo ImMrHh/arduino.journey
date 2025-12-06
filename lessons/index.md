@@ -1,3 +1,5 @@
+<!-- rebuild trigger -->
+
 ---
 title: "Lessons"
 layout: default
