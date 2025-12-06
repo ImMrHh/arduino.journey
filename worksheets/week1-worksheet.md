@@ -46,18 +46,17 @@ void loop() {
 
 ---
 
-## 🧩 Challenge tasks
-1. **Timing tweak:** Set both delays to 200 ms and observe the change in blink speed.
-2. **Pattern design:** Create a short–short–long blink pattern (200 ms, 200 ms, 600 ms).
-3. **Ohm’s Law justification:** Estimate a safe resistor value using
-   
+## 🥹 Challenge Tasks
 
-\[
-   R = \frac{V}{I} \quad \Rightarrow \quad R \approx \frac{(5 - 2)}{0.015} \approx 200\ \Omega
-   \]
+1. Change the blink speed to 200 ms.
+2. Make the LED blink in a short–short–long pattern (e.g., 200 ms, 200 ms, 600 ms).
+3. Calculate the resistor value using Ohm’s Law. Remember:
 
+   R = V / I
 
+   For example, using 5 V from the pin, 2 V forward voltage for the LED, and 15 mA current:
 
+   R ≈ (5 V - 2 V) / 0.015 A ≈ 200 Ω
 ---
 
 ## 🔧 Troubleshooting tips
