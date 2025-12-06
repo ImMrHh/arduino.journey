@@ -7,15 +7,6 @@ layout: default
 
 Interactive calculators and utilities for your Arduino projects.
 
----
-title: "Tools"
-layout: default
----
-
-# 🛠 Tools
-
-Interactive calculators and utilities for your Arduino projects.
-
 <hr>
 
 ## Ohm's Law Calculator
@@ -118,13 +109,13 @@ function calculateLEDResistor() {
   let Vf = parseFloat(document.getElementById("forward").value);
   let I = parseFloat(document.getElementById("current").value);
 
-  if (!isNaN(Vs) && !isNaN(Vf) && !isNaN(I) && I > 0) {
+  if (!isNaN(Vs) && !isNaN(Vf) && !isNaN(I) && I > 0 && Vs > Vf) {
     let R = (Vs - Vf) / (I / 1000); // convert mA to A
     document.getElementById("led-result").innerText =
       "Recommended Resistor = " + R.toFixed(0) + " Ω";
   } else {
     document.getElementById("led-result").innerText =
-      "Please enter valid values.";
+      "Please enter valid numeric values. Supply voltage must be greater than LED forward voltage.";
   }
 }
 </script>
