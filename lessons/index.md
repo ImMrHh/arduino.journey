@@ -1,16 +1,7 @@
-<!-- rebuild trigger -->
-
 ---
 title: "Lessons"
 layout: default
 ---
-
-<nav>
-  <a href="/arduino.journey/" class="">Home</a> |
-  <a href="/arduino.journey/lessons/" class="active">Lessons</a> |
-  <a href="/arduino.journey/worksheets/" class="">Worksheets</a> |
-  <a href="/arduino.journey/tools/" class="">Tools</a>
-</nav>
 
 # 📚 Lessons
 
