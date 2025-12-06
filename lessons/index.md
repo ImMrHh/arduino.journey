@@ -1,7 +1,6 @@
 ---
 title: "Lessons"
 layout: default
-permalink: /lessons/
 ---
 
 # 📚 Lessons
