@@ -316,3 +316,27 @@ nav a[href*="tools"].active {
   font-size: 1.1em;   /* bump body text size */
   line-height: 1.6;
 }
+
+/* Section divider style for Tools page */
+.tool-section {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 1em;
+  margin: 1.5em 0;
+  background-color: #f9f9f9;
+}
+
+.tool-section h2 {
+  margin-top: 0;
+  font-size: 1.4em;
+  color: #333;
+}
+
+.tool-section form {
+  margin-top: 0.5em;
+}
+
+.tool-section p {
+  margin-top: 0.5em;
+  font-weight: bold;
+}

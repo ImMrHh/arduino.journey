@@ -10,6 +10,9 @@ Interactive calculators and utilities for your Arduino projects.
 <hr>
 
 ## Ohm's Law Calculator
+<div class="tool-section">
+  <!-- your Ohm's Law form + script here -->
+</div>
 
 Enter any two values and calculate the third:
 
@@ -47,6 +50,9 @@ function calculateOhmsLaw() {
 </script>
 
 ## Resistor Color Code Decoder
+<div class="tool-section">
+  <!-- your Ohm's Law form + script here -->
+</div>
 
 Enter the 4-band colors to calculate resistance:
 
@@ -91,6 +97,9 @@ function decodeResistor() {
 </script>
 
 ## LED Resistor Calculator
+<div class="tool-section">
+  <!-- your Ohm's Law form + script here -->
+</div>
 
 Calculate the resistor needed for an LED given supply voltage, LED forward voltage, and desired current.
 
@@ -132,6 +141,9 @@ function calculateLEDResistor() {
 </script>
 
 ## PWM Duty Cycle Calculator
+<div class="tool-section">
+  <!-- your Ohm's Law form + script here -->
+</div>
 
 Calculate the duty cycle percentage given signal frequency and pulse width.
 
