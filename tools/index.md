@@ -95,24 +95,35 @@ function decodeResistor() {
 Calculate the resistor needed for an LED given supply voltage, LED forward voltage, and desired current.
 
 <form id="led-resistor">
-  Supply Voltage (V): <input type="number" id="supply" step="any"><br>
-  LED Forward Voltage (V): <input type="number" id="forward" step="any"><br>
-  Desired Current (mA): <input type="number" id="current" step="any"><br>
+  Supply Voltage (V): 
+  <input type="number" id="led-supply" step="0.01" inputmode="decimal"><br>
+  LED Forward Voltage (V): 
+  <input type="number" id="led-forward" step="0.01" inputmode="decimal"><br>
+  Desired Current (mA): 
+  <input type="number" id="led-current" step="1" inputmode="numeric"><br>
   <button type="button" onclick="calculateLEDResistor()">Calculate</button>
 </form>
 
 <p id="led-result"></p>
 
 <script>
-function calculateLEDResistor() {
-  let Vs = parseFloat(document.getElementById("supply").value);
-  let Vf = parseFloat(document.getElementById("forward").value);
-  let I = parseFloat(document.getElementById("current").value);
+function normalizeNumber(value) {
+  // Trim, replace comma with dot, then parse
+  if (typeof value !== "string") return NaN;
+  const cleaned = value.trim().replace(",", ".");
+  return parseFloat(cleaned);
+}
 
-  if (!isNaN(Vs) && !isNaN(Vf) && !isNaN(I) && I > 0 && Vs > Vf) {
-    let R = (Vs - Vf) / (I / 1000); // convert mA to A
+function calculateLEDResistor() {
+  const Vs = normalizeNumber(document.getElementById("led-supply").value);
+  const Vf = normalizeNumber(document.getElementById("led-forward").value);
+  const I_mA = normalizeNumber(document.getElementById("led-current").value);
+
+  if (!isNaN(Vs) && !isNaN(Vf) && !isNaN(I_mA) && I_mA > 0 && Vs > Vf) {
+    const I_A = I_mA / 1000;        // convert mA to A
+    const R = (Vs - Vf) / I_A;      // ohms
     document.getElementById("led-result").innerText =
-      "Recommended Resistor = " + R.toFixed(0) + " Ω";
+      "Recommended Resistor = " + Math.round(R) + " Ω";
   } else {
     document.getElementById("led-result").innerText =
       "Please enter valid numeric values. Supply voltage must be greater than LED forward voltage.";
