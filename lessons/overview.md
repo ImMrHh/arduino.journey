@@ -2,11 +2,10 @@
 title: "Lessons"
 layout: default
 ---
-## TEST HEADING
 
 # 📚 Lessons
 
-<p>Here you’ll find weekly lesson overviews, wiring diagrams, and code snippets.</p>
+Here you’ll find weekly lesson overviews, wiring diagrams, and code snippets.
 
 <hr>
 
