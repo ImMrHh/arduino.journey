@@ -298,3 +298,21 @@ nav a[href*="tools"].active {
   animation: fadeInUp 1s ease forwards;
   animation-delay: 0.6s;
 }
+
+/* Unify section typography across Lessons, Worksheets, Tools */
+.page-content h1 {
+  font-size: 1.8em;   /* larger heading for mobile */
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.page-content h2 {
+  font-size: 1.4em;
+  margin-top: 0.75em;
+  margin-bottom: 0.5em;
+}
+
+.page-content p {
+  font-size: 1.1em;   /* bump body text size */
+  line-height: 1.6;
+}
