@@ -4,7 +4,7 @@
 
 Click on the correct parts of the LED circuit in the wiring diagram below. When you click a hotspot, it will show the component name.
 
-<div style="position: relative; width: 400px; height: 300px; background-image: url('images/week1-wiring.png'); background-size: contain; background-repeat: no-repeat; border: 1px solid #ccc; margin-bottom: 1em;">
+<div style="position: relative; width: 400px; height: 300px; background-image: url('../images/week1-wiring.png'); background-size: contain; background-repeat: no-repeat; border: 1px solid #ccc; margin-bottom: 1em;">
   <button onclick="alert('LED Anode (long leg)')" style="position: absolute; top: 40px; left: 290px; width: 140px; height: 30px; opacity: 0; cursor: pointer;" aria-label="LED Anode hotspot"></button>
   <button onclick="alert('LED Cathode (short leg)')" style="position: absolute; top: 120px; left: 290px; width: 140px; height: 30px; opacity: 0; cursor: pointer;" aria-label="LED Cathode hotspot"></button>
   <button onclick="alert('Resistor')" style="position: absolute; top: 80px; left: 160px; width: 140px; height: 30px; opacity: 0; cursor: pointer;" aria-label="Resistor hotspot"></button>
