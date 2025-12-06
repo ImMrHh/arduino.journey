@@ -130,3 +130,34 @@ function calculateLEDResistor() {
   }
 }
 </script>
+
+## PWM Duty Cycle Calculator
+
+Calculate the duty cycle percentage given signal frequency and pulse width.
+
+<form id="pwm-calculator">
+  Signal Frequency (Hz): 
+  <input type="number" id="pwm-frequency" step="any"><br>
+  Pulse Width (ms): 
+  <input type="number" id="pwm-pulse" step="any"><br>
+  <button type="button" onclick="calculatePWM()">Calculate</button>
+</form>
+
+<p id="pwm-result"></p>
+
+<script>
+function calculatePWM() {
+  const freq = parseFloat(document.getElementById("pwm-frequency").value);
+  const pulse_ms = parseFloat(document.getElementById("pwm-pulse").value);
+
+  if (!isNaN(freq) && !isNaN(pulse_ms) && freq > 0 && pulse_ms > 0) {
+    const period_ms = 1000 / freq; // convert Hz to ms period
+    const duty = (pulse_ms / period_ms) * 100;
+    document.getElementById("pwm-result").innerText =
+      "Duty Cycle = " + duty.toFixed(1) + "%";
+  } else {
+    document.getElementById("pwm-result").innerText =
+      "Please enter valid numeric values.";
+  }
+}
+</script>
