@@ -6,8 +6,19 @@ description: "Hands-on Arduino lessons for secondary students"
 
 # Navigation links
 nav:
+ nav:
   - title: "Home"
     url: /
+
+  - title: "Lessons"
+    url: /lessons/overview
+
+  - title: "Worksheets"
+    url: /worksheets/index
+
+  - title: "Tools"
+    url: tools
+
   - title: "Week 1 Lesson"
     url: /lessons/week1
   - title: "Week 1 Worksheet"
