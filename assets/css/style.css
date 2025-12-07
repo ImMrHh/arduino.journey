@@ -254,6 +254,50 @@ nav a[href*="tools"].active {
   font-weight: 700;
   background-color: rgba(255,136,0,0.15);
 }
+nav a[href*="robotics"] {
+  font-weight: bold;
+  color: #2a9d8f; /* teal accent */
+}
+
+/* Dropdown container */
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+/* Dropdown button */
+.dropbtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: #333;
+  padding: 0 5px;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside dropdown */
+.dropdown-content a {
+  color: #333;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Highlight on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
 
 /* =========================
    Section Divider

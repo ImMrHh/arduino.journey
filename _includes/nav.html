@@ -2,5 +2,14 @@
   <a href="{{ "/" | relative_url }}">Home</a> |
   <a href="{{ "/lessons/" | relative_url }}">Lessons</a> |
   <a href="{{ "/worksheets/" | relative_url }}">Worksheets</a> |
-  <a href="{{ "/tools/" | relative_url }}">Tools</a>
+  <a href="{{ "/tools/" | relative_url }}">Tools</a> |
+  <div class="dropdown">
+    <button class="dropbtn">Robotics ▾</button>
+    <div class="dropdown-content">
+      <a href="{{ "/robotics/" | relative_url }}">Overview</a>
+      <a href="{{ "/robotics/lessons/" | relative_url }}">Lessons</a>
+      <a href="{{ "/robotics/worksheets/" | relative_url }}">Worksheets</a>
+      <a href="{{ "/robotics/code/" | relative_url }}">Code</a>
+    </div>
+  </div>
 </nav>
