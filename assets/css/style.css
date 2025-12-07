@@ -384,3 +384,23 @@ nav a[href*="robotics"] {
   margin-top: 0.5em;
   font-weight: bold;
 }
+
+.download-buttons {
+  margin: 1em 0;
+}
+
+.download-btn {
+  display: inline-block;
+  background-color: #2a9d8f; /* teal accent */
+  color: #fff;
+  padding: 8px 14px;
+  margin: 6px 0;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.download-btn:hover {
+  background-color: #21867a;
+}
