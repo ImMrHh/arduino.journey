@@ -23,7 +23,16 @@ Connect the LCD with I2C backpack:
 - **SDA → A4**
 - **SCL → A5**
 
-Connect the push button to digital pin 2 with a pull‑down or pull‑up resistor.
+![LCD Jumpman Wiring Diagram]({{ "/robotics/wiringrobotics/lcd-jumpman-wiring.png" | relative_url }})
+
+Use this diagram to connect your LCD correctly before uploading the sketches.
+
+## Steps
+1. Follow the wiring diagram above to connect the LCD.
+2. Run `scanner.ino` to detect the I2C address.
+3. Update `lcd-test.ino` and `jumpman.ino` with that address.
+4. Upload `lcd-test.ino` to confirm the LCD works.
+5. Upload `jumpman.ino` to play the game.
 
 ---
 
