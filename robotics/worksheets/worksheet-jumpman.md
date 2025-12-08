@@ -23,7 +23,7 @@ Connect the LCD with I2C backpack:
 - **SDA → A4**
 - **SCL → A5**
 
-![LCD Jumpman Wiring Diagram]({{ "../robotics/wiringrobotics/lcd-jumpman-wiring.png" | relative_url }})
+![LCD Jumpman Wiring Diagram]({{ "../robotics/wiringrobotics/jumpman-wiring.png" | relative_url }})
 
 Use this diagram to connect your LCD correctly before uploading the sketches.
 
