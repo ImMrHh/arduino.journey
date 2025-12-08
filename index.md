@@ -42,7 +42,7 @@ This site contains weekly lessons, wiring diagrams, code snippets, and printable
 
 ### 🔹 Week 2: Button Control
 - [Lesson overview]({{ "/lessons/week2.html" | relative_url }})
-- [Worksheet]({{ "/worksheets/week2-worksheet.html" | relative_url }})
+- [Worksheet]({{ "/worksheets/week2-worksheet" | relative_url }})
 - ![Wiring diagram]({{ "/images/week2-wiring.png" | relative_url }})
 
 ### 🔹 Week 3: Potentiometer & PWM
