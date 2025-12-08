@@ -1,7 +1,7 @@
 
 ---
 
-**week4-worksheet.md** (worksheet page):
+**week4-worksheet.md**:
 
 ## 📝 Worksheet — Week 4
 
