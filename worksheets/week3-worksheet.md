@@ -38,7 +38,7 @@ void loop() {
   Serial.println(potValue);                   // Print raw value
   delay(50);                                  // Small delay for stability
 }
-
+```
 ---
 
 ## 🧠 Core concepts
