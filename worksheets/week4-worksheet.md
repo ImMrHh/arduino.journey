@@ -1,3 +1,8 @@
+---
+title: "Week 4 Worksheet – Sensors & Serial Monitor"
+layout: default
+---
+
 # Week 4 Worksheet – Sensors & Serial Monitor
 
 ---
