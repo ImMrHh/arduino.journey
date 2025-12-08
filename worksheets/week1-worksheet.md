@@ -76,3 +76,8 @@ void loop() {
 
 ## 💡 Real‑world application
 - **Spot the blink:** Where do you see blinking indicators (routers, bikes, cars, wearables), and what purpose do they serve?
+
+---
+
+## 🧭 Navigation
+[Back to Lessons]({{ "/lessons/" | relative_url }}) [Back to Worksheets]({{ "/worksheets/" | relative_url }})

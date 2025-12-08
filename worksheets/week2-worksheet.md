@@ -79,3 +79,8 @@ void loop() {
 ## 💡 Real‑world application
 - **Examples:** Elevator buttons, game controllers, remote controls, light switches.  
 - **Reflection:** How does debounce matter in real devices (e.g., double clicks, accidental presses)?  
+
+---
+
+## 🧭 Navigation
+[Back to Lessons]({{ "/lessons/" | relative_url }}) [Back to Worksheets]({{ "/worksheets/" | relative_url }})
