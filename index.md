@@ -58,9 +58,14 @@ This site contains weekly lessons, wiring diagrams, code snippets, and printable
 ---
 
 ## 🧰 Resources
-- [Arduino IDE](https://www.arduino.cc/en/software)
-- [IDE Tutorial]({{ "/IDE/ide_tutorial.html" | relative_url }})
-- [Ohm’s Law calculator](https://www.digikey.com.mx/en/resources/conversion-calculators/conversion-calculator-ohms)
+
+### 🖥️ Software
+- [Arduino IDE](https://www.arduino.cc/en/software)  
+  *Download & install the official software*
+
+### 📝 Guides
+- [IDE Tutorial]({{ "/IDE/ide_tutorial.html" | relative_url }})  
+  *Step‑by‑step setup guide for beginners*
 
 ---
 
