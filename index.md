@@ -47,10 +47,11 @@ This site contains weekly lessons, wiring diagrams, code snippets, and printable
 - [Ohm’s Law calculator](https://www.digikey.com.mx/en/resources/conversion-calculators/conversion-calculator-ohms)  
   *Quickly compute voltage, current, and resistance*
 
----
 ### 📚 Curriculum
 - [All Lessons]({{ "/lessons/" | relative_url }})  
   *Browse weekly lessons by topic*
+
+---
 
 ## 🌟 About This Curriculum
 This project is designed for 9th grade students exploring coding, electronics, and creative technology.  
