@@ -43,10 +43,6 @@ This site contains weekly lessons, wiring diagrams, code snippets, and printable
 - [IDE Tutorial]({{ "/IDE/ide_tutorial.html" | relative_url }})  
   *Step‑by‑step setup guide for beginners*
 
-### ⚡ Calculators
-- [Ohm’s Law calculator](https://www.digikey.com.mx/en/resources/conversion-calculators/conversion-calculator-ohms)  
-  *Quickly compute voltage, current, and resistance*
-
 ### 📚 Curriculum
 - [All Lessons]({{ "/lessons/" | relative_url }})  
   *Browse weekly lessons by topic*
