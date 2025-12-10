@@ -16,7 +16,7 @@ Welcome! Choose a week to explore lessons, worksheets, and wiring diagrams.
     <li><a href="{{ '/lessons/week2.html' | relative_url }}">Week 2: Button Control</a></li>
     <li><a href="{{ '/lessons/week3.html' | relative_url }}">Week 3: Potentiometer & PWM</a></li>
     <li><a href="{{ '/lessons/week4.html' | relative_url }}">Week 4: Serial Monitor & Sensors</a></li>
-    <li><a href="{{ '/lessons/week5.html' | relative_url }}">Week 5: LEDs & Arrays</a></li>
+    <li><a href="{{ '/lessons/week5.html' | relative_url }}">Week 5: Buzzer & Tone Generation</a></li>
   </ul>
 </details>
 
