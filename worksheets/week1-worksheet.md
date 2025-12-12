@@ -50,13 +50,7 @@ void loop() {
 
 1. Change the blink speed to 200 ms.
 2. Make the LED blink in a short–short–long pattern (e.g., 200 ms, 200 ms, 600 ms).
-3. Calculate the resistor value using Ohm’s Law. Remember:
-
-   R = V / I
-
-   For example, using 5 V from the pin, 2 V forward voltage for the LED, and 15 mA current:
-
-   R ≈ (5 V - 2 V) / 0.015 A ≈ 200 Ω
+3. Connect two LED's, make them blink at the same time.
 ---
 
 ## 🔧 Troubleshooting tips
