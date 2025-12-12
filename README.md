@@ -52,7 +52,4 @@ Your contributions will help me in creating new lessons, challenges, and codes.
 ## 📜 License
 - **Code (Arduino sketches):** Licensed under the MIT License — free to use, share, and remix.  
 - **Educational materials (worksheets, lessons, visual aids):** Licensed under Creative Commons Attribution (CC‑BY) — you may reuse and adapt with proper credit.  
-
-See the [LICENSE](LICENSE) file(s) for full details.  
-
 ---
