@@ -54,10 +54,8 @@ void loop() {
 
 ## 🥹 Challenge Tasks
 1. Modify the code so the LED **toggles** (stays on until the next press).  
-2. Add a second button to control a second LED.  
-3. Implement a **debounce** delay (≈50 ms) to avoid false triggers.  
-4. Use the button to change the blink speed of the LED.  
-5. Comment each line of your code to explain its purpose.  
+2. Add a second button to control a second LED.
+3. Comment each line of your code to explain its purpose.  
 
 ---
 
