@@ -57,6 +57,11 @@ void loop() {
 
 ---
 
+## 💡 Interactive helper
+
+<iframe src="./week4-helper.html" width="100%" height="640" style="border: none; border-radius: 12px; overflow: hidden;"></iframe>
+---
+
 ## 🔧 Troubleshooting tips
 - **Baud rate:** Ensure Serial Monitor is set to 9600 baud.  
 - **Wiring:** Confirm sensor pins are correctly connected to 5V, GND, and A0.  
