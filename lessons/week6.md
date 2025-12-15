@@ -77,15 +77,3 @@ title: Week 6 - Buttons and Passive Buzzer
 * Where do you encounter buzzers controlled by buttons in everyday life?
 
 ---
-
-## 🧭 Navigation
-
-
-
-\[Back to Lessons\]
-
-({{ "/lessons/" | relative_url }}) 
-
-\[Back to Worksheets\]
-
-({{ "/worksheets/" | relative_url }})
