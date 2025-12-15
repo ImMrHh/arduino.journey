@@ -50,10 +50,8 @@ void loop() {
 ---
 
 ## 🥹 Challenge Tasks
-1. Play a short melody using multiple tone() calls.  
-2. Use a button to trigger the buzzer (press to play, release to stop).  
-3. Map potentiometer values to frequency for pitch control.  
-4. Experiment with different delays to change rhythm.  
+1. Play a short melody using multiple tone() calls.   
+2. Experiment with different delays to change rhythm.  
 
 ---
 
