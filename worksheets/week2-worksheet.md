@@ -1,20 +1,25 @@
-# Week 2 Worksheet – Button Control
+---
+title: "Week 2 Worksheet – LEDs & Digital Input/Output"
+layout: default
+---
+
+# Week 2 Worksheet – LEDs & Digital Input/Output
 
 ---
 
 ## 🎯 Objectives
-- **Understanding:** Learn how Arduino reads digital inputs from a push button.  
-- **Safety:** Use `INPUT_PULLUP` to avoid external resistors and simplify wiring.  
-- **Programming:** Write code that responds to button presses with LED actions.  
-- **Reasoning:** Explain why logic is inverted when using internal pull‑ups.  
+- **Understanding:** Learn how buttons provide digital input and LEDs respond as outputs.  
+- **Programming:** Use pinMode(), digitalRead(), digitalWrite(), and Boolean variables to manage state.  
+- **Reasoning:** Explain why we need variables to “remember” LED states.  
+- **Application:** Create toggle behavior and multi‑button control.  
 
 ---
 
 ## 🔌 Wiring guide
-- **Connection:** Button → Pin 2 (digital input).  
-- **Pull‑up logic:** Use `pinMode(2, INPUT_PULLUP)` so the pin reads HIGH by default.  
-- **Ground:** Button connects to GND when pressed.  
-- **Output:** LED anode → Pin 8, cathode → GND.  
+- **Button 1:** Connect one side → D2, other side → GND. Use a pull‑up resistor or pinMode(buttonPin, INPUT_PULLUP).  
+- **Button 2:** Connect similarly to D3.  
+- **LED 1:** Anode → D8, cathode → GND (with 220Ω resistor).  
+- **LED 2:** Anode → D9, cathode → GND (with 220Ω resistor).  
 
 ![Week 2 wiring diagram](../images/week2-wiring.png)
 
@@ -22,61 +27,73 @@
 
 ## 💻 Starter code
 
-```cpp
-// Week 2: Button + LED
-const int buttonPin = 2;
-const int ledPin = 8;
+// Week 2: LED Toggle with Buttons  
+const int button1Pin = 2;  
+const int button2Pin = 3;  
+const int led1Pin = 8;  
+const int led2Pin = 9;  
 
-void setup() {
-  pinMode(buttonPin, INPUT_PULLUP); // Button input with internal pull-up
-  pinMode(ledPin, OUTPUT);          // LED output
-}
+bool led1State = false; // stores ON/OFF state of LED1  
+bool led2State = false; // stores ON/OFF state of LED2  
 
-void loop() {
-  int buttonState = digitalRead(buttonPin);
+void setup() {  
+  pinMode(button1Pin, INPUT_PULLUP); // button 1 input  
+  pinMode(button2Pin, INPUT_PULLUP); // button 2 input  
+  pinMode(led1Pin, OUTPUT);          // LED1 output  
+  pinMode(led2Pin, OUTPUT);          // LED2 output  
+}  
 
-  if (buttonState == LOW) {         // LOW means button pressed
-    digitalWrite(ledPin, HIGH);     // LED on
-  } else {
-    digitalWrite(ledPin, LOW);      // LED off
-  }
-}
-```
+void loop() {  
+  // Read button states (LOW when pressed due to INPUT_PULLUP)  
+  if (digitalRead(button1Pin) == LOW) {  
+    led1State = !led1State;          // toggle LED1 state  
+    digitalWrite(led1Pin, led1State);  
+    delay(250);                      // debounce delay  
+  }  
+
+  if (digitalRead(button2Pin) == LOW) {  
+    led2State = !led2State;          // toggle LED2 state  
+    digitalWrite(led2Pin, led2State);  
+    delay(250);                      // debounce delay  
+  }  
+}  
+
 ---
 
 ## 🧠 Core concepts
-- **Digital input:** `digitalRead(pin)` returns HIGH or LOW.  
-- **Pull‑up resistor:** Keeps the pin HIGH until the button connects it to GND.  
-- **Logic inversion:** With `INPUT_PULLUP`, pressed = LOW, released = HIGH.  
-- **Toggle behavior:** Use variables to remember LED state across presses.  
+- **Boolean (bool):** A variable type that stores true or false. Perfect for ON/OFF states.  
+- **Toggle logic:** ledState = !ledState; flips the value each press.  
+- **Debounce:** A short delay prevents multiple triggers from one press.  
+- **INPUT_PULLUP:** Simplifies wiring by using Arduino’s internal resistor.  
 
 ---
 
 ## 🥹 Challenge Tasks
-1. Modify the code so the LED **toggles** (stays on until the next press).  
-2. Add a second button to control a second LED.
+1. Modify the code so LED1 toggles on/off with each press of Button 1.  
+2. Add Button 2 to control LED2 independently.  
 3. Comment each line of your code to explain its purpose.  
+4. Experiment with different debounce delays (e.g., 100 ms vs 500 ms).  
 
 ---
 
 ## 🔧 Troubleshooting tips
-- **Button orientation:** Ensure the legs are aligned correctly on the breadboard.  
-- **Pull‑up logic:** Without `INPUT_PULLUP`, the pin may float and give random values.  
-- **LED polarity:** Long leg (anode) to pin/resistor, short leg (cathode) to GND.  
+- **Button wiring:** If LED toggles randomly, check pull‑up resistor or use INPUT_PULLUP.  
+- **Debounce:** Too short a delay may cause double toggles.  
+- **Boolean logic:** Ensure you use ! (NOT operator) to flip the state.  
 - **Upload checks:** Confirm correct board and COM port before uploading.  
 
 ---
 
 ## 🤔 Reflection questions
-- Why do we use `INPUT_PULLUP` instead of wiring an external resistor?  
-- What happens if you connect the button incorrectly?  
-- How does the Arduino distinguish between HIGH and LOW states?  
+- Why do we need a variable to remember LED state?  
+- How does INPUT_PULLUP simplify button wiring?  
+- What happens if you remove the debounce delay?  
 
 ---
 
 ## 💡 Real‑world application
-- **Examples:** Elevator buttons, game controllers, remote controls, light switches.  
-- **Reflection:** How does debounce matter in real devices (e.g., double clicks, accidental presses)?  
+- **Examples:** Toggle switches in appliances, light controls, power buttons.  
+- **Reflection:** How does storing state make devices more interactive?  
 
 ---
 
