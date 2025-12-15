@@ -25,7 +25,7 @@ Welcome! Choose a week to explore lessons, worksheets, and wiring diagrams.
 <details>
   <summary>⚙️ Weeks 6–10: Intermediate Projects</summary>
   <ul>
-    <li><a href="{{ '/lessons/week6.html' | relative_url }}">Week 6: Multiple Inputs</a></li>
+    <li><a href="{{ '/lessons/week6.html' | relative_url }}">Week 6: Buttons & Passive Buzzer</a></li>
     <li><a href="{{ '/lessons/week7.html' | relative_url }}">Week 7: Sensors in Action</a></li>
     <li><a href="{{ '/lessons/week8.html' | relative_url }}">Week 8: Servo Motors</a></li>
     <li><a href="{{ '/lessons/week9.html' | relative_url }}">Week 9: LCD Displays</a></li>
