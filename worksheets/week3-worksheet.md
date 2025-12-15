@@ -50,10 +50,9 @@ void loop() {
 ---
 
 ## 🥹 Challenge Tasks
-1. Modify the code to make the LED blink faster as the potentiometer increases.  
-2. Add a second LED that lights only when the potentiometer value > 512.  
-3. Experiment with different delays and observe LED smoothness.  
-4. Print both raw and mapped values to the Serial Monitor.  
+1. Add a second LED.
+2. Experiment with different delays and observe LED smoothness.  
+3. Print both raw and mapped values to the Serial Monitor.  
 
 ---
 
