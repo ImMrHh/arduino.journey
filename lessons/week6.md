@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Week 1 – Intro to Arduino & Blink
+title: Week 6 - Buttons and Passive Buzzer
 ---
 
 ---
