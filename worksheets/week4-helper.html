@@ -101,18 +101,37 @@
     </ul>
     <p class="tip">Idea de código / Code idea:</p>
     <pre class="mono">
-// Read sensor
-int sensorValue = analogRead(A0);
+// Week 4 Challenge Solution
+const int sensorPin = A0;   // Sensor connected to analog pin A0
+const int ledPin = 9;       // LED connected to digital pin 9
 
-// Map to 0–255
-int mappedValue = map(sensorValue, 0, 1023, 0, 255);
+void setup() {
+  Serial.begin(9600);       // Start serial communication at 9600 baud
+  pinMode(ledPin, OUTPUT);  // Set LED pin as output
+}
 
-// Threshold LED
-if (sensorValue > 500) { digitalWrite(9, HIGH); } else { digitalWrite(9, LOW); }
+void loop() {
+  // Read sensor
+  int sensorValue = analogRead(sensorPin);
 
-// Print to Serial
-Serial.print("raw="); Serial.print(sensorValue);
-Serial.print(" mapped="); Serial.println(mappedValue);
+  // Map to 0–255
+  int mappedValue = map(sensorValue, 0, 1023, 0, 255);
+
+  // Threshold LED
+  if (sensorValue > 500) {
+    digitalWrite(ledPin, HIGH); // LED ON
+  } else {
+    digitalWrite(ledPin, LOW);  // LED OFF
+  }
+
+  // Print to Serial
+  Serial.print("raw="); 
+  Serial.print(sensorValue);
+  Serial.print(" mapped="); 
+  Serial.println(mappedValue);
+
+  delay(200); // Delay for readability (students can experiment with 50, 1000, etc.)
+}
     </pre>
   </div>
 </div>
