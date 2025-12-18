@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Comparador de Expresiones Algebraicas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  https://cdn.jsdelivr.net/npm/mathjs@12.4.1/lib/browser/math.js</script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; 
+           max-width: 920px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    h1 { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 1rem; margin-top: 1rem; }
+    label { display: block; margin: 0.5rem 0 0.25rem; font-weight: 600; }
+    input, textarea, select, button { width: 100%; padding: 0.6rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc; }
+    input[type="number"] { width: 100%; }
+    button { background: #2563eb; color: white; border: none; cursor: pointer; }
+    button:hover { background: #1e4ed9; }
+    .result { margin-top: 1rem; padding: 0.75rem; border-radius: 8px; }
+    .ok { background: #e6ffed; border: 1px solid #b7f5c9; }
+    .warn { background: #fff7e6; border: 1px solid #ffe1a3; }
+    .err { background: #ffecec; border: 1px solid #ffb3b3; }
+    .small { color: #666; font-size: 0.92rem; }
+    .grid { display: grid; gap: 1rem; }
+    @media (min-width: 700px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    code { background: rgba(0,0,0,0.05); padding: 0.15rem 0.32rem; border-radius: 4px; }
+    details summary { cursor: pointer; }
+    .pill { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 999px; background: #eef; margin-right: 0.3rem; }
+  </style>
+</head>
+<body>
+  <h1>Compara tu expresión con la solución del curso</h1>
+  <p class="small">
+    Escribe expresiones en términos de variables (ej.: <code>x,y,z</code>). Operadores: 
+    <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>. 
+    Funciones: <code>sin</code>, <code>cos</code>, <code>exp</code>, <code>log</code>, etc. <br>
+    Ejemplos: <code>(x^2 - y^2)/(x - y)</code>, <code>2*x + 3*y - z</code>.
+  </p>
+
+  <div class="card">
+    <label for="reference">Expresión de referencia (del profesor):</label>
+    <input id="reference" placeholder="Ej.: 2*x + 3*y - z" value="2*x + 3*y - z" />
+
+    <label for="studentExpr">Tu expresión:</label>
+    <input id="studentExpr" placeholder="Ej.: 1 + 2*x + 3*y - z - 1" />
+
+    <div class="grid grid-2">
+      <div>
+        <label for="vars">Variables (coma): <span class="small">(déjalo vacío para detectar automáticamente)</span></label>
+        <input id="vars" placeholder="Ej.: x,y,z" />
+      </div>
+      <div>
+        <label for="tolerance">Tolerancia (comparación numérica):</label>
+        <input id="tolerance" type="number" value="1e-9" step="any" />
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <div>
+        <label for="tests">Número de pruebas numéricas:</label>
+        <input id="tests" type="number" min="5" max="100" value="20" />
+      </div>
+      <div>
+        <label for="domainMin">Mínimo del dominio:</label>
+        <input id="domainMin" type="number" value="-5" />
+      </div>
+      <div>
+        <label for="domainMax">Máximo del dominio:</label>
+        <input id="domainMax" type="number" value="5" />
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div>
+        <label for="integersOnly">Usar enteros en pruebas:</label>
+        <select id="integersOnly">
+          <option value="yes" selected>Sí</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+      <div>
+        <label for="avoidZero">Evitar cero (para denominadores):</label>
+        <select id="avoidZero">
+          <option value="auto" selected>Auto (evitar si aparece en denominadores)</option>
+          <option value="always">Siempre</option>
+          <option value="never">Nunca</option>
+        </select>
+      </div>
+    </div>
+
+    <button id="checkBtn">Comparar</button>
+    <div id="output" class="result"></div>
+  </div>
+
+  <script>
+    const output = document.getElementById('output');
+    const approxEqual = (a, b, tol = 1e-9) => {
+      if (!isFinite(a) || !isFinite(b)) return false;
+      return Math.abs(a - b) <= tol * Math.max(1, Math.abs(a), Math.abs(b));
+    };
+
+    function detectVariablesFromTree(node) {
+      const vars = new Set();
+      node.traverse((n) => {
+        if (n.isSymbolNode) vars.add(n.name);
+      });
+      return Array.from(vars);
+    }
+
+    function parseVariables(varsStr, ref, stu) {
+      const listed = (varsStr || '')
+        .split(',')
+        .map(v => v.trim())
+        .filter(v => v.length > 0);
+      if (listed.length > 0) return Array.from(new Set(listed));
+      // auto-detect from both expressions
+      return Array.from(new Set([
+        ...detectVariablesFromTree(ref),
+        ...detectVariablesFromTree(stu)
+      ]));
+    }
+
+    function randomValue(min, max, integersOnly, avoidZeroMode) {
+      const rnd = Math.random();
+      if (integersOnly) {
+        let val = Math.floor(rnd * (max - min + 1)) + min;
+        if (avoidZeroMode === 'always' && val === 0) {
+          // bump off zero
+          val = (rnd < 0.5) ? (min !== 0 ? min : 1) : (max !== 0 ? max : -1);
+        }
+        return val;
+      } else {
+        let val = min + rnd * (max - min);
+        if (avoidZeroMode === 'always' && Math.abs(val) < 1e-12) {
+          val = (rnd < 0.5) ? (min + 1e-3) : (max - 1e-3);
+        }
+        return val;
+      }
+    }
+
+    function randomAssignment(vars, min, max, integersOnly, avoidZeroMode) {
+      const scope = {};
+      for (const v of vars) {
+        scope[v] = randomValue(min, max, integersOnly, avoidZeroMode);
+      }
+      return scope;
+    }
+
+    function denominatorSymbols(node) {
+      // collect symbols that appear in denominators to avoid zero
+      const denSyms = new Set();
+      node.traverse(n => {
+        if (n.isOperatorNode && n.op === '/') {
+          const denom = n.args[1];
+          // collect all symbols inside denominator
+          denom.traverse(d => { if (d.isSymbolNode) denSyms.add(d.name); });
+        }
+        // also handle power with negative exponent: x^(-1) -> denominator
+        if (n.isOperatorNode && n.op === '^' && n.args[1].isConstantNode) {
+          const exp = Number(n.args[1].value);
+          if (exp < 0) {
+            n.args[0].traverse(d => { if (d.isSymbolNode) denSyms.add(d.name); });
+          }
+        }
+      });
+      return Array.from(denSyms);
+    }
+
+    function safeAssignment(vars, ref, stu, min, max, integersOnly, avoidZeroMode) {
+      // Auto mode: avoid zero only for symbols detected in denominators
+      const denVars = new Set([
+        ...denominatorSymbols(ref),
+        ...denominatorSymbols(stu)
+      ]);
+      const scope = {};
+      for (const v of vars) {
+        const mode = (avoidZeroMode === 'auto' && denVars.has(v)) ? 'always' : avoidZeroMode;
+        scope[v] = randomValue(min, max, integersOnly, mode);
+      }
+      return scope;
+    }
+
+    document.getElementById('checkBtn').addEventListener('click', () => {
+      output.className = 'result';
+      output.textContent = '';
+
+      const refStr = document.getElementById('reference').value.trim();
+      const stuStr = document.getElementById('studentExpr').value.trim();
+      const tol = parseFloat(document.getElementById('tolerance').value);
+      const tests = parseInt(document.getElementById('tests').value, 10);
+      const min = parseFloat(document.getElementById('domainMin').value);
+      const max = parseFloat(document.getElementById('domainMax').value);
+      const integersOnly = document.getElementById('integersOnly').value === 'yes';
+      const avoidZeroMode = document.getElementById('avoidZero').value;
+
+      if (!refStr || !stuStr) {
+        output.classList.add('err');
+        output.textContent = 'Por favor, ingresa ambas expresiones.';
+        return;
+      }
+      if (!(min < max)) {
+        output.classList.add('err');
+        output.textContent = 'El dominio debe tener mínimo < máximo.';
+        return;
+      }
+
+      let ref, stu;
+      try {
+        ref = math.parse(refStr);
+        stu = math.parse(stuStr);
+      } catch (e) {
+        output.classList.add('err');
+        output.textContent = 'Error al analizar la expresión: ' + e.message;
+        return;
+      }
+
+      const vars = parseVariables(document.getElementById('vars').value, ref, stu);
+      if (vars.length === 0) {
+        output.classList.add('err');
+        output.textContent = 'No se detectaron variables. Indica variables o usa constantes.';
+        return;
+      }
+
+      // Show detected variables
+      const pills = vars.map(v => `<span class="pill">${v}</span>`).join(' ');
+      const diff = math.simplify(math.subtract(ref, stu));
+      const isSymbolicallyZero = diff.toString() === '0';
+
+      if (isSymbolicallyZero) {
+        output.classList.add('ok');
+        output.innerHTML = `✅ Equivalencia simbólica detectada (la diferencia simplificada es 0).<br>
+          <span class="small">Variables: ${pills}</span>`;
+        return;
+      }
+
+      // Numerical tests with safe assignments
+      let allGood = true;
+      const samples = [];
+      for (let i = 0; i < tests; i++) {
+        const scope = safeAssignment(vars, ref, stu, min, max, integersOnly, avoidZeroMode);
+        try {
+          const refVal = ref.evaluate(scope);
+          const stuVal = stu.evaluate(scope);
+          const ok = approxEqual(refVal, stuVal, tol);
+          samples.push({ scope, refVal, stuVal, ok });
+          if (!ok) allGood = false;
+        } catch (e) {
+          samples.push({ scope, error: e.message, ok: false });
+          allGood = false;
+        }
+      }
+
+      if (allGood) {
+        output.classList.add('ok');
+        output.innerHTML = `✅ Coinciden en ${tests}/${tests} evaluaciones dentro de tolerancia ${tol}.<br>
+          <span class="small">Variables: ${pills}</span>`;
+      } else {
+        const fails = samples.filter(s => !s.ok).length;
+        output.classList.add('warn');
+        output.innerHTML = `⚠️ Las expresiones <strong>no parecen equivalentes</strong>. Fallos: ${fails} de ${tests}.<br>
+          <span class="small">Variables: ${pills}</span>
+          <details class="small"><summary>Detalles de las pruebas</summary>
+            <pre>${samples.map(s => JSON.stringify(s, null, 2)).join('\n')}</pre>
+          </details>`;
+      }
+       });
+  </script>
+</body>
