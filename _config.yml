@@ -17,6 +17,9 @@ plugins:
 markdown: kramdown
 highlighter: rouge
 
+kramdown:
+  parse_block_html: true
+
 exclude:
   - Gemfile
   - Gemfile.lock
