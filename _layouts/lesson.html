@@ -2,6 +2,9 @@
 layout: default
 ---
 <article class="lesson-page">
+  <div class="ws-print-bar">
+    <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+  </div>
   <div class="lesson-header">
     <div class="lesson-number">{{ page.lesson_number | prepend: "0" | slice: -2, 2 }}</div>
     <div class="lesson-header-text">

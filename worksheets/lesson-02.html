@@ -1,0 +1,85 @@
+---
+layout: default
+title: "Worksheet 02 — Blink"
+---
+
+<div class="print-page">
+
+<div class="ws-print-bar">
+<button class="btn-primary no-print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>Worksheet 02 — Blink</h1>
+
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+
+<hr>
+
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>LED</td><td></td></tr>
+<tr><td>Anode</td><td></td></tr>
+<tr><td>Cathode</td><td></td></tr>
+<tr><td>Resistor</td><td></td></tr>
+<tr><td>Digital output</td><td></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Circuit Diagram Space</h2>
+<p>Draw the circuit for an external LED on pin 9 — include the resistor, LED polarity, and connections to GND.</p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Code Challenge</h2>
+<p>Fill in the blanks to blink an LED on pin 9 every half second:</p>
+<pre><code>const int LED_PIN = ___;
+
+void setup() {
+  pinMode(LED_PIN, ___);
+}
+
+void loop() {
+  digitalWrite(LED_PIN, HIGH);
+  delay(___);
+  digitalWrite(LED_PIN, ___);
+  delay(500);
+}</code></pre>
+
+<hr>
+
+<h2>Reflection</h2>
+<p>Answer these questions in your own words:</p>
+
+<p><strong>1. Why does an LED need a resistor in series with it?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>2. What is the difference between the long leg and the short leg of an LED?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>3. If you wanted the LED to blink three times per second, what delay value would you use?</strong></p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Self-Assessment</h2>
+<p>Check each box when you can do it confidently:</p>
+<ul>
+<li><input type="checkbox"> I can wire an LED and resistor on a breadboard correctly</li>
+<li><input type="checkbox"> I understand why the resistor is needed</li>
+<li><input type="checkbox"> I know which leg of an LED is the anode and which is the cathode</li>
+<li><input type="checkbox"> I can change the blink speed by modifying the delay value</li>
+<li><input type="checkbox"> I used a named constant for the pin number</li>
+</ul>
+
+</div>
