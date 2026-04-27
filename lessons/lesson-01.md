@@ -9,6 +9,7 @@ next_lesson:
 ---
 
 <div class="section-label">Learning Objectives</div>
+
 ## Learning Objectives
 <div class="objectives-box" markdown="1">
 - Identify the main parts of the Arduino Uno board
@@ -17,6 +18,7 @@ next_lesson:
 </div>
 
 <div class="section-label">Materials</div>
+
 ## Materials for This Lesson
 <div class="materials-card" markdown="1">
 - Arduino Uno board
@@ -25,6 +27,7 @@ next_lesson:
 </div>
 
 <div class="section-label">Background</div>
+
 ## Background
 
 Arduino is an open-source electronics platform made up of two things: a small circuit board (the microcontroller) and software (the IDE) that lets you write programs for it. The Arduino Uno is the most common board and the one we use throughout this course.
@@ -36,6 +39,7 @@ Arduino programs are called sketches. Every sketch has two main functions: `setu
 When you click Upload in the IDE, your code is compiled (converted to machine language) and sent to the Arduino over the USB cable. Once uploaded, the program stays on the board even when you unplug the USB — it runs from the board's own memory.
 
 <div class="section-label">Wiring</div>
+
 ## Wiring
 
 *(No external wiring needed for this lesson — the LED on pin 13 is built into the board.)*
@@ -44,6 +48,7 @@ When you click Upload in the IDE, your code is compiled (converted to machine la
 2. Confirm the green power LED on the board lights up.
 
 <div class="section-label">Step-by-Step Build</div>
+
 ## Step-by-Step Build
 
 1. Open Arduino IDE 2.
@@ -56,6 +61,7 @@ When you click Upload in the IDE, your code is compiled (converted to machine la
 8. Observe the orange LED labeled L on the board — it should blink once per second.
 
 <div class="section-label">Code</div>
+
 ## Code
 
 ```cpp
@@ -76,6 +82,7 @@ void loop() {
 ```
 
 <div class="section-label">Understanding the Code</div>
+
 ## Understanding the Code
 
 `pinMode(13, OUTPUT)` — tells the Arduino that pin 13 will be used as an output. Without this, the pin doesn't know whether to send or receive signals.
@@ -95,6 +102,7 @@ Can you make the LED blink twice as fast? Try changing the delay values. What ha
 </div>
 
 <div class="section-label">Reflection Questions</div>
+
 ## Reflection Questions
 
 1. What is the difference between `setup()` and `loop()` in an Arduino sketch?
@@ -103,6 +111,7 @@ Can you make the LED blink twice as fast? Try changing the delay values. What ha
 {: .reflection-list}
 
 <div class="section-label">Troubleshooting</div>
+
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
