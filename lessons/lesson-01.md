@@ -3,24 +3,28 @@ layout: lesson
 title: "Lesson 01 — What is Arduino?"
 lesson_number: 1
 description: "Introduction to the Arduino Uno board, the Arduino IDE 2, and uploading your first sketch."
+next_lesson:
+  url: /lessons/lesson-02/
+  title: "Lesson 02 — Blink"
 ---
 
-# Lesson 01 — What is Arduino?
-
+<div class="section-label">Learning Objectives</div>
 ## Learning Objectives
+<div class="objectives-box" markdown="1">
 - Identify the main parts of the Arduino Uno board
 - Install and navigate Arduino IDE 2
 - Upload the Blink example sketch and confirm it runs
+</div>
 
----
-
+<div class="section-label">Materials</div>
 ## Materials for This Lesson
+<div class="materials-card" markdown="1">
 - Arduino Uno board
 - USB-A to USB-B cable
 - Computer with Arduino IDE 2 installed
+</div>
 
----
-
+<div class="section-label">Background</div>
 ## Background
 
 Arduino is an open-source electronics platform made up of two things: a small circuit board (the microcontroller) and software (the IDE) that lets you write programs for it. The Arduino Uno is the most common board and the one we use throughout this course.
@@ -31,8 +35,7 @@ Arduino programs are called sketches. Every sketch has two main functions: `setu
 
 When you click Upload in the IDE, your code is compiled (converted to machine language) and sent to the Arduino over the USB cable. Once uploaded, the program stays on the board even when you unplug the USB — it runs from the board's own memory.
 
----
-
+<div class="section-label">Wiring</div>
 ## Wiring
 
 *(No external wiring needed for this lesson — the LED on pin 13 is built into the board.)*
@@ -40,8 +43,7 @@ When you click Upload in the IDE, your code is compiled (converted to machine la
 1. Connect the Arduino Uno to your computer using the USB cable.
 2. Confirm the green power LED on the board lights up.
 
----
-
+<div class="section-label">Step-by-Step Build</div>
 ## Step-by-Step Build
 
 1. Open Arduino IDE 2.
@@ -53,8 +55,7 @@ When you click Upload in the IDE, your code is compiled (converted to machine la
 7. Wait for "Done uploading" in the status bar.
 8. Observe the orange LED labeled L on the board — it should blink once per second.
 
----
-
+<div class="section-label">Code</div>
 ## Code
 
 ```cpp
@@ -74,8 +75,7 @@ void loop() {
 }
 ```
 
----
-
+<div class="section-label">Understanding the Code</div>
 ## Understanding the Code
 
 `pinMode(13, OUTPUT)` — tells the Arduino that pin 13 will be used as an output. Without this, the pin doesn't know whether to send or receive signals.
@@ -88,22 +88,21 @@ void loop() {
 
 The whole `loop()` function repeats forever: on for 1 second, off for 1 second.
 
----
-
-## Challenge
-
+<div class="section-label">Challenge</div>
+<div class="challenge-box" markdown="1">
+<div class="challenge-label">Try This</div>
 Can you make the LED blink twice as fast? Try changing the delay values. What happens if you use `delay(100)` instead of `delay(1000)`?
+</div>
 
----
-
+<div class="section-label">Reflection Questions</div>
 ## Reflection Questions
 
 1. What is the difference between `setup()` and `loop()` in an Arduino sketch?
 2. What does `HIGH` mean when used with `digitalWrite()`?
 3. If you change the delay to 500, how many times will the LED blink in 10 seconds?
+{: .reflection-list}
 
----
-
+<div class="section-label">Troubleshooting</div>
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
@@ -112,7 +111,4 @@ Can you make the LED blink twice as fast? Try changing the delay values. What ha
 | "Board not detected" | Wrong board selected | Go to Tools > Board and select Arduino Uno |
 | Upload fails with error | Wrong port selected | Go to Tools > Port and select the Arduino port |
 | LED does not blink after upload | Code has a typo | Double-check the code matches exactly; look at error messages in the console |
-
----
-
-[Next Lesson: Blink](../lesson-02/)
+{: .trouble-table}

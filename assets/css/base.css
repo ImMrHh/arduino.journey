@@ -5,7 +5,11 @@
 :root {
   --primary:       #00979D;
   --primary-dark:  #007A7F;
+  --primary-bg:    #E8F7F7;
   --accent:        #E47128;
+  --accent-bg:     #FEF3EB;
+  --danger-bg:     #FEF2F2;
+  --danger-border: #FCA5A5;
   --text:          #1A1A2E;
   --text-soft:     #4A4A6A;
   --surface:       #FFFFFF;

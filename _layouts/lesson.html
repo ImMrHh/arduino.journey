@@ -2,5 +2,30 @@
 layout: default
 ---
 <article class="lesson-page">
+  <div class="lesson-header">
+    <div class="lesson-number">{{ page.lesson_number | prepend: "0" | slice: -2, 2 }}</div>
+    <div class="lesson-header-text">
+      <h1>{{ page.title }}</h1>
+      {% if page.description %}<p>{{ page.description }}</p>{% endif %}
+    </div>
+  </div>
+
   {{ content }}
+
+  {% if page.prev_lesson or page.next_lesson %}
+  <nav class="lesson-nav">
+    {% if page.prev_lesson %}
+    <a href="{{ page.prev_lesson.url | relative_url }}" class="lesson-nav-btn prev">
+      <span class="nav-direction">&#8592; Previous</span>
+      <span class="nav-title">{{ page.prev_lesson.title }}</span>
+    </a>
+    {% endif %}
+    {% if page.next_lesson %}
+    <a href="{{ page.next_lesson.url | relative_url }}" class="lesson-nav-btn next">
+      <span class="nav-direction">Next &#8594;</span>
+      <span class="nav-title">{{ page.next_lesson.title }}</span>
+    </a>
+    {% endif %}
+  </nav>
+  {% endif %}
 </article>

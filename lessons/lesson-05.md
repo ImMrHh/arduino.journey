@@ -3,27 +3,34 @@ layout: lesson
 title: "Lesson 05 — Buzzer and Sound"
 lesson_number: 5
 description: "Generate tones and simple melodies using the tone() function with a passive buzzer."
+prev_lesson:
+  url: /lessons/lesson-04/
+  title: "Lesson 04 — Button Input"
+next_lesson:
+  url: /lessons/lesson-06/
+  title: "Lesson 06 — Analog Input"
 ---
 
-# Lesson 05 — Buzzer and Sound
-
+<div class="section-label">Learning Objectives</div>
 ## Learning Objectives
+<div class="objectives-box" markdown="1">
 - Wire a passive buzzer to an Arduino pin
 - Use `tone()` and `noTone()` to produce sounds
 - Combine button input with sound output
+</div>
 
----
-
+<div class="section-label">Materials</div>
 ## Materials for This Lesson
+<div class="materials-card" markdown="1">
 - Arduino Uno
 - Breadboard
 - 1x passive buzzer (NOT an active buzzer)
 - 1x push button
 - Jumper wires
 - USB cable
+</div>
 
----
-
+<div class="section-label">Background</div>
 ## Background
 
 Sound is produced by vibrations in the air. A buzzer converts an electrical signal into mechanical vibrations that we hear as sound. There are two types of buzzers: active buzzers produce a fixed tone when given power; passive buzzers require a rapidly changing signal to produce different pitches.
@@ -32,8 +39,7 @@ For this lesson you must use a passive buzzer. The Arduino's `tone()` function g
 
 Frequency determines pitch. 440 Hz is the musical note A4 (concert A). Lower frequencies sound lower; higher frequencies sound higher. The `tone()` function accepts the pin, the frequency in Hz, and an optional duration in milliseconds. If no duration is given, the tone plays until you call `noTone()`.
 
----
-
+<div class="section-label">Wiring</div>
 ## Wiring
 
 *(See /images/lesson05-wiring.png)*
@@ -42,8 +48,7 @@ Frequency determines pitch. 440 Hz is the musical note A4 (concert A). Lower fre
 2. Connect the negative leg to GND.
 3. Connect a button: one leg to pin 2, other leg to GND (same as Lesson 04).
 
----
-
+<div class="section-label">Step-by-Step Build</div>
 ## Step-by-Step Build
 
 1. Wire the buzzer and button as described.
@@ -51,8 +56,7 @@ Frequency determines pitch. 440 Hz is the musical note A4 (concert A). Lower fre
 3. Enter the code below and upload.
 4. Press the button to hear the melody.
 
----
-
+<div class="section-label">Code</div>
 ## Code
 
 ```cpp
@@ -92,8 +96,7 @@ void playMelody() {
 }
 ```
 
----
-
+<div class="section-label">Understanding the Code</div>
 ## Understanding the Code
 
 `tone(BUZZER_PIN, melody[i], noteDur[i])` — plays a tone on pin 8 at the frequency `melody[i]` Hz for `noteDur[i]` milliseconds.
@@ -108,22 +111,21 @@ void playMelody() {
 
 `playMelody()` — a custom function defined outside `loop()`. When you call `playMelody()` inside `loop()`, the Arduino jumps to that function, runs it, and comes back.
 
----
-
-## Challenge
-
+<div class="section-label">Challenge</div>
+<div class="challenge-box" markdown="1">
+<div class="challenge-label">Try This</div>
 Can you play the first few notes of a recognizable melody — for example, the Super Mario Bros. theme or Happy Birthday? Look up the note frequencies online and replace the `melody[]` array.
+</div>
 
----
-
+<div class="section-label">Reflection Questions</div>
 ## Reflection Questions
 
 1. What is the difference between an active and a passive buzzer?
 2. What does the frequency number in `tone()` control?
 3. Why do we call `noTone()` after the melody finishes?
+{: .reflection-list}
 
----
-
+<div class="section-label">Troubleshooting</div>
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
@@ -132,7 +134,4 @@ Can you play the first few notes of a recognizable melody — for example, the S
 | Constant tone | noTone() not called | Check that noTone() is called after the melody |
 | Very quiet sound | Poor breadboard connection | Reseat the buzzer legs firmly |
 | Button doesn't trigger | Wrong pin or no INPUT_PULLUP | Check wiring and confirm INPUT_PULLUP in setup() |
-
----
-
-[Next Lesson: Analog Input](../lesson-06/)
+{: .trouble-table}
