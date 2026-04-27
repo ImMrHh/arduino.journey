@@ -2,6 +2,12 @@
    COMPONENTS — Cards, Buttons, Lesson Blocks, Code, Tables, Forms
    ============================================================ */
 
+/* --- Print bar --- */
+
+.ws-print-bar {
+  margin-bottom: 1.25rem;
+}
+
 /* --- Buttons --- */
 
 .btn-primary {
