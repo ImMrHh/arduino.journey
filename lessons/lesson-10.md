@@ -3,18 +3,22 @@ layout: lesson
 title: "Lesson 10 — MP3 Player Final Build"
 lesson_number: 10
 description: "Build a complete MP3 player with play/pause, next, previous, and volume controls using buttons and DFPlayer Mini."
+prev_lesson:
+  url: /lessons/lesson-09/
+  title: "Lesson 09 — DFPlayer Mini Setup"
 ---
 
-# Lesson 10 — MP3 Player Final Build
-
+<div class="section-label">Learning Objectives</div>
 ## Learning Objectives
+<div class="objectives-box" markdown="1">
 - Combine everything from the course into one complete project
 - Implement play/pause, next track, previous track, and volume controls
 - Understand how to manage state (playing/paused) in code
+</div>
 
----
-
+<div class="section-label">Materials</div>
 ## Materials for This Lesson
+<div class="materials-card" markdown="1">
 - Arduino Uno
 - Breadboard
 - DFPlayer Mini with SD card loaded (from Lesson 09)
@@ -24,9 +28,9 @@ description: "Build a complete MP3 player with play/pause, next, previous, and v
 - LED + 220 ohm resistor (status indicator)
 - Jumper wires
 - USB cable
+</div>
 
----
-
+<div class="section-label">Background</div>
 ## Background
 
 This is the capstone project. You will build a functional MP3 player that responds to five buttons: play/pause, next track, previous track, volume up, and volume down. A status LED shows whether the player is playing or paused.
@@ -35,8 +39,7 @@ Managing state is a key concept in this lesson. The word state means "what condi
 
 Debouncing is also important here. Mechanical buttons bounce — they make and break contact several times in the first few milliseconds of a press. Without debouncing, one press can register as many presses. The simplest software debounce is to wait a short time (50–100 ms) after detecting a press before reading again.
 
----
-
+<div class="section-label">Wiring</div>
 ## Wiring
 
 *(See /images/lesson10-wiring.png)*
@@ -52,8 +55,7 @@ Buttons (all using INPUT_PULLUP — one leg to the pin, other leg to GND):
 
 Status LED: long leg through 220 ohm resistor to pin 9, short leg to GND.
 
----
-
+<div class="section-label">Step-by-Step Build</div>
 ## Step-by-Step Build
 
 1. Complete the DFPlayer Mini wiring from Lesson 09.
@@ -62,8 +64,7 @@ Status LED: long leg through 220 ohm resistor to pin 9, short leg to GND.
 4. Enter and upload the code below.
 5. Test each button one at a time.
 
----
-
+<div class="section-label">Code</div>
 ## Code
 
 ```cpp
@@ -181,8 +182,7 @@ void loop() {
 }
 ```
 
----
-
+<div class="section-label">Understanding the Code</div>
 ## Understanding the Code
 
 `bool isPlaying = false` — a global variable that tracks whether audio is playing. Booleans are either `true` or `false`.
@@ -199,22 +199,21 @@ void loop() {
 
 `setLED()` — turns the LED on if playing, off if paused. The ternary operator `isPlaying ? HIGH : LOW` is a shorthand if-else.
 
----
-
-## Challenge
-
+<div class="section-label">Challenge</div>
+<div class="challenge-box" markdown="1">
+<div class="challenge-label">Try This</div>
 Can you add a small OLED or LCD display that shows the current track number? Use the `dfPlayer.readCurrentFileNumber()` function and an I2C display library to show it. This is an advanced challenge — ask your teacher for guidance.
+</div>
 
----
-
+<div class="section-label">Reflection Questions</div>
 ## Reflection Questions
 
 1. What does "state" mean in programming, and how is it used in the play/pause logic?
 2. Why is debouncing necessary for physical buttons?
 3. Looking back at all 10 lessons — which concept was hardest to understand, and which project was most fun to build?
+{: .reflection-list}
 
----
-
+<div class="section-label">Troubleshooting</div>
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
@@ -223,9 +222,6 @@ Can you add a small OLED or LCD display that shows the current track number? Use
 | Volume buttons do nothing | Pins not set to INPUT_PULLUP | Check setup() for pinMode declarations |
 | Player stops after first track | SD card has only one file | Add more MP3 files to the mp3 folder |
 | LED stays off even when playing | LED polarity wrong or wrong pin | Check wiring; confirm PIN_LED = 9 |
-
----
+{: .trouble-table}
 
 Course complete. You have built a working MP3 player from scratch using Arduino.
-
-[Back to Lessons]({{ '/lessons/' | relative_url }})
