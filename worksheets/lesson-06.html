@@ -1,0 +1,68 @@
+---
+layout: default
+title: "Worksheet 06 — Analog Input"
+---
+<div class="print-page">
+<div class="ws-print-bar no-print">
+<button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+</div>
+<h1>Worksheet 06 — Analog Input</h1>
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+<hr>
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>Potentiometer</td><td></td></tr>
+<tr><td>analogRead()</td><td></td></tr>
+<tr><td>PWM</td><td></td></tr>
+<tr><td>analogWrite()</td><td></td></tr>
+<tr><td>map()</td><td></td></tr>
+</tbody>
+</table>
+<hr>
+<h2>Circuit Diagram Space</h2>
+<p>Draw the potentiometer (outer legs to 5V and GND, middle leg to A0) and LED (pin 9 through resistor to GND).</p>
+<div class="ws-box"></div>
+<hr>
+<h2>Code Challenge</h2>
+<p>Fill in the blanks to control LED brightness with a potentiometer:</p>
+<pre><code>const int POT_PIN = ___;
+const int LED_PIN = 9;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(___);
+}
+
+void loop() {
+  int potValue  = ___(POT_PIN);
+  int brightness = map(potValue, 0, ___, 0, ___);
+  analogWrite(LED_PIN, ___);
+  delay(50);
+}</code></pre>
+<hr>
+<h2>Reflection</h2>
+<ol>
+<li><p>What range of values does analogRead() return, and why?</p>
+<div class="ws-box"></div></li>
+<li><p>What is PWM, and why can a digital pin simulate analog output using it?</p>
+<div class="ws-box"></div></li>
+<li><p>What does the map() function do, and why is it needed here?</p>
+<div class="ws-box"></div></li>
+</ol>
+<hr>
+<h2>Self-Assessment</h2>
+<ul>
+<li><input type="checkbox"> I can wire a potentiometer correctly (3 legs: VCC, GND, wiper)</li>
+<li><input type="checkbox"> I know that analogRead() returns 0 to 1023</li>
+<li><input type="checkbox"> I understand what PWM is</li>
+<li><input type="checkbox"> I can use map() to convert between ranges</li>
+<li><input type="checkbox"> I can read values in Serial Monitor</li>
+</ul>
+</div>

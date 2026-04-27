@@ -10,6 +10,10 @@ layout: default
     </div>
   </div>
 
+  <div class="ws-print-bar no-print">
+    <button class="btn-secondary" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
   {{ content }}
 
   {% if page.prev_lesson or page.next_lesson %}

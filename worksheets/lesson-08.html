@@ -1,0 +1,73 @@
+---
+layout: default
+title: "Worksheet 08 — Mini Challenge"
+---
+<div class="print-page">
+<div class="ws-print-bar no-print">
+<button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+</div>
+<h1>Worksheet 08 — Mini Challenge</h1>
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+<hr>
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>State</td><td></td></tr>
+<tr><td>millis()</td><td></td></tr>
+<tr><td>random()</td><td></td></tr>
+<tr><td>while loop</td><td></td></tr>
+<tr><td>Reaction time</td><td></td></tr>
+</tbody>
+</table>
+<hr>
+<h2>Project Choice</h2>
+<p>Which option did your group choose?</p>
+<ul>
+<li><input type="checkbox"> Option A — Reaction Timer</li>
+<li><input type="checkbox"> Option B — Traffic Light Sequence</li>
+</ul>
+<hr>
+<h2>Planning Space</h2>
+<p>Sketch your circuit plan and describe what each part of the code needs to do before you start building.</p>
+<div class="ws-box"></div>
+<hr>
+<h2>Code Challenge</h2>
+<p>For the Reaction Timer — fill in the blanks:</p>
+<pre><code>randomSeed(___(A0));
+
+long waitTime = ___(2000, 5000);
+delay(waitTime);
+
+digitalWrite(LED_PIN, HIGH);
+long startTime = ___();
+
+while (digitalRead(BUTTON_PIN) == ___) { }
+
+long reactionTime = millis() - ___;
+Serial.println(reactionTime);</code></pre>
+<hr>
+<h2>Reflection</h2>
+<ol>
+<li><p>How did your group divide the work for this project?</p>
+<div class="ws-box"></div></li>
+<li><p>What was the hardest part to get working, and how did you fix it?</p>
+<div class="ws-box"></div></li>
+<li><p>What would you change if you had more time?</p>
+<div class="ws-box"></div></li>
+</ol>
+<hr>
+<h2>Self-Assessment</h2>
+<ul>
+<li><input type="checkbox"> My group planned the circuit on paper before wiring</li>
+<li><input type="checkbox"> We tested one part at a time</li>
+<li><input type="checkbox"> We fixed at least one bug ourselves</li>
+<li><input type="checkbox"> The project works as intended</li>
+<li><input type="checkbox"> I can explain how millis() measures time</li>
+</ul>
+</div>

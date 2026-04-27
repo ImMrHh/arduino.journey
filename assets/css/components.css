@@ -180,6 +180,12 @@ tr:nth-child(even) td {
   min-height: 1.5rem;
 }
 
+/* --- Print bar --- */
+
+.ws-print-bar {
+  margin-bottom: 1.25rem;
+}
+
 /* --- Worksheet form fields --- */
 
 .ws-field {
