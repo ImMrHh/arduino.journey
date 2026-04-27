@@ -1,15 +1,39 @@
-<nav>
-  <a href="{{ "/" | relative_url }}">Home</a> |
-  <a href="{{ "/lessons/" | relative_url }}">Lessons</a> |
-  <a href="{{ "/worksheets/" | relative_url }}">Worksheets</a> |
-  <a href="{{ "/tools/" | relative_url }}">Tools</a> |
-<div class="dropdown">
-  <a href="{{ "/robotics/" | relative_url }}" class="drop-link">Robotics ▾</a>
-  <div class="dropdown-content">
-    <a href="{{ "/robotics/" | relative_url }}">Overview</a>
-    <a href="{{ "/robotics/lessons/" | relative_url }}">Lessons</a>
-    <a href="{{ "/robotics/worksheets/" | relative_url }}">Worksheets</a>
-    <a href="{{ "/robotics/code/" | relative_url }}">Code</a>
+<header class="site-header">
+  <div class="container nav-shell">
+
+    <a class="brand" href="{{ '/' | relative_url }}">
+      Arduino Journey
+    </a>
+
+    <nav class="site-nav">
+
+      <a href="{{ '/' | relative_url }}">Home</a>
+
+      <a href="{{ '/lessons/' | relative_url }}">Lessons</a>
+
+      <a href="{{ '/worksheets/' | relative_url }}">Worksheets</a>
+
+      <a href="{{ '/projects/' | relative_url }}">Projects</a>
+
+      <a href="{{ '/resources/' | relative_url }}">Resources</a>
+
+      <a href="{{ '/teachers/' | relative_url }}">Teachers</a>
+
+      <div class="dropdown">
+        <button class="drop-trigger" type="button">
+          More
+        </button>
+
+        <div class="dropdown-content">
+          <a href="{{ '/robotics/' | relative_url }}">Robotics</a>
+          <a href="{{ '/tools/' | relative_url }}">Tools</a>
+          <a href="https://github.com/ImMrHh/arduino.journey" target="_blank">
+            GitHub
+          </a>
+        </div>
+      </div>
+
+    </nav>
+
   </div>
-</div>
-</nav>
+</header>

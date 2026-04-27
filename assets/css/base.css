@@ -1,0 +1,100 @@
+:root {
+  --primary: #00979d;
+  --primary-dark: #00757a;
+  --accent: #2563eb;
+
+  --text: #0f172a;
+  --text-soft: #475569;
+
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+
+  --border: #e2e8f0;
+
+  --radius: 16px;
+
+  --max-width: 1180px;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-alt);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Typography */
+
+h1, h2, h3, h4 {
+  margin-top: 0;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.35rem;
+}
+
+p {
+  margin-top: 0;
+  color: var(--text-soft);
+}
+
+/* Links */
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Images */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Sections */
+
+section {
+  padding: 72px 0;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  section {
+    padding: 48px 0;
+  }
+}

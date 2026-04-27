@@ -1,0 +1,182 @@
+/* =========================
+   Containers
+========================= */
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.site-main {
+  min-height: 70vh;
+  padding: 32px 0 72px;
+}
+
+/* =========================
+   Header / Navbar
+========================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-shell {
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+/* Navigation */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.site-nav a,
+.drop-trigger {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-soft);
+
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.site-nav a:hover,
+.drop-trigger:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* =========================
+   Dropdown
+========================= */
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+
+  position: absolute;
+  top: 38px;
+  right: 0;
+
+  min-width: 190px;
+
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  padding: 8px;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.dropdown-content a:hover {
+  background: var(--surface-alt);
+}
+
+/* =========================
+   Footer
+========================= */
+
+.site-footer {
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 42px 0;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* =========================
+   Grid Helpers
+========================= */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 900px) {
+  .grid-4,
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-shell {
+    padding: 14px 0;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-4,
+  .grid-3,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .site-nav {
+    gap: 12px;
+  }
+
+  .container {
+    padding: 0 18px;
+  }
+}
