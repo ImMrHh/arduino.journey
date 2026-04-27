@@ -1,3 +1,9 @@
+---
+layout: default
+title: "IDE Tutorial"
+description: "Step-by-step guide to installing and setting up Arduino IDE 2 for beginners."
+---
+
 # Arduino IDE Tutorial: Your First Program
 
 ## Introduction
