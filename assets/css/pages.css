@@ -194,6 +194,14 @@
   margin-top: 2rem;
 }
 
+/* Lesson h2 sections — top border provides visual separation since section-label divs
+   are not used in .md files (kramdown renders closing tags as text) */
+.lesson-page h2 {
+  margin-top: 2.25rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--border);
+}
+
 /* ── Objectives box ── */
 
 .objectives-box {
