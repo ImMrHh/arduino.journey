@@ -1,14 +1,24 @@
-title: "Arduino Curriculum"
-theme: jekyll-theme-cayman
-include: ["assets/css"]
-description: "Hands-on Arduino lessons for secondary students"
-
-url: "https://<your-username>.github.io"
+title: "Arduino Journey"
+description: "Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player."
+url: "https://immrhh.github.io"
 baseurl: "/arduino.journey"
 
-# Author info (optional)
 author:
   name: "Henrik"
-  bio: "Secondary school(Middle-School) technology teacher"
+  bio: "Middle school technology teacher"
 
-# force rebuild
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+markdown: kramdown
+highlighter: rouge
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - PROJECT_PLAN.md
+  - node_modules
+  - vendor

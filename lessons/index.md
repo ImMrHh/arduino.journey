@@ -1,47 +1,26 @@
 ---
-title: "Weekly Lessons"
 layout: default
+title: "Lessons"
+description: "All 10 Arduino Journey lessons — from first LED to MP3 Player."
 ---
 
-# 📚 Weekly Lessons
+# Lessons
 
-Welcome! Choose a week to explore lessons, worksheets, and wiring diagrams.
+Ten structured lessons, one every two weeks. Each lesson is designed for a 40-minute class session with groups of 3 students.
 
----
-
-<details>
-  <summary>🔰 Weeks 1–5: Foundations</summary>
-  <ul>
-    <li><a href="{{ '/lessons/week1.html' | relative_url }}">Week 1: Intro to Arduino & Blink</a></li>
-    <li><a href="{{ '/lessons/week2.html' | relative_url }}">Week 2: Button Control</a></li>
-    <li><a href="{{ '/lessons/week3.html' | relative_url }}">Week 3: Potentiometer & PWM</a></li>
-    <li><a href="{{ '/lessons/week4.html' | relative_url }}">Week 4: Serial Monitor & Sensors</a></li>
-    <li><a href="{{ '/lessons/week5.html' | relative_url }}">Week 5: Buzzer & Tone Generation</a></li>
-  </ul>
-</details>
-
----
-
-<details>
-  <summary>⚙️ Weeks 6–10: Intermediate Projects</summary>
-  <ul>
-    <li><a href="{{ '/lessons/week6.html' | relative_url }}">Week 6: Buttons & Passive Buzzer</a></li>
-    <li><a href="{{ '/lessons/week7.html' | relative_url }}">Week 7: Sensors in Action</a></li>
-    <li><a href="{{ '/lessons/week8.html' | relative_url }}">Week 8: Servo Motors</a></li>
-    <li><a href="{{ '/lessons/week9.html' | relative_url }}">Week 9: LCD Displays</a></li>
-    <li><a href="{{ '/lessons/week10.html' | relative_url }}">Week 10: Combining Components</a></li>
-  </ul>
-</details>
+| # | Lesson | Topics |
+|---|--------|--------|
+| 01 | [What is Arduino?](lesson-01/) | Board overview, IDE 2, first upload |
+| 02 | [Blink](lesson-02/) | Digital output, LED, resistor |
+| 03 | [Multiple LEDs](lesson-03/) | Sequences, timing, patterns |
+| 04 | [Button Input](lesson-04/) | Digital input, pull-up resistor |
+| 05 | [Buzzer and Sound](lesson-05/) | tone(), melodies, feedback |
+| 06 | [Analog Input](lesson-06/) | Potentiometer, PWM, analogRead |
+| 07 | [Sensors](lesson-07/) | LDR + DHT11, reading data |
+| 08 | [Mini Challenge](lesson-08/) | Reaction timer or traffic light |
+| 09 | [DFPlayer Mini — Setup](lesson-09/) | Wiring, SD card, first audio |
+| 10 | [MP3 Player — Final Build](lesson-10/) | Buttons, playback, full project |
 
 ---
 
-<details>
-  <summary>🤖 Weeks 11–15: Advanced Builds</summary>
-  <ul>
-    <li><a href="{{ '/lessons/week11.html' | relative_url }}">Week 11: Bluetooth Basics</a></li>
-    <li><a href="{{ '/lessons/week12.html' | relative_url }}">Week 12: Data Logging</a></li>
-    <li><a href="{{ '/lessons/week13.html' | relative_url }}">Week 13: Robotics Intro</a></li>
-    <li><a href="{{ '/lessons/week14.html' | relative_url }}">Week 14: Sensors + Motors Integration</a></li>
-    <li><a href="{{ '/lessons/week15.html' | relative_url }}">Week 15: Capstone Project</a></li>
-  </ul>
-</details>
+[Go to Teacher Hub]({{ '/teachers/' | relative_url }}) | [Download Worksheets]({{ '/worksheets/' | relative_url }})

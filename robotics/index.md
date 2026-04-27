@@ -1,15 +1,10 @@
-# Robotics
+---
+layout: default
+title: "Robotics Club"
+---
 
-Welcome to the Robotics section! Here you’ll find all lessons, worksheets, and code for robotics projects.
+# Robotics Club
 
-## Lessons
-- [LCD Jumpman Game](lessons/jumpman.md)
+This section is coming soon.
 
-## Worksheets
-- [LCD Jumpman Worksheet](worksheets/worksheet-jumpman.md)
-- [LCD Jumpman Challenge](worksheets/challenge-jumpman.md)
-
-## Code
-- [Jumpman Sketch](code/jumpman.ino)
-- [LCD Test Sketch](code/lcd-test.ino)
-- [I2C Scanner](code/scanner.ino)
+It will contain resources, projects, and guides for the Arduino Robotics Club.

@@ -1,139 +1,88 @@
 ---
 layout: default
-title: Arduino Journey
-description: Learn Arduino through real projects.
+title: "Arduino Journey"
+description: "Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player."
 ---
 
-<section class="hero">
-
-<span class="label">Structured Arduino Curriculum</span>
-
-<h1>Learn Arduino Through Real Projects</h1>
-
-<p>
-A bilingual step-by-step learning path for middle school students.
-From your first LED circuit to building a working MP3 Player with DFPlayer Mini.
-</p>
-
-<div class="btn-row">
-  <a class="btn btn-primary" href="/lessons/">Start Journey</a>
-  <a class="btn btn-secondary" href="/worksheets/">View Curriculum</a>
+<div class="hero">
+  <h1>Arduino Journey</h1>
+  <p>Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="{{ '/lessons/' | relative_url }}">Start Learning</a>
+    <a class="btn-secondary" href="{{ '/teachers/' | relative_url }}">Teacher Hub</a>
+  </div>
 </div>
 
 <div class="stat-strip">
-  <div class="stat-item">12 Lessons</div>
-  <div class="stat-item">Worksheets</div>
-  <div class="stat-item">Teacher Ready</div>
-  <div class="stat-item">Final Capstone Project</div>
+  <div class="container">
+    <div class="stat-item"><strong>10</strong><span>Lessons</span></div>
+    <div class="stat-item"><strong>40 min</strong><span>Class Sessions</span></div>
+    <div class="stat-item"><strong>Groups of 3</strong><span>Collaborative Learning</span></div>
+    <div class="stat-item"><strong>MP3 Player</strong><span>Capstone Project</span></div>
+  </div>
 </div>
 
-</section>
+<h2 class="section-title">Learning Path</h2>
 
-<section class="feature-strip">
-
-<div class="grid-4">
-
-<div class="card">
-<h3>Hands-On Learning</h3>
-<p>Build circuits, test code, solve problems.</p>
+<div class="grid-4" style="margin-bottom: 2.5rem;">
+  <div class="phase-card">
+    <h3>Foundations</h3>
+    <ul>
+      <li>L1 — What is Arduino?</li>
+      <li>L2 — Blink</li>
+      <li>L3 — Multiple LEDs</li>
+    </ul>
+  </div>
+  <div class="phase-card">
+    <h3>Inputs and Feedback</h3>
+    <ul>
+      <li>L4 — Button Input</li>
+      <li>L5 — Buzzer and Sound</li>
+      <li>L6 — Analog Input</li>
+    </ul>
+  </div>
+  <div class="phase-card">
+    <h3>Sensors and Data</h3>
+    <ul>
+      <li>L7 — Sensors (LDR + DHT11)</li>
+      <li>L8 — Mini Challenge</li>
+    </ul>
+  </div>
+  <div class="phase-card">
+    <h3>Final Project</h3>
+    <ul>
+      <li>L9 — DFPlayer Mini Setup</li>
+      <li>L10 — MP3 Player Final Build</li>
+    </ul>
+  </div>
 </div>
 
-<div class="card">
-<h3>Weekly Lessons</h3>
-<p>Clear pacing for schools or self-study.</p>
+<div class="capstone-section">
+  <h2>Capstone: MP3 Player</h2>
+  <p>
+    The course builds toward a fully functional MP3 player built with an Arduino Uno and the DFPlayer Mini module.
+    Students wire the circuit, load audio files onto an SD card, and write code to control playback with physical buttons.
+    Every concept from Lessons 1–8 feeds directly into this final build.
+  </p>
 </div>
 
-<div class="card">
-<h3>Printable Worksheets</h3>
-<p>Reinforce concepts with guided practice.</p>
+<div class="teacher-hub">
+  <h2>Built for the Classroom</h2>
+  <div class="grid-2">
+    <ul>
+      <li>10 structured lessons, each 40 minutes</li>
+      <li>One lesson every two weeks</li>
+      <li>Collaborative — designed for groups of 3</li>
+      <li>Printable worksheets for every lesson</li>
+      <li>Pacing guide and curriculum map included</li>
+    </ul>
+    <ul>
+      <li>Real Arduino C++ code, fully commented</li>
+      <li>Troubleshooting guides per lesson</li>
+      <li>Classroom setup and library install guide</li>
+      <li>Works on iPads and laptops</li>
+      <li>100% free — hosted on GitHub Pages</li>
+    </ul>
+  </div>
+  <p style="margin-top: 1rem;"><a class="btn-secondary" href="{{ '/teachers/' | relative_url }}">Go to Teacher Hub</a></p>
 </div>
-
-<div class="card">
-<h3>Real Outcome</h3>
-<p>Create a functional MP3 Player project.</p>
-</div>
-
-</div>
-</section>
-
-<section>
-
-<span class="label">Learning Path</span>
-
-<h2 class="section-title">A Clear Roadmap to Build Skills</h2>
-
-<p class="section-intro">
-Students progress from fundamentals into inputs, modules, and full system integration.
-</p>
-
-<div class="grid-4">
-
-<div class="card path-card">
-<small>Weeks 1–3</small>
-<h3>Foundations</h3>
-<p>Arduino basics, LEDs, variables, outputs.</p>
-</div>
-
-<div class="card path-card">
-<small>Weeks 4–6</small>
-<h3>Inputs</h3>
-<p>Buttons, sensors, PWM, interaction.</p>
-</div>
-
-<div class="card path-card">
-<small>Weeks 7–9</small>
-<h3>Audio Systems</h3>
-<p>Serial communication, DFPlayer Mini.</p>
-</div>
-
-<div class="card path-card">
-<small>Weeks 10–12</small>
-<h3>Final Build</h3>
-<p>Assemble and code your MP3 Player.</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="capstone">
-
-<span class="label">Capstone Project</span>
-
-<h2>Build Your Own MP3 Player</h2>
-
-<p>
-Students combine electronics, programming, debugging,
-buttons, modules, and creative thinking to complete
-a real working device.
-</p>
-
-<div class="btn-row">
-  <a class="btn btn-primary" href="/projects/">View Project</a>
-</div>
-
-</section>
-
-<section class="teacher-box">
-
-<span class="label">Teacher Ready</span>
-
-<h2>Built for the Classroom</h2>
-
-<div class="grid-2">
-
-<div>
-<p>12-week pacing guide</p>
-<p>Printable worksheets</p>
-<p>Materials planning</p>
-</div>
-
-<div>
-<p>Bilingual-ready expansion</p>
-<p>Project-based learning model</p>
-<p>Easy progression system</p>
-</div>
-
-</div>
-
-</section>
