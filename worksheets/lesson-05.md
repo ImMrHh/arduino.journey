@@ -8,9 +8,9 @@ title: "Worksheet 05 — Buzzer and Sound"
 # Worksheet 05 — Buzzer and Sound
 
 <div class="ws-header-fields">
-  <div><label>Name</label><div class="ws-field"></div></div>
-  <div><label>Date</label><div class="ws-field"></div></div>
-  <div><label>Group</label><div class="ws-field"></div></div>
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
 </div>
 
 ---

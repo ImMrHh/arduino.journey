@@ -47,58 +47,58 @@ function calculateOhmsLaw() {
 
 <label>Band 1 (first digit)</label>
 <select id="band1">
-  <option value="">-- select --</option>
-  <option value="0">Black — 0</option>
-  <option value="1">Brown — 1</option>
-  <option value="2">Red — 2</option>
-  <option value="3">Orange — 3</option>
-  <option value="4">Yellow — 4</option>
-  <option value="5">Green — 5</option>
-  <option value="6">Blue — 6</option>
-  <option value="7">Violet — 7</option>
-  <option value="8">Gray — 8</option>
-  <option value="9">White — 9</option>
+<option value="">-- select --</option>
+<option value="0">Black — 0</option>
+<option value="1">Brown — 1</option>
+<option value="2">Red — 2</option>
+<option value="3">Orange — 3</option>
+<option value="4">Yellow — 4</option>
+<option value="5">Green — 5</option>
+<option value="6">Blue — 6</option>
+<option value="7">Violet — 7</option>
+<option value="8">Gray — 8</option>
+<option value="9">White — 9</option>
 </select>
 
 <label>Band 2 (second digit)</label>
 <select id="band2">
-  <option value="">-- select --</option>
-  <option value="0">Black — 0</option>
-  <option value="1">Brown — 1</option>
-  <option value="2">Red — 2</option>
-  <option value="3">Orange — 3</option>
-  <option value="4">Yellow — 4</option>
-  <option value="5">Green — 5</option>
-  <option value="6">Blue — 6</option>
-  <option value="7">Violet — 7</option>
-  <option value="8">Gray — 8</option>
-  <option value="9">White — 9</option>
+<option value="">-- select --</option>
+<option value="0">Black — 0</option>
+<option value="1">Brown — 1</option>
+<option value="2">Red — 2</option>
+<option value="3">Orange — 3</option>
+<option value="4">Yellow — 4</option>
+<option value="5">Green — 5</option>
+<option value="6">Blue — 6</option>
+<option value="7">Violet — 7</option>
+<option value="8">Gray — 8</option>
+<option value="9">White — 9</option>
 </select>
 
 <label>Band 3 (multiplier)</label>
 <select id="multiplier">
-  <option value="">-- select --</option>
-  <option value="1">Black — x1</option>
-  <option value="10">Brown — x10</option>
-  <option value="100">Red — x100</option>
-  <option value="1000">Orange — x1,000</option>
-  <option value="10000">Yellow — x10,000</option>
-  <option value="100000">Green — x100,000</option>
-  <option value="1000000">Blue — x1,000,000</option>
-  <option value="0.1">Gold — x0.1</option>
-  <option value="0.01">Silver — x0.01</option>
+<option value="">-- select --</option>
+<option value="1">Black — x1</option>
+<option value="10">Brown — x10</option>
+<option value="100">Red — x100</option>
+<option value="1000">Orange — x1,000</option>
+<option value="10000">Yellow — x10,000</option>
+<option value="100000">Green — x100,000</option>
+<option value="1000000">Blue — x1,000,000</option>
+<option value="0.1">Gold — x0.1</option>
+<option value="0.01">Silver — x0.01</option>
 </select>
 
 <label>Band 4 (tolerance)</label>
 <select id="tolerance">
-  <option value="">-- select --</option>
-  <option value="±1%">Brown — ±1%</option>
-  <option value="±2%">Red — ±2%</option>
-  <option value="±0.5%">Green — ±0.5%</option>
-  <option value="±0.25%">Blue — ±0.25%</option>
-  <option value="±0.1%">Violet — ±0.1%</option>
-  <option value="±5%">Gold — ±5%</option>
-  <option value="±10%">Silver — ±10%</option>
+<option value="">-- select --</option>
+<option value="±1%">Brown — ±1%</option>
+<option value="±2%">Red — ±2%</option>
+<option value="±0.5%">Green — ±0.5%</option>
+<option value="±0.25%">Blue — ±0.25%</option>
+<option value="±0.1%">Violet — ±0.1%</option>
+<option value="±5%">Gold — ±5%</option>
+<option value="±10%">Silver — ±10%</option>
 </select>
 
 <button class="btn-primary" type="button" onclick="decodeResistor()">Decode</button>
