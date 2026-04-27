@@ -182,6 +182,10 @@ tr:nth-child(even) td {
 
 /* --- Worksheet form fields --- */
 
+.ws-print-bar {
+  margin-bottom: 1.25rem;
+}
+
 .ws-field {
   border: none;
   border-bottom: 1px solid var(--border);

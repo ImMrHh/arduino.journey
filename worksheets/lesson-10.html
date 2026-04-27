@@ -1,0 +1,95 @@
+---
+layout: default
+title: "Worksheet 10 — MP3 Player Final Build"
+---
+
+<div class="print-page">
+
+<div class="ws-print-bar">
+<button class="btn-primary no-print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>Worksheet 10 — MP3 Player Final Build</h1>
+
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+
+<hr>
+
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>State</td><td></td></tr>
+<tr><td>boolean</td><td></td></tr>
+<tr><td>Debounce</td><td></td></tr>
+<tr><td>millis()</td><td></td></tr>
+<tr><td>dfPlayer.pause()</td><td></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Circuit Diagram Space</h2>
+<p>Draw the complete MP3 player circuit: DFPlayer, 5 buttons (pins 2–6), status LED (pin 9).</p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Code Challenge</h2>
+<p>Fill in the blanks to implement play/pause toggle with debounce:</p>
+<pre><code>bool isPlaying = ___;
+unsigned long lastPress[5] = {0,0,0,0,0};
+const unsigned long DEBOUNCE_MS = ___;
+
+bool buttonPressed(int pin, int index) {
+  if (digitalRead(pin) == ___) {
+    unsigned long now = millis();
+    if (now - lastPress[index] &gt; DEBOUNCE_MS) {
+      lastPress[___] = now;
+      return ___;
+    }
+  }
+  return false;
+}
+
+// Inside loop():
+if (buttonPressed(PIN_PLAY_PAUSE, 0)) {
+  if (isPlaying) {
+    dfPlayer.___();
+    isPlaying = false;
+  } else {
+    dfPlayer.start();
+    isPlaying = ___;
+  }
+}</code></pre>
+
+<hr>
+
+<h2>Reflection</h2>
+<p>Answer these questions in your own words:</p>
+<p><strong>1. What does "state" mean in programming, and how is it used in the play/pause logic?</strong></p>
+<div class="ws-box"></div>
+<p><strong>2. Why is debouncing necessary for physical buttons?</strong></p>
+<div class="ws-box"></div>
+<p><strong>3. Looking back at all 10 lessons — which concept was hardest to understand, and which project was most fun to build?</strong></p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Self-Assessment</h2>
+<p>Check each box when you can do it confidently:</p>
+<ul>
+<li><input type="checkbox"> I can wire 5 buttons and a status LED alongside the DFPlayer</li>
+<li><input type="checkbox"> I understand how boolean state variables work</li>
+<li><input type="checkbox"> I can explain what debouncing does and why it is needed</li>
+<li><input type="checkbox"> My MP3 player responds correctly to all 5 buttons</li>
+<li><input type="checkbox"> I can describe what every function in the final sketch does</li>
+</ul>
+
+</div>
