@@ -8,7 +8,6 @@ next_lesson:
   title: "Lesson 02 — Blink"
 ---
 
-<div class="section-label">Learning Objectives</div>
 
 ## Learning Objectives
 <div class="objectives-box" markdown="1">
@@ -17,7 +16,6 @@ next_lesson:
 - Upload the Blink example sketch and confirm it runs
 </div>
 
-<div class="section-label">Materials</div>
 
 ## Materials for This Lesson
 <div class="materials-card" markdown="1">
@@ -26,7 +24,6 @@ next_lesson:
 - Computer with Arduino IDE 2 installed
 </div>
 
-<div class="section-label">Background</div>
 
 ## Background
 
@@ -38,7 +35,6 @@ Arduino programs are called sketches. Every sketch has two main functions: `setu
 
 When you click Upload in the IDE, your code is compiled (converted to machine language) and sent to the Arduino over the USB cable. Once uploaded, the program stays on the board even when you unplug the USB — it runs from the board's own memory.
 
-<div class="section-label">Wiring</div>
 
 ## Wiring
 
@@ -47,7 +43,6 @@ When you click Upload in the IDE, your code is compiled (converted to machine la
 1. Connect the Arduino Uno to your computer using the USB cable.
 2. Confirm the green power LED on the board lights up.
 
-<div class="section-label">Step-by-Step Build</div>
 
 ## Step-by-Step Build
 
@@ -60,7 +55,6 @@ When you click Upload in the IDE, your code is compiled (converted to machine la
 7. Wait for "Done uploading" in the status bar.
 8. Observe the orange LED labeled L on the board — it should blink once per second.
 
-<div class="section-label">Code</div>
 
 ## Code
 
@@ -81,7 +75,6 @@ void loop() {
 }
 ```
 
-<div class="section-label">Understanding the Code</div>
 
 ## Understanding the Code
 
@@ -95,13 +88,11 @@ void loop() {
 
 The whole `loop()` function repeats forever: on for 1 second, off for 1 second.
 
-<div class="section-label">Challenge</div>
 <div class="challenge-box" markdown="1">
 <div class="challenge-label">Try This</div>
 Can you make the LED blink twice as fast? Try changing the delay values. What happens if you use `delay(100)` instead of `delay(1000)`?
 </div>
 
-<div class="section-label">Reflection Questions</div>
 
 ## Reflection Questions
 
@@ -110,7 +101,6 @@ Can you make the LED blink twice as fast? Try changing the delay values. What ha
 3. If you change the delay to 500, how many times will the LED blink in 10 seconds?
 {: .reflection-list}
 
-<div class="section-label">Troubleshooting</div>
 
 ## Troubleshooting
 
