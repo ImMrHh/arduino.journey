@@ -11,7 +11,7 @@ next_lesson:
   title: "Lesson 08 — Mini Challenge"
 ---
 
-<div class="section-label">Learning Objectives</div>
+
 ## Learning Objectives
 <div class="objectives-box" markdown="1">
 - Wire an LDR (light-dependent resistor) and read light levels with `analogRead()`
@@ -19,7 +19,7 @@ next_lesson:
 - Display sensor data in the Serial Monitor
 </div>
 
-<div class="section-label">Materials</div>
+
 ## Materials for This Lesson
 <div class="materials-card" markdown="1">
 - Arduino Uno
@@ -31,7 +31,7 @@ next_lesson:
 - USB cable
 </div>
 
-<div class="section-label">Background</div>
+
 ## Background
 
 Sensors convert physical quantities into electrical signals. An LDR changes its resistance based on the amount of light hitting it. In bright light, resistance drops; in darkness, resistance rises. By pairing the LDR with a fixed resistor in a voltage divider circuit, you create a varying voltage that the Arduino can read.
@@ -40,7 +40,7 @@ The DHT11 is a digital sensor that measures temperature and humidity. It uses a 
 
 Libraries must be installed before you can use them. Install the DHT library by Adafruit in Arduino IDE 2: go to Tools > Manage Libraries, search for "DHT sensor library" by Adafruit, and click Install. Also install Adafruit Unified Sensor when prompted.
 
-<div class="section-label">Wiring</div>
+
 ## Wiring
 
 *(See /images/lesson07-wiring.png)*
@@ -56,7 +56,7 @@ DHT11 on pin 7:
 3. DATA pin of DHT11 to pin 7.
 (If using the bare sensor without a module board, add a 10k pull-up resistor between DATA and VCC.)
 
-<div class="section-label">Step-by-Step Build</div>
+
 ## Step-by-Step Build
 
 1. Wire the LDR and DHT11 as described.
@@ -66,7 +66,7 @@ DHT11 on pin 7:
 5. Open Serial Monitor at 9600 baud.
 6. Cover the LDR with your hand and observe the light level change. Breathe on the DHT11 and watch the humidity change.
 
-<div class="section-label">Code</div>
+
 ## Code
 
 ```cpp
@@ -115,7 +115,7 @@ void loop() {
 }
 ```
 
-<div class="section-label">Understanding the Code</div>
+
 ## Understanding the Code
 
 `#include <DHT.h>` — includes the DHT library so you can use its functions.
@@ -130,13 +130,12 @@ void loop() {
 
 `analogRead(LDR_PIN)` — reads the voltage divider output. High value = more light; low value = less light.
 
-<div class="section-label">Challenge</div>
 <div class="challenge-box" markdown="1">
 <div class="challenge-label">Try This</div>
 Can you turn on an LED automatically when the light level drops below 300 (as if a room light turned off)? Wire an LED to pin 9 and add an `if` statement that turns it on when `lightLevel < 300`.
 </div>
 
-<div class="section-label">Reflection Questions</div>
+
 ## Reflection Questions
 
 1. What is a voltage divider, and why do we use one with the LDR?
@@ -144,7 +143,7 @@ Can you turn on an LED automatically when the light level drops below 300 (as if
 3. What does `isnan()` check for, and why is this important?
 {: .reflection-list}
 
-<div class="section-label">Troubleshooting</div>
+
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
