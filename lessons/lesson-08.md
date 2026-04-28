@@ -11,7 +11,7 @@ next_lesson:
   title: "Lesson 09 — DFPlayer Mini Setup"
 ---
 
-<div class="section-label">Learning Objectives</div>
+
 ## Learning Objectives
 <div class="objectives-box" markdown="1">
 - Apply digital input, output, and timing in a complete small project
@@ -19,7 +19,7 @@ next_lesson:
 - Debug a real project from scratch
 </div>
 
-<div class="section-label">Materials</div>
+
 ## Materials for This Lesson
 <div class="materials-card" markdown="1">
 - Arduino Uno
@@ -32,7 +32,7 @@ next_lesson:
 - USB cable
 </div>
 
-<div class="section-label">Background</div>
+
 ## Background
 
 This lesson is a design challenge. Your group will choose one of two projects and build it using the skills from Lessons 1–7. There is no single correct answer — your group decides the wiring and the code structure.
@@ -43,7 +43,7 @@ One LED turns on at a random time. The player must press a button as fast as pos
 **Option B — Traffic Light Sequence**
 Wire three LEDs (red, yellow, green) and program them to run through a realistic UK traffic light sequence: Red — Red+Yellow — Green — Yellow — Red. Each phase lasts a different amount of time. Bonus: add a button that requests a pedestrian crossing (green holds for extra time).
 
-<div class="section-label">Step-by-Step Build</div>
+
 ## Step-by-Step Build
 
 1. As a group, choose Option A or Option B.
@@ -53,7 +53,7 @@ Wire three LEDs (red, yellow, green) and program them to run through a realistic
 5. Test one part at a time: get the LEDs working before adding the button.
 6. Upload and debug.
 
-<div class="section-label">Code — Option A: Reaction Timer</div>
+
 ## Code — Option A: Reaction Timer
 
 ```cpp
@@ -98,7 +98,7 @@ void loop() {
 }
 ```
 
-<div class="section-label">Code — Option B: Traffic Light</div>
+
 ## Code — Option B: Traffic Light
 
 ```cpp
@@ -144,7 +144,7 @@ void loop() {
 }
 ```
 
-<div class="section-label">Understanding the Code</div>
+
 ## Understanding the Code
 
 **Reaction Timer:**
@@ -159,7 +159,6 @@ void loop() {
 **Traffic Light:**
 `allOff()` — a helper function that turns all three LEDs off at once, making the main code cleaner.
 
-<div class="section-label">Challenge</div>
 <div class="challenge-box" markdown="1">
 <div class="challenge-label">Try This</div>
 For Option A: Can you add a buzzer that plays a short tone when the LED turns on as an audio cue? Does this make the reaction time faster or slower?
@@ -167,7 +166,7 @@ For Option A: Can you add a buzzer that plays a short tone when the LED turns on
 For Option B: Can you add a push button that acts as a pedestrian crossing request? When pressed, the traffic light should complete its current phase and then hold on red for 5 seconds.
 </div>
 
-<div class="section-label">Reflection Questions</div>
+
 ## Reflection Questions
 
 1. How did your group divide the work for this project?
@@ -175,7 +174,7 @@ For Option B: Can you add a push button that acts as a pedestrian crossing reque
 3. What would you change if you had more time?
 {: .reflection-list}
 
-<div class="section-label">Troubleshooting</div>
+
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
