@@ -11,7 +11,7 @@ next_lesson:
   title: "Lesson 05 — Buzzer and Sound"
 ---
 
-<div class="section-label">Learning Objectives</div>
+
 ## Learning Objectives
 <div class="objectives-box" markdown="1">
 - Wire a push button to an Arduino digital pin
@@ -19,7 +19,7 @@ next_lesson:
 - Understand what a pull-up resistor does
 </div>
 
-<div class="section-label">Materials</div>
+
 ## Materials for This Lesson
 <div class="materials-card" markdown="1">
 - Arduino Uno
@@ -30,7 +30,7 @@ next_lesson:
 - USB cable
 </div>
 
-<div class="section-label">Background</div>
+
 ## Background
 
 So far the Arduino has only been sending signals (output). Now it will also receive signals (input). A push button is one of the simplest input devices — it either connects two points or it doesn't.
@@ -39,7 +39,7 @@ When a button is not pressed and the pin is connected to nothing, the pin's valu
 
 The Arduino Uno has built-in pull-up resistors on every digital pin. You activate them in software with `INPUT_PULLUP` instead of `INPUT`. This means you don't need to add an external resistor for the button.
 
-<div class="section-label">Wiring</div>
+
 ## Wiring
 
 *(See /images/lesson04-wiring.png)*
@@ -48,7 +48,7 @@ The Arduino Uno has built-in pull-up resistors on every digital pin. You activat
 2. Connect the other leg of the button to GND on the Arduino.
 3. Wire the LED through a 220 ohm resistor to pin 9, short leg to GND (as in Lesson 02).
 
-<div class="section-label">Step-by-Step Build</div>
+
 ## Step-by-Step Build
 
 1. Wire the button and LED as described.
@@ -56,7 +56,7 @@ The Arduino Uno has built-in pull-up resistors on every digital pin. You activat
 3. Enter the code below and upload it.
 4. Press the button — the LED should turn on while it is held.
 
-<div class="section-label">Code</div>
+
 ## Code
 
 ```cpp
@@ -84,7 +84,7 @@ void loop() {
 }
 ```
 
-<div class="section-label">Understanding the Code</div>
+
 ## Understanding the Code
 
 `pinMode(BUTTON_PIN, INPUT_PULLUP)` — configures pin 2 as an input and activates the internal pull-up resistor. The pin reads HIGH when the button is open.
@@ -95,13 +95,12 @@ void loop() {
 
 `else` — runs when the button is not pressed. Turns the LED off.
 
-<div class="section-label">Challenge</div>
 <div class="challenge-box" markdown="1">
 <div class="challenge-label">Try This</div>
 Can you make the button toggle the LED instead of holding it? The LED should turn on the first press and stay on, then turn off on the second press. You will need to track the LED state in a variable and detect when the button first goes from HIGH to LOW.
 </div>
 
-<div class="section-label">Reflection Questions</div>
+
 ## Reflection Questions
 
 1. Why does a floating pin give unreliable readings without a pull-up resistor?
@@ -109,7 +108,7 @@ Can you make the button toggle the LED instead of holding it? The LED should tur
 3. What is the difference between `INPUT` and `INPUT_PULLUP`?
 {: .reflection-list}
 
-<div class="section-label">Troubleshooting</div>
+
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
