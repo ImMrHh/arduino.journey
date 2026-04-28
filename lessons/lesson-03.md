@@ -11,7 +11,7 @@ next_lesson:
   title: "Lesson 04 — Button Input"
 ---
 
-<div class="section-label">Learning Objectives</div>
+
 ## Learning Objectives
 <div class="objectives-box" markdown="1">
 - Wire three LEDs with resistors on a breadboard
@@ -19,7 +19,7 @@ next_lesson:
 - Create timed LED sequences and patterns
 </div>
 
-<div class="section-label">Materials</div>
+
 ## Materials for This Lesson
 <div class="materials-card" markdown="1">
 - Arduino Uno
@@ -30,7 +30,7 @@ next_lesson:
 - USB cable
 </div>
 
-<div class="section-label">Background</div>
+
 ## Background
 
 Controlling one LED is useful, but most real projects involve multiple outputs. In this lesson you will wire three LEDs and control them in sequence — the basis of everything from traffic lights to status indicators.
@@ -39,7 +39,7 @@ When you have multiple pins doing similar things, it helps to use an array. An a
 
 The `for` loop is one of the most important structures in programming. It runs a block of code a set number of times. With three LEDs and a `for` loop, you can write the setup and pattern logic once instead of repeating it three times.
 
-<div class="section-label">Wiring</div>
+
 ## Wiring
 
 *(See /images/lesson03-wiring.png)*
@@ -50,7 +50,7 @@ Wire each LED the same way as in Lesson 02:
 3. LED 3: long leg through 220 ohm resistor to pin 5, short leg to GND.
 4. All three short legs share the GND rail on the breadboard. Connect the GND rail to one GND pin on the Arduino.
 
-<div class="section-label">Step-by-Step Build</div>
+
 ## Step-by-Step Build
 
 1. Wire all three LEDs as described.
@@ -59,7 +59,7 @@ Wire each LED the same way as in Lesson 02:
 4. Upload and observe the sequence.
 5. Experiment with the delay values to change the speed.
 
-<div class="section-label">Code</div>
+
 ## Code
 
 ```cpp
@@ -98,7 +98,7 @@ void loop() {
 }
 ```
 
-<div class="section-label">Understanding the Code</div>
+
 ## Understanding the Code
 
 `int ledPins[] = {3, 4, 5}` — declares an array of three integers. Index 0 = pin 3, index 1 = pin 4, index 2 = pin 5.
@@ -109,13 +109,12 @@ void loop() {
 
 The second and third loops turn all LEDs on together, wait, then turn them all off together. This creates a chase-then-flash pattern.
 
-<div class="section-label">Challenge</div>
 <div class="challenge-box" markdown="1">
 <div class="challenge-label">Try This</div>
 Can you program a traffic light sequence? Try: Red on for 3 seconds, then Green on for 2 seconds, then Yellow on for 1 second, then repeat. You will need to turn off one LED before turning on the next.
 </div>
 
-<div class="section-label">Reflection Questions</div>
+
 ## Reflection Questions
 
 1. What is an array, and why is it useful when controlling multiple pins?
@@ -123,7 +122,7 @@ Can you program a traffic light sequence? Try: Red on for 3 seconds, then Green 
 3. How would you add a fourth LED to this sketch with minimal changes?
 {: .reflection-list}
 
-<div class="section-label">Troubleshooting</div>
+
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
