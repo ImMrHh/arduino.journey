@@ -11,7 +11,7 @@ next_lesson:
   title: "Lesson 03 — Multiple LEDs"
 ---
 
-<div class="section-label">Learning Objectives</div>
+
 ## Learning Objectives
 <div class="objectives-box" markdown="1">
 - Wire an LED and resistor on a breadboard
@@ -19,7 +19,7 @@ next_lesson:
 - Control an external LED using digital output
 </div>
 
-<div class="section-label">Materials</div>
+
 ## Materials for This Lesson
 <div class="materials-card" markdown="1">
 - Arduino Uno
@@ -30,7 +30,7 @@ next_lesson:
 - USB cable
 </div>
 
-<div class="section-label">Background</div>
+
 ## Background
 
 In the previous lesson you blinked the LED that is built into the Arduino board. Now you will connect your own external LED to a breadboard.
@@ -41,7 +41,7 @@ LEDs must always be used with a resistor. Without a resistor, too much current f
 
 A breadboard lets you make temporary connections without soldering. The rows of holes are connected horizontally in the middle section. The long rails on the sides (marked + and -) run vertically and are used for power and ground.
 
-<div class="section-label">Wiring</div>
+
 ## Wiring
 
 *(See /images/lesson02-wiring.png)*
@@ -51,7 +51,7 @@ A breadboard lets you make temporary connections without soldering. The rows of 
 3. Connect the other leg of the resistor to pin 9 on the Arduino using a jumper wire.
 4. Connect the short leg of the LED to a GND pin on the Arduino using a jumper wire.
 
-<div class="section-label">Step-by-Step Build</div>
+
 ## Step-by-Step Build
 
 1. Wire the circuit as described above.
@@ -61,7 +61,7 @@ A breadboard lets you make temporary connections without soldering. The rows of 
 5. Click Upload.
 6. The LED on your breadboard should blink.
 
-<div class="section-label">Code</div>
+
 ## Code
 
 ```cpp
@@ -82,7 +82,7 @@ void loop() {
 }
 ```
 
-<div class="section-label">Understanding the Code</div>
+
 ## Understanding the Code
 
 `const int LED_PIN = 9` — creates a named constant to store the pin number. Using a name instead of the number 9 directly makes the code easier to read and easier to change later.
@@ -95,13 +95,12 @@ void loop() {
 
 `digitalWrite(LED_PIN, LOW)` — sets pin 9 to 0 V, stopping current flow and turning the LED off.
 
-<div class="section-label">Challenge</div>
 <div class="challenge-box" markdown="1">
 <div class="challenge-label">Try This</div>
 Can you make the LED blink a pattern — for example, three short blinks and then a long one? Adjust the delay values and add more `digitalWrite` and `delay` lines to create your pattern.
 </div>
 
-<div class="section-label">Reflection Questions</div>
+
 ## Reflection Questions
 
 1. Why does an LED need a resistor in series with it?
@@ -109,7 +108,7 @@ Can you make the LED blink a pattern — for example, three short blinks and the
 3. If you wanted the LED to blink three times per second, what delay value would you use?
 {: .reflection-list}
 
-<div class="section-label">Troubleshooting</div>
+
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
