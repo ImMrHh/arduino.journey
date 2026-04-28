@@ -8,7 +8,7 @@ prev_lesson:
   title: "Lesson 09 — DFPlayer Mini Setup"
 ---
 
-<div class="section-label">Learning Objectives</div>
+
 ## Learning Objectives
 <div class="objectives-box" markdown="1">
 - Combine everything from the course into one complete project
@@ -16,7 +16,7 @@ prev_lesson:
 - Understand how to manage state (playing/paused) in code
 </div>
 
-<div class="section-label">Materials</div>
+
 ## Materials for This Lesson
 <div class="materials-card" markdown="1">
 - Arduino Uno
@@ -30,7 +30,7 @@ prev_lesson:
 - USB cable
 </div>
 
-<div class="section-label">Background</div>
+
 ## Background
 
 This is the capstone project. You will build a functional MP3 player that responds to five buttons: play/pause, next track, previous track, volume up, and volume down. A status LED shows whether the player is playing or paused.
@@ -39,7 +39,7 @@ Managing state is a key concept in this lesson. The word state means "what condi
 
 Debouncing is also important here. Mechanical buttons bounce — they make and break contact several times in the first few milliseconds of a press. Without debouncing, one press can register as many presses. The simplest software debounce is to wait a short time (50–100 ms) after detecting a press before reading again.
 
-<div class="section-label">Wiring</div>
+
 ## Wiring
 
 *(See /images/lesson10-wiring.png)*
@@ -55,7 +55,7 @@ Buttons (all using INPUT_PULLUP — one leg to the pin, other leg to GND):
 
 Status LED: long leg through 220 ohm resistor to pin 9, short leg to GND.
 
-<div class="section-label">Step-by-Step Build</div>
+
 ## Step-by-Step Build
 
 1. Complete the DFPlayer Mini wiring from Lesson 09.
@@ -64,7 +64,7 @@ Status LED: long leg through 220 ohm resistor to pin 9, short leg to GND.
 4. Enter and upload the code below.
 5. Test each button one at a time.
 
-<div class="section-label">Code</div>
+
 ## Code
 
 ```cpp
@@ -182,7 +182,7 @@ void loop() {
 }
 ```
 
-<div class="section-label">Understanding the Code</div>
+
 ## Understanding the Code
 
 `bool isPlaying = false` — a global variable that tracks whether audio is playing. Booleans are either `true` or `false`.
@@ -199,13 +199,12 @@ void loop() {
 
 `setLED()` — turns the LED on if playing, off if paused. The ternary operator `isPlaying ? HIGH : LOW` is a shorthand if-else.
 
-<div class="section-label">Challenge</div>
 <div class="challenge-box" markdown="1">
 <div class="challenge-label">Try This</div>
 Can you add a small OLED or LCD display that shows the current track number? Use the `dfPlayer.readCurrentFileNumber()` function and an I2C display library to show it. This is an advanced challenge — ask your teacher for guidance.
 </div>
 
-<div class="section-label">Reflection Questions</div>
+
 ## Reflection Questions
 
 1. What does "state" mean in programming, and how is it used in the play/pause logic?
@@ -213,7 +212,7 @@ Can you add a small OLED or LCD display that shows the current track number? Use
 3. Looking back at all 10 lessons — which concept was hardest to understand, and which project was most fun to build?
 {: .reflection-list}
 
-<div class="section-label">Troubleshooting</div>
+
 ## Troubleshooting
 
 | Problem | Likely Cause | Fix |
