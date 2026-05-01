@@ -1,0 +1,108 @@
+/* ============================================================
+   BASE — Variables, Reset, Typography
+   ============================================================ */
+
+:root {
+  --primary:       #00979D;
+  --primary-dark:  #007A7F;
+  --primary-bg:    #E8F7F7;
+  --accent:        #E47128;
+  --accent-bg:     #FEF3EB;
+  --danger-bg:     #FEF2F2;
+  --danger-border: #FCA5A5;
+  --text:          #1A1A2E;
+  --text-soft:     #4A4A6A;
+  --surface:       #FFFFFF;
+  --surface-alt:   #F5F7FA;
+  --border:        #DDE3EA;
+  --radius:        6px;
+  --max-width:     1100px;
+
+  /* Extended teal palette */
+  --t9: #04342C;
+  --t8: #085041;
+  --t6: #0F6E56;
+  --t5: #1D9E75;
+  --t3: #5DCAA5;
+  --t2: #9FE1CB;
+  --t1: #E1F5EE;
+
+  /* Amber accent */
+  --a6: #854F0B;
+  --a5: #BA7517;
+  --a3: #EF9F27;
+  --a2: #FAC775;
+  --a1: #FAEEDA;
+
+  /* Monospace font stack */
+  --mono: "JetBrains Mono", "Fira Code", "Consolas", "Courier New", monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 17px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  background: var(--surface);
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text);
+  line-height: 1.3;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.1rem; }
+
+p { margin-bottom: 1rem; }
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+ul, ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+li { margin-bottom: 0.25rem; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+strong { font-weight: 600; }
+
+blockquote {
+  border-left: 4px solid var(--primary);
+  padding-left: 1rem;
+  color: var(--text-soft);
+  margin: 1rem 0;
+}

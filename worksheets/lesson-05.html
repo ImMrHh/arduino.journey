@@ -1,0 +1,88 @@
+---
+layout: worksheet
+title: "Worksheet 05 — Buzzer and Sound"
+---
+
+<div class="print-page">
+
+<div class="ws-print-bar">
+<button class="btn-primary no-print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>Worksheet 05 — Buzzer and Sound</h1>
+
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+
+<hr>
+
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>Passive buzzer</td><td></td></tr>
+<tr><td>Frequency</td><td></td></tr>
+<tr><td>tone()</td><td></td></tr>
+<tr><td>noTone()</td><td></td></tr>
+<tr><td>Hz</td><td></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Circuit Diagram Space</h2>
+<p>Draw the circuit: passive buzzer from pin 8 to GND, button from pin 2 to GND.</p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Code Challenge</h2>
+<p>Fill in the blanks to play a tone at 440 Hz for 500 ms when the button is pressed:</p>
+<pre><code>const int BUZZER_PIN = ___;
+const int BUTTON_PIN = 2;
+
+void setup() {
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+}
+
+void loop() {
+  if (digitalRead(BUTTON_PIN) == LOW) {
+    ___(BUZZER_PIN, ___, 500);
+    delay(600);
+  }
+  ___(BUZZER_PIN);
+}</code></pre>
+
+<hr>
+
+<h2>Reflection</h2>
+<p>Answer these questions in your own words:</p>
+
+<p><strong>1. What is the difference between an active and a passive buzzer?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>2. What does the frequency number in tone() control?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>3. Why do we call noTone() after the melody finishes?</strong></p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Self-Assessment</h2>
+<p>Check each box when you can do it confidently:</p>
+<ul>
+<li><input type="checkbox"> I can wire a passive buzzer to an Arduino pin</li>
+<li><input type="checkbox"> I understand the difference between active and passive buzzers</li>
+<li><input type="checkbox"> I can use tone() with frequency and duration arguments</li>
+<li><input type="checkbox"> I can create a simple melody using arrays</li>
+<li><input type="checkbox"> I know why noTone() is needed</li>
+</ul>
+
+</div>

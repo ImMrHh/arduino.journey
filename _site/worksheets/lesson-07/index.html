@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worksheet 07 — Sensors | Arduino Journey</title>
+  <meta name="description" content="Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Worksheet 07 — Sensors | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Worksheet 07 — Sensors" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player." />
+<meta property="og:description" content="Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/worksheets/lesson-07/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/worksheets/lesson-07/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Worksheet 07 — Sensors" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player.","headline":"Worksheet 07 — Sensors","url":"http://localhost:4000/arduino.journey/worksheets/lesson-07/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="worksheet">
+
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+
+  
+  
+  
+
+  <!-- Worksheet Hero -->
+  <div class="ws-hero">
+    <div class="ws-hero-inner container">
+      <div class="ws-hero-meta">
+        <span class="ws-hero-badge">Worksheet</span>
+        <span class="ws-hero-num">07</span>
+      </div>
+      <div class="ws-hero-text">
+        <h1 class="ws-hero-title">Sensors</h1>
+        <div class="ws-hero-fields">
+          <div class="ws-field-group">
+            <label class="ws-field-label" for="ws-name">Name</label>
+            <input class="ws-input" id="ws-name" type="text" placeholder="Your name" autocomplete="off">
+          </div>
+          <div class="ws-field-group">
+            <label class="ws-field-label" for="ws-date">Date</label>
+            <input class="ws-input ws-input--short" id="ws-date" type="text" placeholder="DD / MM / YYYY" autocomplete="off">
+          </div>
+          <div class="ws-field-group">
+            <label class="ws-field-label" for="ws-group">Group</label>
+            <input class="ws-input ws-input--short" id="ws-group" type="text" placeholder="e.g. 3A" autocomplete="off">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF Button — sticky -->
+  <div class="ws-pdf-bar no-print">
+    <div class="container ws-pdf-bar-inner">
+      <span class="ws-pdf-label">Worksheet 07 — Sensors</span>
+      <button class="ws-pdf-btn" onclick="window.print()">⬇ Save as PDF</button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <main class="ws-main site-main">
+    <div class="container ws-content">
+      <div class="print-page">
+
+<div class="ws-print-bar">
+<button class="btn-primary no-print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>Worksheet 07 — Sensors</h1>
+
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+
+<hr>
+
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>LDR</td><td></td></tr>
+<tr><td>Voltage divider</td><td></td></tr>
+<tr><td>DHT11</td><td></td></tr>
+<tr><td>Library</td><td></td></tr>
+<tr><td>float</td><td></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Circuit Diagram Space</h2>
+<p>Draw the LDR voltage divider (A1) and DHT11 connections (pin 7, VCC, GND).</p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Code Challenge</h2>
+<p>Fill in the blanks to read from the DHT11 sensor:</p>
+<pre><code>#include &lt;___&gt;;
+
+const int DHT_PIN  = 7;
+const int DHT_TYPE = DHT11;
+
+DHT dht(___, ___);
+
+void setup() {
+  Serial.begin(9600);
+  dht.___();
+}
+
+void loop() {
+  float humidity    = dht.___();
+  float temperature = dht.readTemperature();
+
+  if (___(humidity) || isnan(temperature)) {
+    Serial.println("Read error");
+    return;
+  }
+  Serial.println(temperature);
+  delay(2000);
+}</code></pre>
+
+<hr>
+
+<h2>Reflection</h2>
+<p>Answer these questions in your own words:</p>
+
+<p><strong>1. What is a voltage divider, and why do we use one with the LDR?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>2. Why does the DHT11 code use a library instead of reading the pin directly?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>3. What does isnan() check for, and why is this important?</strong></p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Self-Assessment</h2>
+<p>Check each box when you can do it confidently:</p>
+<ul>
+<li><input type="checkbox"> I can wire an LDR in a voltage divider circuit</li>
+<li><input type="checkbox"> I can install a library using Arduino IDE 2 Library Manager</li>
+<li><input type="checkbox"> I can read temperature and humidity from a DHT11</li>
+<li><input type="checkbox"> I understand what isnan() does</li>
+<li><input type="checkbox"> I can display sensor values in Serial Monitor</li>
+</ul>
+
+</div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+
+</body>
+</html>

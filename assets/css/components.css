@@ -1,0 +1,248 @@
+/* ============================================================
+   COMPONENTS — Cards, Buttons, Lesson Blocks, Code, Tables, Forms
+   ============================================================ */
+
+/* --- Print bar --- */
+
+.ws-print-bar {
+  margin-bottom: 1.25rem;
+}
+
+/* --- Buttons --- */
+
+.btn-primary {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.6rem 1.4rem;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.6rem 1.4rem;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-secondary:hover {
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* --- Cards --- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.lesson-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  text-decoration: none;
+  color: var(--text);
+  display: block;
+}
+.lesson-card:hover {
+  border-left-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+.lesson-card h3 { margin-top: 0.25rem; margin-bottom: 0.25rem; font-size: 1.05rem; }
+.lesson-card p  { margin: 0; font-size: 0.9rem; color: var(--text-soft); }
+
+/* --- Code blocks --- */
+
+pre {
+  background: #0D1117;
+  color: #C9D1D9;
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  line-height: 1.75;
+  padding: 0;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid #21262D;
+}
+
+.code-topbar {
+  background: #161B22;
+  border-bottom: 1px solid #21262D;
+  padding: 0.4rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.code-lang {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6E7681;
+}
+
+pre code {
+  display: block;
+  padding: 1.1rem 1.25rem;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: var(--t1);
+  color: var(--t6);
+  border: 1px solid var(--t2);
+  padding: 0.12em 0.35em;
+  border-radius: 3px;
+}
+
+/* Rouge / Pygments syntax tokens */
+.highlight .k,
+.highlight .kd,
+.highlight .kn { color: #FF7B72; }          /* keyword */
+.highlight .nf,
+.highlight .nc { color: #79C0FF; }          /* function / class name */
+.highlight .m,
+.highlight .mi,
+.highlight .mf { color: #F8C555; }          /* number */
+.highlight .c,
+.highlight .c1,
+.highlight .cm { color: #6E7681; font-style: italic; } /* comment */
+.highlight .cp  { color: #79C0FF; }         /* preprocessor */
+.highlight .s,
+.highlight .s1,
+.highlight .s2  { color: #A5D6FF; }         /* string */
+
+/* --- Tables --- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.93rem;
+}
+
+th {
+  background: var(--surface-alt);
+  color: var(--text);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border);
+}
+
+td {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+
+tr:nth-child(even) td {
+  background: var(--surface-alt);
+}
+
+/* --- Tool forms --- */
+
+.tool-section {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tool-section h2 {
+  margin-top: 0;
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.tool-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  margin-top: 0.75rem;
+  font-size: 0.93rem;
+}
+
+.tool-section input,
+.tool-section select {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.tool-section button {
+  margin-top: 0.75rem;
+}
+
+.tool-result {
+  margin-top: 0.75rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  font-size: 1.05rem;
+  min-height: 1.5rem;
+}
+
+/* --- Worksheet form fields --- */
+
+.ws-field {
+  border: none;
+  border-bottom: 1px solid var(--border);
+  display: block;
+  width: 100%;
+  margin: 0.4rem 0 1rem;
+  padding: 0.2rem 0;
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+.ws-box {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-height: 120px;
+  margin: 0.5rem 0 1rem;
+  padding: 0.5rem;
+}

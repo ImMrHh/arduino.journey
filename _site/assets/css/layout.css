@@ -1,0 +1,230 @@
+/* ============================================================
+   LAYOUT — Header, Nav, Main, Footer, Container, Grid
+   ============================================================ */
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* --- Site Header & Nav --- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.nav-shell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.brand {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  border-left: 4px solid var(--primary);
+  padding-left: 0.6rem;
+  text-decoration: none;
+}
+.brand:hover {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.site-nav a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+}
+.site-nav a:hover,
+.site-nav a.active {
+  color: var(--primary);
+  background: var(--surface-alt);
+  text-decoration: none;
+}
+
+/* --- Lesson shell: sidebar + content --- */
+
+.lesson-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 60px);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.lesson-sidebar {
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  padding: 1.75rem 0 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  background: var(--surface);
+}
+
+.lesson-content {
+  min-width: 0;
+  padding: 2rem 2.5rem 3rem;
+}
+
+/* Sidebar blocks */
+.sb-block {
+  padding: 0 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.sb-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted, var(--text-soft));
+  margin-bottom: 0.4rem;
+  padding: 0 8px;
+}
+
+.sb-lesson-chip {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--t6);
+  background: var(--t1);
+  border: 1px solid var(--t2);
+  border-radius: 3px;
+  padding: 2px 7px;
+  margin-bottom: 0.5rem;
+}
+
+.sb-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  padding: 0 8px;
+}
+
+.sb-rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0.25rem 1rem 1rem;
+}
+
+/* TOC links */
+.toc-link {
+  display: block;
+  font-size: 12.5px;
+  color: var(--text-soft);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-left: 2px solid transparent;
+  margin-bottom: 1px;
+  text-decoration: none;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+  line-height: 1.4;
+}
+
+.toc-link:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.toc-link.active {
+  background: var(--t1);
+  color: var(--t6);
+  border-left-color: var(--t5);
+  font-weight: 500;
+}
+
+/* Override .site-main padding for lesson pages so sidebar reaches full height */
+body.lesson .site-main {
+  padding: 0;
+}
+
+@media (max-width: 860px) {
+  .lesson-shell {
+    grid-template-columns: 1fr;
+  }
+  .lesson-sidebar {
+    display: none;
+  }
+  .lesson-content {
+    padding: 1.5rem 1.25rem 3rem;
+  }
+  body.lesson .site-main {
+    padding: 0;
+  }
+}
+
+/* --- Main Content --- */
+
+.site-main {
+  min-height: calc(100vh - 120px);
+  padding: 2rem 0 3rem;
+}
+
+/* --- Footer --- */
+
+.site-footer {
+  background: var(--text);
+  color: #aab;
+  padding: 1.5rem 0;
+  font-size: 0.88rem;
+  text-align: center;
+}
+.site-footer p { margin-bottom: 0.25rem; }
+.site-footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* --- Grid utilities --- */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 860px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .site-nav { gap: 0.1rem; }
+  .site-nav a { font-size: 0.8rem; padding: 0.25rem 0.4rem; }
+  .grid-2, .grid-4 { grid-template-columns: 1fr; }
+}

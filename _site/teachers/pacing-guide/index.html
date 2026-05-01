@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pacing Guide | Arduino Journey</title>
+  <meta name="description" content="10-lesson pacing guide for Arduino Journey — 40-minute sessions, groups of 3.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Pacing Guide | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Pacing Guide" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="10-lesson pacing guide for Arduino Journey — 40-minute sessions, groups of 3." />
+<meta property="og:description" content="10-lesson pacing guide for Arduino Journey — 40-minute sessions, groups of 3." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/teachers/pacing-guide/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/teachers/pacing-guide/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Pacing Guide" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"10-lesson pacing guide for Arduino Journey — 40-minute sessions, groups of 3.","headline":"Pacing Guide","url":"http://localhost:4000/arduino.journey/teachers/pacing-guide/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="teacher">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <article class="teacher-page">
+  <div class="teacher-banner">Teacher Hub</div>
+  <h1 id="pacing-guide">Pacing Guide</h1>
+
+<p><strong>Format:</strong> 1 lesson every 2 weeks, 40-minute sessions, groups of 3 students.</p>
+
+<hr />
+
+<h2 id="lesson-01--what-is-arduino">Lesson 01 — What is Arduino?</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 15 minutes<br />
+<strong>Objectives:</strong> Students identify board parts, install IDE 2, upload Blink.<br />
+<strong>Materials to prepare:</strong> Arduino Uno + USB cable per group, computers with IDE 2 pre-installed if possible.<br />
+<strong>Expected challenges:</strong> IDE installation takes time on student computers — pre-install if possible. Some USB cables are charge-only.<br />
+<strong>Teacher notes:</strong> This is an orientation lesson. Focus on getting everyone to a successful first upload. Don’t go deeper than Blink.</p>
+
+<hr />
+
+<h2 id="lesson-02--blink-external-led">Lesson 02 — Blink (External LED)</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 10 minutes<br />
+<strong>Objectives:</strong> Students wire an LED with resistor on breadboard, control it from code.<br />
+<strong>Materials to prepare:</strong> Breadboard, 1x LED, 1x 220 ohm resistor, 2x jumper wires per group.<br />
+<strong>Expected challenges:</strong> LED polarity errors are very common. Have spare LEDs ready.<br />
+<strong>Teacher notes:</strong> Spend 5 minutes demonstrating the breadboard layout before groups start wiring.</p>
+
+<hr />
+
+<h2 id="lesson-03--multiple-leds">Lesson 03 — Multiple LEDs</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 10 minutes<br />
+<strong>Objectives:</strong> Students wire 3 LEDs, use arrays and for loops.<br />
+<strong>Materials to prepare:</strong> 3x LEDs, 3x 220 ohm resistors, 6+ jumper wires per group.<br />
+<strong>Expected challenges:</strong> for loop indexing confuses students at first. The array concept may need extra time.<br />
+<strong>Teacher notes:</strong> Draw the for loop execution order on the board. Walk through i=0, i=1, i=2 step by step.</p>
+
+<hr />
+
+<h2 id="lesson-04--button-input">Lesson 04 — Button Input</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 10 minutes<br />
+<strong>Objectives:</strong> Students wire a button, read digital input, understand pull-up resistors.<br />
+<strong>Materials to prepare:</strong> 1x push button, 1x LED + resistor per group.<br />
+<strong>Expected challenges:</strong> Students often forget INPUT_PULLUP and get floating pin readings. Active LOW logic confuses many.<br />
+<strong>Teacher notes:</strong> Demonstrate floating pin behavior first (without INPUT_PULLUP) so students understand why pull-up is needed.</p>
+
+<hr />
+
+<h2 id="lesson-05--buzzer-and-sound">Lesson 05 — Buzzer and Sound</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 10 minutes<br />
+<strong>Objectives:</strong> Students wire a passive buzzer, use tone() to play a melody.<br />
+<strong>Materials to prepare:</strong> 1x passive buzzer per group (verify they are passive, not active).<br />
+<strong>Expected challenges:</strong> Active buzzers only produce one tone. Have students verify buzzer type.<br />
+<strong>Teacher notes:</strong> Keep volume expectations realistic — the small buzzers are quiet. Students often expect louder sound.</p>
+
+<hr />
+
+<h2 id="lesson-06--analog-input">Lesson 06 — Analog Input</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 10 minutes<br />
+<strong>Objectives:</strong> Students wire a potentiometer, use analogRead() and map(), control LED brightness.<br />
+<strong>Materials to prepare:</strong> 1x potentiometer (10k recommended), 1x LED + resistor per group.<br />
+<strong>Expected challenges:</strong> Potentiometer leg identification. Students sometimes confuse analog and PWM pins.<br />
+<strong>Teacher notes:</strong> Open Serial Monitor early — seeing the numbers change as they turn the pot is very engaging and confirms the circuit is working.</p>
+
+<hr />
+
+<h2 id="lesson-07--sensors">Lesson 07 — Sensors</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 20 minutes (library install)<br />
+<strong>Objectives:</strong> Students read LDR and DHT11 sensor data, display it in Serial Monitor.<br />
+<strong>Materials to prepare:</strong> 1x LDR + 10k resistor, 1x DHT11 module per group. Pre-install DHT library if possible.<br />
+<strong>Expected challenges:</strong> DHT library installation. Students sometimes open the wrong library (there are several DHT libraries).<br />
+<strong>Teacher notes:</strong> Install DHT sensor library by Adafruit specifically. Walk through Library Manager as a class before groups start.</p>
+
+<hr />
+
+<h2 id="lesson-08--mini-challenge">Lesson 08 — Mini Challenge</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 5 minutes<br />
+<strong>Objectives:</strong> Students design and build either a reaction timer or traffic light independently.<br />
+<strong>Materials to prepare:</strong> Full component kit available per group.<br />
+<strong>Expected challenges:</strong> Groups that haven’t fully understood previous lessons will struggle. Be ready to provide more scaffolding.<br />
+<strong>Teacher notes:</strong> This lesson is assessment-friendly — observe each group’s process. Ask probing questions while they build.</p>
+
+<hr />
+
+<h2 id="lesson-09--dfplayer-mini-setup">Lesson 09 — DFPlayer Mini Setup</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 30 minutes (SD card prep, library install)<br />
+<strong>Objectives:</strong> Students wire DFPlayer Mini, load SD card, play first audio file.<br />
+<strong>Materials to prepare:</strong> DFPlayer Mini, microSD card (FAT32, with mp3 folder and numbered files), small speaker, 1k resistor, DFRobotDFPlayerMini library installed.<br />
+<strong>Expected challenges:</strong> SD card format issues are the most common problem. Pre-format and load cards before class.<br />
+<strong>Teacher notes:</strong> Pre-load the SD cards with a few short MP3 files. FAT32 formatting + correct folder/filename structure is the biggest hurdle.</p>
+
+<hr />
+
+<h2 id="lesson-10--mp3-player-final-build">Lesson 10 — MP3 Player Final Build</h2>
+
+<p><strong>Session time:</strong> 40 minutes<br />
+<strong>Prep time:</strong> 10 minutes<br />
+<strong>Objectives:</strong> Students build complete MP3 player with 5-button control and status LED.<br />
+<strong>Materials to prepare:</strong> Full kit from Lesson 09 plus 5 buttons.<br />
+<strong>Expected challenges:</strong> Wiring complexity with 5 buttons. Debounce logic takes time to understand.<br />
+<strong>Teacher notes:</strong> Celebrate completion — this is the capstone. Allow 5 minutes at the end for groups to demo their player.</p>
+
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

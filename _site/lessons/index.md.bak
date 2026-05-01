@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lessons | Arduino Journey</title>
+  <meta name="description" content="All 10 Arduino Journey lessons — from first LED to MP3 Player.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lessons | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lessons" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="All 10 Arduino Journey lessons — from first LED to MP3 Player." />
+<meta property="og:description" content="All 10 Arduino Journey lessons — from first LED to MP3 Player." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/index.md.bak" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/index.md.bak" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lessons" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"All 10 Arduino Journey lessons — from first LED to MP3 Player.","headline":"Lessons","url":"http://localhost:4000/arduino.journey/lessons/index.md.bak"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="default">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lessons-hero">
+  <div class="container">
+    <span class="home-hero-badge">10 Lessons · Arduino C++ · Groups of 3</span>
+    <h1 class="lessons-hero-title">All Lessons</h1>
+    <p class="lessons-hero-sub">Ten structured sessions — one every two weeks. Each lesson builds directly on the last, ending with a fully functional MP3 player.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- PHASE 1 -->
+  <div class="lessons-phase-header">
+    <span class="lessons-phase-num">01</span>
+    <div>
+      <span class="lessons-phase-kicker">Phase 1</span>
+      <h2 class="lessons-phase-name">Foundations</h2>
+    </div>
+  </div>
+
+  <div class="lessons-grid">
+
+    <a class="lesson-card" href="/arduino.journey/lessons/lesson-01/">
+      <div class="lesson-card-num">01</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">What is Arduino?</h3>
+        <p class="lesson-card-desc">Introduction to the Arduino Uno board, the Arduino IDE 2, and uploading your first sketch.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip">Board overview</span>
+          <span class="lc-chip">IDE 2</span>
+          <span class="lc-chip">First upload</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+    <a class="lesson-card" href="/arduino.journey/lessons/lesson-02/">
+      <div class="lesson-card-num">02</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">Blink</h3>
+        <p class="lesson-card-desc">Control an external LED with a resistor on a breadboard — digital output and Ohm's law basics.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip">Digital output</span>
+          <span class="lc-chip">LED + resistor</span>
+          <span class="lc-chip">Breadboard</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+    <a class="lesson-card" href="/arduino.journey/lessons/lesson-03/">
+      <div class="lesson-card-num">03</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">Multiple LEDs</h3>
+        <p class="lesson-card-desc">Wire multiple LEDs and create sequences and timing patterns with arrays and for loops.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip">Arrays</span>
+          <span class="lc-chip">for loops</span>
+          <span class="lc-chip">Sequences</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="lessons-phase-header">
+    <span class="lessons-phase-num">02</span>
+    <div>
+      <span class="lessons-phase-kicker">Phase 2</span>
+      <h2 class="lessons-phase-name">Inputs &amp; Feedback</h2>
+    </div>
+  </div>
+
+  <div class="lessons-grid">
+
+    <a class="lesson-card" href="/arduino.journey/lessons/lesson-04/">
+      <div class="lesson-card-num">04</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">Button Input</h3>
+        <p class="lesson-card-desc">Read digital input from a push button using the internal pull-up resistor.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip">digitalRead()</span>
+          <span class="lc-chip">Pull-up resistor</span>
+          <span class="lc-chip">if / else</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+    <a class="lesson-card" href="/arduino.journey/lessons/lesson-05/">
+      <div class="lesson-card-num">05</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">Buzzer &amp; Sound</h3>
+        <p class="lesson-card-desc">Generate tones and simple melodies using the tone() function with a passive buzzer.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip">tone()</span>
+          <span class="lc-chip">Frequencies</span>
+          <span class="lc-chip">Melodies</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+    <a class="lesson-card" href="/arduino.journey/lessons/lesson-06/">
+      <div class="lesson-card-num">06</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">Analog Input</h3>
+        <p class="lesson-card-desc">Read a potentiometer with analogRead() and control LED brightness via PWM.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip">analogRead()</span>
+          <span class="lc-chip">PWM</span>
+          <span class="lc-chip">map()</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="lessons-phase-header">
+    <span class="lessons-phase-num">03</span>
+    <div>
+      <span class="lessons-phase-kicker">Phase 3</span>
+      <h2 class="lessons-phase-name">Sensors &amp; Data</h2>
+    </div>
+  </div>
+
+  <div class="lessons-grid lessons-grid--2">
+
+    <a class="lesson-card" href="/arduino.journey/lessons/lesson-07/">
+      <div class="lesson-card-num">07</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">Sensors</h3>
+        <p class="lesson-card-desc">Read light intensity with an LDR and temperature/humidity with a DHT11 sensor.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip">LDR</span>
+          <span class="lc-chip">DHT11</span>
+          <span class="lc-chip">Libraries</span>
+          <span class="lc-chip">Serial Monitor</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+    <a class="lesson-card lesson-card--challenge" href="/arduino.journey/lessons/lesson-08/">
+      <div class="lesson-card-num">08</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">Mini Challenge</h3>
+        <p class="lesson-card-desc">Apply everything learned — build a reaction timer or traffic light as a team project.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip lc-chip--amber">Team project</span>
+          <span class="lc-chip lc-chip--amber">millis()</span>
+          <span class="lc-chip lc-chip--amber">State</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="lessons-phase-header lessons-phase-header--capstone">
+    <span class="lessons-phase-num">04</span>
+    <div>
+      <span class="lessons-phase-kicker">Phase 4 · Capstone</span>
+      <h2 class="lessons-phase-name">Final Project</h2>
+    </div>
+  </div>
+
+  <div class="lessons-grid lessons-grid--2">
+
+    <a class="lesson-card lesson-card--capstone" href="/arduino.journey/lessons/lesson-09/">
+      <div class="lesson-card-num">09</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">DFPlayer Mini — Setup</h3>
+        <p class="lesson-card-desc">Wire the DFPlayer Mini MP3 module, prepare the SD card, and play your first audio file.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip lc-chip--amber">SoftwareSerial</span>
+          <span class="lc-chip lc-chip--amber">SD card</span>
+          <span class="lc-chip lc-chip--amber">DFPlayer library</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+    <a class="lesson-card lesson-card--capstone" href="/arduino.journey/lessons/lesson-10/">
+      <div class="lesson-card-num">10</div>
+      <div class="lesson-card-body">
+        <h3 class="lesson-card-title">MP3 Player — Final Build</h3>
+        <p class="lesson-card-desc">Build a complete MP3 player with play/pause, next, previous, and volume controls.</p>
+        <div class="lesson-card-chips">
+          <span class="lc-chip lc-chip--amber">5 buttons</span>
+          <span class="lc-chip lc-chip--amber">Debouncing</span>
+          <span class="lc-chip lc-chip--amber">Complete project</span>
+        </div>
+      </div>
+      <span class="lesson-card-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- FOOTER BAR -->
+  <div class="lessons-footer-bar">
+    <a class="btn-secondary" href="/arduino.journey/teachers/">Teacher Hub →</a>
+    <a class="btn-secondary" href="/arduino.journey/worksheets/">Download Worksheets →</a>
+  </div>
+
+</div>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

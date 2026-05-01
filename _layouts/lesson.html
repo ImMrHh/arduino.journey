@@ -1,0 +1,114 @@
+---
+layout: default
+---
+<div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson {{ page.lesson_number | prepend: "0" | slice: -2, 2 }}</div>
+      <div class="sb-title">{{ page.title | remove_first: "Lesson " | split: " — " | last }}</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      {% if page.toc %}
+        {% for item in page.toc %}
+        <a class="toc-link" href="{{ item.anchor }}">{{ item.label }}</a>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      {% assign lessons = site.pages | where: "layout", "lesson" | sort: "lesson_number" %}
+      {% for lesson in lessons %}
+      <a class="toc-link{% if lesson.url == page.url %} active{% endif %}" href="{{ lesson.url | relative_url }}">{{ lesson.lesson_number | prepend: "0" | slice: -2, 2 }} &mdash; {{ lesson.title | remove_first: "Lesson " | split: " — " | last }}</a>
+      {% endfor %}
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">{{ page.lesson_number | prepend: "0" | slice: -2, 2 }}</div>
+        <div class="lesson-header-text">
+          <h1>{{ page.title }}</h1>
+          {% if page.description %}<p>{{ page.description }}</p>{% endif %}
+        </div>
+      </div>
+
+      {{ content }}
+
+      {% if page.prev_lesson or page.next_lesson %}
+      <nav class="lesson-nav">
+        {% if page.prev_lesson %}
+        <a href="{{ page.prev_lesson.url | relative_url }}" class="lesson-nav-btn prev">
+          <span class="nav-direction">&#8592; Previous</span>
+          <span class="nav-title">{{ page.prev_lesson.title }}</span>
+        </a>
+        {% endif %}
+        {% if page.next_lesson %}
+        <a href="{{ page.next_lesson.url | relative_url }}" class="lesson-nav-btn next">
+          <span class="nav-direction">Next &#8594;</span>
+          <span class="nav-title">{{ page.next_lesson.title }}</span>
+        </a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>

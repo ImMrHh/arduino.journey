@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 10 — MP3 Player Final Build | Arduino Journey</title>
+  <meta name="description" content="Build a complete MP3 player with play/pause, next, previous, and volume controls using buttons and DFPlayer Mini.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lesson 10 — MP3 Player Final Build | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lesson 10 — MP3 Player Final Build" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Build a complete MP3 player with play/pause, next, previous, and volume controls using buttons and DFPlayer Mini." />
+<meta property="og:description" content="Build a complete MP3 player with play/pause, next, previous, and volume controls using buttons and DFPlayer Mini." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/lesson-10/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/lesson-10/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lesson 10 — MP3 Player Final Build" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Build a complete MP3 player with play/pause, next, previous, and volume controls using buttons and DFPlayer Mini.","headline":"Lesson 10 — MP3 Player Final Build","url":"http://localhost:4000/arduino.journey/lessons/lesson-10/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="lesson">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson 10</div>
+      <div class="sb-title">MP3 Player Final Build</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      
+        
+        <a class="toc-link" href="#objectives">Objectives</a>
+        
+        <a class="toc-link" href="#materials">Materials</a>
+        
+        <a class="toc-link" href="#background">Background</a>
+        
+        <a class="toc-link" href="#build">Build</a>
+        
+        <a class="toc-link" href="#code">Code</a>
+        
+        <a class="toc-link" href="#understanding">Understanding</a>
+        
+        <a class="toc-link" href="#reflect">Reflect</a>
+        
+        <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+        
+        <a class="toc-link" href="#course-complete">What You Built</a>
+        
+      
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-01/">01 &mdash; What is Arduino?</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-02/">02 &mdash; Blink</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-03/">03 &mdash; Multiple LEDs</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-04/">04 &mdash; Button Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-05/">05 &mdash; Buzzer and Sound</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-06/">06 &mdash; Analog Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-07/">07 &mdash; Sensors</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-08/">08 &mdash; Mini Challenge</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-09/">09 &mdash; DFPlayer Mini Setup</a>
+      
+      <a class="toc-link active" href="/arduino.journey/lessons/lesson-10/">10 &mdash; MP3 Player Final Build</a>
+      
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">10</div>
+        <div class="lesson-header-text">
+          <h1>Lesson 10 — MP3 Player Final Build</h1>
+          <p>Build a complete MP3 player with play/pause, next, previous, and volume controls using buttons and DFPlayer Mini.</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+  <p><span class="section-kicker">Objectives</span></p>
+
+  <h2 id="objectives">Learning Objectives</h2>
+  <div class="objectives-box">
+    <ul>
+      <li>Combine everything from the course into one complete project</li>
+      <li>Implement play/pause, next track, previous track, and volume controls</li>
+      <li>Understand how to manage state (playing/paused) in code</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Materials</span></p>
+
+  <h2 id="materials">Materials for This Lesson</h2>
+  <div class="materials-card">
+    <ul>
+      <li>Arduino Uno</li>
+      <li>Breadboard</li>
+      <li>DFPlayer Mini with SD card loaded (from Lesson 09)</li>
+      <li>5x push buttons</li>
+      <li>5x 220 ohm resistors (optional, for button debouncing — or use INPUT_PULLUP)</li>
+      <li>Small speaker (4 or 8 ohm)</li>
+      <li>LED + 220 ohm resistor (status indicator)</li>
+      <li>Jumper wires</li>
+      <li>USB cable</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Background</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>This is the capstone project. You will build a functional MP3 player that responds to five buttons: play/pause, next track, previous track, volume up, and volume down. A status LED shows whether the player is playing or paused.</p>
+
+  <p>Managing state is a key concept in this lesson. The word state means “what condition is the system in right now?” Your player can be in one of two states: playing or paused. You store this in a boolean variable (<code>true</code> = playing, <code>false</code> = paused) and check it every time the play/pause button is pressed.</p>
+
+  <p>Debouncing is also important here. Mechanical buttons bounce — they make and break contact several times in the first few milliseconds of a press. Without debouncing, one press can register as many presses. The simplest software debounce is to wait a short time (50–100 ms) after detecting a press before reading again.</p>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Build</span></p>
+
+  <h2 id="build">Build</h2>
+
+  <div class="wiring-placeholder">
+    <p><img src="/arduino.journey/assets/img/lesson-10-wiring.png" alt="Lesson 10 wiring diagram — MP3 Player Final Build" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /></p>
+    <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+  </div>
+
+  <ol class="step-list">
+<li>VCC of DFPlayer to 5V, GND to GND.</li>
+<li>RX of DFPlayer to pin 11 through a 1k ohm resistor.</li>
+<li>TX of DFPlayer to pin 10 (direct).</li>
+<li>Speaker on SPK_1 / SPK_2.</li>
+<li>Play/Pause button: one leg to pin 2, other leg to GND.</li>
+<li>Next track button: one leg to pin 3, other leg to GND.</li>
+<li>Previous track button: one leg to pin 4, other leg to GND.</li>
+<li>Volume up button: one leg to pin 5, other leg to GND.</li>
+<li>Volume down button: one leg to pin 6, other leg to GND.</li>
+<li>Status LED: long leg through 220 ohm resistor to pin 9, short leg to GND.</li>
+<li>Enter the code below and upload.</li>
+<li>Test each button one at a time — play/pause first, then next/previous, then volume.</li>
+</ol>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Code</span></p>
+
+  <h2 id="code">Code</h2>
+
+  <div class="code-topbar">
+    <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MP3 Player Final Build</span>
+<span class="c1">// DFPlayer Mini on pins 10 (RX) and 11 (TX through 1k resistor)</span>
+<span class="c1">// Buttons: Play/Pause=2, Next=3, Prev=4, VolUp=5, VolDown=6</span>
+<span class="c1">// Status LED on pin 9</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;SoftwareSerial.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;DFRobotDFPlayerMini.h&gt;</span><span class="cp">
+</span>
+<span class="n">SoftwareSerial</span> <span class="nf">dfSerial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
+<span class="n">DFRobotDFPlayerMini</span> <span class="n">dfPlayer</span><span class="p">;</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">PIN_PLAY_PAUSE</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">PIN_NEXT</span>       <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">PIN_PREV</span>       <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">PIN_VOL_UP</span>     <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">PIN_VOL_DOWN</span>   <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">PIN_LED</span>        <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+
+<span class="kt">bool</span> <span class="n">isPlaying</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<span class="kt">int</span>  <span class="n">volume</span>    <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">VOL_MIN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">VOL_MAX</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+
+<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">lastPress</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">DEBOUNCE_MS</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+
+<span class="kt">bool</span> <span class="nf">buttonPressed</span><span class="p">(</span><span class="kt">int</span> <span class="n">pin</span><span class="p">,</span> <span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">pin</span><span class="p">)</span> <span class="o">==</span> <span class="n">LOW</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">now</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">lastPress</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">DEBOUNCE_MS</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">lastPress</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">now</span><span class="p">;</span>
+      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">setLED</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span> <span class="n">isPlaying</span> <span class="o">?</span> <span class="n">HIGH</span> <span class="o">:</span> <span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+  <span class="n">dfSerial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_PLAY_PAUSE</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_NEXT</span><span class="p">,</span>       <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_PREV</span><span class="p">,</span>       <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_VOL_UP</span><span class="p">,</span>     <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_VOL_DOWN</span><span class="p">,</span>   <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">PIN_LED</span><span class="p">,</span>        <span class="n">OUTPUT</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">dfPlayer</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">dfSerial</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"DFPlayer not found"</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">dfPlayer</span><span class="p">.</span><span class="n">volume</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
+  <span class="n">dfPlayer</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="n">isPlaying</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="n">setLED</span><span class="p">();</span>
+
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"MP3 Player ready"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">buttonPressed</span><span class="p">(</span><span class="n">PIN_PLAY_PAUSE</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">isPlaying</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">dfPlayer</span><span class="p">.</span><span class="n">pause</span><span class="p">();</span>
+      <span class="n">isPlaying</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">dfPlayer</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
+      <span class="n">isPlaying</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">setLED</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">isPlaying</span> <span class="o">?</span> <span class="s">"Playing"</span> <span class="o">:</span> <span class="s">"Paused"</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">buttonPressed</span><span class="p">(</span><span class="n">PIN_NEXT</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">dfPlayer</span><span class="p">.</span><span class="n">next</span><span class="p">();</span>
+    <span class="n">isPlaying</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">setLED</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Next track"</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">buttonPressed</span><span class="p">(</span><span class="n">PIN_PREV</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">dfPlayer</span><span class="p">.</span><span class="n">previous</span><span class="p">();</span>
+    <span class="n">isPlaying</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">setLED</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Previous track"</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">buttonPressed</span><span class="p">(</span><span class="n">PIN_VOL_UP</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">volume</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">VOL_MAX</span><span class="p">);</span>
+    <span class="n">dfPlayer</span><span class="p">.</span><span class="n">volume</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Volume: "</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">buttonPressed</span><span class="p">(</span><span class="n">PIN_VOL_DOWN</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">volume</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="n">VOL_MIN</span><span class="p">);</span>
+    <span class="n">dfPlayer</span><span class="p">.</span><span class="n">volume</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Volume: "</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Understanding</span></p>
+
+    <h2 id="understanding">Understanding the Code</h2>
+
+    <table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">bool isPlaying = false</td>
+      <td class="def-body">A global variable that tracks whether audio is playing. Booleans are either <code>true</code> or <code>false</code>.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">buttonPressed(pin, index)</td>
+      <td class="def-body">A helper function that checks if a button is pressed and debounces it. Returns <code>true</code> only if the button has been LOW for more than DEBOUNCE_MS since the last press.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">millis() for debouncing</td>
+      <td class="def-body">Using <code>millis()</code> for debouncing is better than <code>delay()</code> because the program does not stop and miss other button presses.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">dfPlayer.pause() / dfPlayer.start()</td>
+      <td class="def-body">Pause and resume playback without resetting track position.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">dfPlayer.next() / dfPlayer.previous()</td>
+      <td class="def-body">Skip to next or previous track on the SD card.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">isPlaying ? HIGH : LOW</td>
+      <td class="def-body">The ternary operator — a shorthand if-else. Turns the LED on if playing, off if paused.</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="challenge-box">
+      <p class="challenge-label">Try This</p>
+      <p>Can you add a small OLED or LCD display that shows the current track number? Use the <code>dfPlayer.readCurrentFileNumber()</code> function and an I2C display library. This is an advanced challenge — ask your teacher for guidance.</p>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Reflect</span></p>
+
+    <h2 id="reflect">Reflection Questions</h2>
+
+    <ol class="reflection-list">
+      <li>What does “state” mean in programming, and how is it used in the play/pause logic?</li>
+      <li>Why is debouncing necessary for physical buttons?</li>
+      <li>Looking back at all 10 lessons — which concept was hardest to understand, and which project was most fun to build?</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Troubleshooting</span></p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Likely Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Play/pause button skips multiple tracks</td>
+          <td>No debounce</td>
+          <td>Make sure DEBOUNCE_MS is at least 200</td>
+        </tr>
+        <tr>
+          <td>Volume buttons do nothing</td>
+          <td>Pins not set to INPUT_PULLUP</td>
+          <td>Check setup() for pinMode declarations</td>
+        </tr>
+        <tr>
+          <td>Player stops after first track</td>
+          <td>SD card has only one file</td>
+          <td>Add more MP3 files to the mp3 folder</td>
+        </tr>
+        <tr>
+          <td>LED stays off even when playing</td>
+          <td>LED polarity wrong or wrong pin</td>
+          <td>Check wiring; confirm PIN_LED = 9</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Course Complete</span></p>
+
+    <h2 id="course-complete">What You Built</h2>
+
+    <p>You have built a working MP3 player from scratch using Arduino.</p>
+
+    <p>Over these ten lessons you went from blinking a single LED to managing hardware state, serial communication, and external libraries. You learned to read inputs, control outputs, work with sensors, and structure code around real-world constraints. The same principles — setup, loop, state, input, output — are the foundation of every embedded system ever built.</p>
+
+    <p>If you want to keep going, try adding an OLED display, building a custom enclosure, or exploring other Arduino-compatible boards like the ESP32 (which has built-in Wi-Fi and Bluetooth). The skills you have now are the starting point for all of it.</p>
+  </div>
+</div>
+
+
+      
+      <nav class="lesson-nav">
+        
+        <a href="/arduino.journey/lessons/lesson-09/" class="lesson-nav-btn prev">
+          <span class="nav-direction">&#8592; Previous</span>
+          <span class="nav-title">Lesson 09 — DFPlayer Mini Setup</span>
+        </a>
+        
+        
+      </nav>
+      
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

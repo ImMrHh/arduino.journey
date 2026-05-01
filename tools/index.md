@@ -1,175 +1,178 @@
 ---
-title: "Tools"
 layout: default
+title: "Tools"
+description: "Interactive calculators for Arduino projects — Ohm's Law, Resistor Color Code, LED Resistor, PWM."
 ---
 
-# 🛠 Tools
+# Tools
 
-Interactive calculators and utilities for your Arduino projects.
+Interactive calculators for your Arduino projects.
 
-<hr>
-
-## Ohm's Law Calculator
 <div class="tool-section">
-  <!-- your Ohm's Law form + script here -->
+<h2>Ohm's Law Calculator</h2>
+<p>Enter any two values to calculate the third.</p>
+
+<label>Voltage (V)</label>
+<input type="number" id="voltage" step="any" placeholder="e.g. 5">
+<label>Current (A)</label>
+<input type="number" id="current" step="any" placeholder="e.g. 0.02">
+<label>Resistance (R)</label>
+<input type="number" id="resistance" step="any" placeholder="e.g. 250">
+<button class="btn-primary" type="button" onclick="calculateOhmsLaw()">Calculate</button>
+<p class="tool-result" id="ohms-result"></p>
 </div>
-
-Enter any two values and calculate the third:
-
-<form id="ohms-law">
-  Voltage (V): <input type="number" id="voltage" step="any"><br>
-  Current (I): <input type="number" id="current" step="any"><br>
-  Resistance (R): <input type="number" id="resistance" step="any"><br>
-  <button type="button" onclick="calculateOhmsLaw()">Calculate</button>
-</form>
-
-<p id="ohms-result"></p>
 
 <script>
 function calculateOhmsLaw() {
-  let V = parseFloat(document.getElementById("voltage").value);
-  let I = parseFloat(document.getElementById("current").value);
-  let R = parseFloat(document.getElementById("resistance").value);
-  let result = "";
-
-  if (!isNaN(V) && !isNaN(I)) {
-    R = V / I;
-    result = "Resistance = " + R.toFixed(2) + " Ω";
-  } else if (!isNaN(V) && !isNaN(R)) {
-    I = V / R;
-    result = "Current = " + I.toFixed(2) + " A";
-  } else if (!isNaN(I) && !isNaN(R)) {
-    V = I * R;
-    result = "Voltage = " + V.toFixed(2) + " V";
+  var V = parseFloat(document.getElementById("voltage").value);
+  var I = parseFloat(document.getElementById("current").value);
+  var R = parseFloat(document.getElementById("resistance").value);
+  var result = "";
+  if (!isNaN(V) && !isNaN(I) && isNaN(R)) {
+    result = "Resistance = " + (V / I).toFixed(2) + " ohms";
+  } else if (!isNaN(V) && isNaN(I) && !isNaN(R)) {
+    result = "Current = " + (V / R).toFixed(4) + " A (" + ((V/R)*1000).toFixed(2) + " mA)";
+  } else if (isNaN(V) && !isNaN(I) && !isNaN(R)) {
+    result = "Voltage = " + (I * R).toFixed(2) + " V";
   } else {
-    result = "Please enter any two values.";
+    result = "Enter exactly two values.";
   }
-
-  document.getElementById("ohms-result").innerText = result;
+  document.getElementById("ohms-result").textContent = result;
 }
 </script>
 
-## Resistor Color Code Decoder
 <div class="tool-section">
-  <!-- your Ohm's Law form + script here -->
+<h2>Resistor Color Code Decoder</h2>
+<p>Select the four band colors to decode the resistance value.</p>
+
+<label>Band 1 (first digit)</label>
+<select id="band1">
+<option value="">-- select --</option>
+<option value="0">Black — 0</option>
+<option value="1">Brown — 1</option>
+<option value="2">Red — 2</option>
+<option value="3">Orange — 3</option>
+<option value="4">Yellow — 4</option>
+<option value="5">Green — 5</option>
+<option value="6">Blue — 6</option>
+<option value="7">Violet — 7</option>
+<option value="8">Gray — 8</option>
+<option value="9">White — 9</option>
+</select>
+
+<label>Band 2 (second digit)</label>
+<select id="band2">
+<option value="">-- select --</option>
+<option value="0">Black — 0</option>
+<option value="1">Brown — 1</option>
+<option value="2">Red — 2</option>
+<option value="3">Orange — 3</option>
+<option value="4">Yellow — 4</option>
+<option value="5">Green — 5</option>
+<option value="6">Blue — 6</option>
+<option value="7">Violet — 7</option>
+<option value="8">Gray — 8</option>
+<option value="9">White — 9</option>
+</select>
+
+<label>Band 3 (multiplier)</label>
+<select id="multiplier">
+<option value="">-- select --</option>
+<option value="1">Black — x1</option>
+<option value="10">Brown — x10</option>
+<option value="100">Red — x100</option>
+<option value="1000">Orange — x1,000</option>
+<option value="10000">Yellow — x10,000</option>
+<option value="100000">Green — x100,000</option>
+<option value="1000000">Blue — x1,000,000</option>
+<option value="0.1">Gold — x0.1</option>
+<option value="0.01">Silver — x0.01</option>
+</select>
+
+<label>Band 4 (tolerance)</label>
+<select id="tolerance">
+<option value="">-- select --</option>
+<option value="±1%">Brown — ±1%</option>
+<option value="±2%">Red — ±2%</option>
+<option value="±0.5%">Green — ±0.5%</option>
+<option value="±0.25%">Blue — ±0.25%</option>
+<option value="±0.1%">Violet — ±0.1%</option>
+<option value="±5%">Gold — ±5%</option>
+<option value="±10%">Silver — ±10%</option>
+</select>
+
+<button class="btn-primary" type="button" onclick="decodeResistor()">Decode</button>
+<p class="tool-result" id="resistor-result"></p>
 </div>
 
-Enter the 4-band colors to calculate resistance:
-
-<form id="resistor-code">
-  Band 1: <input type="text" id="band1"><br>
-  Band 2: <input type="text" id="band2"><br>
-  Multiplier: <input type="text" id="multiplier"><br>
-  Tolerance: <input type="text" id="tolerance"><br>
-  <button type="button" onclick="decodeResistor()">Decode</button>
-</form>
-
-<p id="resistor-result"></p>
-
 <script>
-const colorValues = {
-  black: 0, brown: 1, red: 2, orange: 3, yellow: 4,
-  green: 5, blue: 6, violet: 7, gray: 8, white: 9
-};
-const multiplierValues = {
-  black: 1, brown: 10, red: 100, orange: 1000, yellow: 10000,
-  green: 100000, blue: 1000000, violet: 10000000, gray: 100000000, white: 1000000000
-};
-const toleranceValues = {
-  brown: "±1%", red: "±2%", green: "±0.5%", blue: "±0.25%",
-  violet: "±0.1%", gray: "±0.05%", gold: "±5%", silver: "±10%"
-};
-
 function decodeResistor() {
-  let b1 = document.getElementById("band1").value.toLowerCase();
-  let b2 = document.getElementById("band2").value.toLowerCase();
-  let mult = document.getElementById("multiplier").value.toLowerCase();
-  let tol = document.getElementById("tolerance").value.toLowerCase();
-
-  if (colorValues[b1] !== undefined && colorValues[b2] !== undefined && multiplierValues[mult] !== undefined) {
-    let value = (colorValues[b1] * 10 + colorValues[b2]) * multiplierValues[mult];
-    let tolerance = toleranceValues[tol] || "";
-    document.getElementById("resistor-result").innerText = "Resistance = " + value + " Ω " + tolerance;
-  } else {
-    document.getElementById("resistor-result").innerText = "Invalid color input.";
+  var b1 = document.getElementById("band1").value;
+  var b2 = document.getElementById("band2").value;
+  var mult = document.getElementById("multiplier").value;
+  var tol = document.getElementById("tolerance").value;
+  if (b1 === "" || b2 === "" || mult === "") {
+    document.getElementById("resistor-result").textContent = "Please select all color bands.";
+    return;
   }
+  var value = (parseInt(b1) * 10 + parseInt(b2)) * parseFloat(mult);
+  var tolStr = tol ? " " + tol : "";
+  var display = value >= 1000000 ? (value/1000000).toFixed(2) + " M" :
+                value >= 1000 ? (value/1000).toFixed(2) + " k" : value + " ";
+  document.getElementById("resistor-result").textContent = "Resistance = " + display + "ohms" + tolStr;
 }
 </script>
 
-## LED Resistor Calculator
 <div class="tool-section">
-  <!-- your Ohm's Law form + script here -->
+<h2>LED Resistor Calculator</h2>
+<p>Calculate the resistor value needed for an LED.</p>
+
+<label>Supply Voltage (V)</label>
+<input type="number" id="led-supply" step="0.01" placeholder="e.g. 5">
+<label>LED Forward Voltage (V)</label>
+<input type="number" id="led-forward" step="0.01" placeholder="e.g. 2.0">
+<label>Desired Current (mA)</label>
+<input type="number" id="led-current" step="1" placeholder="e.g. 20">
+<button class="btn-primary" type="button" onclick="calculateLEDResistor()">Calculate</button>
+<p class="tool-result" id="led-result"></p>
 </div>
-
-Calculate the resistor needed for an LED given supply voltage, LED forward voltage, and desired current.
-
-<form id="led-resistor">
-  Supply Voltage (V): 
-  <input type="number" id="led-supply" step="0.01" inputmode="decimal"><br>
-  LED Forward Voltage (V): 
-  <input type="number" id="led-forward" step="0.01" inputmode="decimal"><br>
-  Desired Current (mA): 
-  <input type="number" id="led-current" step="1" inputmode="numeric"><br>
-  <button type="button" onclick="calculateLEDResistor()">Calculate</button>
-</form>
-
-<p id="led-result"></p>
 
 <script>
-function normalizeNumber(value) {
-  // Trim, replace comma with dot, then parse
-  if (typeof value !== "string") return NaN;
-  const cleaned = value.trim().replace(",", ".");
-  return parseFloat(cleaned);
-}
-
 function calculateLEDResistor() {
-  const Vs = normalizeNumber(document.getElementById("led-supply").value);
-  const Vf = normalizeNumber(document.getElementById("led-forward").value);
-  const I_mA = normalizeNumber(document.getElementById("led-current").value);
-
+  var Vs = parseFloat(document.getElementById("led-supply").value);
+  var Vf = parseFloat(document.getElementById("led-forward").value);
+  var I_mA = parseFloat(document.getElementById("led-current").value);
   if (!isNaN(Vs) && !isNaN(Vf) && !isNaN(I_mA) && I_mA > 0 && Vs > Vf) {
-    const I_A = I_mA / 1000;        // convert mA to A
-    const R = (Vs - Vf) / I_A;      // ohms
-    document.getElementById("led-result").innerText =
-      "Recommended Resistor = " + Math.round(R) + " Ω";
+    var R = (Vs - Vf) / (I_mA / 1000);
+    document.getElementById("led-result").textContent = "Recommended Resistor = " + Math.round(R) + " ohms";
   } else {
-    document.getElementById("led-result").innerText =
-      "Please enter valid numeric values. Supply voltage must be greater than LED forward voltage.";
+    document.getElementById("led-result").textContent = "Please enter valid values. Supply voltage must exceed LED forward voltage.";
   }
 }
 </script>
 
-## PWM Duty Cycle Calculator
 <div class="tool-section">
-  <!-- your Ohm's Law form + script here -->
+<h2>PWM Duty Cycle Calculator</h2>
+<p>Calculate duty cycle from frequency and pulse width.</p>
+
+<label>Signal Frequency (Hz)</label>
+<input type="number" id="pwm-frequency" step="any" placeholder="e.g. 490">
+<label>Pulse Width (ms)</label>
+<input type="number" id="pwm-pulse" step="any" placeholder="e.g. 1.02">
+<button class="btn-primary" type="button" onclick="calculatePWM()">Calculate</button>
+<p class="tool-result" id="pwm-result"></p>
 </div>
-
-Calculate the duty cycle percentage given signal frequency and pulse width.
-
-<form id="pwm-calculator">
-  Signal Frequency (Hz): 
-  <input type="number" id="pwm-frequency" step="any"><br>
-  Pulse Width (ms): 
-  <input type="number" id="pwm-pulse" step="any"><br>
-  <button type="button" onclick="calculatePWM()">Calculate</button>
-</form>
-
-<p id="pwm-result"></p>
 
 <script>
 function calculatePWM() {
-  const freq = parseFloat(document.getElementById("pwm-frequency").value);
-  const pulse_ms = parseFloat(document.getElementById("pwm-pulse").value);
-
+  var freq = parseFloat(document.getElementById("pwm-frequency").value);
+  var pulse_ms = parseFloat(document.getElementById("pwm-pulse").value);
   if (!isNaN(freq) && !isNaN(pulse_ms) && freq > 0 && pulse_ms > 0) {
-    const period_ms = 1000 / freq; // convert Hz to ms period
-    const duty = (pulse_ms / period_ms) * 100;
-    document.getElementById("pwm-result").innerText =
-      "Duty Cycle = " + duty.toFixed(1) + "%";
+    var period_ms = 1000 / freq;
+    var duty = (pulse_ms / period_ms) * 100;
+    document.getElementById("pwm-result").textContent = "Duty Cycle = " + duty.toFixed(1) + "%";
   } else {
-    document.getElementById("pwm-result").innerText =
-      "Please enter valid numeric values.";
+    document.getElementById("pwm-result").textContent = "Please enter valid values.";
   }
 }
 </script>

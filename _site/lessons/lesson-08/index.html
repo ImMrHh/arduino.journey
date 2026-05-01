@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 08 — Mini Challenge | Arduino Journey</title>
+  <meta name="description" content="Apply everything learned so far — build a reaction timer or traffic light as a team project.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lesson 08 — Mini Challenge | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lesson 08 — Mini Challenge" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Apply everything learned so far — build a reaction timer or traffic light as a team project." />
+<meta property="og:description" content="Apply everything learned so far — build a reaction timer or traffic light as a team project." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/lesson-08/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/lesson-08/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lesson 08 — Mini Challenge" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Apply everything learned so far — build a reaction timer or traffic light as a team project.","headline":"Lesson 08 — Mini Challenge","url":"http://localhost:4000/arduino.journey/lessons/lesson-08/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="lesson">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson 08</div>
+      <div class="sb-title">Mini Challenge</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      
+        
+        <a class="toc-link" href="#objectives">Objectives</a>
+        
+        <a class="toc-link" href="#materials">Materials</a>
+        
+        <a class="toc-link" href="#background">Background</a>
+        
+        <a class="toc-link" href="#build">Build</a>
+        
+        <a class="toc-link" href="#code">Code — Option A</a>
+        
+        <a class="toc-link" href="#code-b">Code — Option B</a>
+        
+        <a class="toc-link" href="#understanding">Understanding</a>
+        
+        <a class="toc-link" href="#reflect">Reflect</a>
+        
+        <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+        
+      
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-01/">01 &mdash; What is Arduino?</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-02/">02 &mdash; Blink</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-03/">03 &mdash; Multiple LEDs</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-04/">04 &mdash; Button Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-05/">05 &mdash; Buzzer and Sound</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-06/">06 &mdash; Analog Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-07/">07 &mdash; Sensors</a>
+      
+      <a class="toc-link active" href="/arduino.journey/lessons/lesson-08/">08 &mdash; Mini Challenge</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-09/">09 &mdash; DFPlayer Mini Setup</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-10/">10 &mdash; MP3 Player Final Build</a>
+      
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">08</div>
+        <div class="lesson-header-text">
+          <h1>Lesson 08 — Mini Challenge</h1>
+          <p>Apply everything learned so far — build a reaction timer or traffic light as a team project.</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+  <p><span class="section-kicker">Objectives</span></p>
+
+  <h2 id="objectives">Learning Objectives</h2>
+  <div class="objectives-box">
+    <ul>
+      <li>Apply digital input, output, and timing in a complete small project</li>
+      <li>Work as a team to plan, build, and test a circuit</li>
+      <li>Debug a real project from scratch</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Materials</span></p>
+
+  <h2 id="materials">Materials for This Lesson</h2>
+  <div class="materials-card">
+    <ul>
+      <li>Arduino Uno</li>
+      <li>Breadboard</li>
+      <li>3x LEDs (red, yellow/orange, green recommended for traffic light)</li>
+      <li>3x 220 ohm resistors</li>
+      <li>1x push button</li>
+      <li>1x passive buzzer</li>
+      <li>Jumper wires</li>
+      <li>USB cable</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Background</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>This lesson is a design challenge. Your group will choose one of two projects and build it using the skills from Lessons 1–7. There is no single correct answer — your group decides the wiring and the code structure.</p>
+
+  <p><strong>Option A — Reaction Timer:</strong> One LED turns on at a random time. The player must press a button as fast as possible. The Arduino measures the time between the LED turning on and the button press, and displays the result in milliseconds in the Serial Monitor.</p>
+
+  <p><strong>Option B — Traffic Light Sequence:</strong> Wire three LEDs (red, yellow, green) and program them to run through a realistic traffic light sequence: Red — Red+Yellow — Green — Yellow — Red. Each phase lasts a different amount of time. Bonus: add a button that requests a pedestrian crossing.</p>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Build</span></p>
+
+  <h2 id="build">Build</h2>
+
+  <div class="wiring-placeholder">
+    <p><img src="/arduino.journey/assets/img/lesson-08-wiring.png" alt="Lesson 08 wiring diagram — Mini Challenge" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /></p>
+    <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+  </div>
+
+  <ol class="step-list">
+<li>As a group, choose Option A or Option B.</li>
+<li>Sketch the wiring on paper before touching any components.</li>
+<li>Wire the circuit on the breadboard.</li>
+<li>Open Arduino IDE 2 and start a new sketch.</li>
+<li>Write your code — start with <code>setup()</code> and <code>loop()</code> only, then build up.</li>
+<li>Test one part at a time: get the LEDs working before adding the button.</li>
+<li>Upload and debug until it works.</li>
+</ol>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Code — Option A</span></p>
+
+  <h2 id="code">Code — Option A: Reaction Timer</h2>
+
+  <div class="code-topbar">
+    <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Reaction Timer</span>
+<span class="c1">// LED on pin 9, button on pin 2</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">LED_PIN</span>    <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">BUTTON_PIN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">BUTTON_PIN</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+  <span class="n">randomSeed</span><span class="p">(</span><span class="n">analogRead</span><span class="p">(</span><span class="n">A0</span><span class="p">));</span>  <span class="c1">// Seed random with floating pin noise</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Get ready..."</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+
+  <span class="c1">// Random delay before LED turns on: 2 to 5 seconds</span>
+  <span class="kt">long</span> <span class="n">waitTime</span> <span class="o">=</span> <span class="n">random</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="n">waitTime</span><span class="p">);</span>
+
+  <span class="c1">// Turn on LED and record the time</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="kt">long</span> <span class="n">startTime</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
+
+  <span class="c1">// Wait for button press</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">BUTTON_PIN</span><span class="p">)</span> <span class="o">==</span> <span class="n">HIGH</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Do nothing — just wait</span>
+  <span class="p">}</span>
+
+  <span class="kt">long</span> <span class="n">reactionTime</span> <span class="o">=</span> <span class="n">millis</span><span class="p">()</span> <span class="o">-</span> <span class="n">startTime</span><span class="p">;</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Reaction time: "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">reactionTime</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" ms"</span><span class="p">);</span>
+
+  <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>  <span class="c1">// Pause before next round</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Code — Option B</span></p>
+
+    <h2 id="code-b">Code — Option B: Traffic Light</h2>
+
+    <div class="code-topbar">
+      <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+      <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Traffic Light Sequence</span>
+<span class="c1">// Red = pin 3, Yellow = pin 4, Green = pin 5</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">RED</span>    <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">YELLOW</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">GREEN</span>  <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">allOff</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">allOff</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Red phase</span>
+  <span class="n">allOff</span><span class="p">();</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+
+  <span class="c1">// Red + Yellow (prepare to go)</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+
+  <span class="c1">// Green phase</span>
+  <span class="n">allOff</span><span class="p">();</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+
+  <span class="c1">// Yellow (prepare to stop)</span>
+  <span class="n">allOff</span><span class="p">();</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>      </div>
+    </div>
+
+    <div class="lesson-section">
+      <p><span class="section-kicker">Understanding</span></p>
+
+      <h2 id="understanding">Understanding the Code</h2>
+
+      <table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">randomSeed(analogRead(A0))</td>
+      <td class="def-body">Seeds the random number generator with electrical noise from an unconnected analog pin, so timing is different each run.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">random(2000, 5000)</td>
+      <td class="def-body">Returns a random long integer between 2000 and 4999 milliseconds.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">millis()</td>
+      <td class="def-body">Returns the number of milliseconds since the Arduino was powered on. This is how you measure elapsed time.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">while (digitalRead(BUTTON_PIN) == HIGH)</td>
+      <td class="def-body">An empty loop that keeps running until the button is pressed.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">allOff()</td>
+      <td class="def-body">A helper function that turns all three LEDs off at once, making the main code cleaner.</td>
+    </tr>
+  </tbody>
+</table>
+
+      <div class="challenge-box">
+        <p class="challenge-label">Try This</p>
+        <p><strong>Option A:</strong> Can you add a buzzer that plays a short tone when the LED turns on as an audio cue?<br />
+<strong>Option B:</strong> Can you add a push button that acts as a pedestrian crossing request? When pressed, the traffic light should complete its current phase and then hold on red for 5 seconds.</p>
+      </div>
+    </div>
+
+    <div class="lesson-section">
+      <p><span class="section-kicker">Reflect</span></p>
+
+      <h2 id="reflect">Reflection Questions</h2>
+
+      <ol class="reflection-list">
+        <li>How did your group divide the work for this project?</li>
+        <li>What was the hardest part to get working, and how did you fix it?</li>
+        <li>What would you change if you had more time?</li>
+      </ol>
+    </div>
+
+    <div class="lesson-section">
+      <p><span class="section-kicker">Troubleshooting</span></p>
+
+      <h2 id="troubleshooting">Troubleshooting</h2>
+
+      <table class="trouble-table">
+        <thead>
+          <tr>
+            <th>Problem</th>
+            <th>Likely Cause</th>
+            <th>Fix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Reaction timer starts immediately</td>
+            <td>Button pressed during setup</td>
+            <td>Make sure button is released when sketch starts</td>
+          </tr>
+          <tr>
+            <td>Traffic light stays on one phase</td>
+            <td>Delay too long or missing</td>
+            <td>Check delay values match intended timing</td>
+          </tr>
+          <tr>
+            <td>millis() readings look wrong</td>
+            <td>Long integer overflow (very long session)</td>
+            <td>Restart the board to reset millis()</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+      
+      <nav class="lesson-nav">
+        
+        <a href="/arduino.journey/lessons/lesson-07/" class="lesson-nav-btn prev">
+          <span class="nav-direction">&#8592; Previous</span>
+          <span class="nav-title">Lesson 07 — Sensors</span>
+        </a>
+        
+        
+        <a href="/arduino.journey/lessons/lesson-09/" class="lesson-nav-btn next">
+          <span class="nav-direction">Next &#8594;</span>
+          <span class="nav-title">Lesson 09 — DFPlayer Mini Setup</span>
+        </a>
+        
+      </nav>
+      
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

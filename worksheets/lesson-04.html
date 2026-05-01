@@ -1,0 +1,90 @@
+---
+layout: worksheet
+title: "Worksheet 04 — Button Input"
+---
+
+<div class="print-page">
+
+<div class="ws-print-bar">
+<button class="btn-primary no-print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>Worksheet 04 — Button Input</h1>
+
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+
+<hr>
+
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>Digital input</td><td></td></tr>
+<tr><td>Pull-up resistor</td><td></td></tr>
+<tr><td>INPUT_PULLUP</td><td></td></tr>
+<tr><td>Active LOW</td><td></td></tr>
+<tr><td>digitalRead()</td><td></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Circuit Diagram Space</h2>
+<p>Draw the circuit: button from pin 2 to GND, LED through resistor from pin 9 to GND.</p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Code Challenge</h2>
+<p>Fill in the blanks to make a button control an LED:</p>
+<pre><code>const int BUTTON_PIN = 2;
+const int LED_PIN    = 9;
+
+void setup() {
+  pinMode(BUTTON_PIN, ___);
+  pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+  int buttonState = ___(BUTTON_PIN);
+
+  if (buttonState == ___) {
+    digitalWrite(LED_PIN, HIGH);
+  } else {
+    digitalWrite(LED_PIN, ___);
+  }
+}</code></pre>
+
+<hr>
+
+<h2>Reflection</h2>
+<p>Answer these questions in your own words:</p>
+
+<p><strong>1. Why does a floating pin give unreliable readings without a pull-up resistor?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>2. Why is button input described as "active LOW" when using INPUT_PULLUP?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>3. What is the difference between INPUT and INPUT_PULLUP?</strong></p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Self-Assessment</h2>
+<p>Check each box when you can do it confidently:</p>
+<ul>
+<li><input type="checkbox"> I can wire a push button to an Arduino pin</li>
+<li><input type="checkbox"> I understand what INPUT_PULLUP does</li>
+<li><input type="checkbox"> I understand why the button reads LOW when pressed</li>
+<li><input type="checkbox"> I can use digitalRead() in an if statement</li>
+<li><input type="checkbox"> I can explain what "active LOW" means</li>
+</ul>
+
+</div>

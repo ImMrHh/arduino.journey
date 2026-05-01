@@ -1,0 +1,102 @@
+---
+layout: worksheet
+title: "Worksheet 09 — DFPlayer Mini Setup"
+---
+
+<div class="print-page">
+
+<div class="ws-print-bar">
+<button class="btn-primary no-print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>Worksheet 09 — DFPlayer Mini Setup</h1>
+
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+
+<hr>
+
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>DFPlayer Mini</td><td></td></tr>
+<tr><td>SoftwareSerial</td><td></td></tr>
+<tr><td>FAT32</td><td></td></tr>
+<tr><td>SD card</td><td></td></tr>
+<tr><td>Serial communication</td><td></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Circuit Diagram Space</h2>
+<p>Draw the DFPlayer Mini wiring: VCC, GND, RX (through 1k resistor to pin 11), TX (to pin 10), speaker connections.</p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>SD Card Checklist</h2>
+<p>Before testing, verify each step:</p>
+<ul>
+<li><input type="checkbox"> SD card formatted as FAT32</li>
+<li><input type="checkbox"> Folder named exactly <code>mp3</code> created at root</li>
+<li><input type="checkbox"> MP3 files renamed to <code>0001.mp3</code>, <code>0002.mp3</code>, etc.</li>
+<li><input type="checkbox"> SD card inserted into DFPlayer Mini</li>
+<li><input type="checkbox"> DFRobotDFPlayerMini library installed</li>
+</ul>
+
+<hr>
+
+<h2>Code Challenge</h2>
+<p>Fill in the blanks to initialize and play a track:</p>
+<pre><code>#include &lt;SoftwareSerial.h&gt;
+#include &lt;DFRobotDFPlayerMini.h&gt;
+
+SoftwareSerial dfSerial(___, 11);
+DFRobotDFPlayerMini dfPlayer;
+
+void setup() {
+  Serial.begin(9600);
+  dfSerial.begin(___);
+
+  if (!dfPlayer.___(dfSerial)) {
+    while (true);
+  }
+
+  dfPlayer.volume(___);
+  dfPlayer.___(1);
+}</code></pre>
+
+<hr>
+
+<h2>Reflection</h2>
+<p>Answer these questions in your own words:</p>
+
+<p><strong>1. Why must we use SoftwareSerial instead of the hardware serial pins (0 and 1)?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>2. What format must the SD card and file names be in for the DFPlayer to work?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>3. What happens if dfPlayer.begin() returns false?</strong></p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Self-Assessment</h2>
+<p>Check each box when you can do it confidently:</p>
+<ul>
+<li><input type="checkbox"> I can wire the DFPlayer Mini correctly including the 1k resistor</li>
+<li><input type="checkbox"> I can prepare an SD card with the correct folder and file names</li>
+<li><input type="checkbox"> I understand why SoftwareSerial is used</li>
+<li><input type="checkbox"> I can set the volume and play a specific track</li>
+<li><input type="checkbox"> I know how to debug if the DFPlayer is not found</li>
+</ul>
+
+</div>

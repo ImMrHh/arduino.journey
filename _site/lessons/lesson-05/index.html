@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 05 — Buzzer and Sound | Arduino Journey</title>
+  <meta name="description" content="Generate tones and simple melodies using the tone() function with a passive buzzer.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lesson 05 — Buzzer and Sound | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lesson 05 — Buzzer and Sound" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Generate tones and simple melodies using the tone() function with a passive buzzer." />
+<meta property="og:description" content="Generate tones and simple melodies using the tone() function with a passive buzzer." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/lesson-05/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/lesson-05/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lesson 05 — Buzzer and Sound" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Generate tones and simple melodies using the tone() function with a passive buzzer.","headline":"Lesson 05 — Buzzer and Sound","url":"http://localhost:4000/arduino.journey/lessons/lesson-05/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="lesson">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson 05</div>
+      <div class="sb-title">Buzzer and Sound</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      
+        
+        <a class="toc-link" href="#objectives">Objectives</a>
+        
+        <a class="toc-link" href="#materials">Materials</a>
+        
+        <a class="toc-link" href="#background">Background</a>
+        
+        <a class="toc-link" href="#build">Build</a>
+        
+        <a class="toc-link" href="#code">Code</a>
+        
+        <a class="toc-link" href="#understanding">Understanding</a>
+        
+        <a class="toc-link" href="#reflect">Reflect</a>
+        
+        <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+        
+      
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-01/">01 &mdash; What is Arduino?</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-02/">02 &mdash; Blink</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-03/">03 &mdash; Multiple LEDs</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-04/">04 &mdash; Button Input</a>
+      
+      <a class="toc-link active" href="/arduino.journey/lessons/lesson-05/">05 &mdash; Buzzer and Sound</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-06/">06 &mdash; Analog Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-07/">07 &mdash; Sensors</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-08/">08 &mdash; Mini Challenge</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-09/">09 &mdash; DFPlayer Mini Setup</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-10/">10 &mdash; MP3 Player Final Build</a>
+      
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">05</div>
+        <div class="lesson-header-text">
+          <h1>Lesson 05 — Buzzer and Sound</h1>
+          <p>Generate tones and simple melodies using the tone() function with a passive buzzer.</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+  <p><span class="section-kicker">Objectives</span></p>
+
+  <h2 id="objectives">Learning Objectives</h2>
+  <div class="objectives-box">
+    <ul>
+      <li>Wire a passive buzzer to an Arduino pin</li>
+      <li>Use <code class="language-plaintext highlighter-rouge">tone()</code> and <code class="language-plaintext highlighter-rouge">noTone()</code> to produce sounds</li>
+      <li>Combine button input with sound output</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Materials</span></p>
+
+  <h2 id="materials">Materials for This Lesson</h2>
+  <div class="materials-card">
+    <ul>
+      <li>Arduino Uno</li>
+      <li>Breadboard</li>
+      <li>1x passive buzzer (NOT an active buzzer)</li>
+      <li>1x push button</li>
+      <li>Jumper wires</li>
+      <li>USB cable</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Background</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>Sound is produced by vibrations in the air. A buzzer converts an electrical signal into mechanical vibrations that we hear as sound. There are two types of buzzers: active buzzers produce a fixed tone when given power; passive buzzers require a rapidly changing signal to produce different pitches.</p>
+
+  <p>For this lesson you must use a passive buzzer. The Arduino’s <code class="language-plaintext highlighter-rouge">tone()</code> function generates a square wave at a specified frequency on a digital pin, which drives the passive buzzer.</p>
+
+  <p>Frequency determines pitch. 440 Hz is the musical note A4 (concert A). Lower frequencies sound lower; higher frequencies sound higher. The <code class="language-plaintext highlighter-rouge">tone()</code> function accepts the pin, the frequency in Hz, and an optional duration in milliseconds. If no duration is given, the tone plays until you call <code class="language-plaintext highlighter-rouge">noTone()</code>.</p>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Build</span></p>
+
+  <h2 id="build">Build</h2>
+
+  <div class="wiring-placeholder">
+    <p><img src="/arduino.journey/assets/img/lesson-05-wiring.png" alt="Lesson 05 wiring diagram — Buzzer and Sound" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /></p>
+    <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+  </div>
+
+  <ol class="step-list">
+<li>Connect the positive leg of the buzzer (longer leg or marked +) to pin 8.</li>
+<li>Connect the negative leg to GND.</li>
+<li>Connect a button: one leg to pin 2, other leg to GND (same as Lesson 04).</li>
+<li>Open a new sketch in Arduino IDE 2.</li>
+<li>Enter the code below and upload.</li>
+<li>Press the button to hear the melody.</li>
+</ol>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Code</span></p>
+
+  <h2 id="code">Code</h2>
+
+  <div class="code-topbar">
+    <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Buzzer melody with button trigger</span>
+<span class="c1">// Passive buzzer on pin 8, button on pin 2</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">BUZZER_PIN</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">BUTTON_PIN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="c1">// Simple melody: frequencies in Hz (0 = rest)</span>
+<span class="kt">int</span> <span class="n">melody</span><span class="p">[]</span>   <span class="o">=</span> <span class="p">{</span><span class="mi">262</span><span class="p">,</span> <span class="mi">294</span><span class="p">,</span> <span class="mi">330</span><span class="p">,</span> <span class="mi">349</span><span class="p">,</span> <span class="mi">392</span><span class="p">,</span> <span class="mi">440</span><span class="p">,</span> <span class="mi">494</span><span class="p">,</span> <span class="mi">523</span><span class="p">};</span>
+<span class="kt">int</span> <span class="n">noteDur</span><span class="p">[]</span>  <span class="o">=</span> <span class="p">{</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">600</span><span class="p">};</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">NOTES</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">BUTTON_PIN</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">BUTTON_PIN</span><span class="p">)</span> <span class="o">==</span> <span class="n">LOW</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">playMelody</span><span class="p">();</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>  <span class="c1">// Debounce pause after melody</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">playMelody</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NOTES</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">melody</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">noTone</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">tone</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">,</span> <span class="n">melody</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">noteDur</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="n">delay</span><span class="p">(</span><span class="n">noteDur</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">30</span><span class="p">);</span>  <span class="c1">// Note duration + small gap</span>
+  <span class="p">}</span>
+  <span class="n">noTone</span><span class="p">(</span><span class="n">BUZZER_PIN</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Understanding</span></p>
+
+    <h2 id="understanding">Understanding the Code</h2>
+
+    <table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">tone(BUZZER_PIN, melody[i], noteDur[i])</td>
+      <td class="def-body">Plays a tone on pin 8 at the frequency <code>melody[i]</code> Hz for <code>noteDur[i]</code> milliseconds.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">noTone(BUZZER_PIN)</td>
+      <td class="def-body">Stops any tone on pin 8.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">melody[]</td>
+      <td class="def-body">Stores the note frequencies. 262 Hz = C4, 294 = D4, 330 = E4, and so on up the C major scale.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">noteDur[]</td>
+      <td class="def-body">Stores how long each note plays in milliseconds.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">delay(noteDur[i] + 30)</td>
+      <td class="def-body">Waits for the note to finish plus a small gap so notes are distinct and not blurred together.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">playMelody()</td>
+      <td class="def-body">A custom function defined outside <code>loop()</code>. When called, the Arduino jumps to it, runs it, and returns.</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="challenge-box">
+      <p class="challenge-label">Try This</p>
+      <p>Can you play the first few notes of a recognizable melody — for example, the Super Mario Bros. theme or Happy Birthday? Look up the note frequencies online and replace the <code>melody[]</code> array.</p>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Reflect</span></p>
+
+    <h2 id="reflect">Reflection Questions</h2>
+
+    <ol class="reflection-list">
+      <li>What is the difference between an active and a passive buzzer?</li>
+      <li>What does the frequency number in <code class="language-plaintext highlighter-rouge">tone()</code> control?</li>
+      <li>Why do we call <code class="language-plaintext highlighter-rouge">noTone()</code> after the melody finishes?</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Troubleshooting</span></p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Likely Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>No sound</td>
+          <td>Active buzzer used instead of passive</td>
+          <td>Check your buzzer type; passive buzzers need the tone() signal</td>
+        </tr>
+        <tr>
+          <td>Constant tone</td>
+          <td>noTone() not called</td>
+          <td>Check that noTone() is called after the melody</td>
+        </tr>
+        <tr>
+          <td>Very quiet sound</td>
+          <td>Poor breadboard connection</td>
+          <td>Reseat the buzzer legs firmly</td>
+        </tr>
+        <tr>
+          <td>Button doesn’t trigger</td>
+          <td>Wrong pin or no INPUT_PULLUP</td>
+          <td>Check wiring and confirm INPUT_PULLUP in setup()</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+      
+      <nav class="lesson-nav">
+        
+        <a href="/arduino.journey/lessons/lesson-04/" class="lesson-nav-btn prev">
+          <span class="nav-direction">&#8592; Previous</span>
+          <span class="nav-title">Lesson 04 — Button Input</span>
+        </a>
+        
+        
+        <a href="/arduino.journey/lessons/lesson-06/" class="lesson-nav-btn next">
+          <span class="nav-direction">Next &#8594;</span>
+          <span class="nav-title">Lesson 06 — Analog Input</span>
+        </a>
+        
+      </nav>
+      
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

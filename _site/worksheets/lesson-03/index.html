@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worksheet 03 — Multiple LEDs | Arduino Journey</title>
+  <meta name="description" content="Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Worksheet 03 — Multiple LEDs | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Worksheet 03 — Multiple LEDs" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player." />
+<meta property="og:description" content="Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/worksheets/lesson-03/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/worksheets/lesson-03/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Worksheet 03 — Multiple LEDs" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player.","headline":"Worksheet 03 — Multiple LEDs","url":"http://localhost:4000/arduino.journey/worksheets/lesson-03/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="worksheet">
+
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+
+  
+  
+  
+
+  <!-- Worksheet Hero -->
+  <div class="ws-hero">
+    <div class="ws-hero-inner container">
+      <div class="ws-hero-meta">
+        <span class="ws-hero-badge">Worksheet</span>
+        <span class="ws-hero-num">03</span>
+      </div>
+      <div class="ws-hero-text">
+        <h1 class="ws-hero-title">Multiple LEDs</h1>
+        <div class="ws-hero-fields">
+          <div class="ws-field-group">
+            <label class="ws-field-label" for="ws-name">Name</label>
+            <input class="ws-input" id="ws-name" type="text" placeholder="Your name" autocomplete="off">
+          </div>
+          <div class="ws-field-group">
+            <label class="ws-field-label" for="ws-date">Date</label>
+            <input class="ws-input ws-input--short" id="ws-date" type="text" placeholder="DD / MM / YYYY" autocomplete="off">
+          </div>
+          <div class="ws-field-group">
+            <label class="ws-field-label" for="ws-group">Group</label>
+            <input class="ws-input ws-input--short" id="ws-group" type="text" placeholder="e.g. 3A" autocomplete="off">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF Button — sticky -->
+  <div class="ws-pdf-bar no-print">
+    <div class="container ws-pdf-bar-inner">
+      <span class="ws-pdf-label">Worksheet 03 — Multiple LEDs</span>
+      <button class="ws-pdf-btn" onclick="window.print()">⬇ Save as PDF</button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <main class="ws-main site-main">
+    <div class="container ws-content">
+      <div class="print-page">
+
+<div class="ws-print-bar">
+<button class="btn-primary no-print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>Worksheet 03 — Multiple LEDs</h1>
+
+<div class="ws-header-fields">
+<div><label>Name</label><div class="ws-field"></div></div>
+<div><label>Date</label><div class="ws-field"></div></div>
+<div><label>Group</label><div class="ws-field"></div></div>
+</div>
+
+<hr>
+
+<h2>Key Vocabulary</h2>
+<p>Match each term to its definition:</p>
+
+<table>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>Array</td><td></td></tr>
+<tr><td>Index</td><td></td></tr>
+<tr><td>for loop</td><td></td></tr>
+<tr><td>Sequence</td><td></td></tr>
+<tr><td>NUM_LEDS</td><td></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Circuit Diagram Space</h2>
+<p>Draw the circuit for three LEDs on pins 3, 4, and 5, sharing a common GND rail.</p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Code Challenge</h2>
+<p>Fill in the blanks to complete the LED sequence:</p>
+<pre><code>const int NUM_LEDS = ___;
+int ledPins[] = {3, ___, 5};
+
+void setup() {
+  for (int i = 0; i &lt; ___; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+}
+
+void loop() {
+  for (int i = 0; i &lt; NUM_LEDS; ___) {
+    digitalWrite(ledPins[i], HIGH);
+    delay(300);
+    digitalWrite(ledPins[___], LOW);
+  }
+}</code></pre>
+
+<hr>
+
+<h2>Reflection</h2>
+<p>Answer these questions in your own words:</p>
+
+<p><strong>1. What is an array, and why is it useful when controlling multiple pins?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>2. What does <code>i &lt; NUM_LEDS</code> mean in the for loop condition?</strong></p>
+<div class="ws-box"></div>
+
+<p><strong>3. How would you add a fourth LED to this sketch with minimal changes?</strong></p>
+<div class="ws-box"></div>
+
+<hr>
+
+<h2>Self-Assessment</h2>
+<p>Check each box when you can do it confidently:</p>
+<ul>
+<li><input type="checkbox"> I can wire three LEDs with resistors on a breadboard</li>
+<li><input type="checkbox"> I understand what an array is and how to access elements</li>
+<li><input type="checkbox"> I can trace through a for loop step by step (i=0, i=1, i=2)</li>
+<li><input type="checkbox"> I can create a chase pattern using a loop</li>
+<li><input type="checkbox"> I can add a new LED to the array</li>
+</ul>
+
+</div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+
+</body>
+</html>
