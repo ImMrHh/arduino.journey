@@ -86,6 +86,9 @@ Before writing any code, take a moment to find these parts on your Arduino Uno:
 | Reset button | Top edge | Restarts the current sketch |
 | 5V and GND pins | Right side | Provide power and ground to external components |
 {: .trouble-table}
+<div class="wiring-placeholder" style="margin-top: 1.25rem;">
+  <img src="{{ '/assets/img/lesson-01-board.png' | relative_url }}" alt="Arduino Uno board — top view" />
+</div>
 </div>
 
 
