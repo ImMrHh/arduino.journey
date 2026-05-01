@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Setup | Arduino Journey</title>
+  <meta name="description" content="Hardware kit, software setup, and classroom layout guide for Arduino Journey.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Classroom Setup | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Classroom Setup" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Hardware kit, software setup, and classroom layout guide for Arduino Journey." />
+<meta property="og:description" content="Hardware kit, software setup, and classroom layout guide for Arduino Journey." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/teachers/classroom-setup/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/teachers/classroom-setup/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Classroom Setup" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Hardware kit, software setup, and classroom layout guide for Arduino Journey.","headline":"Classroom Setup","url":"http://localhost:4000/arduino.journey/teachers/classroom-setup/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="teacher">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <article class="teacher-page">
+  <div class="teacher-banner">Teacher Hub</div>
+  <h1 id="classroom-setup">Classroom Setup</h1>
+
+<hr />
+
+<h2 id="arduino-ide-2-installation">Arduino IDE 2 Installation</h2>
+
+<ol>
+  <li>Go to <a href="https://www.arduino.cc/en/software">https://www.arduino.cc/en/software</a></li>
+  <li>Download Arduino IDE 2 for your operating system.</li>
+  <li>Install it with default settings.</li>
+  <li>Connect an Arduino Uno and verify it appears under Tools &gt; Port.</li>
+</ol>
+
+<p>On <strong>Windows</strong>, some boards require the CH340 driver if the port is not detected automatically. Download from the chip manufacturer’s site.</p>
+
+<p>On <strong>iPads or Chromebooks</strong>, use the Arduino Web Editor at <a href="https://create.arduino.cc">https://create.arduino.cc</a> — students need a free Arduino account.</p>
+
+<hr />
+
+<h2 id="required-libraries">Required Libraries</h2>
+
+<p>Install these libraries in Arduino IDE 2 via Tools &gt; Manage Libraries:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Library</th>
+      <th>Author</th>
+      <th>Used in</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DHT sensor library</td>
+      <td>Adafruit</td>
+      <td>Lesson 07</td>
+    </tr>
+    <tr>
+      <td>Adafruit Unified Sensor</td>
+      <td>Adafruit</td>
+      <td>Lesson 07 (dependency)</td>
+    </tr>
+    <tr>
+      <td>DFRobotDFPlayerMini</td>
+      <td>DFRobot</td>
+      <td>Lessons 09, 10</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>SoftwareSerial is included with Arduino IDE — no installation needed.</p>
+
+<hr />
+
+<h2 id="hardware-kit-per-group-of-3">Hardware Kit Per Group of 3</h2>
+
+<p>Each group needs:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Quantity</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Arduino Uno</td>
+      <td>1</td>
+      <td>Any clone works</td>
+    </tr>
+    <tr>
+      <td>USB-A to USB-B cable</td>
+      <td>1</td>
+      <td>Data cable, not charge-only</td>
+    </tr>
+    <tr>
+      <td>Breadboard (half-size or full)</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Jumper wires (male-to-male)</td>
+      <td>20</td>
+      <td>Assorted colors</td>
+    </tr>
+    <tr>
+      <td>LED (red)</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LED (green)</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>LED (yellow)</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Resistor 220 ohm</td>
+      <td>10</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Resistor 1k ohm</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Resistor 10k ohm</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Push button (momentary)</td>
+      <td>5</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Potentiometer 10k</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Passive buzzer</td>
+      <td>1</td>
+      <td>Verify passive, not active</td>
+    </tr>
+    <tr>
+      <td>LDR (photoresistor)</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>DHT11 sensor module</td>
+      <td>1</td>
+      <td>Module preferred over bare sensor</td>
+    </tr>
+    <tr>
+      <td>DFPlayer Mini</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>MicroSD card (2 or 4 GB)</td>
+      <td>1</td>
+      <td>FAT32 formatted</td>
+    </tr>
+    <tr>
+      <td>Small speaker (8 ohm, 0.5W)</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="sd-card-preparation-lessons-09-10">SD Card Preparation (Lessons 09-10)</h2>
+
+<ol>
+  <li>Format the microSD card as FAT32.</li>
+  <li>Create a folder named exactly <code class="language-plaintext highlighter-rouge">mp3</code> at the root.</li>
+  <li>Add MP3 audio files named <code class="language-plaintext highlighter-rouge">0001.mp3</code>, <code class="language-plaintext highlighter-rouge">0002.mp3</code>, etc.</li>
+  <li>Files should be short (30–60 seconds) to keep class focused.</li>
+</ol>
+
+<p>Pre-format and load all SD cards before class — this is the most common source of errors in Lessons 09 and 10.</p>
+
+<hr />
+
+<h2 id="classroom-layout-suggestions">Classroom Layout Suggestions</h2>
+
+<ul>
+  <li>Arrange tables in groups of 3 or in islands — students share one Arduino per group.</li>
+  <li>Ensure each station has a dedicated power bar or enough USB ports for one Arduino per group.</li>
+  <li>Keep a spare kit with extra LEDs, resistors, and a working Arduino at the front — components break.</li>
+  <li>Display the lesson page on a projector or shared screen during the build steps.</li>
+</ul>
+
+<hr />
+
+<h2 id="common-first-day-problems">Common First-Day Problems</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Problem</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDE not detecting the board</td>
+      <td>Check USB cable (data vs charge-only); install CH340 driver on Windows</td>
+    </tr>
+    <tr>
+      <td>Students modifying the wrong sketch</td>
+      <td>Have students always start from File &gt; New</td>
+    </tr>
+    <tr>
+      <td>LED not lighting up</td>
+      <td>90% of cases are reversed polarity — flip the LED</td>
+    </tr>
+    <tr>
+      <td>Upload error: port busy</td>
+      <td>Close Serial Monitor before uploading</td>
+    </tr>
+    <tr>
+      <td>Groups finishing very quickly</td>
+      <td>Direct them to the Challenge section of each lesson</td>
+    </tr>
+    <tr>
+      <td>Groups not finishing in 40 min</td>
+      <td>Pre-wire the circuit for the last 10 minutes if needed</td>
+    </tr>
+  </tbody>
+</table>
+
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 07 — Sensors | Arduino Journey</title>
+  <meta name="description" content="Read light intensity with an LDR and temperature/humidity with a DHT11 sensor.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lesson 07 — Sensors | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lesson 07 — Sensors" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Read light intensity with an LDR and temperature/humidity with a DHT11 sensor." />
+<meta property="og:description" content="Read light intensity with an LDR and temperature/humidity with a DHT11 sensor." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/lesson-07/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/lesson-07/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lesson 07 — Sensors" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Read light intensity with an LDR and temperature/humidity with a DHT11 sensor.","headline":"Lesson 07 — Sensors","url":"http://localhost:4000/arduino.journey/lessons/lesson-07/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="lesson">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson 07</div>
+      <div class="sb-title">Sensors</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      
+        
+        <a class="toc-link" href="#objectives">Objectives</a>
+        
+        <a class="toc-link" href="#materials">Materials</a>
+        
+        <a class="toc-link" href="#background">Background</a>
+        
+        <a class="toc-link" href="#build">Build</a>
+        
+        <a class="toc-link" href="#code">Code</a>
+        
+        <a class="toc-link" href="#understanding">Understanding</a>
+        
+        <a class="toc-link" href="#reflect">Reflect</a>
+        
+        <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+        
+      
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-01/">01 &mdash; What is Arduino?</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-02/">02 &mdash; Blink</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-03/">03 &mdash; Multiple LEDs</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-04/">04 &mdash; Button Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-05/">05 &mdash; Buzzer and Sound</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-06/">06 &mdash; Analog Input</a>
+      
+      <a class="toc-link active" href="/arduino.journey/lessons/lesson-07/">07 &mdash; Sensors</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-08/">08 &mdash; Mini Challenge</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-09/">09 &mdash; DFPlayer Mini Setup</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-10/">10 &mdash; MP3 Player Final Build</a>
+      
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">07</div>
+        <div class="lesson-header-text">
+          <h1>Lesson 07 — Sensors</h1>
+          <p>Read light intensity with an LDR and temperature/humidity with a DHT11 sensor.</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+  <p><span class="section-kicker">Objectives</span></p>
+
+  <h2 id="objectives">Learning Objectives</h2>
+  <div class="objectives-box">
+    <ul>
+      <li>Wire an LDR (light-dependent resistor) and read light levels with <code class="language-plaintext highlighter-rouge">analogRead()</code></li>
+      <li>Wire a DHT11 sensor and read temperature and humidity using the DHT library</li>
+      <li>Display sensor data in the Serial Monitor</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Materials</span></p>
+
+  <h2 id="materials">Materials for This Lesson</h2>
+  <div class="materials-card">
+    <ul>
+      <li>Arduino Uno</li>
+      <li>Breadboard</li>
+      <li>1x LDR (light-dependent resistor / photoresistor)</li>
+      <li>1x 10k ohm resistor (for LDR voltage divider)</li>
+      <li>1x DHT11 sensor module (or bare sensor with pull-up resistor)</li>
+      <li>Jumper wires</li>
+      <li>USB cable</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Background</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>Sensors convert physical quantities into electrical signals. An LDR (light-dependent resistor) changes its resistance based on light — low resistance in bright light, high resistance in darkness. Paired with a fixed resistor in a voltage divider, it produces a varying voltage that <code class="language-plaintext highlighter-rouge">analogRead()</code> can measure.</p>
+
+  <p>The DHT11 is a digital sensor that measures temperature and humidity over a single data wire. Rather than writing the communication protocol yourself, you use a library — a collection of pre-written code that handles all the low-level details.</p>
+
+  <p>Install the DHT library before this lesson: go to <strong>Tools &gt; Manage Libraries</strong>, search for <strong>DHT sensor library</strong> by Adafruit, and click Install. Also install <strong>Adafruit Unified Sensor</strong> when prompted.</p>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Build</span></p>
+
+  <h2 id="build">Build</h2>
+
+  <div class="wiring-placeholder">
+    <p><img src="/arduino.journey/assets/img/lesson-07-wiring.png" alt="Lesson 07 wiring diagram — Sensors" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /></p>
+    <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+  </div>
+
+  <ol class="step-list">
+<li>One leg of the LDR to 5V.</li>
+<li>Other leg of the LDR to A1 and also to one leg of the 10k resistor.</li>
+<li>Other leg of the 10k resistor to GND.</li>
+<li>VCC pin of DHT11 to 5V.</li>
+<li>GND pin of DHT11 to GND.</li>
+<li>DATA pin of DHT11 to pin 7. (If using the bare sensor without a module board, add a 10k pull-up resistor between DATA and VCC.)</li>
+<li>Open a new sketch and enter the code below.</li>
+<li>Upload the sketch.</li>
+<li>Open Serial Monitor at <strong>9600 baud</strong>, line ending set to <strong>No line ending</strong>.</li>
+<li>Cover the LDR with your hand and observe the light level change. Breathe on the DHT11 and watch the humidity change.</li>
+</ol>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Code</span></p>
+
+  <h2 id="code">Code</h2>
+
+  <div class="code-topbar">
+    <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// LDR + DHT11 Sensor readings</span>
+<span class="c1">// LDR on A1, DHT11 data pin on pin 7</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;DHT.h&gt;</span><span class="cp">
+</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">LDR_PIN</span>  <span class="o">=</span> <span class="n">A1</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">DHT_PIN</span>  <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">DHT_TYPE</span> <span class="o">=</span> <span class="n">DHT11</span><span class="p">;</span>
+
+<span class="n">DHT</span> <span class="nf">dht</span><span class="p">(</span><span class="n">DHT_PIN</span><span class="p">,</span> <span class="n">DHT_TYPE</span><span class="p">);</span>  <span class="c1">// Create DHT object</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+  <span class="n">dht</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>  <span class="c1">// Initialize DHT sensor</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Sensor readings starting..."</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// --- Read LDR ---</span>
+  <span class="kt">int</span> <span class="n">lightLevel</span> <span class="o">=</span> <span class="n">analogRead</span><span class="p">(</span><span class="n">LDR_PIN</span><span class="p">);</span>  <span class="c1">// 0 (dark) to 1023 (bright)</span>
+
+  <span class="c1">// --- Read DHT11 ---</span>
+  <span class="kt">float</span> <span class="n">humidity</span>    <span class="o">=</span> <span class="n">dht</span><span class="p">.</span><span class="n">readHumidity</span><span class="p">();</span>
+  <span class="kt">float</span> <span class="n">temperature</span> <span class="o">=</span> <span class="n">dht</span><span class="p">.</span><span class="n">readTemperature</span><span class="p">();</span>  <span class="c1">// Celsius by default</span>
+
+  <span class="c1">// Check if DHT reading failed</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">isnan</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span> <span class="o">||</span> <span class="n">isnan</span><span class="p">(</span><span class="n">temperature</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"DHT11 read error — check wiring"</span><span class="p">);</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Print all readings</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Light: "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">lightLevel</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"  Temp: "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" C  Humidity: "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">humidity</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" %"</span><span class="p">);</span>
+
+  <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>  <span class="c1">// DHT11 needs at least 1 second between readings</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Understanding</span></p>
+
+    <h2 id="understanding">Understanding the Code</h2>
+
+    <table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">#include &lt;DHT.h&gt;</td>
+      <td class="def-body">Includes the DHT library so you can use its functions.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">DHT dht(DHT_PIN, DHT_TYPE)</td>
+      <td class="def-body">Creates a DHT object named <code>dht</code>, configured for pin 7 and DHT11 type.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">dht.begin()</td>
+      <td class="def-body">Initializes the DHT sensor.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">dht.readHumidity() / dht.readTemperature()</td>
+      <td class="def-body">Read values from the sensor. They return <code>float</code> values (numbers with decimal points).</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">isnan()</td>
+      <td class="def-body">Stands for "is not a number". The DHT library returns NaN if a read fails. This check prevents printing garbage data.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">analogRead(LDR_PIN)</td>
+      <td class="def-body">Reads the voltage divider output. High value = more light; low value = less light.</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="challenge-box">
+      <p class="challenge-label">Try This</p>
+      <p>Can you turn on an LED automatically when the light level drops below 300? Wire an LED to pin 9 and add an <code>if</code> statement that turns it on when <code>lightLevel &lt; 300</code>.</p>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Reflect</span></p>
+
+    <h2 id="reflect">Reflection Questions</h2>
+
+    <ol class="reflection-list">
+      <li>What is a voltage divider, and why do we use one with the LDR?</li>
+      <li>Why does the DHT11 code use a library instead of reading the pin directly?</li>
+      <li>What does <code class="language-plaintext highlighter-rouge">isnan()</code> check for, and why is this important?</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Troubleshooting</span></p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Likely Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LDR always reads near 0 or 1023</td>
+          <td>Voltage divider wired incorrectly</td>
+          <td>Check that LDR and 10k resistor form a series connection between 5V and GND</td>
+        </tr>
+        <tr>
+          <td>“DHT11 read error” in Serial Monitor</td>
+          <td>Wiring issue or missing pull-up</td>
+          <td>Check data wire connection; add 10k pull-up if using bare sensor</td>
+        </tr>
+        <tr>
+          <td>Compiler error: “DHT.h not found”</td>
+          <td>Library not installed</td>
+          <td>Install DHT sensor library by Adafruit in Library Manager</td>
+        </tr>
+        <tr>
+          <td>Temperature reads 0.0</td>
+          <td>Wrong DHT type constant</td>
+          <td>Make sure you use DHT11, not DHT22</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+      
+      <nav class="lesson-nav">
+        
+        <a href="/arduino.journey/lessons/lesson-06/" class="lesson-nav-btn prev">
+          <span class="nav-direction">&#8592; Previous</span>
+          <span class="nav-title">Lesson 06 — Analog Input</span>
+        </a>
+        
+        
+        <a href="/arduino.journey/lessons/lesson-08/" class="lesson-nav-btn next">
+          <span class="nav-direction">Next &#8594;</span>
+          <span class="nav-title">Lesson 08 — Mini Challenge</span>
+        </a>
+        
+      </nav>
+      
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

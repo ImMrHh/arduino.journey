@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 04 — Button Input | Arduino Journey</title>
+  <meta name="description" content="Read digital input from a push button using the internal pull-up resistor.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lesson 04 — Button Input | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lesson 04 — Button Input" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Read digital input from a push button using the internal pull-up resistor." />
+<meta property="og:description" content="Read digital input from a push button using the internal pull-up resistor." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/lesson-04/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/lesson-04/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lesson 04 — Button Input" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Read digital input from a push button using the internal pull-up resistor.","headline":"Lesson 04 — Button Input","url":"http://localhost:4000/arduino.journey/lessons/lesson-04/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="lesson">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson 04</div>
+      <div class="sb-title">Button Input</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      
+        
+        <a class="toc-link" href="#objectives">Objectives</a>
+        
+        <a class="toc-link" href="#materials">Materials</a>
+        
+        <a class="toc-link" href="#background">Background</a>
+        
+        <a class="toc-link" href="#build">Build</a>
+        
+        <a class="toc-link" href="#code">Code</a>
+        
+        <a class="toc-link" href="#understanding">Understanding</a>
+        
+        <a class="toc-link" href="#reflect">Reflect</a>
+        
+        <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+        
+      
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-01/">01 &mdash; What is Arduino?</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-02/">02 &mdash; Blink</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-03/">03 &mdash; Multiple LEDs</a>
+      
+      <a class="toc-link active" href="/arduino.journey/lessons/lesson-04/">04 &mdash; Button Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-05/">05 &mdash; Buzzer and Sound</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-06/">06 &mdash; Analog Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-07/">07 &mdash; Sensors</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-08/">08 &mdash; Mini Challenge</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-09/">09 &mdash; DFPlayer Mini Setup</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-10/">10 &mdash; MP3 Player Final Build</a>
+      
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">04</div>
+        <div class="lesson-header-text">
+          <h1>Lesson 04 — Button Input</h1>
+          <p>Read digital input from a push button using the internal pull-up resistor.</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+  <p><span class="section-kicker">Objectives</span></p>
+
+  <h2 id="objectives">Learning Objectives</h2>
+  <div class="objectives-box">
+    <ul>
+      <li>Wire a push button to an Arduino digital pin</li>
+      <li>Use <code class="language-plaintext highlighter-rouge">digitalRead()</code> to detect button presses</li>
+      <li>Understand what a pull-up resistor does</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Materials</span></p>
+
+  <h2 id="materials">Materials for This Lesson</h2>
+  <div class="materials-card">
+    <ul>
+      <li>Arduino Uno</li>
+      <li>Breadboard</li>
+      <li>1x push button (momentary)</li>
+      <li>1x LED and 220 ohm resistor (from Lesson 02)</li>
+      <li>Jumper wires</li>
+      <li>USB cable</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Background</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>So far the Arduino has only been sending signals (output). Now it will also receive signals (input). A push button is one of the simplest input devices — it either connects two points or it doesn’t.</p>
+
+  <p>When a button is not pressed and the pin is connected to nothing, the pin’s value is undefined — it can float between HIGH and LOW randomly. To fix this, you use a pull-up resistor. A pull-up resistor connects the pin to 5 V through a high resistance, so when the button is open, the pin reads HIGH. When you press the button and connect the pin to GND, it reads LOW. This is called “active LOW” logic.</p>
+
+  <p>The Arduino Uno has built-in pull-up resistors on every digital pin. You activate them in software with <code class="language-plaintext highlighter-rouge">INPUT_PULLUP</code> instead of <code class="language-plaintext highlighter-rouge">INPUT</code>. This means you don’t need to add an external resistor for the button.</p>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Build</span></p>
+
+  <h2 id="build">Build</h2>
+
+  <div class="wiring-placeholder">
+    <p><img src="/arduino.journey/assets/img/lesson-04-wiring.png" alt="Lesson 04 wiring diagram — Button Input" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /></p>
+    <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+  </div>
+
+  <ol class="step-list">
+<li>Connect one leg of the button to pin 2 on the Arduino.</li>
+<li>Connect the other leg of the button to GND on the Arduino.</li>
+<li>Wire the LED through a 220 ohm resistor to pin 9, short leg to GND (as in Lesson 02).</li>
+<li>Open a new sketch in Arduino IDE 2.</li>
+<li>Enter the code below and upload it.</li>
+<li>Press the button — the LED should turn on while it is held.</li>
+</ol>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Code</span></p>
+
+  <h2 id="code">Code</h2>
+
+  <div class="code-topbar">
+    <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Button controls LED</span>
+<span class="c1">// Button on pin 2 (internal pull-up), LED on pin 9</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">BUTTON_PIN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">LED_PIN</span>    <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">BUTTON_PIN</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>  <span class="c1">// Internal pull-up: HIGH when not pressed</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">buttonState</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">BUTTON_PIN</span><span class="p">);</span>  <span class="c1">// Read the button</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">buttonState</span> <span class="o">==</span> <span class="n">LOW</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Button is pressed (active LOW)</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>  <span class="c1">// Turn LED on</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Button is not pressed</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>   <span class="c1">// Turn LED off</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Understanding</span></p>
+
+    <h2 id="understanding">Understanding the Code</h2>
+
+    <table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">pinMode(BUTTON_PIN, INPUT_PULLUP)</td>
+      <td class="def-body">Configures pin 2 as an input and activates the internal pull-up resistor. The pin reads HIGH when the button is open.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">digitalRead(BUTTON_PIN)</td>
+      <td class="def-body">Reads the current state of pin 2. Returns either HIGH (1) or LOW (0).</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">if (buttonState == LOW)</td>
+      <td class="def-body">Because of the pull-up, the button reads LOW when pressed. This turns the LED on when the button is down.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">else</td>
+      <td class="def-body">Runs when the button is not pressed. Turns the LED off.</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="challenge-box">
+      <p class="challenge-label">Try This</p>
+      <p>Can you make the button toggle the LED instead of holding it? The LED should turn on with the first press and stay on, then turn off on the second press. You will need to track the LED state in a variable and detect when the button first goes from HIGH to LOW.</p>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Reflect</span></p>
+
+    <h2 id="reflect">Reflection Questions</h2>
+
+    <ol class="reflection-list">
+      <li>Why does a floating pin give unreliable readings without a pull-up resistor?</li>
+      <li>Why is button input described as “active LOW” when using INPUT_PULLUP?</li>
+      <li>What is the difference between <code class="language-plaintext highlighter-rouge">INPUT</code> and <code class="language-plaintext highlighter-rouge">INPUT_PULLUP</code>?</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Troubleshooting</span></p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Likely Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LED stays on all the time</td>
+          <td>Button legs bridging incorrectly on breadboard</td>
+          <td>Check which pairs of legs on the button are connected</td>
+        </tr>
+        <tr>
+          <td>LED never turns on</td>
+          <td>Button not reaching GND</td>
+          <td>Check GND jumper wire connection</td>
+        </tr>
+        <tr>
+          <td>Erratic LED behavior</td>
+          <td>Floating pin</td>
+          <td>Confirm INPUT_PULLUP is used in the sketch</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+      
+      <nav class="lesson-nav">
+        
+        <a href="/arduino.journey/lessons/lesson-03/" class="lesson-nav-btn prev">
+          <span class="nav-direction">&#8592; Previous</span>
+          <span class="nav-title">Lesson 03 — Multiple LEDs</span>
+        </a>
+        
+        
+        <a href="/arduino.journey/lessons/lesson-05/" class="lesson-nav-btn next">
+          <span class="nav-direction">Next &#8594;</span>
+          <span class="nav-title">Lesson 05 — Buzzer and Sound</span>
+        </a>
+        
+      </nav>
+      
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

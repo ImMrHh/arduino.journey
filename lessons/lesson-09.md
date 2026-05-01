@@ -9,18 +9,44 @@ prev_lesson:
 next_lesson:
   url: /lessons/lesson-10/
   title: "Lesson 10 — MP3 Player Final Build"
+toc:
+  - label: "Objectives"
+    anchor: "#objectives"
+  - label: "Materials"
+    anchor: "#materials"
+  - label: "Background"
+    anchor: "#background"
+  - label: "Build"
+    anchor: "#build"
+  - label: "Code"
+    anchor: "#code"
+  - label: "Understanding"
+    anchor: "#understanding"
+  - label: "Reflect"
+    anchor: "#reflect"
+  - label: "Troubleshooting"
+    anchor: "#troubleshooting"
 ---
 
 
+<div class="lesson-section">
+<span class="section-kicker">Objectives</span>
+
 ## Learning Objectives
+{: #objectives}
 <div class="objectives-box" markdown="1">
 - Wire the DFPlayer Mini module to an Arduino Uno
 - Prepare an SD card with correctly named audio files
 - Use the DFRobotDFPlayerMini library to play a sound
 </div>
+</div>
 
+
+<div class="lesson-section">
+<span class="section-kicker">Materials</span>
 
 ## Materials for This Lesson
+{: #materials}
 <div class="materials-card" markdown="1">
 - Arduino Uno
 - Breadboard
@@ -32,51 +58,63 @@ next_lesson:
 - USB cable
 - MP3 files to load onto the SD card
 </div>
+</div>
 
+
+<div class="lesson-section">
+<span class="section-kicker">Background</span>
 
 ## Background
+{: #background}
 
 The DFPlayer Mini is a small MP3 player module with a built-in SD card reader and amplifier. It connects to the Arduino using serial communication — a two-wire protocol (TX and RX) where data is sent as a stream of bits.
 
-The Arduino Uno only has one hardware serial port, which is also used for the USB connection to your computer. If you use pins 0 and 1 (the hardware serial pins) for the DFPlayer, uploading will fail. Instead, we use the `SoftwareSerial` library, which creates a software-based serial port on any two digital pins.
+The Arduino Uno only has one hardware serial port, which is also used for the USB connection to your computer. If you use pins 0 and 1 (the hardware serial pins) for the DFPlayer, uploading will fail. Instead, we use the <code>SoftwareSerial</code> library, which creates a software-based serial port on any two digital pins.
 
-The SD card must be formatted as FAT32. Audio files must be placed in a folder named `mp3` at the root of the card, and each file must be named with a four-digit number: `0001.mp3`, `0002.mp3`, etc.
-
-Install the DFRobotDFPlayerMini library before this lesson: Tools > Manage Libraries, search for "DFRobotDFPlayerMini", click Install.
-
-
-## Wiring
-
-*(See /images/lesson09-wiring.png)*
-
-DFPlayer Mini pin connections:
-1. VCC to 5V.
-2. GND to GND.
-3. RX of DFPlayer to pin 11 on Arduino through a 1k ohm resistor (the resistor protects the module from voltage spikes).
-4. TX of DFPlayer to pin 10 on Arduino (direct, no resistor needed).
-5. Speaker+ to SPK_1 pin on DFPlayer.
-6. Speaker- to SPK_2 pin on DFPlayer.
+The SD card must be formatted as FAT32. Audio files must be placed in a folder named <code>mp3</code> at the root of the card, and each file must be named with a four-digit number: <code>0001.mp3</code>, <code>0002.mp3</code>, etc.
+</div>
 
 
-## SD Card Preparation
+<div class="lesson-section">
+<span class="section-kicker">Build</span>
 
-1. Format the SD card as FAT32 (use Windows Explorer or Disk Utility on Mac).
-2. Create a folder named `mp3` in the root of the card.
-3. Copy your MP3 files into the `mp3` folder, renamed as `0001.mp3`, `0002.mp3`, etc.
-4. Insert the SD card into the DFPlayer Mini.
+## Build
+{: #build}
+
+<div class="wiring-placeholder">
+  <img
+    src="{{ '/assets/img/lesson-09-wiring.png' | relative_url }}"
+    alt="Lesson 09 wiring diagram — DFPlayer Mini Setup"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+</div>
+
+<ol class="step-list">
+<li>Format the SD card as FAT32 (use Windows Explorer right-click &gt; Format, or Disk Utility on Mac).</li>
+<li>Create a folder named <code>mp3</code> in the root of the card.</li>
+<li>Copy your MP3 files into the <code>mp3</code> folder, renamed as <code>0001.mp3</code>, <code>0002.mp3</code>, etc.</li>
+<li>Insert the SD card into the DFPlayer Mini.</li>
+<li>VCC of DFPlayer to 5V.</li>
+<li>GND of DFPlayer to GND.</li>
+<li>RX of DFPlayer to pin 11 on Arduino through a 1k ohm resistor.</li>
+<li>TX of DFPlayer to pin 10 on Arduino (direct, no resistor needed).</li>
+<li>Speaker+ to SPK_1 pin on DFPlayer.</li>
+<li>Speaker- to SPK_2 pin on DFPlayer.</li>
+<li>In Arduino IDE 2 go to <strong>Tools &gt; Manage Libraries</strong>, search for <strong>DFRobotDFPlayerMini</strong> and click Install.</li>
+<li>Open a new sketch and enter the code below.</li>
+<li>Upload and open Serial Monitor at <strong>9600 baud</strong>, line ending set to <strong>No line ending</strong>.</li>
+<li>The sketch will play <code>0001.mp3</code> automatically on startup.</li>
+</ol>
+</div>
 
 
-## Step-by-Step Build
-
-1. Wire the DFPlayer Mini as described.
-2. Prepare the SD card.
-3. Install the DFRobotDFPlayerMini library.
-4. Open a new sketch and enter the code below.
-5. Upload and open Serial Monitor at 9600 baud.
-6. The sketch will play `0001.mp3` automatically on startup.
-
+<div class="lesson-section">
+<span class="section-kicker">Code</span>
 
 ## Code
+{: #code}
+
+<div class="code-topbar"><span class="code-lang">Arduino C++</span></div>
 
 ```cpp
 // DFPlayer Mini — basic playback
@@ -109,37 +147,69 @@ void loop() {
   // Nothing here yet — playback is handled by the DFPlayer module itself
 }
 ```
-
-
-## Understanding the Code
-
-`SoftwareSerial dfSerial(10, 11)` — creates a software serial connection. Pin 10 = RX (Arduino receives from DFPlayer TX), pin 11 = TX (Arduino sends to DFPlayer RX).
-
-`DFRobotDFPlayerMini dfPlayer` — creates the DFPlayer object.
-
-`dfPlayer.begin(dfSerial)` — initializes the DFPlayer over the software serial connection. Returns `false` if the module cannot be found.
-
-`while (true)` — an infinite loop that stops the program if initialization fails, so you know something is wrong rather than the code silently doing nothing.
-
-`dfPlayer.volume(20)` — sets volume level. 0 = silent, 30 = maximum.
-
-`dfPlayer.play(1)` — plays track number 1 (file `0001.mp3` in the `mp3` folder).
-
-<div class="challenge-box" markdown="1">
-<div class="challenge-label">Try This</div>
-Can you add a button to skip to the next track? Wire a button to pin 2 and use `dfPlayer.next()` to advance to the next audio file when the button is pressed.
 </div>
 
 
+<div class="lesson-section">
+<span class="section-kicker">Understanding</span>
+
+## Understanding the Code
+{: #understanding}
+
+<table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">SoftwareSerial dfSerial(10, 11)</td>
+      <td class="def-body">Creates a software serial connection. Pin 10 = RX (Arduino receives from DFPlayer TX), pin 11 = TX (Arduino sends to DFPlayer RX).</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">DFRobotDFPlayerMini dfPlayer</td>
+      <td class="def-body">Creates the DFPlayer object.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">dfPlayer.begin(dfSerial)</td>
+      <td class="def-body">Initializes the DFPlayer over the software serial connection. Returns <code>false</code> if the module cannot be found.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">while (true)</td>
+      <td class="def-body">An infinite loop that stops the program if initialization fails, so you know something is wrong.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">dfPlayer.volume(20)</td>
+      <td class="def-body">Sets volume level. 0 = silent, 30 = maximum.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">dfPlayer.play(1)</td>
+      <td class="def-body">Plays track number 1 (file <code>0001.mp3</code> in the <code>mp3</code> folder).</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="challenge-box">
+<p class="challenge-label">Try This</p>
+<p>Can you add a button to skip to the next track? Wire a button to pin 2 and use <code>dfPlayer.next()</code> to advance to the next audio file when the button is pressed.</p>
+</div>
+</div>
+
+
+<div class="lesson-section">
+<span class="section-kicker">Reflect</span>
+
 ## Reflection Questions
+{: #reflect}
 
 1. Why must we use SoftwareSerial instead of the hardware serial pins (0 and 1)?
 2. What format must the SD card and file names be in for the DFPlayer to work?
 3. What happens if `dfPlayer.begin()` returns false?
 {: .reflection-list}
+</div>
 
+
+<div class="lesson-section">
+<span class="section-kicker">Troubleshooting</span>
 
 ## Troubleshooting
+{: #troubleshooting}
 
 | Problem | Likely Cause | Fix |
 |---------|-------------|-----|
@@ -148,3 +218,4 @@ Can you add a button to skip to the next track? Wire a button to pin 2 and use `
 | Sketch uploads but nothing happens | 1k resistor missing on RX line | Add 1k resistor between pin 11 and DFPlayer RX |
 | Audio distorted or cuts out | Power supply insufficient | Power the Arduino from a wall adapter, not just USB |
 {: .trouble-table}
+</div>

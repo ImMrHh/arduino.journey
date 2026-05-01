@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 03 — Multiple LEDs | Arduino Journey</title>
+  <meta name="description" content="Wire multiple LEDs and create sequences and timing patterns with digital output.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lesson 03 — Multiple LEDs | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lesson 03 — Multiple LEDs" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Wire multiple LEDs and create sequences and timing patterns with digital output." />
+<meta property="og:description" content="Wire multiple LEDs and create sequences and timing patterns with digital output." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/lesson-03/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/lesson-03/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lesson 03 — Multiple LEDs" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Wire multiple LEDs and create sequences and timing patterns with digital output.","headline":"Lesson 03 — Multiple LEDs","url":"http://localhost:4000/arduino.journey/lessons/lesson-03/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="lesson">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson 03</div>
+      <div class="sb-title">Multiple LEDs</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      
+        
+        <a class="toc-link" href="#objectives">Objectives</a>
+        
+        <a class="toc-link" href="#materials">Materials</a>
+        
+        <a class="toc-link" href="#background">Background</a>
+        
+        <a class="toc-link" href="#build">Build</a>
+        
+        <a class="toc-link" href="#code">Code</a>
+        
+        <a class="toc-link" href="#understanding">Understanding</a>
+        
+        <a class="toc-link" href="#reflect">Reflect</a>
+        
+        <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+        
+      
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-01/">01 &mdash; What is Arduino?</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-02/">02 &mdash; Blink</a>
+      
+      <a class="toc-link active" href="/arduino.journey/lessons/lesson-03/">03 &mdash; Multiple LEDs</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-04/">04 &mdash; Button Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-05/">05 &mdash; Buzzer and Sound</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-06/">06 &mdash; Analog Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-07/">07 &mdash; Sensors</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-08/">08 &mdash; Mini Challenge</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-09/">09 &mdash; DFPlayer Mini Setup</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-10/">10 &mdash; MP3 Player Final Build</a>
+      
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">03</div>
+        <div class="lesson-header-text">
+          <h1>Lesson 03 — Multiple LEDs</h1>
+          <p>Wire multiple LEDs and create sequences and timing patterns with digital output.</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+  <p><span class="section-kicker">Objectives</span></p>
+
+  <h2 id="objectives">Learning Objectives</h2>
+  <div class="objectives-box">
+    <ul>
+      <li>Wire three LEDs with resistors on a breadboard</li>
+      <li>Use arrays to manage multiple pins</li>
+      <li>Create timed LED sequences and patterns</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Materials</span></p>
+
+  <h2 id="materials">Materials for This Lesson</h2>
+  <div class="materials-card">
+    <ul>
+      <li>Arduino Uno</li>
+      <li>Breadboard</li>
+      <li>3x LEDs (different colors if possible)</li>
+      <li>3x 220 ohm resistors</li>
+      <li>Jumper wires</li>
+      <li>USB cable</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Background</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>Controlling one LED is useful, but most real projects involve multiple outputs. In this lesson you will wire three LEDs and control them in sequence — the basis of everything from traffic lights to status indicators.</p>
+
+  <p>When you have multiple pins doing similar things, it helps to use an array. An array is a list of values stored under one name. Instead of writing <code class="language-plaintext highlighter-rouge">pin1 = 3; pin2 = 4; pin3 = 5;</code> separately, you write <code class="language-plaintext highlighter-rouge">int pins[] = {3, 4, 5};</code>. You can then use a loop to apply the same action to every element in the array.</p>
+
+  <p>The <code class="language-plaintext highlighter-rouge">for</code> loop is one of the most important structures in programming. It runs a block of code a set number of times. With three LEDs and a <code class="language-plaintext highlighter-rouge">for</code> loop, you can write the setup and pattern logic once instead of repeating it three times.</p>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Build</span></p>
+
+  <h2 id="build">Build</h2>
+
+  <div class="wiring-placeholder">
+    <p><img src="/arduino.journey/assets/img/lesson-03-wiring.png" alt="Lesson 03 wiring diagram — Multiple LEDs" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /></p>
+    <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+  </div>
+
+  <ol class="step-list">
+<li>Wire LED 1: long leg through 220 ohm resistor to pin 3, short leg to GND.</li>
+<li>Wire LED 2: long leg through 220 ohm resistor to pin 4, short leg to GND.</li>
+<li>Wire LED 3: long leg through 220 ohm resistor to pin 5, short leg to GND.</li>
+<li>Connect all three short legs to the GND rail on the breadboard, then run one wire from the GND rail to a GND pin on the Arduino.</li>
+<li>Open a new sketch in Arduino IDE 2.</li>
+<li>Enter the code below.</li>
+<li>Upload and observe the sequence.</li>
+<li>Experiment with the delay values to change the speed.</li>
+</ol>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Code</span></p>
+
+  <h2 id="code">Code</h2>
+
+  <div class="code-topbar">
+    <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Multiple LED sequence</span>
+<span class="c1">// Three LEDs on pins 3, 4, 5</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">NUM_LEDS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">ledPins</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>  <span class="c1">// Array of pin numbers</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Set all LED pins as output using a loop</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_LEDS</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">pinMode</span><span class="p">(</span><span class="n">ledPins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Turn each LED on in sequence, then off</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_LEDS</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">HIGH</span><span class="p">);</span>  <span class="c1">// Turn LED on</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">300</span><span class="p">);</span>                      <span class="c1">// Wait 300 ms</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">LOW</span><span class="p">);</span>   <span class="c1">// Turn LED off</span>
+  <span class="p">}</span>
+
+  <span class="c1">// All on together briefly</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_LEDS</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+
+  <span class="c1">// All off together</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_LEDS</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">LOW</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Understanding</span></p>
+
+    <h2 id="understanding">Understanding the Code</h2>
+
+    <table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">int ledPins[] = {3, 4, 5}</td>
+      <td class="def-body">Declares an array of three integers. Index 0 = pin 3, index 1 = pin 4, index 2 = pin 5.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">for (int i = 0; i &lt; NUM_LEDS; i++)</td>
+      <td class="def-body">Runs three times: i = 0, then 1, then 2. Stops when i reaches NUM_LEDS (3).</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">ledPins[i]</td>
+      <td class="def-body">Accesses the element at position i in the array. When i = 0 this is pin 3; when i = 1 it is pin 4; and so on.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">All-on / all-off loops</td>
+      <td class="def-body">The second and third loops turn all LEDs on together, wait, then turn them all off — creating a chase-then-flash pattern.</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="challenge-box">
+      <p class="challenge-label">Try This</p>
+      <p>Can you make a Knight Rider scanner? The LEDs should light up one at a time from left to right, then bounce back from right to left — continuously. Try modifying the <code>for</code> loop to run forwards and then backwards through the <code>ledPins</code> array.</p>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Reflect</span></p>
+
+    <h2 id="reflect">Reflection Questions</h2>
+
+    <ol class="reflection-list">
+      <li>What is an array, and why is it useful when controlling multiple pins?</li>
+      <li>What does <code class="language-plaintext highlighter-rouge">i &lt; NUM_LEDS</code> mean in the <code class="language-plaintext highlighter-rouge">for</code> loop condition?</li>
+      <li>How would you add a fourth LED to this sketch with minimal changes?</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Troubleshooting</span></p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Likely Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>One LED never lights up</td>
+          <td>Wiring error on that LED</td>
+          <td>Check polarity and resistor connection for that LED</td>
+        </tr>
+        <tr>
+          <td>All LEDs off</td>
+          <td>Wrong pins in array</td>
+          <td>Compare array values to actual wiring</td>
+        </tr>
+        <tr>
+          <td>LEDs flicker erratically</td>
+          <td>Loose breadboard connection</td>
+          <td>Press components firmly into the breadboard</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+      
+      <nav class="lesson-nav">
+        
+        <a href="/arduino.journey/lessons/lesson-02/" class="lesson-nav-btn prev">
+          <span class="nav-direction">&#8592; Previous</span>
+          <span class="nav-title">Lesson 02 — Blink</span>
+        </a>
+        
+        
+        <a href="/arduino.journey/lessons/lesson-04/" class="lesson-nav-btn next">
+          <span class="nav-direction">Next &#8594;</span>
+          <span class="nav-title">Lesson 04 — Button Input</span>
+        </a>
+        
+      </nav>
+      
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

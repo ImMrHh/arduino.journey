@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 02 — Blink | Arduino Journey</title>
+  <meta name="description" content="Control an external LED with a resistor on a breadboard — digital output, Ohm's law basics.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lesson 02 — Blink | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lesson 02 — Blink" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Control an external LED with a resistor on a breadboard — digital output, Ohm’s law basics." />
+<meta property="og:description" content="Control an external LED with a resistor on a breadboard — digital output, Ohm’s law basics." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/lesson-02/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/lesson-02/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lesson 02 — Blink" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Control an external LED with a resistor on a breadboard — digital output, Ohm’s law basics.","headline":"Lesson 02 — Blink","url":"http://localhost:4000/arduino.journey/lessons/lesson-02/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="lesson">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson 02</div>
+      <div class="sb-title">Blink</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      
+        
+        <a class="toc-link" href="#objectives">Objectives</a>
+        
+        <a class="toc-link" href="#materials">Materials</a>
+        
+        <a class="toc-link" href="#background">Background</a>
+        
+        <a class="toc-link" href="#build">Build</a>
+        
+        <a class="toc-link" href="#code">Code</a>
+        
+        <a class="toc-link" href="#understanding">Understanding</a>
+        
+        <a class="toc-link" href="#reflect">Reflect</a>
+        
+        <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+        
+      
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-01/">01 &mdash; What is Arduino?</a>
+      
+      <a class="toc-link active" href="/arduino.journey/lessons/lesson-02/">02 &mdash; Blink</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-03/">03 &mdash; Multiple LEDs</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-04/">04 &mdash; Button Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-05/">05 &mdash; Buzzer and Sound</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-06/">06 &mdash; Analog Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-07/">07 &mdash; Sensors</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-08/">08 &mdash; Mini Challenge</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-09/">09 &mdash; DFPlayer Mini Setup</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-10/">10 &mdash; MP3 Player Final Build</a>
+      
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">02</div>
+        <div class="lesson-header-text">
+          <h1>Lesson 02 — Blink</h1>
+          <p>Control an external LED with a resistor on a breadboard — digital output, Ohm's law basics.</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+  <p><span class="section-kicker">Objectives</span></p>
+
+  <h2 id="objectives">Learning Objectives</h2>
+  <div class="objectives-box">
+    <ul>
+      <li>Wire an LED and resistor on a breadboard</li>
+      <li>Understand why resistors protect LEDs</li>
+      <li>Control an external LED using digital output</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Materials</span></p>
+
+  <h2 id="materials">Materials for This Lesson</h2>
+  <div class="materials-card">
+    <ul>
+      <li>Arduino Uno</li>
+      <li>Breadboard</li>
+      <li>1x LED (any color)</li>
+      <li>1x 220 ohm resistor (red-red-brown or similar)</li>
+      <li>2x jumper wires (male-to-male)</li>
+      <li>USB cable</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Background</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>In the previous lesson you blinked the LED that is built into the Arduino board. Now you will connect your own external LED to a breadboard.</p>
+
+  <p>An LED (Light Emitting Diode) is a component that produces light when current flows through it in one direction. Diodes only work in one direction — if you wire it backwards, it will not light up (and in some cases could be damaged).</p>
+
+  <p>LEDs must always be used with a resistor. Without a resistor, too much current flows through the LED and it burns out quickly or immediately. A 220 ohm resistor is a safe choice for a red or green LED powered by the Arduino’s 5 V pin. Use the LED Resistor Calculator in the Tools section if you want to calculate the exact value for a different LED.</p>
+
+  <p>A breadboard lets you make temporary connections without soldering. The rows of holes are connected horizontally in the middle section. The long rails on the sides (marked + and -) run vertically and are used for power and ground.</p>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Build</span></p>
+
+  <h2 id="build">Build</h2>
+
+  <div class="wiring-placeholder">
+    <p><img src="/arduino.journey/assets/img/lesson-02-wiring.png" alt="Lesson 02 wiring diagram — Blink" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /></p>
+    <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+  </div>
+
+  <ol class="step-list">
+<li>Insert the LED into the breadboard. The longer leg (anode, +) goes into one row; the shorter leg (cathode, -) into an adjacent row.</li>
+<li>Connect one leg of the 220 ohm resistor to the same row as the long leg of the LED.</li>
+<li>Connect the other leg of the resistor to pin 9 on the Arduino using a jumper wire.</li>
+<li>Connect the short leg of the LED to a GND pin on the Arduino using a jumper wire.</li>
+<li>Open Arduino IDE 2 and start a new sketch (<strong>File &gt; New</strong>).</li>
+<li>Delete any existing code and type in the code below.</li>
+<li>Select <strong>Board: Arduino Uno</strong> and the correct <strong>Port</strong>.</li>
+<li>Click <strong>Upload</strong>.</li>
+<li>The LED on your breadboard should blink.</li>
+</ol>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Code</span></p>
+
+  <h2 id="code">Code</h2>
+
+  <div class="code-topbar">
+    <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// External LED Blink</span>
+<span class="c1">// LED connected to pin 9 through a 220 ohm resistor</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">LED_PIN</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>  <span class="c1">// Give the pin a name</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>  <span class="c1">// Set pin 9 as output</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>  <span class="c1">// LED on</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>                   <span class="c1">// Wait 0.5 seconds</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>   <span class="c1">// LED off</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>                   <span class="c1">// Wait 0.5 seconds</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Understanding</span></p>
+
+    <h2 id="understanding">Understanding the Code</h2>
+
+    <table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">const int LED_PIN = 9</td>
+      <td class="def-body">Creates a named constant for the pin number. Using a name instead of 9 directly makes the code easier to read and easier to change later.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">pinMode(LED_PIN, OUTPUT)</td>
+      <td class="def-body">Configures pin 9 to send signals.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">digitalWrite(LED_PIN, HIGH)</td>
+      <td class="def-body">Sends 5V to pin 9, pushing current through the resistor and LED, lighting it up.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">delay(500)</td>
+      <td class="def-body">Pauses for 500 ms (half a second).</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">digitalWrite(LED_PIN, LOW)</td>
+      <td class="def-body">Sets pin 9 to 0V, stopping current flow and turning the LED off.</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="challenge-box">
+      <p class="challenge-label">Try This</p>
+      <p>Can you make the LED blink a pattern — for example, three short blinks and then a long one? Adjust the delay values and add more <code>digitalWrite</code> and <code>delay</code> lines to create your pattern.</p>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Reflect</span></p>
+
+    <h2 id="reflect">Reflection Questions</h2>
+
+    <ol class="reflection-list">
+      <li>Why does an LED need a resistor in series with it?</li>
+      <li>What is the difference between the long leg and the short leg of an LED?</li>
+      <li>If you wanted the LED to blink three times per second, what delay value would you use?</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Troubleshooting</span></p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Likely Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LED does not light up</td>
+          <td>LED wired backwards</td>
+          <td>Flip the LED in the breadboard</td>
+        </tr>
+        <tr>
+          <td>LED lights but does not blink</td>
+          <td>Code not uploaded</td>
+          <td>Click Upload in the IDE</td>
+        </tr>
+        <tr>
+          <td>Upload error</td>
+          <td>Wrong port</td>
+          <td>Go to Tools &gt; Port and select the correct one</td>
+        </tr>
+        <tr>
+          <td>LED very dim</td>
+          <td>Resistor too high in value</td>
+          <td>Check resistor color bands or swap to 220 ohm</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+      
+      <nav class="lesson-nav">
+        
+        <a href="/arduino.journey/lessons/lesson-01/" class="lesson-nav-btn prev">
+          <span class="nav-direction">&#8592; Previous</span>
+          <span class="nav-title">Lesson 01 — What is Arduino?</span>
+        </a>
+        
+        
+        <a href="/arduino.journey/lessons/lesson-03/" class="lesson-nav-btn next">
+          <span class="nav-direction">Next &#8594;</span>
+          <span class="nav-title">Lesson 03 — Multiple LEDs</span>
+        </a>
+        
+      </nav>
+      
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -9,18 +9,44 @@ prev_lesson:
 next_lesson:
   url: /lessons/lesson-06/
   title: "Lesson 06 — Analog Input"
+toc:
+  - label: "Objectives"
+    anchor: "#objectives"
+  - label: "Materials"
+    anchor: "#materials"
+  - label: "Background"
+    anchor: "#background"
+  - label: "Build"
+    anchor: "#build"
+  - label: "Code"
+    anchor: "#code"
+  - label: "Understanding"
+    anchor: "#understanding"
+  - label: "Reflect"
+    anchor: "#reflect"
+  - label: "Troubleshooting"
+    anchor: "#troubleshooting"
 ---
 
 
+<div class="lesson-section">
+<span class="section-kicker">Objectives</span>
+
 ## Learning Objectives
+{: #objectives}
 <div class="objectives-box" markdown="1">
 - Wire a passive buzzer to an Arduino pin
 - Use `tone()` and `noTone()` to produce sounds
 - Combine button input with sound output
 </div>
+</div>
 
+
+<div class="lesson-section">
+<span class="section-kicker">Materials</span>
 
 ## Materials for This Lesson
+{: #materials}
 <div class="materials-card" markdown="1">
 - Arduino Uno
 - Breadboard
@@ -29,35 +55,55 @@ next_lesson:
 - Jumper wires
 - USB cable
 </div>
+</div>
 
+
+<div class="lesson-section">
+<span class="section-kicker">Background</span>
 
 ## Background
+{: #background}
 
 Sound is produced by vibrations in the air. A buzzer converts an electrical signal into mechanical vibrations that we hear as sound. There are two types of buzzers: active buzzers produce a fixed tone when given power; passive buzzers require a rapidly changing signal to produce different pitches.
 
 For this lesson you must use a passive buzzer. The Arduino's `tone()` function generates a square wave at a specified frequency on a digital pin, which drives the passive buzzer.
 
 Frequency determines pitch. 440 Hz is the musical note A4 (concert A). Lower frequencies sound lower; higher frequencies sound higher. The `tone()` function accepts the pin, the frequency in Hz, and an optional duration in milliseconds. If no duration is given, the tone plays until you call `noTone()`.
+</div>
 
 
-## Wiring
+<div class="lesson-section">
+<span class="section-kicker">Build</span>
 
-*(See /images/lesson05-wiring.png)*
+## Build
+{: #build}
 
-1. Connect the positive leg of the buzzer (longer leg or marked +) to pin 8.
-2. Connect the negative leg to GND.
-3. Connect a button: one leg to pin 2, other leg to GND (same as Lesson 04).
+<div class="wiring-placeholder">
+  <img
+    src="{{ '/assets/img/lesson-05-wiring.png' | relative_url }}"
+    alt="Lesson 05 wiring diagram — Buzzer and Sound"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <p style="display:none" class="wiring-fallback">Wiring diagram coming soon — check back before class.</p>
+</div>
+
+<ol class="step-list">
+<li>Connect the positive leg of the buzzer (longer leg or marked +) to pin 8.</li>
+<li>Connect the negative leg to GND.</li>
+<li>Connect a button: one leg to pin 2, other leg to GND (same as Lesson 04).</li>
+<li>Open a new sketch in Arduino IDE 2.</li>
+<li>Enter the code below and upload.</li>
+<li>Press the button to hear the melody.</li>
+</ol>
+</div>
 
 
-## Step-by-Step Build
-
-1. Wire the buzzer and button as described.
-2. Open a new sketch in Arduino IDE 2.
-3. Enter the code below and upload.
-4. Press the button to hear the melody.
-
+<div class="lesson-section">
+<span class="section-kicker">Code</span>
 
 ## Code
+{: #code}
+
+<div class="code-topbar"><span class="code-lang">Arduino C++</span></div>
 
 ```cpp
 // Buzzer melody with button trigger
@@ -95,37 +141,69 @@ void playMelody() {
   noTone(BUZZER_PIN);
 }
 ```
-
-
-## Understanding the Code
-
-`tone(BUZZER_PIN, melody[i], noteDur[i])` — plays a tone on pin 8 at the frequency `melody[i]` Hz for `noteDur[i]` milliseconds.
-
-`noTone(BUZZER_PIN)` — stops any tone on pin 8.
-
-`melody[]` — stores the note frequencies. 262 Hz = C4, 294 = D4, 330 = E4, and so on up the C major scale.
-
-`noteDur[]` — stores how long each note plays in milliseconds.
-
-`delay(noteDur[i] + 30)` — waits for the note to finish plus a small gap so notes are distinct and not blurred together.
-
-`playMelody()` — a custom function defined outside `loop()`. When you call `playMelody()` inside `loop()`, the Arduino jumps to that function, runs it, and comes back.
-
-<div class="challenge-box" markdown="1">
-<div class="challenge-label">Try This</div>
-Can you play the first few notes of a recognizable melody — for example, the Super Mario Bros. theme or Happy Birthday? Look up the note frequencies online and replace the `melody[]` array.
 </div>
 
 
+<div class="lesson-section">
+<span class="section-kicker">Understanding</span>
+
+## Understanding the Code
+{: #understanding}
+
+<table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">tone(BUZZER_PIN, melody[i], noteDur[i])</td>
+      <td class="def-body">Plays a tone on pin 8 at the frequency <code>melody[i]</code> Hz for <code>noteDur[i]</code> milliseconds.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">noTone(BUZZER_PIN)</td>
+      <td class="def-body">Stops any tone on pin 8.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">melody[]</td>
+      <td class="def-body">Stores the note frequencies. 262 Hz = C4, 294 = D4, 330 = E4, and so on up the C major scale.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">noteDur[]</td>
+      <td class="def-body">Stores how long each note plays in milliseconds.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">delay(noteDur[i] + 30)</td>
+      <td class="def-body">Waits for the note to finish plus a small gap so notes are distinct and not blurred together.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">playMelody()</td>
+      <td class="def-body">A custom function defined outside <code>loop()</code>. When called, the Arduino jumps to it, runs it, and returns.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="challenge-box">
+<p class="challenge-label">Try This</p>
+<p>Can you play the first few notes of a recognizable melody — for example, the Super Mario Bros. theme or Happy Birthday? Look up the note frequencies online and replace the <code>melody[]</code> array.</p>
+</div>
+</div>
+
+
+<div class="lesson-section">
+<span class="section-kicker">Reflect</span>
+
 ## Reflection Questions
+{: #reflect}
 
 1. What is the difference between an active and a passive buzzer?
 2. What does the frequency number in `tone()` control?
 3. Why do we call `noTone()` after the melody finishes?
 {: .reflection-list}
+</div>
 
+
+<div class="lesson-section">
+<span class="section-kicker">Troubleshooting</span>
 
 ## Troubleshooting
+{: #troubleshooting}
 
 | Problem | Likely Cause | Fix |
 |---------|-------------|-----|
@@ -134,3 +212,4 @@ Can you play the first few notes of a recognizable melody — for example, the S
 | Very quiet sound | Poor breadboard connection | Reseat the buzzer legs firmly |
 | Button doesn't trigger | Wrong pin or no INPUT_PULLUP | Check wiring and confirm INPUT_PULLUP in setup() |
 {: .trouble-table}
+</div>

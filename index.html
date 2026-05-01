@@ -4,87 +4,181 @@ title: "Arduino Journey"
 description: "Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player."
 ---
 
-<div class="hero">
+<!-- ═══════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════ -->
+<div class="home-hero">
+  <div class="container">
+    <div class="home-hero-inner">
+      <div class="home-hero-text">
+        <span class="home-hero-badge">Arduino C++ · 10 Lessons · Middle School</span>
+        <h1 class="home-hero-title">Arduino<br><em>Journey</em></h1>
+        <p class="home-hero-sub">Hands-on curriculum from first LED to fully functional MP3 Player — built for collaborative classroom learning.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="{{ '/lessons/' | relative_url }}">Start Learning →</a>
+          <a class="btn-secondary" href="{{ '/teachers/' | relative_url }}">Teacher Hub</a>
+        </div>
+      </div>
+      <div class="home-hero-visual" aria-hidden="true">
+        <div class="hero-board">
+          <div class="hero-board-label">Arduino Uno</div>
+          <div class="hero-pins">
+            <span class="pin pin-d"></span><span class="pin pin-d"></span>
+            <span class="pin pin-d"></span><span class="pin pin-d"></span>
+            <span class="pin pin-a"></span><span class="pin pin-a"></span>
+            <span class="pin pin-pwr"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     STAT STRIP
+═══════════════════════════════════════════════ -->
+<div class="home-stat-strip">
+  <div class="container">
+    <div class="home-stats">
+      <div class="home-stat">
+        <span class="home-stat-num">10</span>
+        <span class="home-stat-label">Lessons</span>
+      </div>
+      <div class="home-stat-div"></div>
+      <div class="home-stat">
+        <span class="home-stat-num">40 min</span>
+        <span class="home-stat-label">Per session</span>
+      </div>
+      <div class="home-stat-div"></div>
+      <div class="home-stat">
+        <span class="home-stat-num">Groups of 3</span>
+        <span class="home-stat-label">Collaborative</span>
+      </div>
+      <div class="home-stat-div"></div>
+      <div class="home-stat">
+        <span class="home-stat-num">MP3 Player</span>
+        <span class="home-stat-label">Capstone project</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LEARNING PATH
+═══════════════════════════════════════════════ -->
 <div class="container">
-<h1>Arduino Journey</h1>
-<p>Hands-on Arduino curriculum for middle school students — from first LED to MP3 Player.</p>
-<div class="hero-actions">
-<a class="btn-primary" href="{{ '/lessons/' | relative_url }}">Start Learning</a>
-<a class="btn-secondary" href="{{ '/teachers/' | relative_url }}">Teacher Hub</a>
-</div>
-</div>
-</div>
 
-<div class="stat-strip">
-<div class="container">
-<div class="stat-item"><strong>10</strong><span>Lessons</span></div>
-<div class="stat-item"><strong>40 min</strong><span>Class Sessions</span></div>
-<div class="stat-item"><strong>Groups of 3</strong><span>Collaborative Learning</span></div>
-<div class="stat-item"><strong>MP3 Player</strong><span>Capstone Project</span></div>
-</div>
-</div>
+  <div class="home-section-header">
+    <span class="section-kicker">Curriculum</span>
+    <h2 class="home-section-title">Learning Path</h2>
+    <p class="home-section-sub">Four phases, each building on the last — from blinking an LED to building a real device.</p>
+  </div>
 
-<div class="container">
+  <div class="phase-grid">
 
-<h2 class="section-title">Learning Path</h2>
+    <!-- Phase 1 -->
+    <div class="phase-card-v2 phase-foundations">
+      <div class="phase-card-header">
+        <span class="phase-num">01</span>
+        <div>
+          <span class="phase-kicker">Phase 1</span>
+          <h3 class="phase-name">Foundations</h3>
+        </div>
+      </div>
+      <ul class="phase-lesson-list">
+        <li><a href="{{ '/lessons/lesson-01/' | relative_url }}"><span class="lesson-chip">L1</span> What is Arduino?</a></li>
+        <li><a href="{{ '/lessons/lesson-02/' | relative_url }}"><span class="lesson-chip">L2</span> Blink</a></li>
+        <li><a href="{{ '/lessons/lesson-03/' | relative_url }}"><span class="lesson-chip">L3</span> Multiple LEDs</a></li>
+      </ul>
+    </div>
 
-<div class="grid-4" style="margin-bottom:2.5rem;">
-<div class="phase-card">
-<h3>Foundations</h3>
-<ul>
-<li><a href="{{ '/lessons/lesson-01/' | relative_url }}">L1 — What is Arduino?</a></li>
-<li><a href="{{ '/lessons/lesson-02/' | relative_url }}">L2 — Blink</a></li>
-<li><a href="{{ '/lessons/lesson-03/' | relative_url }}">L3 — Multiple LEDs</a></li>
-</ul>
-</div>
-<div class="phase-card">
-<h3>Inputs and Feedback</h3>
-<ul>
-<li><a href="{{ '/lessons/lesson-04/' | relative_url }}">L4 — Button Input</a></li>
-<li><a href="{{ '/lessons/lesson-05/' | relative_url }}">L5 — Buzzer and Sound</a></li>
-<li><a href="{{ '/lessons/lesson-06/' | relative_url }}">L6 — Analog Input</a></li>
-</ul>
-</div>
-<div class="phase-card">
-<h3>Sensors and Data</h3>
-<ul>
-<li><a href="{{ '/lessons/lesson-07/' | relative_url }}">L7 — Sensors (LDR + DHT11)</a></li>
-<li><a href="{{ '/lessons/lesson-08/' | relative_url }}">L8 — Mini Challenge</a></li>
-</ul>
-</div>
-<div class="phase-card">
-<h3>Final Project</h3>
-<ul>
-<li><a href="{{ '/lessons/lesson-09/' | relative_url }}">L9 — DFPlayer Mini Setup</a></li>
-<li><a href="{{ '/lessons/lesson-10/' | relative_url }}">L10 — MP3 Player Final Build</a></li>
-</ul>
-</div>
-</div>
+    <!-- Phase 2 -->
+    <div class="phase-card-v2 phase-inputs">
+      <div class="phase-card-header">
+        <span class="phase-num">02</span>
+        <div>
+          <span class="phase-kicker">Phase 2</span>
+          <h3 class="phase-name">Inputs &amp; Feedback</h3>
+        </div>
+      </div>
+      <ul class="phase-lesson-list">
+        <li><a href="{{ '/lessons/lesson-04/' | relative_url }}"><span class="lesson-chip">L4</span> Button Input</a></li>
+        <li><a href="{{ '/lessons/lesson-05/' | relative_url }}"><span class="lesson-chip">L5</span> Buzzer and Sound</a></li>
+        <li><a href="{{ '/lessons/lesson-06/' | relative_url }}"><span class="lesson-chip">L6</span> Analog Input</a></li>
+      </ul>
+    </div>
 
-<div class="capstone-section">
-<h2>Capstone: MP3 Player</h2>
-<p>The course builds toward a fully functional MP3 player built with an Arduino Uno and the DFPlayer Mini module. Students wire the circuit, load audio files onto an SD card, and write code to control playback with physical buttons. Every concept from Lessons 1–8 feeds directly into this final build.</p>
-</div>
+    <!-- Phase 3 -->
+    <div class="phase-card-v2 phase-sensors">
+      <div class="phase-card-header">
+        <span class="phase-num">03</span>
+        <div>
+          <span class="phase-kicker">Phase 3</span>
+          <h3 class="phase-name">Sensors &amp; Data</h3>
+        </div>
+      </div>
+      <ul class="phase-lesson-list">
+        <li><a href="{{ '/lessons/lesson-07/' | relative_url }}"><span class="lesson-chip">L7</span> Sensors (LDR + DHT11)</a></li>
+        <li><a href="{{ '/lessons/lesson-08/' | relative_url }}"><span class="lesson-chip">L8</span> Mini Challenge</a></li>
+      </ul>
+    </div>
 
-<div class="teacher-hub">
-<h2>Built for the Classroom</h2>
-<div class="grid-2">
-<ul>
-<li>10 structured lessons, each 40 minutes</li>
-<li>One lesson every two weeks</li>
-<li>Collaborative — designed for groups of 3</li>
-<li>Printable worksheets for every lesson</li>
-<li>Pacing guide and curriculum map included</li>
-</ul>
-<ul>
-<li>Real Arduino C++ code, fully commented</li>
-<li>Troubleshooting guides per lesson</li>
-<li>Classroom setup and library install guide</li>
-<li>Works on iPads and laptops</li>
-<li>100% free — hosted on GitHub Pages</li>
-</ul>
-</div>
-<p style="margin-top:1rem;"><a class="btn-secondary" href="{{ '/teachers/' | relative_url }}">Go to Teacher Hub</a></p>
-</div>
+    <!-- Phase 4 -->
+    <div class="phase-card-v2 phase-capstone">
+      <div class="phase-card-header">
+        <span class="phase-num">04</span>
+        <div>
+          <span class="phase-kicker">Phase 4</span>
+          <h3 class="phase-name">Final Project</h3>
+        </div>
+      </div>
+      <ul class="phase-lesson-list">
+        <li><a href="{{ '/lessons/lesson-09/' | relative_url }}"><span class="lesson-chip">L9</span> DFPlayer Mini Setup</a></li>
+        <li><a href="{{ '/lessons/lesson-10/' | relative_url }}"><span class="lesson-chip">L10</span> MP3 Player Final Build</a></li>
+      </ul>
+    </div>
 
-</div>
+  </div><!-- /phase-grid -->
+
+  <!-- ═══════════════════════════════════════════════
+       CAPSTONE BANNER
+  ═══════════════════════════════════════════════ -->
+  <div class="home-capstone">
+    <div class="home-capstone-badge">Capstone Project</div>
+    <div class="home-capstone-body">
+      <h2 class="home-capstone-title">Build a Working MP3 Player</h2>
+      <p>The course builds toward a fully functional MP3 player using an Arduino Uno and DFPlayer Mini module. Students wire the circuit, load audio files onto an SD card, and write code to control playback with physical buttons. Every concept from Lessons 1–8 feeds directly into this final build.</p>
+    </div>
+    <div class="home-capstone-icon" aria-hidden="true">
+      <span class="capstone-glyph">♪</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       CLASSROOM INFO
+  ═══════════════════════════════════════════════ -->
+  <div class="home-classroom">
+    <div class="home-classroom-header">
+      <span class="section-kicker">For Educators</span>
+      <h2 class="home-section-title" style="margin-top:0.25rem;">Built for the Classroom</h2>
+    </div>
+    <div class="home-classroom-cols">
+      <ul class="home-feat-list">
+        <li><span class="feat-icon">✓</span> 10 structured lessons, each 40 minutes</li>
+        <li><span class="feat-icon">✓</span> One lesson every two weeks</li>
+        <li><span class="feat-icon">✓</span> Collaborative — designed for groups of 3</li>
+        <li><span class="feat-icon">✓</span> Printable worksheets for every lesson</li>
+        <li><span class="feat-icon">✓</span> Pacing guide and curriculum map included</li>
+      </ul>
+      <ul class="home-feat-list">
+        <li><span class="feat-icon">✓</span> Real Arduino C++ code, fully commented</li>
+        <li><span class="feat-icon">✓</span> Troubleshooting guides per lesson</li>
+        <li><span class="feat-icon">✓</span> Classroom setup and library install guide</li>
+        <li><span class="feat-icon">✓</span> Works on iPads and laptops</li>
+        <li><span class="feat-icon feat-free">★</span> 100% free — hosted on GitHub Pages</li>
+      </ul>
+    </div>
+    <p style="margin-top:1.5rem;"><a class="btn-secondary" href="{{ '/teachers/' | relative_url }}">Go to Teacher Hub →</a></p>
+  </div>
+
+</div><!-- /container -->

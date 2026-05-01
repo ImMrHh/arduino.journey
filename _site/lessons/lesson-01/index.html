@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 01 — What is Arduino? | Arduino Journey</title>
+  <meta name="description" content="Introduction to the Arduino Uno board, the Arduino IDE 2, and uploading your first sketch.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Lesson 01 — What is Arduino? | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Lesson 01 — What is Arduino?" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction to the Arduino Uno board, the Arduino IDE 2, and uploading your first sketch." />
+<meta property="og:description" content="Introduction to the Arduino Uno board, the Arduino IDE 2, and uploading your first sketch." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/lessons/lesson-01/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/lessons/lesson-01/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lesson 01 — What is Arduino?" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Introduction to the Arduino Uno board, the Arduino IDE 2, and uploading your first sketch.","headline":"Lesson 01 — What is Arduino?","url":"http://localhost:4000/arduino.journey/lessons/lesson-01/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="lesson">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <div class="lesson-shell">
+
+  <aside class="lesson-sidebar no-print">
+    <div class="sb-block">
+      <div class="sb-lesson-chip">Lesson 01</div>
+      <div class="sb-title">What is Arduino?</div>
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">On this page</div>
+      
+        
+        <a class="toc-link" href="#objectives">Objectives</a>
+        
+        <a class="toc-link" href="#materials">Materials</a>
+        
+        <a class="toc-link" href="#background">Background</a>
+        
+        <a class="toc-link" href="#meet-the-board">Meet the Board</a>
+        
+        <a class="toc-link" href="#build">Build</a>
+        
+        <a class="toc-link" href="#code">Code</a>
+        
+        <a class="toc-link" href="#understanding">Understanding</a>
+        
+        <a class="toc-link" href="#reflect">Reflect</a>
+        
+        <a class="toc-link" href="#troubleshooting">Troubleshooting</a>
+        
+      
+    </div>
+
+    <hr class="sb-rule">
+
+    <div class="sb-block">
+      <div class="sb-label">All lessons</div>
+      
+      
+      <a class="toc-link active" href="/arduino.journey/lessons/lesson-01/">01 &mdash; What is Arduino?</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-02/">02 &mdash; Blink</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-03/">03 &mdash; Multiple LEDs</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-04/">04 &mdash; Button Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-05/">05 &mdash; Buzzer and Sound</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-06/">06 &mdash; Analog Input</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-07/">07 &mdash; Sensors</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-08/">08 &mdash; Mini Challenge</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-09/">09 &mdash; DFPlayer Mini Setup</a>
+      
+      <a class="toc-link" href="/arduino.journey/lessons/lesson-10/">10 &mdash; MP3 Player Final Build</a>
+      
+    </div>
+  </aside>
+
+  <div class="lesson-content">
+    <article class="lesson-page">
+      <div class="ws-print-bar">
+        <button class="btn-secondary no-print" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+      <div class="lesson-header">
+        <div class="lesson-number">01</div>
+        <div class="lesson-header-text">
+          <h1>Lesson 01 — What is Arduino?</h1>
+          <p>Introduction to the Arduino Uno board, the Arduino IDE 2, and uploading your first sketch.</p>
+        </div>
+      </div>
+
+      <div class="lesson-section">
+  <p><span class="section-kicker">Objectives</span></p>
+
+  <h2 id="objectives">Learning Objectives</h2>
+  <div class="objectives-box">
+    <ul>
+      <li>Identify the main parts of the Arduino Uno board</li>
+      <li>Install and navigate Arduino IDE 2</li>
+      <li>Upload the Blink example sketch and confirm it runs</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Materials</span></p>
+
+  <h2 id="materials">Materials for This Lesson</h2>
+  <div class="materials-card">
+    <ul>
+      <li>Arduino Uno board</li>
+      <li>USB-A to USB-B cable</li>
+      <li>Computer with Arduino IDE 2 installed</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Background</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>Arduino is an open-source electronics platform made up of two things: a small circuit board (the microcontroller) and software (the IDE) that lets you write programs for it. The Arduino Uno is the most common board and the one we use throughout this course.</p>
+
+  <p>Arduino programs are called sketches. Every sketch has two main functions: <code class="language-plaintext highlighter-rouge">setup()</code> runs once when the board powers on, and <code class="language-plaintext highlighter-rouge">loop()</code> runs over and over as long as the board has power. You write your code inside these two functions.</p>
+
+  <p>When you click Upload in the IDE, your code is compiled (converted to machine language) and sent to the Arduino over the USB cable. Once uploaded, the program stays on the board even when you unplug the USB — it runs from the board’s own memory.</p>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Meet the Board</span></p>
+
+  <h2 id="meet-the-board">Meet the Board</h2>
+
+  <p>Before writing any code, take a moment to find these parts on your Arduino Uno:</p>
+
+  <table class="trouble-table">
+    <thead>
+      <tr>
+        <th>Part</th>
+        <th>Location</th>
+        <th>What it does</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Digital pins 0–13</td>
+        <td>Right side</td>
+        <td>Send or receive on/off signals</td>
+      </tr>
+      <tr>
+        <td>Analog pins A0–A5</td>
+        <td>Left side</td>
+        <td>Read a range of values (e.g. from a sensor)</td>
+      </tr>
+      <tr>
+        <td>USB port</td>
+        <td>Top edge</td>
+        <td>Connects to your computer for programming and power</td>
+      </tr>
+      <tr>
+        <td>Power jack</td>
+        <td>Top edge</td>
+        <td>Powers the board from a wall adapter</td>
+      </tr>
+      <tr>
+        <td>Built-in LED (L)</td>
+        <td>Next to pin 13</td>
+        <td>Orange LED wired to pin 13 — we use this in Lesson 01</td>
+      </tr>
+      <tr>
+        <td>Reset button</td>
+        <td>Top edge</td>
+        <td>Restarts the current sketch</td>
+      </tr>
+      <tr>
+        <td>5V and GND pins</td>
+        <td>Right side</td>
+        <td>Provide power and ground to external components</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Build</span></p>
+
+  <h2 id="build">Build</h2>
+
+  <p><em>No external wiring needed for this lesson — the LED on pin 13 is built into the board.</em></p>
+
+  <ol class="step-list">
+<li>Connect the Arduino Uno to your computer using the USB cable.</li>
+<li>Confirm the green power LED on the board lights up.</li>
+<li>Open Arduino IDE 2.</li>
+<li>Go to <strong>File &gt; Examples &gt; 01.Basics &gt; Blink</strong>.</li>
+<li>Look at the code. Find <code>setup()</code> and <code>loop()</code>.</li>
+<li>In the IDE toolbar, select <strong>Board: Arduino Uno</strong>.</li>
+<li>Select the correct <strong>Port</strong> (usually the only one listed when the board is connected).</li>
+<li>Click the <strong>Upload</strong> button (right-arrow icon).</li>
+<li>Wait for "Done uploading" in the status bar.</li>
+<li>Observe the orange LED labeled L on the board — it should blink once per second.</li>
+</ol>
+</div>
+
+<div class="lesson-section">
+  <p><span class="section-kicker">Code</span></p>
+
+  <h2 id="code">Code</h2>
+
+  <div class="code-topbar">
+    <p><span class="code-lang">Arduino C++</span>&lt;/div&gt;</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Blink — the Hello World of Arduino</span>
+<span class="c1">// Built-in LED is on pin 13</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Set pin 13 as an output so we can control it</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>  <span class="c1">// Turn the LED on</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>             <span class="c1">// Wait 1 second (1000 ms)</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>   <span class="c1">// Turn the LED off</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>             <span class="c1">// Wait 1 second</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Understanding</span></p>
+
+    <h2 id="understanding">Understanding the Code</h2>
+
+    <table class="def-list">
+  <tbody>
+    <tr class="def-item">
+      <td class="def-term">pinMode(13, OUTPUT)</td>
+      <td class="def-body">Tells the Arduino that pin 13 will be used as an output. Without this, the pin doesn't know whether to send or receive signals.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">digitalWrite(13, HIGH)</td>
+      <td class="def-body">Sends 5V to pin 13, turning the LED on. HIGH means full voltage.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">delay(1000)</td>
+      <td class="def-body">Pauses the program for 1000 milliseconds (1 second). During a delay, the Arduino does nothing else.</td>
+    </tr>
+    <tr class="def-item">
+      <td class="def-term">digitalWrite(13, LOW)</td>
+      <td class="def-body">Removes voltage from pin 13, turning the LED off. The <code>loop()</code> then repeats forever: on, off, on, off.</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="challenge-box">
+      <p class="challenge-label">Try This</p>
+      <p>Can you make the LED blink twice as fast? Try changing the delay values. What happens if you use <code>delay(100)</code> instead of <code>delay(1000)</code>?</p>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Reflect</span></p>
+
+    <h2 id="reflect">Reflection Questions</h2>
+
+    <ol class="reflection-list">
+      <li>What is the difference between <code class="language-plaintext highlighter-rouge">setup()</code> and <code class="language-plaintext highlighter-rouge">loop()</code> in an Arduino sketch?</li>
+      <li>What does <code class="language-plaintext highlighter-rouge">HIGH</code> mean when used with <code class="language-plaintext highlighter-rouge">digitalWrite()</code>?</li>
+      <li>If you change the delay to 500, how many times will the LED blink in 10 seconds?</li>
+    </ol>
+  </div>
+
+  <div class="lesson-section">
+    <p><span class="section-kicker">Troubleshooting</span></p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Likely Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>“Port not found” in IDE</td>
+          <td>Driver not installed or cable is charge-only</td>
+          <td>Install CH340 driver; try a different USB cable</td>
+        </tr>
+        <tr>
+          <td>“Board not detected”</td>
+          <td>Wrong board selected</td>
+          <td>Go to Tools &gt; Board and select Arduino Uno</td>
+        </tr>
+        <tr>
+          <td>Upload fails with error</td>
+          <td>Wrong port selected</td>
+          <td>Go to Tools &gt; Port and select the Arduino port</td>
+        </tr>
+        <tr>
+          <td>LED does not blink after upload</td>
+          <td>Code has a typo</td>
+          <td>Double-check the code matches exactly; look at error messages in the console</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+      
+      <nav class="lesson-nav">
+        
+        
+        <a href="/arduino.journey/lessons/lesson-02/" class="lesson-nav-btn next">
+          <span class="nav-direction">Next &#8594;</span>
+          <span class="nav-title">Lesson 02 — Blink</span>
+        </a>
+        
+      </nav>
+      
+    </article>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var sections = document.querySelectorAll('.lesson-section');
+  var tocLinks = document.querySelectorAll('.lesson-sidebar .sb-block:nth-child(3) .toc-link');
+
+  if (!sections.length || !tocLinks.length) return;
+
+  // Build a map from anchor id -> toc link
+  var linkMap = {};
+  tocLinks.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap[href.slice(1)] = link;
+    }
+  });
+
+  var activeId = null;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        // Find the first heading with an id inside this section
+        var heading = entry.target.querySelector('[id]');
+        if (heading) {
+          var id = heading.getAttribute('id');
+          if (id !== activeId && linkMap[id]) {
+            if (activeId && linkMap[activeId]) {
+              linkMap[activeId].classList.remove('active');
+            }
+            linkMap[id].classList.add('active');
+            activeId = id;
+          }
+        }
+      }
+    });
+  }, {
+    rootMargin: '0px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function (section) {
+    observer.observe(section);
+  });
+})();
+</script>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

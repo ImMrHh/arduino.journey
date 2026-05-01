@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDE Tutorial | Arduino Journey</title>
+  <meta name="description" content="Step-by-step guide to installing and setting up Arduino IDE 2 for beginners.">
+  <link rel="stylesheet" href="/arduino.journey/assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>IDE Tutorial | Arduino Journey</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="IDE Tutorial" />
+<meta name="author" content="Henrik" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Step-by-step guide to installing and setting up Arduino IDE 2 for beginners." />
+<meta property="og:description" content="Step-by-step guide to installing and setting up Arduino IDE 2 for beginners." />
+<link rel="canonical" href="http://localhost:4000/arduino.journey/IDE/ide_tutorial/" />
+<meta property="og:url" content="http://localhost:4000/arduino.journey/IDE/ide_tutorial/" />
+<meta property="og:site_name" content="Arduino Journey" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="IDE Tutorial" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Henrik"},"description":"Step-by-step guide to installing and setting up Arduino IDE 2 for beginners.","headline":"IDE Tutorial","url":"http://localhost:4000/arduino.journey/IDE/ide_tutorial/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="default">
+  <header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="/arduino.journey/">Arduino Journey</a>
+    <nav class="site-nav">
+      <a href="/arduino.journey/">Home</a>
+      <a href="/arduino.journey/lessons/">Lessons</a>
+      <a href="/arduino.journey/worksheets/">Worksheets</a>
+      <a href="/arduino.journey/teachers/">Teacher Hub</a>
+      <a href="/arduino.journey/resources/">Resources</a>
+      <a href="/arduino.journey/tools/">Tools</a>
+      <a href="/arduino.journey/robotics/">Robotics</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="site-main">
+    <h1 id="arduino-ide-tutorial-your-first-program">Arduino IDE Tutorial: Your First Program</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>Welcome to Arduino programming! By the end of this tutorial, you’ll know how to write code, upload it to your Arduino board, and make it do what you want.</p>
+
+<h2 id="what-youll-need">What You’ll Need</h2>
+<ul>
+  <li>Arduino board (Uno, Nano, or similar)</li>
+  <li>USB cable to connect Arduino to computer</li>
+  <li>Arduino IDE installed on your computer</li>
+  <li>A computer (Windows, Mac, or Linux)</li>
+</ul>
+
+<hr />
+
+<h2 id="part-1-understanding-the-arduino-ide">Part 1: Understanding the Arduino IDE</h2>
+
+<h3 id="opening-a-new-project">Opening a New Project</h3>
+<p>When you open Arduino IDE, you’ll see a blank “sketch” (that’s what Arduino calls programs). Every sketch has this basic structure:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void setup() {
+  // Code here runs ONCE when Arduino starts
+}
+
+void loop() {
+  // Code here runs OVER and OVER forever
+}
+</code></pre></div></div>
+
+<h3 id="key-parts-of-the-ide-window">Key Parts of the IDE Window</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────────────────────┐
+│ File  Edit  Sketch  Tools  Help          [MENU BAR]     │
+├─────────────────────────────────────────────────────────┤
+│ ✓  →  📁  🔍                              [TOOLBAR]      │
+│ Verify Upload                                            │
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  void setup() {                                          │
+│    // Your code here                    [CODE AREA]     │
+│  }                                                       │
+│                                                          │
+│  void loop() {                                           │
+│    // Your code here                                     │
+│  }                                                       │
+│                                                          │
+├─────────────────────────────────────────────────────────┤
+│ Done compiling.                        [MESSAGE AREA]   │
+├─────────────────────────────────────────────────────────┤
+│ Arduino Uno on COM3                    [STATUS BAR]     │
+└─────────────────────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Menu Bar</strong> (top): File, Edit, Sketch, Tools, Help
+<strong>Toolbar</strong> (below menu): Contains important buttons</p>
+<ul>
+  <li>✓ <strong>Verify</strong> - Checks your code for errors (checkmark button)</li>
+  <li>→ <strong>Upload</strong> - Sends code to your Arduino (right arrow button)</li>
+  <li>🔍 <strong>Serial Monitor</strong> - Lets Arduino talk to your computer (magnifying glass, far right)</li>
+</ul>
+
+<p><strong>Code Area</strong> (large white space): Where you write your program
+<strong>Message Area</strong> (black box at bottom): Shows errors and upload status
+<strong>Status Bar</strong> (very bottom): Shows which board and port you’re using</p>
+
+<hr />
+
+<h2 id="part-2-setting-up-your-arduino-board">Part 2: Setting Up Your Arduino Board</h2>
+
+<p>Before you can upload code, you need to tell the IDE which Arduino board you have and how it’s connected.</p>
+
+<h3 id="step-1-connect-your-arduino">Step 1: Connect Your Arduino</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Computer USB Port
+         ↓
+    [USB Cable]
+         ↓
+    Arduino Board → 💡 Power LED lights up!
+</code></pre></div></div>
+
+<p>Plug your Arduino into your computer using the USB cable. You should see a light turn on the board.</p>
+
+<h3 id="step-2-select-your-board-type">Step 2: Select Your Board Type</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Tools → Board → Arduino AVR Boards → Arduino Uno ✓
+</code></pre></div></div>
+
+<ol>
+  <li>Click <strong>Tools</strong> in the menu bar</li>
+  <li>Hover over <strong>Board</strong></li>
+  <li>Select <strong>Arduino AVR Boards</strong></li>
+  <li>Click <strong>Arduino Uno</strong> (or your specific board)</li>
+</ol>
+
+<p><strong>Visual Cue</strong>: You’ll see a checkmark ✓ next to your selected board.</p>
+
+<h3 id="step-3-select-the-port">Step 3: Select the Port</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Tools → Port → COM3 (Arduino Uno) ✓
+</code></pre></div></div>
+
+<ol>
+  <li>Click <strong>Tools</strong> in the menu bar</li>
+  <li>Hover over <strong>Port</strong></li>
+  <li>Select the port with your Arduino
+    <ul>
+      <li><strong>Windows</strong>: Looks like “COM3” or “COM4”</li>
+      <li><strong>Mac</strong>: Looks like “/dev/cu.usbmodem…” or “/dev/cu.usbserial…”</li>
+      <li><strong>Linux</strong>: Looks like “/dev/ttyUSB0” or “/dev/ttyACM0”</li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>Visual Cue</strong>: The correct port usually shows the board name in parentheses, like “COM3 (Arduino Uno)”</p>
+
+<p><strong>Tip</strong>: If you’re not sure which port, unplug the Arduino, check which ports are listed, plug it back in, and see which new port appears!</p>
+
+<hr />
+
+<h2 id="part-3-your-first-program---blink-led">Part 3: Your First Program - Blink LED</h2>
+
+<p>Let’s write a program to make the built-in LED on your Arduino blink on and off.</p>
+
+<h3 id="the-code">The Code</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Blink Program</span>
+<span class="c1">// This makes the built-in LED turn on and off</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>  <span class="c1">// Set pin 13 as an output</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>  <span class="c1">// Turn LED on</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>             <span class="c1">// Wait 1 second (1000 milliseconds)</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>   <span class="c1">// Turn LED off</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>             <span class="c1">// Wait 1 second</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="understanding-the-code">Understanding the Code</h3>
+
+<p><strong>Comments</strong>: Lines starting with <code class="language-plaintext highlighter-rouge">//</code> are comments - they help humans understand code but Arduino ignores them.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Arduino Board (looking down at it):
+┌──────────────────────────┐
+│  [USB Port]              │
+│                          │
+│    Digital Pins →        │
+│    13 12 11 10 9 8 7     │
+│    💡← Built-in LED      │
+│     ↑                    │
+│   Pin 13                 │
+│                          │
+│  [Power LED] [Pin 13 LED]│
+└──────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>pinMode(13, OUTPUT)</strong>: This tells Arduino that pin 13 will send out electricity (OUTPUT) rather than read sensors (INPUT). Pin 13 is special because it has a built-in LED labeled “L” on the board!</p>
+
+<p><strong>digitalWrite(13, HIGH)</strong>: Sets pin 13 to HIGH (on, 5 volts). This lights up the LED.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Pin 13: HIGH → 💡 LED ON (bright)
+</code></pre></div></div>
+
+<p><strong>digitalWrite(13, LOW)</strong>: Sets pin 13 to LOW (off, 0 volts). This turns off the LED.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Pin 13: LOW → ⚫ LED OFF (dark)
+</code></pre></div></div>
+
+<p><strong>delay(1000)</strong>: Makes Arduino wait for 1000 milliseconds (1 second) before moving to the next line.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Timeline: |--1 second--|
+          0ms        1000ms
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="part-4-uploading-your-code">Part 4: Uploading Your Code</h2>
+
+<h3 id="step-1-verify-your-code">Step 1: Verify Your Code</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Click this button → [✓ Verify]
+</code></pre></div></div>
+
+<ol>
+  <li>Click the <strong>✓ Verify</strong> button (or press Ctrl+R / Cmd+R)</li>
+  <li>Watch the message area at the bottom</li>
+  <li><strong>SUCCESS looks like this:</strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>✅ Done compiling.
+Sketch uses 924 bytes (2%) of program storage space.
+</code></pre></div>    </div>
+  </li>
+  <li><strong>ERROR looks like this:</strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>❌ error: expected ';' before '}' token
+Arduino:15:1: error: expected ';' before '}' token
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="common-errors-and-fixes">Common Errors and Fixes</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>❌ Missing semicolon:          ✅ Fixed:
+   digitalWrite(13, HIGH)        digitalWrite(13, HIGH);
+                         ↑                              ↑
+                    Missing                         Added!
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Missing semicolon</strong>: Every statement needs to end with <code class="language-plaintext highlighter-rouge">;</code></li>
+  <li><strong>Misspelled function</strong>: Check spelling of <code class="language-plaintext highlighter-rouge">pinMode</code>, <code class="language-plaintext highlighter-rouge">digitalWrite</code>, <code class="language-plaintext highlighter-rouge">delay</code></li>
+  <li><strong>Wrong bracket</strong>: Make sure every <code class="language-plaintext highlighter-rouge">{</code> has a matching <code class="language-plaintext highlighter-rouge">}</code></li>
+</ul>
+
+<h3 id="step-2-upload-to-arduino">Step 2: Upload to Arduino</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Click this button → [→ Upload]
+</code></pre></div></div>
+
+<ol>
+  <li>Click the <strong>→ Upload</strong> button (or press Ctrl+U / Cmd+U)</li>
+  <li><strong>Watch for these signs:</strong>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Arduino Board:
+TX LED: ⚡⚡⚡ ← Flashing rapidly (sending data)
+RX LED: ⚡⚡⚡ ← Flashing rapidly (receiving data)
+   
+Message Area:
+"Uploading..."
+⏳ Progress bar moving
+✅ "Done uploading."
+</code></pre></div>    </div>
+  </li>
+  <li>Your LED should start blinking!</li>
+</ol>
+
+<p><strong>Visual Timeline:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Click Upload → TX/RX flash → "Done uploading" → LED starts blinking
+     (2 sec)      (3 sec)          (1 sec)           (ongoing)
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="part-5-troubleshooting-guide">Part 5: Troubleshooting Guide</h2>
+
+<h3 id="problem-port-not-found-or-permission-denied">Problem: “Port not found” or “Permission denied”</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+  <li>Make sure USB cable is fully plugged in</li>
+  <li>Try a different USB port</li>
+  <li>Check that you selected the correct port in Tools → Port</li>
+  <li>Some cables are “charge only” - try a different cable</li>
+</ul>
+
+<h3 id="problem-avrdude-stk500_recv-programmer-is-not-responding">Problem: “avrdude: stk500_recv(): programmer is not responding”</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+  <li>Make sure no other program is using the Arduino</li>
+  <li>Close Serial Monitor if it’s open</li>
+  <li>Press the reset button on Arduino, then immediately upload</li>
+  <li>Check that you selected the correct board type</li>
+</ul>
+
+<h3 id="problem-orange-error-messages-when-verifying">Problem: Orange error messages when verifying</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+  <li>Read the error message carefully - it usually tells you what’s wrong</li>
+  <li>Check for missing semicolons <code class="language-plaintext highlighter-rouge">;</code></li>
+  <li>Make sure all brackets match <code class="language-plaintext highlighter-rouge">{ }</code></li>
+  <li>Check spelling of function names</li>
+</ul>
+
+<h3 id="problem-code-uploads-but-led-doesnt-blink">Problem: Code uploads but LED doesn’t blink</h3>
+<p><strong>Solutions</strong>:</p>
+<ul>
+  <li>Make sure you’re looking at the right LED (labeled “L” on most boards)</li>
+  <li>Try pressing the reset button on the Arduino</li>
+  <li>Your code might have uploaded to the wrong board - check Tools → Board</li>
+</ul>
+
+<hr />
+
+<h2 id="quick-reference">Quick Reference</h2>
+
+<h3 id="essential-arduino-functions">Essential Arduino Functions</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pinMode(pin, mode)</code> - Set a pin as INPUT or OUTPUT</li>
+  <li><code class="language-plaintext highlighter-rouge">digitalWrite(pin, value)</code> - Set a pin HIGH or LOW</li>
+  <li><code class="language-plaintext highlighter-rouge">digitalRead(pin)</code> - Read if a pin is HIGH or LOW</li>
+  <li><code class="language-plaintext highlighter-rouge">delay(milliseconds)</code> - Pause for a specific time</li>
+  <li><code class="language-plaintext highlighter-rouge">Serial.begin(speed)</code> - Start serial communication</li>
+  <li><code class="language-plaintext highlighter-rouge">Serial.println(message)</code> - Send a message to computer</li>
+</ul>
+
+<h3 id="keyboard-shortcuts">Keyboard Shortcuts</h3>
+<ul>
+  <li><strong>Ctrl+R / Cmd+R</strong>: Verify code</li>
+  <li><strong>Ctrl+U / Cmd+U</strong>: Upload code</li>
+  <li><strong>Ctrl+Shift+M / Cmd+Shift+M</strong>: Open Serial Monitor</li>
+  <li>
+    <h2 id="ctrls--cmds-save-sketch"><strong>Ctrl+S / Cmd+S</strong>: Save sketch</h2>
+  </li>
+</ul>
+
+<h2 id="final-tips-for-success">Final Tips for Success</h2>
+
+<ol>
+  <li><strong>Save often</strong>: Arduino IDE can crash, so save your work regularly</li>
+  <li><strong>Use comments</strong>: Explain what your code does - your future self will thank you</li>
+  <li><strong>Start simple</strong>: Get basic code working before adding complexity</li>
+  <li><strong>Read error messages</strong>: They’re trying to help you!</li>
+  <li><strong>Ask for help</strong>: Everyone gets stuck sometimes - that’s part of learning</li>
+</ol>
+
+  </main>
+  <footer class="site-footer">
+  <div class="container">
+    <p>Arduino Journey &mdash; Middle School Technology Curriculum</p>
+    <p><a href="https://github.com/ImMrHh/arduino.journey" target="_blank">View on GitHub</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
