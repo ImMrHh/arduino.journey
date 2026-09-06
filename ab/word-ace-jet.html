@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Word Ace Jet — Unit 1 Vocabulary Game</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    overflow: hidden; background: #0b1e3a;
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    touch-action: none; user-select: none;
+  }
+  #game-container { position: relative; width: 100%; height: 100%; }
+  #game { display: block; width: 100%; height: 100%; touch-action: none; }
+
+  #hud {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 16px; color: #fff; font-size: 16px; font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    pointer-events: none; z-index: 5;
+  }
+  #hud span { margin: 0 4px; }
+  .hud-label { opacity: 0.75; font-weight: 400; font-size: 13px; }
+
+  .overlay {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: rgba(5, 15, 35, 0.92); color: #fff; text-align: center; padding: 24px;
+  }
+  .hidden { display: none !important; }
+  .overlay h1 { font-size: 28px; margin: 0 0 10px; }
+  .overlay p { font-size: 15px; max-width: 420px; line-height: 1.5; opacity: 0.9; margin: 6px 0 18px; }
+  .btn {
+    background: #ffcc33; color: #1a1a1a; border: none; border-radius: 10px;
+    padding: 14px 32px; font-size: 17px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 4px 0 #c99b1f; margin-top: 6px;
+  }
+  .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #c99b1f; }
+
+  #quiz-box {
+    background: #10254a; border: 2px solid #3f6fb8; border-radius: 16px;
+    padding: 22px; max-width: 480px; width: 90%;
+  }
+  #quiz-title { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: #9fc0ff; margin: 0 0 8px; }
+  #quiz-def { font-size: 18px; font-weight: 600; margin: 0 0 18px; line-height: 1.4; }
+  #quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .opt-btn {
+    background: #1c3a6b; border: 2px solid #3f6fb8; color: #fff;
+    border-radius: 10px; padding: 12px 8px; font-size: 15px; font-weight: 600;
+    cursor: pointer;
+  }
+  .opt-btn:active { background: #2a4d8a; }
+  .opt-btn.correct { background: #2f9e44; border-color: #2f9e44; }
+  .opt-btn.wrong { background: #c92a2a; border-color: #c92a2a; }
+  #quiz-feedback { min-height: 20px; font-size: 14px; margin-top: 12px; color: #ffd43b; font-weight: 600; }
+</style>
+</head>
+<body>
+<div id="game-container">
+  <canvas id="game"></canvas>
+
+  <div id="hud">
+    <div><span class="hud-label">SCORE</span> <span id="score">0</span></div>
+    <div><span class="hud-label">AMMO</span> <span id="ammo">24</span></div>
+    <div><span class="hud-label">LIVES</span> <span id="lives">3</span></div>
+    <div><span class="hud-label">BEST</span> <span id="best">0</span></div>
+  </div>
+
+  <div id="start-overlay" class="overlay">
+    <h1>Word Ace Jet</h1>
+    <p>Drag to move your jet. It shoots automatically. Every shot uses ammo — when you run out, answer a vocabulary question to reload and keep flying!</p>
+    <button class="btn" id="start-btn">Start game</button>
+  </div>
+
+  <div id="quiz-overlay" class="overlay hidden">
+    <div id="quiz-box">
+      <p id="quiz-title">Out of ammo — pick the word</p>
+      <p id="quiz-def"></p>
+      <div id="quiz-options"></div>
+      <div id="quiz-feedback"></div>
+    </div>
+  </div>
+
+  <div id="gameover-overlay" class="overlay hidden">
+    <h1>Game over</h1>
+    <p>Final score: <span id="final-score">0</span></p>
+    <p id="new-best-msg" class="hidden" style="color:#ffd43b;">New best score!</p>
+    <button class="btn" id="restart-btn">Play again</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------------- Word bank: Unit 1 spelling + vocabulary ----------------
+  var WORDS = [
+    { w: "Grow", d: "To become bigger or more developed over time." },
+    { w: "Development", d: "The process of growing, changing, and improving." },
+    { w: "Change", d: "To become different, or to make something different." },
+    { w: "Adaptation", d: "A change you make to fit a new situation or environment." },
+    { w: "Identity", d: "Who you are; what makes you different from other people." },
+    { w: "Puberty", d: "The stage of growth when a child's body starts changing into an adult's body." },
+    { w: "Milestone", d: "An important event that marks a stage in someone's life or development." },
+    { w: "Health", d: "The condition of your body and mind; being well or sick." },
+    { w: "Emotion", d: "A strong feeling, like happiness, sadness, or anger." },
+    { w: "Responsibility", d: "A duty or job that you are expected to do." },
+    { w: "Resilience", d: "The ability to recover quickly from difficulties; being able to bounce back." },
+    { w: "Self-awareness", d: "Understanding your own feelings, thoughts, and actions." },
+    { w: "Learning", d: "Gaining new knowledge or skills." },
+    { w: "Independence", d: "Being able to do things by yourself, without needing help." },
+    { w: "Social skills", d: "The abilities you use to communicate and interact with other people." },
+    { w: "Fold", d: "To bend something so one part lies on top of another." },
+    { w: "Food", d: "Something you eat to stay alive and healthy." },
+    { w: "Foot", d: "The part of your body at the end of your leg that you stand on." },
+    { w: "Football", d: "A game played by kicking a round ball into a goal." },
+    { w: "For", d: "A word that shows who something is meant for, or the reason for something." },
+    { w: "Free", d: "Not costing any money, or able to do what you want." },
+    { w: "Fresh", d: "Newly made, clean, or not spoiled." },
+    { w: "Friend", d: "A person you like and enjoy spending time with." },
+    { w: "Frog", d: "A small jumping animal that lives near water and says \"ribbit.\"" },
+    { w: "From", d: "A word that shows where something starts or where it comes from." },
+    { w: "Front", d: "The part that faces forward, or the first part of something." },
+    { w: "Fruit", d: "The sweet part of a plant that grows from a flower, like an apple." },
+    { w: "Fry", d: "To cook food in hot oil." },
+    { w: "Full", d: "Having no empty space left; completely filled." },
+    { w: "Fun", d: "Something enjoyable that makes you happy." },
+    { w: "Fur", d: "The soft hair that covers many animals' bodies." },
+    { w: "Game", d: "An activity you play for fun, often with rules." },
+    { w: "Garage", d: "A building where you keep a car." },
+    { w: "Garden", d: "A piece of land where you grow flowers, fruit, or vegetables." },
+    { w: "Garlic", d: "A small white plant used to add flavor to food." }
+  ];
+
+  // ---------------- Canvas setup ----------------
+  var canvas = document.getElementById("game");
+  var ctx = canvas.getContext("2d");
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0;
+
+  function resize() {
+    W = canvas.clientWidth;
+    H = canvas.clientHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener("resize", resize);
+
+  // ---------------- Game state ----------------
+  var jet, bullets, enemies, particles;
+  var score, ammo, lives, best, running, quizActive, frame, spawnTimer, fireTimer;
+  var usedRecently = [];
+
+  var BEST_KEY = "wordAceJet_best";
+  try { best = parseInt(localStorage.getItem(BEST_KEY) || "0", 10) || 0; } catch (e) { best = 0; }
+  document.getElementById("best").textContent = best;
+
+  function resetGame() {
+    jet = { x: W / 2, y: H - 90, w: 44, h: 54 };
+    bullets = [];
+    enemies = [];
+    particles = [];
+    score = 0;
+    ammo = 24;
+    lives = 3;
+    frame = 0;
+    spawnTimer = 0;
+    fireTimer = 0;
+    quizActive = false;
+    usedRecently = [];
+    updateHud();
+  }
+
+  function updateHud() {
+    document.getElementById("score").textContent = score;
+    document.getElementById("ammo").textContent = ammo;
+    document.getElementById("lives").textContent = lives;
+    document.getElementById("best").textContent = best;
+  }
+
+  // ---------------- Input: drag to move ----------------
+  var pointerActive = false;
+  function setJetX(clientX) {
+    var rect = canvas.getBoundingClientRect();
+    var x = clientX - rect.left;
+    jet.x = Math.max(jet.w / 2, Math.min(W - jet.w / 2, x));
+  }
+  canvas.addEventListener("touchstart", function (e) {
+    pointerActive = true;
+    setJetX(e.touches[0].clientX);
+    e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener("touchmove", function (e) {
+    if (!pointerActive) return;
+    setJetX(e.touches[0].clientX);
+    e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener("touchend", function () { pointerActive = false; });
+
+  canvas.addEventListener("mousedown", function (e) { pointerActive = true; setJetX(e.clientX); });
+  window.addEventListener("mousemove", function (e) { if (pointerActive) setJetX(e.clientX); });
+  window.addEventListener("mouseup", function () { pointerActive = false; });
+
+  var keys = {};
+  window.addEventListener("keydown", function (e) { keys[e.key] = true; });
+  window.addEventListener("keyup", function (e) { keys[e.key] = false; });
+
+  // ---------------- Spawning ----------------
+  function spawnEnemy() {
+    var size = 30 + Math.random() * 16;
+    enemies.push({
+      x: size + Math.random() * (W - size * 2),
+      y: -size,
+      r: size / 2,
+      speed: 1.2 + Math.random() * 1.3 + Math.min(score / 300, 2),
+      rot: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.06
+    });
+  }
+
+  function fireBullet() {
+    if (ammo <= 0) return;
+    bullets.push({ x: jet.x, y: jet.y - jet.h / 2, r: 4, speed: 8 });
+    ammo--;
+    updateHud();
+    if (ammo <= 0) triggerQuiz();
+  }
+
+  function addParticles(x, y, color) {
+    for (var i = 0; i < 10; i++) {
+      particles.push({
+        x: x, y: y,
+        vx: (Math.random() - 0.5) * 4,
+        vy: (Math.random() - 0.5) * 4,
+        life: 20 + Math.random() * 10,
+        color: color
+      });
+    }
+  }
+
+  // ---------------- Quiz ----------------
+  function pickWord() {
+    var pool = WORDS.filter(function (item) { return usedRecently.indexOf(item.w) === -1; });
+    if (pool.length === 0) { usedRecently = []; pool = WORDS.slice(); }
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    usedRecently.push(pick.w);
+    if (usedRecently.length > 12) usedRecently.shift();
+    return pick;
+  }
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function triggerQuiz() {
+    quizActive = true;
+    var correct = pickWord();
+    var distractors = shuffle(WORDS.filter(function (w) { return w.w !== correct.w; })).slice(0, 3);
+    var options = shuffle([correct].concat(distractors));
+
+    document.getElementById("quiz-def").textContent = correct.d;
+    var optWrap = document.getElementById("quiz-options");
+    optWrap.innerHTML = "";
+    document.getElementById("quiz-feedback").textContent = "";
+
+    options.forEach(function (opt) {
+      var btn = document.createElement("button");
+      btn.className = "opt-btn";
+      btn.textContent = opt.w;
+      btn.onclick = function () {
+        if (opt.w === correct.w) {
+          btn.classList.add("correct");
+          document.getElementById("quiz-feedback").textContent = "Correct! Ammo reloaded.";
+          ammo = 18;
+          updateHud();
+          setTimeout(function () {
+            document.getElementById("quiz-overlay").classList.add("hidden");
+            quizActive = false;
+          }, 500);
+        } else {
+          btn.classList.add("wrong");
+          document.getElementById("quiz-feedback").textContent = "Not quite — try again!";
+          btn.disabled = true;
+        }
+      };
+      optWrap.appendChild(btn);
+    });
+
+    document.getElementById("quiz-overlay").classList.remove("hidden");
+  }
+
+  // ---------------- Collisions ----------------
+  function circleHit(ax, ay, ar, bx, by, br) {
+    var dx = ax - bx, dy = ay - by;
+    return Math.sqrt(dx * dx + dy * dy) < ar + br;
+  }
+
+  // ---------------- Update / render ----------------
+  function update() {
+    frame++;
+
+    if (!quizActive) {
+      if (keys["ArrowLeft"]) jet.x = Math.max(jet.w / 2, jet.x - 5);
+      if (keys["ArrowRight"]) jet.x = Math.min(W - jet.w / 2, jet.x + 5);
+
+      fireTimer++;
+      if (fireTimer > 20) { fireTimer = 0; fireBullet(); }
+
+      spawnTimer++;
+      var spawnRate = Math.max(35, 70 - Math.floor(score / 40));
+      if (spawnTimer > spawnRate) { spawnTimer = 0; spawnEnemy(); }
+
+      bullets.forEach(function (b) { b.y -= b.speed; });
+      bullets = bullets.filter(function (b) { return b.y > -10; });
+
+      enemies.forEach(function (en) { en.y += en.speed; en.rot += en.spin; });
+
+      for (var i = enemies.length - 1; i >= 0; i--) {
+        var en = enemies[i];
+        var hit = false;
+        for (var j = bullets.length - 1; j >= 0; j--) {
+          var b = bullets[j];
+          if (circleHit(en.x, en.y, en.r, b.x, b.y, b.r)) {
+            addParticles(en.x, en.y, "#ffcc33");
+            enemies.splice(i, 1);
+            bullets.splice(j, 1);
+            score += 10;
+            hit = true;
+            break;
+          }
+        }
+        if (hit) continue;
+        if (circleHit(en.x, en.y, en.r, jet.x, jet.y, jet.w / 2.4)) {
+          addParticles(jet.x, jet.y, "#ff6b6b");
+          enemies.splice(i, 1);
+          lives--;
+          updateHud();
+          if (lives <= 0) { endGame(); return; }
+        } else if (en.y - en.r > H) {
+          enemies.splice(i, 1);
+        }
+      }
+      updateHud();
+    }
+
+    particles.forEach(function (p) { p.x += p.vx; p.y += p.vy; p.life--; });
+    particles = particles.filter(function (p) { return p.life > 0; });
+  }
+
+  function drawJet() {
+    ctx.save();
+    ctx.translate(jet.x, jet.y);
+    ctx.fillStyle = "#4dabf7";
+    ctx.beginPath();
+    ctx.moveTo(0, -jet.h / 2);
+    ctx.lineTo(jet.w / 2, jet.h / 2);
+    ctx.lineTo(0, jet.h / 3);
+    ctx.lineTo(-jet.w / 2, jet.h / 2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = "#ffd43b";
+    ctx.beginPath();
+    ctx.arc(0, -jet.h / 6, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawEnemy(en) {
+    ctx.save();
+    ctx.translate(en.x, en.y);
+    ctx.rotate(en.rot);
+    ctx.fillStyle = "#c0392b";
+    ctx.strokeStyle = "#7b241c";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    var spikes = 7;
+    for (var i = 0; i < spikes; i++) {
+      var ang = (i / spikes) * Math.PI * 2;
+      var rad = en.r * (0.8 + (i % 2) * 0.25);
+      var px = Math.cos(ang) * rad, py = Math.sin(ang) * rad;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function render() {
+    // sky
+    var grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, "#123163");
+    grad.addColorStop(1, "#0b1e3a");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // stars
+    ctx.fillStyle = "rgba(255,255,255,0.35)";
+    for (var s = 0; s < 40; s++) {
+      var sx = (s * 97 + frame * 0.6) % W;
+      var sy = (s * 53) % H;
+      ctx.fillRect(sx, sy, 2, 2);
+    }
+
+    bullets.forEach(function (b) {
+      ctx.fillStyle = "#ffe066";
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    enemies.forEach(drawEnemy);
+    drawJet();
+
+    particles.forEach(function (p) {
+      ctx.globalAlpha = Math.max(p.life / 30, 0);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+  }
+
+  function loop() {
+    if (!running) return;
+    update();
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  function endGame() {
+    running = false;
+    var newBest = false;
+    if (score > best) {
+      best = score;
+      newBest = true;
+      try { localStorage.setItem(BEST_KEY, String(best)); } catch (e) {}
+    }
+    document.getElementById("final-score").textContent = score;
+    document.getElementById("new-best-msg").classList.toggle("hidden", !newBest);
+    document.getElementById("gameover-overlay").classList.remove("hidden");
+    updateHud();
+  }
+
+  function startGame() {
+    document.getElementById("start-overlay").classList.add("hidden");
+    document.getElementById("gameover-overlay").classList.add("hidden");
+    resize();
+    resetGame();
+    running = true;
+    loop();
+  }
+
+  document.getElementById("start-btn").addEventListener("click", startGame);
+  document.getElementById("restart-btn").addEventListener("click", startGame);
+
+  resize();
+})();
+</script>
+</body>
+</html>
