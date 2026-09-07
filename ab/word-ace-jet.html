@@ -71,7 +71,7 @@
 
   <div id="start-overlay" class="overlay">
     <h1>Word Ace Jet</h1>
-    <p>Drag to move your jet. It shoots automatically. Every shot uses ammo — when you run out, answer a vocabulary question to reload and keep flying!</p>
+    <p>Drag to move your jet. It shoots automatically. Every shot uses ammo — when you run out, answer a vocabulary question to reload and keep flying! You get 2 tries per question — miss both and you'll lose a life.</p>
     <button class="btn" id="start-btn">Start game</button>
   </div>
 
@@ -261,8 +261,12 @@
     return a;
   }
 
+  var quizAttempts = 0;
+  var QUIZ_MAX_ATTEMPTS = 2;
+
   function triggerQuiz() {
     quizActive = true;
+    quizAttempts = 0;
     var correct = pickWord();
     var distractors = shuffle(WORDS.filter(function (w) { return w.w !== correct.w; })).slice(0, 3);
     var options = shuffle([correct].concat(distractors));
@@ -271,6 +275,34 @@
     var optWrap = document.getElementById("quiz-options");
     optWrap.innerHTML = "";
     document.getElementById("quiz-feedback").textContent = "";
+
+    function lockAllButtons() {
+      Array.prototype.forEach.call(optWrap.querySelectorAll(".opt-btn"), function (b) { b.disabled = true; });
+    }
+
+    function revealCorrectAndPenalize() {
+      Array.prototype.forEach.call(optWrap.querySelectorAll(".opt-btn"), function (b) {
+        if (b.textContent === correct.w) b.classList.add("correct");
+      });
+      lives--;
+      updateHud();
+      if (lives <= 0) {
+        document.getElementById("quiz-feedback").textContent = "Out of tries! The word was \"" + correct.w + "\".";
+        setTimeout(function () {
+          document.getElementById("quiz-overlay").classList.add("hidden");
+          quizActive = false;
+          endGame();
+        }, 900);
+      } else {
+        document.getElementById("quiz-feedback").textContent = "Out of tries! The word was \"" + correct.w + "\". You lost a life.";
+        ammo = 8;
+        updateHud();
+        setTimeout(function () {
+          document.getElementById("quiz-overlay").classList.add("hidden");
+          quizActive = false;
+        }, 1200);
+      }
+    }
 
     options.forEach(function (opt) {
       var btn = document.createElement("button");
@@ -282,14 +314,20 @@
           document.getElementById("quiz-feedback").textContent = "Correct! Ammo reloaded.";
           ammo = 18;
           updateHud();
+          lockAllButtons();
           setTimeout(function () {
             document.getElementById("quiz-overlay").classList.add("hidden");
             quizActive = false;
           }, 500);
         } else {
+          quizAttempts++;
           btn.classList.add("wrong");
-          document.getElementById("quiz-feedback").textContent = "Not quite — try again!";
           btn.disabled = true;
+          if (quizAttempts >= QUIZ_MAX_ATTEMPTS) {
+            revealCorrectAndPenalize();
+          } else {
+            document.getElementById("quiz-feedback").textContent = "Not quite — last try!";
+          }
         }
       };
       optWrap.appendChild(btn);
