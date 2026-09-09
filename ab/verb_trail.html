@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Verb Trail — Past Simple &amp; Participle</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#3D4E70;
+    --parchment:#F6F1E4;
+    --trail:#E8DCC2;
+    --trail-line:#C9B98F;
+    --good:#4C7A5E;
+    --good-fill:#DCEADD;
+    --bad:#C1584B;
+    --bad-fill:#F6DEDA;
+    --amber:#D8A33D;
+    --white:#FFFDF8;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:var(--parchment);
+    font-family:'Nunito', sans-serif;
+    color:var(--ink);
+    overscroll-behavior:none;
+    user-select:none;
+  }
+
+  .stage{
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:20px 16px 28px;
+  }
+
+  h1,h2,h3{ font-family:'Baloo 2', sans-serif; margin:0; }
+
+  /* ---------- Header / trail ---------- */
+  .topbar{
+    width:100%; max-width:640px;
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .topbar .title{
+    font-size:1.15rem; font-weight:800; color:var(--ink);
+  }
+  .stars{
+    display:flex; align-items:center; gap:6px;
+    background:var(--white); border:2px solid var(--trail-line);
+    border-radius:999px; padding:6px 14px;
+    font-weight:800; font-size:1rem;
+  }
+  .stars svg{ width:18px; height:18px; }
+
+  .trail-wrap{
+    width:100%; max-width:640px;
+    background:var(--trail);
+    border-radius:18px;
+    padding:14px 16px;
+    margin-bottom:18px;
+    border:2px solid var(--trail-line);
+  }
+  .trail-track{
+    display:flex;
+    gap:5px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    padding:4px 2px;
+  }
+  .trail-track::-webkit-scrollbar{ display:none; }
+  .stone{
+    flex:0 0 auto;
+    width:16px; height:16px;
+    border-radius:50%;
+    background:var(--white);
+    border:2px solid var(--trail-line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .stone.current{
+    background:var(--ink);
+    border-color:var(--ink);
+    box-shadow:0 0 0 4px rgba(27,42,74,0.15);
+  }
+  .stone.done-good{ background:var(--good); border-color:var(--good); }
+  .stone.done-review{ background:var(--amber); border-color:var(--amber); }
+
+  .trail-caption{
+    font-size:0.85rem; color:var(--ink-soft); font-weight:700;
+    margin-top:8px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    width:100%; max-width:640px;
+    background:var(--white);
+    border:2px solid var(--trail-line);
+    border-radius:22px;
+    padding:28px 22px;
+    text-align:center;
+    flex:1;
+    display:flex; flex-direction:column;
+    justify-content:center;
+    min-height:0;
+  }
+
+  /* Start screen */
+  .start-card .icon-row{ display:flex; justify-content:center; gap:14px; margin-bottom:18px; }
+  .icon-badge{
+    width:56px; height:56px; border-radius:50%;
+    background:var(--parchment); border:2px solid var(--trail-line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icon-badge svg{ width:28px; height:28px; stroke:var(--ink); }
+
+  .start-card h1{ font-size:1.9rem; margin-bottom:8px; }
+  .start-card p.lede{ color:var(--ink-soft); font-size:1.02rem; line-height:1.5; margin:0 auto 22px; max-width:440px; }
+
+  .rule-list{
+    text-align:left; max-width:420px; margin:0 auto 26px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .rule-item{
+    display:flex; align-items:flex-start; gap:10px;
+    font-size:0.95rem; color:var(--ink);
+  }
+  .rule-item .dot{
+    flex:0 0 auto; width:8px; height:8px; border-radius:50%;
+    background:var(--amber); margin-top:7px;
+  }
+
+  .btn{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700; font-size:1.05rem;
+    border:none; border-radius:16px;
+    padding:15px 28px;
+    cursor:pointer;
+    background:var(--ink); color:var(--white);
+    transition:transform .08s ease;
+  }
+  .btn:active{ transform:scale(0.96); }
+  .btn.secondary{
+    background:var(--white); color:var(--ink);
+    border:2px solid var(--trail-line);
+  }
+
+  .best-note{ margin-top:16px; font-size:0.85rem; color:var(--ink-soft); font-weight:700; }
+
+  /* Question screen */
+  .stage-label{
+    display:inline-block;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700; font-size:0.9rem;
+    color:var(--good);
+    background:var(--good-fill);
+    border-radius:999px;
+    padding:5px 16px;
+    margin-bottom:16px;
+  }
+  .verb-count{ font-size:0.85rem; color:var(--ink-soft); font-weight:700; margin-bottom:6px; }
+
+  .base-word{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size:2.6rem;
+    color:var(--ink);
+    margin-bottom:6px;
+    word-break:break-word;
+  }
+  .prompt-text{ color:var(--ink-soft); font-size:1rem; margin-bottom:26px; }
+
+  .options-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    max-width:480px;
+    margin:0 auto;
+  }
+  @media (max-width:420px){
+    .options-grid{ grid-template-columns:1fr; }
+  }
+
+  .option{
+    font-family:'Nunito', sans-serif;
+    font-weight:700; font-size:1.05rem;
+    background:var(--parchment);
+    border:2px solid var(--trail-line);
+    border-radius:16px;
+    padding:16px 12px;
+    cursor:pointer;
+    color:var(--ink);
+    min-height:58px;
+    display:flex; align-items:center; justify-content:center;
+    transition: background .15s ease, border-color .15s ease, transform .08s ease;
+  }
+  .option:active{ transform:scale(0.97); }
+  .option.correct{
+    background:var(--good-fill); border-color:var(--good); color:var(--good);
+  }
+  .option.incorrect{
+    background:var(--bad-fill); border-color:var(--bad); color:var(--bad);
+  }
+  .option.disabled{ pointer-events:none; opacity:0.6; }
+  .option.reveal{
+    background:var(--good-fill); border-color:var(--good); color:var(--good); opacity:1;
+  }
+
+  .feedback-line{
+    min-height:26px;
+    margin-top:18px;
+    font-weight:800;
+    font-size:1rem;
+  }
+  .feedback-line.good{ color:var(--good); }
+  .feedback-line.bad{ color:var(--bad); }
+
+  /* End screen */
+  .end-card h1{ font-size:1.8rem; margin-bottom:6px; }
+  .end-score{
+    font-family:'Baloo 2', sans-serif;
+    font-size:2.8rem; font-weight:800; color:var(--amber);
+    margin:8px 0 4px;
+  }
+  .end-sub{ color:var(--ink-soft); font-size:0.95rem; margin-bottom:22px; }
+
+  .review-box{
+    text-align:left; background:var(--parchment); border:2px solid var(--trail-line);
+    border-radius:16px; padding:16px 18px; margin:0 auto 24px; max-width:440px;
+    max-height:220px; overflow-y:auto;
+  }
+  .review-box h3{ font-size:0.95rem; margin-bottom:10px; color:var(--ink); }
+  .review-item{
+    font-size:0.92rem; padding:6px 0; border-bottom:1px solid var(--trail-line);
+    display:flex; justify-content:space-between; gap:10px;
+  }
+  .review-item:last-child{ border-bottom:none; }
+  .review-item b{ color:var(--ink); }
+  .review-item span{ color:var(--ink-soft); }
+
+  .end-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- ===== START SCREEN ===== -->
+  <div id="screen-start" class="card start-card" style="max-width:640px;">
+    <div class="icon-row">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M4 19V9l8-5 8 5v10"/><path d="M9 19v-6h6v6"/></svg>
+      </div>
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6"/><circle cx="12" cy="12" r="9"/><path d="M12 12l4 2"/></svg>
+      </div>
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+    </div>
+    <h1>Verb Trail</h1>
+    <p class="lede">Walk the trail one verb at a time. For each verb, pick the correct <b>past simple</b> and <b>past participle</b> form.</p>
+    <div class="rule-list">
+      <div class="rule-item"><span class="dot"></span><span>33 verbs from your Week 1 list — a mix of regular and irregular.</span></div>
+      <div class="rule-item"><span class="dot"></span><span>Tap the correct answer. Get both forms right to earn a star for that verb.</span></div>
+      <div class="rule-item"><span class="dot"></span><span>Verbs you miss go into a "words to revisit" list at the end.</span></div>
+    </div>
+    <button class="btn" id="btn-start">Start the trail</button>
+    <div class="best-note" id="best-note"></div>
+  </div>
+
+  <!-- ===== QUESTION SCREEN ===== -->
+  <div id="screen-question" class="hidden" style="width:100%; max-width:640px; display:flex; flex-direction:column; flex:1; min-height:0;">
+    <div class="topbar">
+      <div class="title">Verb Trail</div>
+      <div class="stars">
+        <svg viewBox="0 0 24 24" fill="#D8A33D" stroke="#D8A33D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span id="star-count">0</span>
+      </div>
+    </div>
+
+    <div class="trail-wrap">
+      <div class="trail-track" id="trail-track"></div>
+      <div class="trail-caption" id="trail-caption">Verb 1 of 33</div>
+    </div>
+
+    <div class="card" id="question-card">
+      <div class="stage-label" id="stage-label">Past simple</div>
+      <div class="verb-count" id="verb-count"></div>
+      <div class="base-word" id="base-word"></div>
+      <div class="prompt-text" id="prompt-text"></div>
+      <div class="options-grid" id="options-grid"></div>
+      <div class="feedback-line" id="feedback-line"></div>
+    </div>
+  </div>
+
+  <!-- ===== END SCREEN ===== -->
+  <div id="screen-end" class="hidden card end-card" style="max-width:640px;">
+    <h1 id="end-title">Trail complete!</h1>
+    <div class="end-score" id="end-score">0 / 33</div>
+    <div class="end-sub" id="end-sub">verbs mastered on the first try</div>
+
+    <div id="review-wrap" class="hidden">
+      <div class="review-box" id="review-box"></div>
+    </div>
+
+    <div class="end-actions">
+      <button class="btn" id="btn-again">Walk the trail again</button>
+      <button class="btn secondary" id="btn-review-only" style="display:none;">Practice missed verbs</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+
+  // ---------- Verb data ----------
+  // [base, pastSimple, pastParticiple, pastDistractors[3], participleDistractors[3]]
+  const VERBS = [
+    ["ride","rode","ridden",["rided","ridden","rid"],["rode","rided","rid"]],
+    ["sit down","sat down","sat down",["sitted down","seated down","sits down"],["sitted down","sits down","seated down"]],
+    ["stand up","stood up","stood up",["standed up","stand up","stooded up"],["standed up","stand up","stooded up"]],
+    ["fight","fought","fought",["fighted","fight","foughted"],["fighted","fight","fightened"]],
+    ["laugh","laughed","laughed",["laught","laughted","laugh"],["laught","laughted","laugh"]],
+    ["read","read","read",["readed","red","reads"],["readed","red","reads"]],
+    ["play","played","played",["playd","plaied","play"],["playd","plaied","play"]],
+    ["listen","listened","listened",["listend","listen","listenned"],["listend","listen","listenned"]],
+    ["cry","cried","cried",["cryed","cries","cry"],["cryed","cries","cry"]],
+    ["think","thought","thought",["thinked","think","thoughted"],["thinked","think","thoughted"]],
+    ["sing","sang","sung",["singed","sung","sing"],["sang","singed","sing"]],
+    ["watch TV","watched TV","watched TV",["watchd TV","watches TV","watch TV"],["watchd TV","watches TV","watch TV"]],
+    ["dance","danced","danced",["dansed","danceed","dance"],["dansed","danceed","dance"]],
+    ["turn on","turned on","turned on",["turnned on","turn on","turnd on"],["turnned on","turn on","turnd on"]],
+    ["turn off","turned off","turned off",["turnned off","turn off","turnd off"],["turnned off","turn off","turnd off"]],
+    ["win","won","won",["winned","win","wan"],["winned","win","wan"]],
+    ["fly","flew","flown",["flied","flyed","flown"],["flew","flied","flyed"]],
+    ["cut","cut","cut",["cutted","cuts","cutting"],["cutted","cuts","cutting"]],
+    ["throw away","threw away","thrown away",["throwed away","throw away","thrown away"],["threw away","throwed away","throw away"]],
+    ["sleep","slept","slept",["sleeped","sleept","sleep"],["sleeped","sleept","sleep"]],
+    ["close","closed","closed",["closd","closeed","close"],["closd","closeed","close"]],
+    ["open","opened","opened",["opend","openned","open"],["opend","openned","open"]],
+    ["write","wrote","written",["writed","written","wroted"],["wrote","writed","wroted"]],
+    ["give","gave","given",["gived","given","gaved"],["gave","gived","gaved"]],
+    ["jump","jumped","jumped",["jumpped","jumpt","jump"],["jumpped","jumpt","jump"]],
+    ["eat","ate","eaten",["eated","eaten","ated"],["ate","eated","ated"]],
+    ["drink","drank","drunk",["drinked","drunk","dranked"],["drank","drinked","dranked"]],
+    ["cook","cooked","cooked",["cookd","cookked","cook"],["cookd","cookked","cook"]],
+    ["wash","washed","washed",["washd","washt","wash"],["washd","washt","wash"]],
+    ["wait","waited","waited",["waitted","waitd","wait"],["waitted","waitd","wait"]],
+    ["climb","climbed","climbed",["climbd","climbbed","climb"],["climbd","climbbed","climb"]],
+    ["talk","talked","talked",["talkd","talkked","talk"],["talkd","talkked","talk"]],
+    ["crawl","crawled","crawled",["crawld","crawlled","crawl"],["crawld","crawlled","crawl"]]
+  ];
+
+  const BEST_KEY = "verbTrailBestStars";
+
+  let order = [];
+  let idx = 0;
+  let sub = "past"; // "past" | "participle"
+  let stars = 0;
+  let verbClean = true; // no wrong taps yet on this verb
+  let reviewList = []; // {base, past, participle}
+  let locked = false;
+
+  const $ = (id) => document.getElementById(id);
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function newGame(){
+    order = shuffle(VERBS.map((_, i) => i));
+    idx = 0;
+    sub = "past";
+    stars = 0;
+    reviewList = [];
+    verbClean = true;
+    locked = false;
+    $("star-count").textContent = "0";
+  }
+
+  function buildTrail(){
+    const track = $("trail-track");
+    track.innerHTML = "";
+    for (let i = 0; i < order.length; i++){
+      const s = document.createElement("div");
+      s.className = "stone";
+      s.id = "stone-" + i;
+      track.appendChild(s);
+    }
+  }
+
+  function updateTrailVisual(){
+    for (let i = 0; i < order.length; i++){
+      const s = $("stone-" + i);
+      s.classList.remove("current", "done-good", "done-review");
+      if (i < idx) {
+        // completed verb: was it clean?
+      } else if (i === idx) {
+        s.classList.add("current");
+      }
+    }
+    // mark completed
+    for (let i = 0; i < idx; i++){
+      const verb = VERBS[order[i]];
+      const wasReviewed = reviewList.some(r => r.base === verb[0]);
+      $("stone-" + i).classList.add(wasReviewed ? "done-review" : "done-good");
+    }
+    $("trail-caption").textContent = "Verb " + (idx + 1) + " of " + order.length;
+    const cur = $("stone-" + idx);
+    if (cur) cur.scrollIntoView({ inline: "center", behavior: "smooth", block: "nearest" });
+  }
+
+  function currentVerb(){
+    return VERBS[order[idx]];
+  }
+
+  function renderQuestion(){
+    locked = false;
+    const v = currentVerb();
+    const base = v[0];
+    const correct = sub === "past" ? v[1] : v[2];
+    const distractors = sub === "past" ? v[3] : v[4];
+
+    $("stage-label").textContent = sub === "past" ? "Past simple" : "Past participle";
+    $("stage-label").style.color = sub === "past" ? "var(--good)" : "#7A5CB8";
+    $("stage-label").style.background = sub === "past" ? "var(--good-fill)" : "#EDE6F7";
+    $("verb-count").textContent = "Verb " + (idx + 1) + " of " + order.length;
+    $("base-word").textContent = base;
+    $("prompt-text").textContent = sub === "past"
+      ? "What is the past simple form?"
+      : "What is the past participle form?";
+    $("feedback-line").textContent = "";
+    $("feedback-line").className = "feedback-line";
+
+    const options = shuffle([correct, ...distractors]);
+    const grid = $("options-grid");
+    grid.innerHTML = "";
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "option";
+      btn.textContent = opt;
+      btn.addEventListener("click", () => handleAnswer(btn, opt, correct));
+      grid.appendChild(btn);
+    });
+
+    updateTrailVisual();
+  }
+
+  function handleAnswer(btn, chosen, correct){
+    if (locked) return;
+    locked = true;
+
+    const allOptions = Array.from(document.querySelectorAll(".option"));
+    allOptions.forEach(o => o.classList.add("disabled"));
+
+    if (chosen === correct){
+      btn.classList.add("correct");
+      $("feedback-line").textContent = "Nice — that's right!";
+      $("feedback-line").classList.add("good");
+    } else {
+      btn.classList.add("incorrect");
+      verbClean = false;
+      $("feedback-line").textContent = "Not quite. The correct answer is \"" + correct + "\".";
+      $("feedback-line").classList.add("bad");
+      allOptions.forEach(o => {
+        if (o.textContent === correct) o.classList.add("reveal");
+      });
+    }
+
+    setTimeout(advance, chosen === correct ? 900 : 1500);
+  }
+
+  function advance(){
+    if (sub === "past"){
+      sub = "participle";
+      renderQuestion();
+      return;
+    }
+
+    // finished both stages for this verb
+    const v = currentVerb();
+    if (verbClean){
+      stars += 1;
+      $("star-count").textContent = String(stars);
+    } else {
+      reviewList.push({ base: v[0], past: v[1], participle: v[2] });
+    }
+
+    idx += 1;
+    sub = "past";
+    verbClean = true;
+
+    if (idx >= order.length){
+      showEnd();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function showEnd(){
+    $("screen-question").classList.add("hidden");
+    $("screen-end").classList.remove("hidden");
+
+    $("end-score").textContent = stars + " / " + order.length;
+    const pct = Math.round((stars / order.length) * 100);
+    $("end-sub").textContent = pct + "% mastered on the first try";
+
+    const best = Number(localStorage.getItem(BEST_KEY) || 0);
+    if (stars > best){
+      localStorage.setItem(BEST_KEY, String(stars));
+      $("end-title").textContent = "New best — trail complete!";
+    }
+
+    if (reviewList.length > 0){
+      $("review-wrap").classList.remove("hidden");
+      const box = $("review-box");
+      box.innerHTML = "<h3>Words to revisit</h3>";
+      reviewList.forEach(r => {
+        const row = document.createElement("div");
+        row.className = "review-item";
+        row.innerHTML = "<b>" + r.base + "</b><span>" + r.past + " · " + r.participle + "</span>";
+        box.appendChild(row);
+      });
+      $("btn-review-only").style.display = "inline-block";
+    } else {
+      $("review-wrap").classList.add("hidden");
+      $("btn-review-only").style.display = "none";
+    }
+  }
+
+  function startGame(){
+    newGame();
+    buildTrail();
+    $("screen-start").classList.add("hidden");
+    $("screen-end").classList.add("hidden");
+    $("screen-question").classList.remove("hidden");
+    renderQuestion();
+  }
+
+  function startReviewOnly(missedBases){
+    const missedSet = new Set(missedBases);
+    const indices = VERBS
+      .map((v, i) => i)
+      .filter(i => missedSet.has(VERBS[i][0]));
+    order = shuffle(indices);
+    idx = 0;
+    sub = "past";
+    stars = 0;
+    reviewList = [];
+    verbClean = true;
+    locked = false;
+    $("star-count").textContent = "0";
+    buildTrail();
+    $("screen-end").classList.add("hidden");
+    $("screen-question").classList.remove("hidden");
+    renderQuestion();
+  }
+
+  $("btn-start").addEventListener("click", startGame);
+  $("btn-again").addEventListener("click", startGame);
+  $("btn-review-only").addEventListener("click", () => {
+    startReviewOnly(reviewList.map(r => r.base));
+  });
+
+  const best = Number(localStorage.getItem(BEST_KEY) || 0);
+  if (best > 0){
+    $("best-note").textContent = "Best so far: " + best + " / " + VERBS.length + " stars";
+  }
+
+})();
+</script>
+
+</body>
+</html>
