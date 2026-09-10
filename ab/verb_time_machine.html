@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Verb Time Machine</title>
+<style>
+  :root{
+    --bg: #171B36;
+    --bg-glow: #232A52;
+    --panel: #262B52;
+    --panel-edge: #343B6E;
+    --gold: #E8B54D;
+    --gold-dim: #B8903C;
+    --parchment: #F2EAD8;
+    --muted: #9AA0C4;
+    --green: #4CAF7D;
+    --green-dim: #2E7A54;
+    --coral: #E2574C;
+    --coral-dim: #A83A32;
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: radial-gradient(ellipse at 50% -10%, var(--bg-glow) 0%, var(--bg) 55%);
+    color: var(--parchment);
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+
+  #app {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+
+  .screen { width: 100%; max-width: 480px; }
+  .hidden { display: none !important; }
+
+  /* ---------- Header / badge ---------- */
+  .badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .clock-badge {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 2px solid var(--gold-dim);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  h1.title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 0.2px;
+    margin: 0;
+    text-align: center;
+    color: var(--parchment);
+  }
+
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14.5px;
+    margin: 6px 0 28px;
+    line-height: 1.5;
+  }
+
+  /* ---------- Start screen ---------- */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: var(--radius);
+    padding: 22px 20px;
+  }
+
+  .rules-list { margin: 0 0 20px; padding: 0; list-style: none; }
+  .rules-list li {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--panel-edge);
+    font-size: 14.5px;
+    color: var(--parchment);
+    line-height: 1.4;
+  }
+  .rules-list li:last-child { border-bottom: none; }
+  .rules-list .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold);
+    margin-top: 7px; flex-shrink: 0;
+  }
+
+  .big-btn {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.08s ease;
+  }
+  .big-btn:active { transform: scale(0.97); }
+
+  .btn-gold {
+    background: linear-gradient(180deg, #F1C266, var(--gold));
+    color: #2A1E05;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--parchment);
+    border: 1.5px solid var(--panel-edge);
+    margin-top: 10px;
+  }
+
+  .best-score {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 16px;
+  }
+
+  /* ---------- Quiz screen ---------- */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .track {
+    height: 8px;
+    background: var(--panel);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 22px;
+    border: 1px solid var(--panel-edge);
+  }
+  .track-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+
+  .score-pill {
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .q-card {
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
+    border-radius: var(--radius);
+    padding: 26px 20px 22px;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .q-kicker {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .q-base {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--parchment);
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+
+  .q-prompt {
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .opt-btn {
+    background: var(--panel);
+    border: 1.5px solid var(--panel-edge);
+    color: var(--parchment);
+    border-radius: 14px;
+    padding: 16px 8px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    min-height: 56px;
+    transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .opt-btn:active { transform: scale(0.96); }
+  .opt-btn:disabled { cursor: default; }
+
+  .opt-correct {
+    background: linear-gradient(180deg, #59C48B, var(--green));
+    border-color: var(--green-dim);
+    color: #08210F;
+  }
+  .opt-wrong {
+    background: linear-gradient(180deg, #EA6E64, var(--coral));
+    border-color: var(--coral-dim);
+    color: #300805;
+  }
+  .opt-dim { opacity: 0.45; }
+
+  .feedback-line {
+    min-height: 22px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 14px 0 6px;
+  }
+  .feedback-line.correct { color: var(--green); }
+  .feedback-line.wrong { color: var(--coral); }
+
+  .next-btn {
+    margin-top: 4px;
+  }
+
+  /* ---------- End screen ---------- */
+  .result-score {
+    text-align: center;
+    margin: 6px 0 22px;
+  }
+  .result-score .num {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+  .result-score .label {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .review-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--parchment);
+    margin: 4px 0 10px;
+  }
+
+  .review-list { list-style: none; margin: 0 0 20px; padding: 0; }
+  .review-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--panel-edge);
+    font-size: 14px;
+  }
+  .review-item:last-child { border-bottom: none; }
+  .review-item .base { color: var(--parchment); font-weight: 600; }
+  .review-item .forms { color: var(--gold); text-align: right; }
+
+  .all-correct {
+    text-align: center;
+    color: var(--green);
+    font-size: 14.5px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 360px) {
+    .q-base { font-size: 28px; }
+    .opt-btn { font-size: 14.5px; padding: 14px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- START SCREEN -->
+  <div id="start-screen" class="screen">
+    <div class="badge-row">
+      <div class="clock-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#E8B54D" stroke-width="1.6"/>
+          <path d="M12 7v5l3.5 2" stroke="#E8B54D" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <h1 class="title">Verb Time Machine</h1>
+    <p class="subtitle">Travel back in time and prove you know your verb forms — Who We Are, Week 1</p>
+
+    <div class="panel">
+      <ul class="rules-list">
+        <li><span class="dot"></span>You'll see a verb in its base form, like <strong>eat</strong>.</li>
+        <li><span class="dot"></span>Tap the correct <strong>past simple</strong> form.</li>
+        <li><span class="dot"></span>Some verbs also ask for the <strong>past participle</strong> — the form used with "have."</li>
+        <li><span class="dot"></span>Watch out for trick answers like "eated" — that's not a real word!</li>
+      </ul>
+      <button class="big-btn btn-gold" id="start-btn">Start the mission</button>
+      <div class="best-score" id="best-score-line"></div>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen" class="screen hidden">
+    <div class="top-bar">
+      <span id="progress-text">Question 1 of 41</span>
+      <span class="score-pill" id="score-pill">0 pts</span>
+    </div>
+    <div class="track"><div class="track-fill" id="track-fill" style="width:0%"></div></div>
+
+    <div class="q-card">
+      <div class="q-kicker">Base form</div>
+      <div class="q-base" id="q-base">ride</div>
+      <div class="q-prompt" id="q-prompt">What is the past simple form?</div>
+    </div>
+
+    <div class="options-grid" id="options-grid"></div>
+
+    <div class="feedback-line" id="feedback-line"></div>
+    <button class="big-btn btn-gold next-btn hidden" id="next-btn">Next</button>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="end-screen" class="screen hidden">
+    <div class="badge-row">
+      <div class="clock-badge">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12l4.5 4.5L19 7" stroke="#E8B54D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <h1 class="title">Mission complete</h1>
+
+    <div class="panel">
+      <div class="result-score">
+        <span class="num" id="final-score">0/41</span>
+        <span class="label">correct answers</span>
+      </div>
+
+      <div id="review-section"></div>
+
+      <button class="big-btn btn-gold" id="restart-btn">Play again</button>
+      <button class="big-btn btn-outline" id="missed-only-btn">Practice missed words</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+
+  // ---------- Verb data (Week 1 verb list) ----------
+  // regIrr = the wrong "regularized" form a student might guess for an irregular verb
+  const VERBS = [
+    { base: "Ride",        past: "rode",        part: "ridden",       regIrr: "rided" },
+    { base: "Sit down",    past: "sat down",     part: "sat down",     regIrr: "sitted down" },
+    { base: "Stand up",    past: "stood up",     part: "stood up",     regIrr: "standed up" },
+    { base: "Fight",       past: "fought",       part: "fought",       regIrr: "fighted" },
+    { base: "Laugh",       past: "laughed",      part: "laughed",      regIrr: null },
+    { base: "Read",        past: "read",         part: "read",         regIrr: "readed" },
+    { base: "Play",        past: "played",       part: "played",       regIrr: null },
+    { base: "Listen",      past: "listened",     part: "listened",     regIrr: null },
+    { base: "Cry",         past: "cried",        part: "cried",        regIrr: null },
+    { base: "Think",       past: "thought",      part: "thought",      regIrr: "thinked" },
+    { base: "Sing",        past: "sang",         part: "sung",         regIrr: "singed" },
+    { base: "Watch TV",    past: "watched TV",   part: "watched TV",   regIrr: null },
+    { base: "Dance",       past: "danced",       part: "danced",       regIrr: null },
+    { base: "Turn on",     past: "turned on",    part: "turned on",    regIrr: null },
+    { base: "Turn off",    past: "turned off",   part: "turned off",   regIrr: null },
+    { base: "Win",         past: "won",          part: "won",          regIrr: "winned" },
+    { base: "Fly",         past: "flew",         part: "flown",        regIrr: "flyed" },
+    { base: "Cut",         past: "cut",          part: "cut",          regIrr: "cutted" },
+    { base: "Throw away",  past: "threw away",   part: "thrown away",  regIrr: "throwed away" },
+    { base: "Sleep",       past: "slept",        part: "slept",        regIrr: "sleeped" },
+    { base: "Close",       past: "closed",       part: "closed",       regIrr: null },
+    { base: "Open",        past: "opened",       part: "opened",       regIrr: null },
+    { base: "Write",       past: "wrote",        part: "written",      regIrr: "writed" },
+    { base: "Give",        past: "gave",         part: "given",        regIrr: "gived" },
+    { base: "Jump",        past: "jumped",       part: "jumped",       regIrr: null },
+    { base: "Eat",         past: "ate",          part: "eaten",        regIrr: "eated" },
+    { base: "Drink",       past: "drank",        part: "drunk",        regIrr: "drinked" },
+    { base: "Cook",        past: "cooked",       part: "cooked",       regIrr: null },
+    { base: "Wash",        past: "washed",       part: "washed",       regIrr: null },
+    { base: "Wait",        past: "waited",       part: "waited",       regIrr: null },
+    { base: "Climb",       past: "climbed",      part: "climbed",      regIrr: null },
+    { base: "Talk",        past: "talked",       part: "talked",       regIrr: null },
+    { base: "Crawl",       past: "crawled",      part: "crawled",      regIrr: null },
+  ];
+
+  const STORAGE_KEY = "verbTimeMachineBest";
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildOptions(correct, pool, extras){
+    const opts = new Set([correct]);
+    shuffle(extras.filter(Boolean)).forEach(e => { if(opts.size < 4 && e !== correct) opts.add(e); });
+    const shuffledPool = shuffle(pool);
+    let i = 0;
+    while(opts.size < 4 && i < shuffledPool.length){
+      const cand = shuffledPool[i];
+      if(cand !== correct) opts.add(cand);
+      i++;
+    }
+    return shuffle(Array.from(opts));
+  }
+
+  function buildQuestions(verbList){
+    const allPast = verbList.map(v => v.past);
+    const allPart = verbList.map(v => v.part);
+    const qs = [];
+
+    verbList.forEach(v => {
+      qs.push({
+        base: v.base,
+        type: "past",
+        prompt: "What is the past simple form?",
+        correct: v.past,
+        options: buildOptions(v.past, allPast, [v.regIrr, v.part])
+      });
+
+      if(v.part !== v.past){
+        qs.push({
+          base: v.base,
+          type: "participle",
+          prompt: 'What is the past participle? ("have ___")',
+          correct: v.part,
+          options: buildOptions(v.part, allPart, [v.regIrr, v.past])
+        });
+      }
+    });
+
+    return shuffle(qs);
+  }
+
+  // ---------- State ----------
+  let questions = [];
+  let qIndex = 0;
+  let score = 0;
+  let missed = []; // {base, type, correct}
+  let answered = false;
+
+  // ---------- Elements ----------
+  const startScreen = document.getElementById("start-screen");
+  const quizScreen = document.getElementById("quiz-screen");
+  const endScreen = document.getElementById("end-screen");
+
+  const startBtn = document.getElementById("start-btn");
+  const restartBtn = document.getElementById("restart-btn");
+  const missedOnlyBtn = document.getElementById("missed-only-btn");
+  const nextBtn = document.getElementById("next-btn");
+
+  const progressText = document.getElementById("progress-text");
+  const trackFill = document.getElementById("track-fill");
+  const scorePill = document.getElementById("score-pill");
+  const qBase = document.getElementById("q-base");
+  const qPrompt = document.getElementById("q-prompt");
+  const optionsGrid = document.getElementById("options-grid");
+  const feedbackLine = document.getElementById("feedback-line");
+
+  const finalScore = document.getElementById("final-score");
+  const reviewSection = document.getElementById("review-section");
+  const bestScoreLine = document.getElementById("best-score-line");
+
+  function showScreen(el){
+    [startScreen, quizScreen, endScreen].forEach(s => s.classList.add("hidden"));
+    el.classList.remove("hidden");
+  }
+
+  function getBest(){
+    const v = localStorage.getItem(STORAGE_KEY);
+    return v ? parseInt(v, 10) : null;
+  }
+
+  function setBest(n){
+    const cur = getBest();
+    if(cur === null || n > cur) localStorage.setItem(STORAGE_KEY, String(n));
+  }
+
+  function renderBestLine(){
+    const best = getBest();
+    bestScoreLine.textContent = best !== null ? "Best score: " + best + " / 41" : "";
+  }
+
+  function startGame(pool){
+    questions = buildQuestions(pool);
+    qIndex = 0;
+    score = 0;
+    missed = [];
+    showScreen(quizScreen);
+    renderQuestion();
+  }
+
+  function renderQuestion(){
+    answered = false;
+    const q = questions[qIndex];
+    progressText.textContent = "Question " + (qIndex + 1) + " of " + questions.length;
+    scorePill.textContent = score + " pts";
+    trackFill.style.width = Math.round((qIndex / questions.length) * 100) + "%";
+
+    qBase.textContent = q.base;
+    qPrompt.textContent = q.prompt;
+    feedbackLine.textContent = "";
+    feedbackLine.className = "feedback-line";
+    nextBtn.classList.add("hidden");
+
+    optionsGrid.innerHTML = "";
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "opt-btn";
+      btn.textContent = opt;
+      btn.addEventListener("click", () => handleAnswer(opt, btn));
+      optionsGrid.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(chosen, btnEl){
+    if(answered) return;
+    answered = true;
+    const q = questions[qIndex];
+    const correct = chosen === q.correct;
+
+    Array.from(optionsGrid.children).forEach(btn => {
+      btn.disabled = true;
+      if(btn.textContent === q.correct){
+        btn.classList.add("opt-correct");
+      } else if(btn === btnEl){
+        btn.classList.add("opt-wrong");
+      } else {
+        btn.classList.add("opt-dim");
+      }
+    });
+
+    if(correct){
+      score++;
+      feedbackLine.textContent = "Correct!";
+      feedbackLine.classList.add("correct");
+    } else {
+      feedbackLine.textContent = 'Not quite — the correct answer is "' + q.correct + '"';
+      feedbackLine.classList.add("wrong");
+      missed.push({ base: q.base, type: q.type, correct: q.correct });
+    }
+
+    scorePill.textContent = score + " pts";
+    nextBtn.classList.remove("hidden");
+  }
+
+  function nextQuestion(){
+    qIndex++;
+    if(qIndex >= questions.length){
+      endGame();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function endGame(){
+    trackFill.style.width = "100%";
+    setBest(score);
+    showScreen(endScreen);
+    finalScore.textContent = score + "/" + questions.length;
+
+    reviewSection.innerHTML = "";
+    if(missed.length === 0){
+      const p = document.createElement("p");
+      p.className = "all-correct";
+      p.textContent = "Perfect score! Every verb form was correct.";
+      reviewSection.appendChild(p);
+    } else {
+      const title = document.createElement("div");
+      title.className = "review-title";
+      title.textContent = "Words to review";
+      reviewSection.appendChild(title);
+
+      const list = document.createElement("ul");
+      list.className = "review-list";
+
+      // de-duplicate by base+type in case a word appears more than once missed later
+      const seen = new Set();
+      missed.forEach(m => {
+        const key = m.base + m.type;
+        if(seen.has(key)) return;
+        seen.add(key);
+        const li = document.createElement("li");
+        li.className = "review-item";
+        const label = m.type === "past" ? "past simple" : "participle";
+        li.innerHTML = '<span class="base">' + m.base + '</span><span class="forms">' + m.correct + ' <span style="color:var(--muted); font-weight:400;">(' + label + ')</span></span>';
+        list.appendChild(li);
+      });
+      reviewSection.appendChild(list);
+    }
+
+    missedOnlyBtn.classList.toggle("hidden", missed.length === 0);
+  }
+
+  startBtn.addEventListener("click", () => startGame(VERBS));
+  restartBtn.addEventListener("click", () => { renderBestLine(); startGame(VERBS); });
+  nextBtn.addEventListener("click", nextQuestion);
+
+  missedOnlyBtn.addEventListener("click", () => {
+    const missedBases = Array.from(new Set(missed.map(m => m.base)));
+    const missedVerbs = VERBS.filter(v => missedBases.includes(v.base));
+    startGame(missedVerbs.length ? missedVerbs : VERBS);
+  });
+
+  renderBestLine();
+})();
+</script>
+
+</body>
+</html>
