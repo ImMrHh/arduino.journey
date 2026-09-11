@@ -71,7 +71,7 @@
 
   <div id="start-overlay" class="overlay">
     <h1>Word Ace Jet</h1>
-    <p>Drag to move your jet. It shoots automatically. Every shot uses ammo — when you run out, answer a vocabulary question to reload and keep flying! You get 2 tries per question — miss both and you'll lose a life.</p>
+    <p>Drag to move your jet. It shoots automatically. Every shot uses ammo — when you run out, answer a vocabulary question to reload and keep flying! You get 1 try per question — miss it and you'll lose a life.</p>
     <button class="btn" id="start-btn">Start game</button>
   </div>
 
@@ -87,6 +87,7 @@
   <div id="gameover-overlay" class="overlay hidden">
     <h1>Game over</h1>
     <p>Final score: <span id="final-score">0</span></p>
+    <p>Vocabulary quiz: <span id="final-quiz">0/0</span> correct (<span id="final-quiz-pct">0%</span>)</p>
     <p id="new-best-msg" class="hidden" style="color:#ffd43b;">New best score!</p>
     <button class="btn" id="restart-btn">Play again</button>
   </div>
@@ -153,6 +154,7 @@
   // ---------------- Game state ----------------
   var jet, bullets, enemies, particles;
   var score, ammo, lives, best, running, quizActive, frame, spawnTimer, fireTimer;
+  var quizCorrect, quizTotal;
   var usedRecently = [];
 
   var BEST_KEY = "wordAceJet_best";
@@ -171,6 +173,8 @@
     spawnTimer = 0;
     fireTimer = 0;
     quizActive = false;
+    quizCorrect = 0;
+    quizTotal = 0;
     usedRecently = [];
     updateHud();
   }
@@ -262,7 +266,7 @@
   }
 
   var quizAttempts = 0;
-  var QUIZ_MAX_ATTEMPTS = 2;
+  var QUIZ_MAX_ATTEMPTS = 1;
 
   function triggerQuiz() {
     quizActive = true;
@@ -310,6 +314,8 @@
       btn.textContent = opt.w;
       btn.onclick = function () {
         if (opt.w === correct.w) {
+          quizTotal++;
+          quizCorrect++;
           btn.classList.add("correct");
           document.getElementById("quiz-feedback").textContent = "Correct! Ammo reloaded.";
           ammo = 18;
@@ -321,13 +327,10 @@
           }, 500);
         } else {
           quizAttempts++;
+          quizTotal++;
           btn.classList.add("wrong");
           btn.disabled = true;
-          if (quizAttempts >= QUIZ_MAX_ATTEMPTS) {
-            revealCorrectAndPenalize();
-          } else {
-            document.getElementById("quiz-feedback").textContent = "Not quite — last try!";
-          }
+          revealCorrectAndPenalize();
         }
       };
       optWrap.appendChild(btn);
@@ -485,6 +488,9 @@
       try { localStorage.setItem(BEST_KEY, String(best)); } catch (e) {}
     }
     document.getElementById("final-score").textContent = score;
+    var pct = quizTotal > 0 ? Math.round((quizCorrect / quizTotal) * 100) : 0;
+    document.getElementById("final-quiz").textContent = quizCorrect + "/" + quizTotal;
+    document.getElementById("final-quiz-pct").textContent = pct + "%";
     document.getElementById("new-best-msg").classList.toggle("hidden", !newBest);
     document.getElementById("gameover-overlay").classList.remove("hidden");
     updateHud();
