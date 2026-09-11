@@ -303,6 +303,95 @@
 </style>
 </head>
 <body>
+<div id="roster-picker" style="position:fixed;inset:0;z-index:99999;background:#0b1220;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;font-family:inherit;text-align:center;">
+  <h1 style="margin:0 0 8px;font-size:1.4rem;">Who's playing?</h1>
+  <p id="picker-step-label" style="margin:0 0 20px;opacity:.8;">Pick your group</p>
+
+  <div id="picker-groups" style="display:flex;gap:16px;">
+    <button class="picker-group-btn" data-group="A" style="padding:16px 32px;font-size:1.1rem;border-radius:12px;border:2px solid #E8B54D;background:transparent;color:#E8B54D;cursor:pointer;">Group A</button>
+    <button class="picker-group-btn" data-group="B" style="padding:16px 32px;font-size:1.1rem;border-radius:12px;border:2px solid #E8B54D;background:transparent;color:#E8B54D;cursor:pointer;">Group B</button>
+  </div>
+
+  <div id="picker-names" style="display:none;flex-wrap:wrap;gap:10px;max-width:520px;justify-content:center;"></div>
+
+  <button id="picker-back" style="display:none;margin-top:20px;background:none;border:none;color:#9aa4b2;text-decoration:underline;cursor:pointer;font-size:.9rem;">&larr; back to groups</button>
+</div>
+<script>
+(function(){
+  var SHEET_URL = "https://script.google.com/macros/s/AKfycbz6HwVtI8LEzfZUUKNvkSShTT26YWwexM6hBUfRlGqsH7GbQsj6zpVzp9dEuPYyd-aj/exec";
+  var ROSTER = {
+    A: [
+      {id:"001",name:"Fatima"},{id:"002",name:"Iker"},{id:"003",name:"Jules"},{id:"004",name:"JoseL"},
+      {id:"005",name:"DiegoG"},{id:"006",name:"Cons"},{id:"007",name:"Gabo"},{id:"008",name:"Pau"},
+      {id:"009",name:"SantiL"},{id:"010",name:"Alonso"},{id:"011",name:"Diego2nd"},{id:"012",name:"Emi"},
+      {id:"013",name:"Oli"},{id:"014",name:"Arthur"},{id:"015",name:"Emma"},{id:"016",name:"JP"},
+      {id:"017",name:"SantiS"},{id:"018",name:"Majo"}
+    ],
+    B: [
+      {id:"019",name:"Rodri"},{id:"020",name:"JuanA"},{id:"021",name:"Alex"},{id:"022",name:"Emi"},
+      {id:"023",name:"Jero"},{id:"024",name:"Thomas"},{id:"025",name:"Thiago"},{id:"026",name:"Nats"},
+      {id:"027",name:"Pato"},{id:"028",name:"Bruno"},{id:"029",name:"Max"},{id:"030",name:"Anto"},
+      {id:"031",name:"Aitana"},{id:"032",name:"Juan2nd"},{id:"033",name:"Sil"},{id:"034",name:"Anya"},
+      {id:"035",name:"Luka"},{id:"036",name:"Ian"},{id:"037",name:"Xime"}
+    ]
+  };
+
+  window.__student = null;
+  window.__sessionId = null;
+
+  function makeSessionId(){
+    return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,8);
+  }
+
+  window.__submitScore = function(payload){
+    try {
+      fetch(SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+    } catch(e) { console.error("score submit failed", e); }
+  };
+
+  var picker = document.getElementById("roster-picker");
+  var groupsBox = document.getElementById("picker-groups");
+  var namesBox = document.getElementById("picker-names");
+  var backBtn = document.getElementById("picker-back");
+  var stepLabel = document.getElementById("picker-step-label");
+
+  function showNames(group){
+    groupsBox.style.display = "none";
+    namesBox.style.display = "flex";
+    backBtn.style.display = "inline-block";
+    stepLabel.textContent = "Pick your name — Group " + group;
+    namesBox.innerHTML = "";
+    ROSTER[group].forEach(function(s){
+      var b = document.createElement("button");
+      b.textContent = s.name;
+      b.style.cssText = "padding:12px 18px;border-radius:10px;border:2px solid #E8B54D;background:transparent;color:#fff;cursor:pointer;font-size:1rem;";
+      b.addEventListener("click", function(){
+        window.__student = { id: s.id, name: s.name, group: group };
+        window.__sessionId = makeSessionId();
+        picker.style.display = "none";
+      });
+      namesBox.appendChild(b);
+    });
+  }
+
+  Array.prototype.forEach.call(groupsBox.querySelectorAll(".picker-group-btn"), function(btn){
+    btn.addEventListener("click", function(){ showNames(btn.getAttribute("data-group")); });
+  });
+
+  backBtn.addEventListener("click", function(){
+    namesBox.style.display = "none";
+    backBtn.style.display = "none";
+    groupsBox.style.display = "flex";
+    stepLabel.textContent = "Pick your group";
+  });
+})();
+</script>
+
 
 <div id="app">
 
@@ -476,6 +565,8 @@
   let score = 0;
   let missed = []; // {base, type, correct}
   let answered = false;
+  let isFullRound = false;
+  let matchStartTime = null;
 
   // ---------- Elements ----------
   const startScreen = document.getElementById("start-screen");
@@ -524,6 +615,8 @@
     qIndex = 0;
     score = 0;
     missed = [];
+    isFullRound = (pool === VERBS);
+    if (isFullRound) matchStartTime = Date.now();
     showScreen(quizScreen);
     renderQuestion();
   }
@@ -596,6 +689,20 @@
     setBest(score);
     showScreen(endScreen);
     finalScore.textContent = score + "/" + questions.length;
+
+    if (isFullRound && window.__student && window.__submitScore) {
+      window.__submitScore({
+        studentId: window.__student.id,
+        studentName: window.__student.name,
+        group: window.__student.group,
+        activity: "Verb Time Machine",
+        score: score,
+        quizQuestions: questions.length,
+        quizCorrect: score,
+        duration: matchStartTime ? Math.round((Date.now() - matchStartTime) / 1000) : "",
+        sessionId: window.__sessionId
+      });
+    }
 
     reviewSection.innerHTML = "";
     if(missed.length === 0){
