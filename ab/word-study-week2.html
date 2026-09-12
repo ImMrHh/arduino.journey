@@ -35,14 +35,14 @@
   table{width:100%; border-collapse:collapse; margin-top:8px;}
   td,th{padding:8px 6px; border-bottom:1px solid #dde5ef; text-align:left; font-size:0.95em;}
   th{color:var(--navy);}
-  .ws-wrap{display:flex; flex-wrap:wrap; gap:20px; justify-content:center; width:100%;}
-  #wsGrid{display:grid; gap:2px; background:#cfd9e6; padding:4px; border-radius:8px;}
-  .ws-cell{width:26px; height:26px; display:flex; align-items:center; justify-content:center; background:#fff; font-weight:700; font-size:0.85em; color:var(--navy); border-radius:3px; cursor:pointer; user-select:none;}
-  .ws-cell.sel{background:#bcd8fb;}
-  .ws-cell.found{background:var(--good); color:#fff;}
-  #wsWordList{list-style:none; padding:0; margin:0; min-width:180px;}
-  #wsWordList li{padding:6px 10px; margin-bottom:4px; border-radius:8px; background:#fff; border:1px solid #dde5ef; font-size:0.95em;}
-  #wsWordList li.found{background:var(--good); color:#fff; text-decoration:line-through;}
+  .ws-wrap{display:flex; flex-wrap:wrap; gap:24px; justify-content:center; width:100%; align-items:flex-start;}
+  #wsGrid{border-collapse:collapse; background:#cfd9e6; border-radius:6px; overflow:hidden;}
+  #wsGrid td{width:24px; height:24px; text-align:center; vertical-align:middle; background:#fff; font-weight:700; font-size:0.75em; color:var(--navy); border:1px solid #e3eaf3; cursor:pointer; user-select:none; padding:0;}
+  #wsGrid td.sel{background:#bcd8fb;}
+  #wsGrid td.found{background:var(--good); color:#fff;}
+  #wsWordList{list-style:none; padding:0; margin:0; min-width:170px; background:var(--card); border-radius:12px; padding:10px; box-shadow:0 2px 10px rgba(30,58,95,0.08);}
+  #wsWordList li{padding:8px 10px; margin-bottom:6px; border-radius:8px; background:#f4f7fb; font-size:0.9em; font-weight:600; color:var(--navy-dark);}
+  #wsWordList li.found{background:var(--good); color:#fff; text-decoration:line-through; font-weight:600;}
   .studentTag{color:#5b7290; margin-bottom:6px;}
 </style>
 </head>
@@ -101,7 +101,7 @@
   <div class="progress" id="progW"></div>
   <div class="subtitle" style="margin-bottom:10px;">Tap the first letter, then the last letter of a word.</div>
   <div class="ws-wrap">
-    <div id="wsGrid"></div>
+    <table id="wsGrid"><tbody></tbody></table>
     <ul id="wsWordList"></ul>
   </div>
 </div>
@@ -123,7 +123,7 @@ const STUDENTS = {"A": [{"id": "001", "name": "Fatima"}, {"id": "002", "name": "
 const SPELLING_WORDS = [{"display": "gas", "puzzle": "GAS"}, {"display": "get", "puzzle": "GET"}, {"display": "gift", "puzzle": "GIFT"}, {"display": "girl", "puzzle": "GIRL"}, {"display": "give", "puzzle": "GIVE"}, {"display": "glad", "puzzle": "GLAD"}, {"display": "glass", "puzzle": "GLASS"}, {"display": "glove", "puzzle": "GLOVE"}, {"display": "glue", "puzzle": "GLUE"}, {"display": "go", "puzzle": "GO"}, {"display": "goal", "puzzle": "GOAL"}, {"display": "goat", "puzzle": "GOAT"}, {"display": "good", "puzzle": "GOOD"}, {"display": "goodbye", "puzzle": "GOODBYE"}, {"display": "grab", "puzzle": "GRAB"}, {"display": "grade", "puzzle": "GRADE"}, {"display": "grape", "puzzle": "GRAPE"}, {"display": "grass", "puzzle": "GRASS"}, {"display": "great", "puzzle": "GREAT"}, {"display": "green", "puzzle": "GREEN"}];
 const VOCAB_WORDS = [{"display": "belonging", "puzzle": "BELONGING", "def": "the feeling of being accepted and part of a group"}, {"display": "autonomy", "puzzle": "AUTONOMY", "def": "being able to make your own choices and decisions"}, {"display": "vulnerability", "puzzle": "VULNERABILITY", "def": "being open about your feelings, even if it feels risky"}, {"display": "integrity", "puzzle": "INTEGRITY", "def": "doing the right thing even when no one is watching"}, {"display": "empathy", "puzzle": "EMPATHY", "def": "understanding and sharing how someone else feels"}, {"display": "assertiveness", "puzzle": "ASSERTIVENESS", "def": "saying what you think or need in a clear, respectful way"}, {"display": "self-awareness", "puzzle": "SELFAWARENESS", "def": "understanding your own feelings, thoughts, and actions"}, {"display": "resistance", "puzzle": "RESISTANCE", "def": "pushing back against something you disagree with"}, {"display": "acceptance", "puzzle": "ACCEPTANCE", "def": "choosing to embrace who you are or a situation as it is"}, {"display": "beliefs", "puzzle": "BELIEFS", "def": "ideas you think are true or important"}, {"display": "self-worth", "puzzle": "SELFWORTH", "def": "how much you value and respect yourself"}, {"display": "isolation", "puzzle": "ISOLATION", "def": "feeling alone and left out (the opposite of belonging)"}, {"display": "curiosity", "puzzle": "CURIOSITY", "def": "wanting to learn or find out about something"}, {"display": "adaptability", "puzzle": "ADAPTABILITY", "def": "being able to change and adjust to new situations"}, {"display": "resilience", "puzzle": "RESILIENCE", "def": "the ability to recover quickly from difficulties"}];
 const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbz6HwVtI8LEzfZUUKNvkSShTT26YWwexM6hBUfRlGqsH7GbQsj6zpVzp9dEuPYyd-aj/exec";
-const ACTIVITY_NAME = "Word Study";
+const ACTIVITY_NAME = "Word Study W2";
 
 let state = {group:null, name:null, studentId:null, format:null, items:[], idx:0, correct:0, total:0, startTime:0};
 
@@ -149,8 +149,10 @@ function pickGroup(g){
 function pickName(s){
   state.name = s.name;
   state.studentId = s.id;
+  const params = new URLSearchParams(window.location.search);
+  const forced = params.get('format');
   const formats = ['unscramble','match','wordsearch'];
-  state.format = formats[Math.floor(Math.random()*formats.length)];
+  state.format = formats.includes(forced) ? forced : formats[Math.floor(Math.random()*formats.length)];
   const introMsgs = {
     unscramble: "Unscramble each word. Use the clue to help you if it's a new vocabulary word.",
     match: "Read each word and pick the meaning that matches it.",
@@ -317,17 +319,18 @@ function renderWordSearch(){
   wsFirstCell = null;
   document.getElementById('progW').textContent = 'Found 0 of ' + state.total;
   const gridEl = document.getElementById('wsGrid');
-  gridEl.style.gridTemplateColumns = 'repeat(' + wsSize + ', 26px)';
-  gridEl.innerHTML = '';
+  const tbody = gridEl.querySelector('tbody');
+  tbody.innerHTML = '';
   for(let r=0;r<wsSize;r++){
+    const tr = document.createElement('tr');
     for(let c=0;c<wsSize;c++){
-      const cell = document.createElement('div');
-      cell.className = 'ws-cell';
-      cell.textContent = built.grid[r][c];
-      cell.dataset.row = r; cell.dataset.col = c;
-      cell.onclick = ()=>wsCellTap(r,c,cell);
-      gridEl.appendChild(cell);
+      const td = document.createElement('td');
+      td.textContent = built.grid[r][c];
+      td.dataset.row = r; td.dataset.col = c;
+      td.onclick = ()=>wsCellTap(r,c,td);
+      tr.appendChild(td);
     }
+    tbody.appendChild(tr);
   }
   const list = document.getElementById('wsWordList');
   list.innerHTML = '';
@@ -363,7 +366,7 @@ function wsCellTap(r,c,cell){
   if(matchWord){
     wsFound.add(matchWord.word.puzzle);
     cells.forEach(p=>{
-      const el = document.querySelector('.ws-cell[data-row="'+p.row+'"][data-col="'+p.col+'"]');
+      const el = document.querySelector('#wsGrid td[data-row="'+p.row+'"][data-col="'+p.col+'"]');
       if(el) el.classList.add('found');
     });
     const li = document.getElementById('wsli-' + matchWord.word.puzzle);
