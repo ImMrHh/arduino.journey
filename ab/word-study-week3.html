@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Word Study - Week 3</title>
+<style>
+  :root{
+    --navy:#1e3a5f; --navy-dark:#132a45; --accent:#2f7fd1; --bg:#f4f7fb;
+    --good:#2e9e5b; --bad:#d0483e; --card:#ffffff;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--navy-dark); min-height:100vh;}
+  .screen{display:none; min-height:100vh; padding:24px; flex-direction:column; align-items:center;}
+  .screen.active{display:flex;}
+  h1{color:var(--navy); font-size:1.6em; margin:0 0 4px;}
+  h2{color:var(--navy); font-size:1.2em; margin:0 0 16px;}
+  .subtitle{color:#5b7290; margin-bottom:24px; text-align:center;}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:14px; padding:16px 28px; font-size:1.1em; font-weight:600; cursor:pointer; margin:8px; min-width:120px; box-shadow:0 3px 0 var(--navy);}
+  .btn:active{transform:translateY(2px); box-shadow:0 1px 0 var(--navy);}
+  .btn.secondary{background:#fff; color:var(--navy); border:2px solid var(--navy);}
+  .grid-buttons{display:grid; grid-template-columns:repeat(auto-fill, minmax(120px,1fr)); gap:12px; width:100%; max-width:700px;}
+  .grid-buttons button{background:var(--card); border:2px solid var(--navy); color:var(--navy); border-radius:12px; padding:16px 8px; font-size:1.05em; font-weight:600; cursor:pointer;}
+  .grid-buttons button:active{background:var(--navy); color:#fff;}
+  .card{background:var(--card); border-radius:16px; padding:24px; box-shadow:0 2px 10px rgba(30,58,95,0.12); width:100%; max-width:640px; margin-bottom:16px;}
+  .scramble{font-size:2.2em; letter-spacing:6px; font-weight:700; color:var(--navy); text-align:center; margin:16px 0;}
+  .clue{color:#5b7290; text-align:center; margin-bottom:16px; font-style:italic;}
+  input[type=text]{width:100%; font-size:1.3em; padding:14px; border-radius:10px; border:2px solid #cfd9e6; text-align:center; text-transform:lowercase;}
+  .feedback{min-height:28px; text-align:center; font-weight:700; margin-top:10px;}
+  .feedback.good{color:var(--good);} .feedback.bad{color:var(--bad);}
+  .progress{color:#5b7290; margin-bottom:8px;}
+  .choice-btn{display:block; width:100%; text-align:left; background:var(--card); border:2px solid #cfd9e6; border-radius:12px; padding:14px 18px; margin:8px 0; font-size:1.05em; cursor:pointer;}
+  .choice-btn:active{background:#e8f0fb;}
+  .word-target{font-size:1.6em; font-weight:800; color:var(--navy); text-align:center; margin-bottom:18px;}
+  table{width:100%; border-collapse:collapse; margin-top:8px;}
+  td,th{padding:8px 6px; border-bottom:1px solid #dde5ef; text-align:left; font-size:0.95em;}
+  th{color:var(--navy);}
+  .ws-wrap{display:flex; flex-wrap:wrap; gap:20px; justify-content:center; width:100%;}
+  #wsGrid{display:grid; gap:2px; background:#cfd9e6; padding:4px; border-radius:8px;}
+  .ws-cell{width:26px; height:26px; display:flex; align-items:center; justify-content:center; background:#fff; font-weight:700; font-size:0.85em; color:var(--navy); border-radius:3px; cursor:pointer; user-select:none;}
+  .ws-cell.sel{background:#bcd8fb;}
+  .ws-cell.found{background:var(--good); color:#fff;}
+  #wsWordList{list-style:none; padding:0; margin:0; min-width:180px;}
+  #wsWordList li{padding:6px 10px; margin-bottom:4px; border-radius:8px; background:#fff; border:1px solid #dde5ef; font-size:0.95em;}
+  #wsWordList li.found{background:var(--good); color:#fff; text-decoration:line-through;}
+  .studentTag{color:#5b7290; margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<div id="screen-picker-group" class="screen active">
+  <h1>Word Study</h1>
+  <div class="subtitle">Week 3 &mdash; pick your group</div>
+  <div class="grid-buttons">
+    <button onclick="pickGroup('A')">Group A</button>
+    <button onclick="pickGroup('B')">Group B</button>
+  </div>
+</div>
+
+<div id="screen-picker-name" class="screen">
+  <h1>Who are you?</h1>
+  <div class="subtitle" id="groupLabel"></div>
+  <div class="grid-buttons" id="nameGrid"></div>
+  <button class="btn secondary" onclick="showScreen('screen-picker-group')">Back</button>
+</div>
+
+<div id="screen-intro" class="screen">
+  <h1>Word Study</h1>
+  <div class="subtitle">Week 3</div>
+  <div class="card" id="introCard">
+    <p id="introText"></p>
+    <p>Copy the words into your notebook at the end. Take your time &mdash; you can try again if you get one wrong.</p>
+  </div>
+  <button class="btn" onclick="startRound()">Start</button>
+</div>
+
+<div id="screen-unscramble" class="screen">
+  <div class="studentTag" id="tagU"></div>
+  <div class="progress" id="progU"></div>
+  <div class="card">
+    <div class="clue" id="clueU"></div>
+    <div class="scramble" id="scrambleU"></div>
+    <input type="text" id="inputU" placeholder="type the word here" autocomplete="off" autocapitalize="off" autocorrect="off">
+    <div style="text-align:center; margin-top:14px;"><button class="btn" onclick="checkUnscramble()">Check</button></div>
+    <div class="feedback" id="fbU"></div>
+  </div>
+</div>
+
+<div id="screen-match" class="screen">
+  <div class="studentTag" id="tagM"></div>
+  <div class="progress" id="progM"></div>
+  <div class="card">
+    <div class="word-target" id="wordM"></div>
+    <div id="choicesM"></div>
+    <div class="feedback" id="fbM"></div>
+  </div>
+</div>
+
+<div id="screen-wordsearch" class="screen">
+  <div class="studentTag" id="tagW"></div>
+  <div class="progress" id="progW"></div>
+  <div class="subtitle" style="margin-bottom:10px;">Tap the first letter, then the last letter of a word.</div>
+  <div class="ws-wrap">
+    <div id="wsGrid"></div>
+    <ul id="wsWordList"></ul>
+  </div>
+</div>
+
+<div id="screen-reveal" class="screen">
+  <h1>Great job!</h1>
+  <div class="subtitle" id="revealScore"></div>
+  <div class="card">
+    <p><strong>Copy these into your notebook:</strong></p>
+    <table id="revealTable"></table>
+  </div>
+  <button class="btn" id="submitBtn" onclick="submitResults()">Finish &amp; Submit</button>
+  <div class="feedback good" id="doneMsg" style="display:none;">Submitted! You're all done. Great work.</div>
+</div>
+
+<script>
+const WEEK_LABEL = "Week 3";
+const STUDENTS = {"A": [{"id": "001", "name": "Fatima"}, {"id": "002", "name": "Iker"}, {"id": "003", "name": "Jules"}, {"id": "004", "name": "JoseL"}, {"id": "005", "name": "DiegoG"}, {"id": "006", "name": "Cons"}, {"id": "007", "name": "Gabo"}, {"id": "008", "name": "Pau"}, {"id": "009", "name": "SantiL"}, {"id": "010", "name": "Alonso"}, {"id": "011", "name": "Diego2nd"}, {"id": "012", "name": "Emi"}, {"id": "013", "name": "Oli"}, {"id": "014", "name": "Arthur"}, {"id": "015", "name": "Emma"}, {"id": "016", "name": "JP"}, {"id": "017", "name": "SantiS"}, {"id": "018", "name": "Majo"}], "B": [{"id": "019", "name": "Rodri"}, {"id": "020", "name": "JuanA"}, {"id": "021", "name": "Alex"}, {"id": "022", "name": "Emi"}, {"id": "023", "name": "Jero"}, {"id": "024", "name": "Thomas"}, {"id": "025", "name": "Thiago"}, {"id": "026", "name": "Nats"}, {"id": "027", "name": "Pato"}, {"id": "028", "name": "Bruno"}, {"id": "029", "name": "Max"}, {"id": "030", "name": "Anto"}, {"id": "031", "name": "Aitana"}, {"id": "032", "name": "Juan2nd"}, {"id": "033", "name": "Sil"}, {"id": "034", "name": "Anya"}, {"id": "035", "name": "Luka"}, {"id": "036", "name": "Ian"}, {"id": "037", "name": "Xime"}]};
+const SPELLING_WORDS = [{"display": "greet", "puzzle": "GREET"}, {"display": "grey", "puzzle": "GREY"}, {"display": "ground", "puzzle": "GROUND"}, {"display": "guest", "puzzle": "GUEST"}, {"display": "guitar", "puzzle": "GUITAR"}, {"display": "gymnastics", "puzzle": "GYMNASTICS"}, {"display": "hair", "puzzle": "HAIR"}, {"display": "hall", "puzzle": "HALL"}, {"display": "hand", "puzzle": "HAND"}, {"display": "hang", "puzzle": "HANG"}, {"display": "happy", "puzzle": "HAPPY"}, {"display": "hat", "puzzle": "HAT"}, {"display": "hate", "puzzle": "HATE"}, {"display": "have", "puzzle": "HAVE"}, {"display": "he", "puzzle": "HE"}, {"display": "head", "puzzle": "HEAD"}, {"display": "headache", "puzzle": "HEADACHE"}, {"display": "health", "puzzle": "HEALTH"}, {"display": "healthy", "puzzle": "HEALTHY"}, {"display": "hear", "puzzle": "HEAR"}];
+const VOCAB_WORDS = [{"display": "puberty", "puzzle": "PUBERTY", "def": "the stage when a child's body starts changing into an adult's body"}, {"display": "maturity", "puzzle": "MATURITY", "def": "behaving in a responsible, grown-up way"}, {"display": "transition", "puzzle": "TRANSITION", "def": "the process of changing from one stage or situation to another"}, {"display": "peer pressure", "puzzle": "PEERPRESSURE", "def": "feeling pushed by friends to do or say certain things"}, {"display": "curiosity", "puzzle": "CURIOSITY", "def": "wanting to learn or find out about something"}, {"display": "habit", "puzzle": "HABIT", "def": "something you do regularly, almost without thinking"}, {"display": "wisdom", "puzzle": "WISDOM", "def": "good judgment gained from knowledge and experience"}, {"display": "generation", "puzzle": "GENERATION", "def": "a group of people born around the same time"}, {"display": "retirement", "puzzle": "RETIREMENT", "def": "the time when someone stops working, usually when older"}, {"display": "challenge", "puzzle": "CHALLENGE", "def": "something difficult that tests your skills or effort"}, {"display": "goal", "puzzle": "GOAL", "def": "something you are working toward or hope to achieve"}, {"display": "support", "puzzle": "SUPPORT", "def": "helping or encouraging someone"}, {"display": "role", "puzzle": "ROLE", "def": "the part someone plays in a group or situation"}, {"display": "decision", "puzzle": "DECISION", "def": "a choice you make after thinking about it"}, {"display": "expectation", "puzzle": "EXPECTATION", "def": "something you believe will happen or should happen"}];
+const SUBMIT_URL = "https://script.google.com/macros/s/AKfycbz6HwVtI8LEzfZUUKNvkSShTT26YWwexM6hBUfRlGqsH7GbQsj6zpVzp9dEuPYyd-aj/exec";
+const ACTIVITY_NAME = "Word Study";
+
+let state = {group:null, name:null, studentId:null, format:null, items:[], idx:0, correct:0, total:0, startTime:0};
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function pickGroup(g){
+  state.group = g;
+  document.getElementById('groupLabel').textContent = 'Group ' + g;
+  const grid = document.getElementById('nameGrid');
+  grid.innerHTML = '';
+  STUDENTS[g].forEach(s=>{
+    const b = document.createElement('button');
+    b.textContent = s.name;
+    b.onclick = ()=>pickName(s);
+    grid.appendChild(b);
+  });
+  showScreen('screen-picker-name');
+}
+
+function pickName(s){
+  state.name = s.name;
+  state.studentId = s.id;
+  const formats = ['unscramble','match','wordsearch'];
+  state.format = formats[Math.floor(Math.random()*formats.length)];
+  const introMsgs = {
+    unscramble: "Unscramble each word. Use the clue to help you if it's a new vocabulary word.",
+    match: "Read each word and pick the meaning that matches it.",
+    wordsearch: "Find every word hidden in the grid!"
+  };
+  document.getElementById('introText').textContent = introMsgs[state.format];
+  showScreen('screen-intro');
+}
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function startRound(){
+  state.idx = 0; state.correct = 0; state.startTime = Date.now();
+  if(state.format === 'match'){
+    state.items = shuffle(VOCAB_WORDS);
+    state.total = state.items.length;
+    showScreen('screen-match');
+    renderMatch();
+  } else if(state.format === 'unscramble'){
+    state.items = shuffle(SPELLING_WORDS.concat(VOCAB_WORDS));
+    state.total = state.items.length;
+    showScreen('screen-unscramble');
+    renderUnscramble();
+  } else {
+    state.items = SPELLING_WORDS.concat(VOCAB_WORDS);
+    state.total = state.items.length;
+    showScreen('screen-wordsearch');
+    renderWordSearch();
+  }
+}
+
+function scrambleLetters(word){
+  let arr;
+  do {
+    arr = shuffle(word.split(''));
+  } while(arr.join('') === word && word.length > 1);
+  return arr.join(' ');
+}
+function renderUnscramble(){
+  const item = state.items[state.idx];
+  document.getElementById('tagU').textContent = state.group + ' - ' + state.name + ' - ' + WEEK_LABEL;
+  document.getElementById('progU').textContent = 'Word ' + (state.idx+1) + ' of ' + state.total;
+  document.getElementById('scrambleU').textContent = scrambleLetters(item.puzzle);
+  document.getElementById('clueU').textContent = item.def ? ('Clue: ' + item.def) : 'Spelling word';
+  document.getElementById('inputU').value = '';
+  document.getElementById('fbU').textContent = '';
+  document.getElementById('fbU').className = 'feedback';
+  document.getElementById('inputU').focus();
+}
+function checkUnscramble(){
+  const item = state.items[state.idx];
+  const val = document.getElementById('inputU').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+  const fb = document.getElementById('fbU');
+  if(val === item.puzzle){
+    fb.textContent = 'Correct!'; fb.className = 'feedback good';
+    state.correct++;
+    setTimeout(advanceUnscramble, 700);
+  } else {
+    fb.textContent = 'Try again!'; fb.className = 'feedback bad';
+  }
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+  const inp = document.getElementById('inputU');
+  if(inp) inp.addEventListener('keydown', e=>{ if(e.key==='Enter') checkUnscramble(); });
+});
+function advanceUnscramble(){
+  state.idx++;
+  if(state.idx >= state.total){ finishRound(); }
+  else { renderUnscramble(); }
+}
+
+function renderMatch(){
+  const item = state.items[state.idx];
+  document.getElementById('tagM').textContent = state.group + ' - ' + state.name + ' - ' + WEEK_LABEL;
+  document.getElementById('progM').textContent = 'Word ' + (state.idx+1) + ' of ' + state.total;
+  document.getElementById('wordM').textContent = item.display;
+  document.getElementById('fbM').textContent = '';
+  const distractors = shuffle(VOCAB_WORDS.filter(w=>w.display!==item.display)).slice(0,3).map(w=>w.def);
+  const choices = shuffle([item.def, ...distractors]);
+  const box = document.getElementById('choicesM');
+  box.innerHTML = '';
+  choices.forEach(c=>{
+    const b = document.createElement('button');
+    b.className = 'choice-btn';
+    b.textContent = c;
+    b.onclick = ()=>checkMatch(c===item.def, b);
+    box.appendChild(b);
+  });
+}
+function checkMatch(isRight, btn){
+  const fb = document.getElementById('fbM');
+  if(isRight){
+    fb.textContent = 'Correct!'; fb.className = 'feedback good';
+    state.correct++;
+    document.querySelectorAll('#choicesM button').forEach(b=>b.disabled=true);
+    setTimeout(advanceMatch, 700);
+  } else {
+    fb.textContent = 'Not quite, try another one.'; fb.className = 'feedback bad';
+    btn.disabled = true;
+  }
+}
+function advanceMatch(){
+  state.idx++;
+  if(state.idx >= state.total){ finishRound(); }
+  else { renderMatch(); }
+}
+
+let wsGridData = [];
+let wsSize = 0;
+let wsFound = new Set();
+let wsFirstCell = null;
+const DIRS = [[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
+
+function buildWordSearch(words){
+  const longest = Math.max(...words.map(w=>w.puzzle.length));
+  wsSize = Math.max(18, longest + 4);
+  const grid = Array.from({length:wsSize},()=>Array(wsSize).fill(null));
+  const placed = [];
+  const sorted = words.slice().sort((a,b)=>b.puzzle.length - a.puzzle.length);
+  sorted.forEach(w=>{
+    let ok = false;
+    for(let attempt=0; attempt<300 && !ok; attempt++){
+      const dir = DIRS[Math.floor(Math.random()*DIRS.length)];
+      const row = Math.floor(Math.random()*wsSize);
+      const col = Math.floor(Math.random()*wsSize);
+      const endRow = row + dir[0]*(w.puzzle.length-1);
+      const endCol = col + dir[1]*(w.puzzle.length-1);
+      if(endRow<0||endRow>=wsSize||endCol<0||endCol>=wsSize) continue;
+      let fits = true;
+      for(let i=0;i<w.puzzle.length;i++){
+        const r = row+dir[0]*i, c = col+dir[1]*i;
+        const existing = grid[r][c];
+        if(existing !== null && existing !== w.puzzle[i]){ fits = false; break; }
+      }
+      if(!fits) continue;
+      for(let i=0;i<w.puzzle.length;i++){
+        const r = row+dir[0]*i, c = col+dir[1]*i;
+        grid[r][c] = w.puzzle[i];
+      }
+      placed.push({word:w, row, col, dir});
+      ok = true;
+    }
+  });
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for(let r=0;r<wsSize;r++) for(let c=0;c<wsSize;c++){
+    if(grid[r][c]===null) grid[r][c] = letters[Math.floor(Math.random()*26)];
+  }
+  return {grid, placed};
+}
+
+function renderWordSearch(){
+  document.getElementById('tagW').textContent = state.group + ' - ' + state.name + ' - ' + WEEK_LABEL;
+  const built = buildWordSearch(state.items);
+  wsGridData = built;
+  state.total = built.placed.length;
+  wsFound = new Set();
+  wsFirstCell = null;
+  document.getElementById('progW').textContent = 'Found 0 of ' + state.total;
+  const gridEl = document.getElementById('wsGrid');
+  gridEl.style.gridTemplateColumns = 'repeat(' + wsSize + ', 26px)';
+  gridEl.innerHTML = '';
+  for(let r=0;r<wsSize;r++){
+    for(let c=0;c<wsSize;c++){
+      const cell = document.createElement('div');
+      cell.className = 'ws-cell';
+      cell.textContent = built.grid[r][c];
+      cell.dataset.row = r; cell.dataset.col = c;
+      cell.onclick = ()=>wsCellTap(r,c,cell);
+      gridEl.appendChild(cell);
+    }
+  }
+  const list = document.getElementById('wsWordList');
+  list.innerHTML = '';
+  built.placed.forEach(p=>{
+    const li = document.createElement('li');
+    li.textContent = p.word.display;
+    li.id = 'wsli-' + p.word.puzzle;
+    list.appendChild(li);
+  });
+}
+
+function wsCellTap(r,c,cell){
+  if(!wsFirstCell){
+    wsFirstCell = {r,c,cell};
+    cell.classList.add('sel');
+    return;
+  }
+  const dr = Math.sign(r - wsFirstCell.r);
+  const dc = Math.sign(c - wsFirstCell.c);
+  const lenR = Math.abs(r - wsFirstCell.r);
+  const lenC = Math.abs(c - wsFirstCell.c);
+  const len = Math.max(lenR, lenC) + 1;
+  let valid = (lenR===0 || lenC===0 || lenR===lenC);
+  let cells = [];
+  if(valid){
+    for(let i=0;i<len;i++){
+      cells.push({row: wsFirstCell.r + dr*i, col: wsFirstCell.c + dc*i});
+    }
+  }
+  const letters = cells.map(p => wsGridData.grid[p.row][p.col]).join('');
+  const letters_rev = letters.split('').reverse().join('');
+  let matchWord = wsGridData.placed.find(p => !wsFound.has(p.word.puzzle) && (p.word.puzzle===letters || p.word.puzzle===letters_rev));
+  if(matchWord){
+    wsFound.add(matchWord.word.puzzle);
+    cells.forEach(p=>{
+      const el = document.querySelector('.ws-cell[data-row="'+p.row+'"][data-col="'+p.col+'"]');
+      if(el) el.classList.add('found');
+    });
+    const li = document.getElementById('wsli-' + matchWord.word.puzzle);
+    if(li) li.classList.add('found');
+    state.correct = wsFound.size;
+    document.getElementById('progW').textContent = 'Found ' + wsFound.size + ' of ' + state.total;
+    if(wsFound.size >= state.total){
+      setTimeout(finishRound, 600);
+    }
+  }
+  wsFirstCell.cell.classList.remove('sel');
+  wsFirstCell = null;
+}
+
+function finishRound(){
+  document.getElementById('revealScore').textContent = state.correct + ' / ' + state.total + ' complete';
+  const tbl = document.getElementById('revealTable');
+  let rows = '<tr><th>Word</th><th>Meaning</th></tr>';
+  SPELLING_WORDS.forEach(w=>{ rows += '<tr><td>'+w.display+'</td><td>spelling word</td></tr>'; });
+  VOCAB_WORDS.forEach(w=>{ rows += '<tr><td>'+w.display+'</td><td>'+w.def+'</td></tr>'; });
+  tbl.innerHTML = rows;
+  showScreen('screen-reveal');
+}
+
+function submitResults(){
+  const duration = Math.round((Date.now() - state.startTime)/1000);
+  const payload = {
+    studentId: state.studentId,
+    studentName: state.name,
+    group: state.group,
+    activity: ACTIVITY_NAME,
+    score: state.correct,
+    quizQuestions: state.total,
+    quizCorrect: state.correct,
+    duration: duration,
+    sessionId: 'ws-' + Date.now() + '-' + Math.floor(Math.random()*10000)
+  };
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').textContent = 'Submitting...';
+  fetch(SUBMIT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type':'text/plain'},
+    body: JSON.stringify(payload)
+  }).then(()=>{
+    document.getElementById('submitBtn').style.display = 'none';
+    document.getElementById('doneMsg').style.display = 'block';
+  }).catch(()=>{
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').textContent = 'Finish & Submit';
+  });
+}
+</script>
+</body>
+</html>
