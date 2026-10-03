@@ -1,0 +1,150 @@
+/* ================================================================
+   DARK MODE OVERRIDES
+   Apply when: body.dark-mode
+   ================================================================ */
+
+body.dark-mode {
+  --bg: #1a1a1a;
+  --card: #2a2a2a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+  --border: #404040;
+  --primary: #e0e0e0;
+  --primary-dark: #f0f0f0;
+}
+
+/* Forms & Inputs */
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="email"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="number"],
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: #333333;
+  color: var(--text-primary);
+  border-color: #404040;
+}
+
+body.dark-mode input[type="text"]:focus,
+body.dark-mode input[type="email"]:focus,
+body.dark-mode input[type="password"]:focus,
+body.dark-mode input[type="number"]:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124, 179, 66, 0.2);
+}
+
+/* Tables */
+
+body.dark-mode table {
+  background-color: #2a2a2a;
+  border: 1px solid #404040;
+}
+
+body.dark-mode thead {
+  background-color: #1a1a1a;
+  border-bottom: 2px solid #404040;
+}
+
+body.dark-mode th {
+  color: var(--text-primary);
+  border-color: #404040;
+}
+
+body.dark-mode td {
+  border-color: #404040;
+}
+
+body.dark-mode tbody tr:hover {
+  background-color: #333333;
+}
+
+/* Buttons */
+
+body.dark-mode .btn-secondary {
+  background-color: #333333;
+  color: var(--text-primary);
+  border-color: #555555;
+}
+
+body.dark-mode .btn-secondary:hover {
+  background-color: #404040;
+}
+
+body.dark-mode .btn-outline {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+body.dark-mode .btn-outline:hover {
+  background-color: rgba(124, 179, 66, 0.15);
+}
+
+/* Cards */
+
+body.dark-mode .card {
+  background-color: #2a2a2a;
+  border: 1px solid #404040;
+}
+
+body.dark-mode .card-header {
+  border-color: #404040;
+}
+
+body.dark-mode .card-footer {
+  border-color: #404040;
+}
+
+/* Progress Bar */
+
+body.dark-mode .progress-bar {
+  background-color: #404040;
+}
+
+/* Typography Links */
+
+body.dark-mode a {
+  color: #7cb342;
+}
+
+body.dark-mode a:hover {
+  color: #9cdb5c;
+}
+
+/* Badges */
+
+body.dark-mode .badge {
+  background-color: #333333;
+  color: var(--text-primary);
+}
+
+body.dark-mode .badge-accent {
+  background-color: var(--accent);
+  color: #1a1a1a;
+}
+
+/* Select/Focus states for better visibility */
+
+body.dark-mode input[type="checkbox"],
+body.dark-mode input[type="radio"] {
+  border: 2px solid #555555;
+}
+
+body.dark-mode input[type="checkbox"]:checked,
+body.dark-mode input[type="radio"]:checked {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Utility backgrounds */
+
+body.dark-mode .bg-light {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .bg-lighter {
+  background-color: #333333;
+}

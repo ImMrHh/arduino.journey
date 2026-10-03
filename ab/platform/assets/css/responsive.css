@@ -1,0 +1,466 @@
+/* ================================================================
+   RESPONSIVE CSS - Mobile First
+   Mobile: 375px | Tablet: 768px | Desktop: 1024px | Large: 1440px
+   ================================================================ */
+
+/* ================================================================
+   MOBILE - BASE (375px)
+   ================================================================ */
+
+@media (max-width: 767px) {
+  /* Typography */
+  h1 {
+    font-size: 1.5rem;
+    margin: var(--spacing-md) 0;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* Screens */
+  .screen {
+    padding: var(--spacing-md);
+    justify-content: center;
+  }
+
+  .screen-content {
+    width: 100%;
+    padding: 0;
+  }
+
+  /* Cards */
+  .card {
+    max-width: 100%;
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
+  }
+
+  /* Buttons */
+  .btn {
+    width: 100%;
+    min-height: 48px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1rem;
+  }
+
+  .btn-small {
+    width: auto;
+    min-height: 40px;
+  }
+
+  .btn-group {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+  }
+
+  /* Grids */
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Flex */
+  .flex-col-mobile {
+    flex-direction: column;
+  }
+
+  /* Forms */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 16px;
+    min-height: 48px;
+  }
+
+  /* Tables */
+  table {
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: var(--spacing-sm);
+  }
+
+  /* Container */
+  .container {
+    padding: var(--spacing-md);
+  }
+
+  /* Utility: Hide on mobile */
+  .hidden-mobile {
+    display: none !important;
+  }
+
+  /* Responsive Grid Buttons */
+  .grid-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--spacing-md);
+    width: 100%;
+  }
+
+  .grid-buttons button {
+    min-height: 48px;
+  }
+}
+
+/* ================================================================
+   TABLET - MEDIUM (768px to 1023px)
+   ================================================================ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Typography */
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Screens */
+  .screen {
+    padding: var(--spacing-lg);
+  }
+
+  .screen-content {
+    max-width: 680px;
+  }
+
+  /* Cards */
+  .card {
+    max-width: 680px;
+    padding: var(--spacing-lg);
+  }
+
+  /* Buttons */
+  .btn {
+    min-height: 52px;
+    padding: var(--spacing-md) var(--spacing-xl);
+  }
+
+  /* Grids */
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Flex */
+  .flex-tablet-col {
+    flex-direction: column;
+  }
+
+  /* Container */
+  .container {
+    max-width: 90%;
+  }
+
+  /* Utility: Hide on tablet */
+  .hidden-tablet {
+    display: none !important;
+  }
+
+  /* iPad specific: Landscape */
+  @media (orientation: landscape) {
+    .screen {
+      padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      margin: var(--spacing-sm) 0;
+    }
+
+    .btn {
+      min-height: 48px;
+      font-size: 0.95rem;
+      padding: var(--spacing-sm) var(--spacing-lg);
+    }
+
+    .card {
+      margin: var(--spacing-md) 0;
+      padding: var(--spacing-md);
+    }
+  }
+}
+
+/* ================================================================
+   DESKTOP - LARGE (1024px and above)
+   ================================================================ */
+
+@media (min-width: 1024px) {
+  /* Typography */
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1.05rem;
+  }
+
+  /* Screens */
+  .screen {
+    padding: var(--spacing-xl);
+    justify-content: center;
+  }
+
+  .screen-content {
+    max-width: 800px;
+  }
+
+  /* Cards */
+  .card {
+    max-width: 800px;
+    padding: var(--spacing-xl);
+  }
+
+  /* Buttons */
+  .btn {
+    min-height: 56px;
+    padding: var(--spacing-lg) var(--spacing-2xl);
+    font-size: 1.1rem;
+  }
+
+  .btn-group {
+    flex-direction: row;
+  }
+
+  .btn-group .btn {
+    width: auto;
+  }
+
+  /* Grids */
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Container */
+  .container {
+    max-width: 1200px;
+  }
+
+  /* Utility: Hide on desktop */
+  .hidden-desktop {
+    display: none !important;
+  }
+
+  /* Flex for desktop */
+  .flex-desktop-row {
+    flex-direction: row;
+  }
+
+  .flex-desktop-col {
+    flex-direction: column;
+  }
+}
+
+/* ================================================================
+   EXTRA LARGE (1440px and above)
+   ================================================================ */
+
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  .screen-content {
+    max-width: 900px;
+  }
+
+  .card {
+    max-width: 900px;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+  }
+}
+
+/* ================================================================
+   LANDSCAPE MODE (Mobile)
+   ================================================================ */
+
+@media (max-width: 767px) and (orientation: landscape) {
+  .screen {
+    padding: var(--spacing-md);
+    min-height: auto;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+    margin: var(--spacing-sm) 0;
+  }
+
+  h2 {
+    font-size: 1rem;
+    margin: var(--spacing-sm) 0;
+  }
+
+  .card {
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-md);
+  }
+
+  .btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: 44px;
+    font-size: 0.95rem;
+  }
+
+  .grid-buttons {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .grid-buttons button {
+    min-height: 44px;
+    padding: var(--spacing-sm);
+    font-size: 0.9rem;
+  }
+}
+
+/* ================================================================
+   PRINT STYLES
+   ================================================================ */
+
+@media print {
+  body {
+    background-color: white;
+  }
+
+  .btn,
+  .btn-primary,
+  .btn-secondary {
+    border: 1px solid #000;
+  }
+
+  .hidden-print {
+    display: none !important;
+  }
+
+  .screen {
+    page-break-inside: avoid;
+  }
+
+  .card {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}
+
+/* ================================================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ================================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .btn {
+    min-height: 48px;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .checkbox-item,
+  .radio-item {
+    min-height: 48px;
+  }
+
+  /* Remove hover effects on touch */
+  .btn:hover {
+    background-color: inherit;
+  }
+
+  a:hover {
+    text-decoration: inherit;
+  }
+
+  /* Reduce motion */
+  .btn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* ================================================================
+   HIGH CONTRAST MODE
+   ================================================================ */
+
+@media (prefers-contrast: more) {
+  :root {
+    --accent: #5a8c00;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --border: #999999;
+  }
+
+  .btn-primary {
+    border: 2px solid #000;
+  }
+
+  .card {
+    border: 2px solid #000;
+  }
+}
+
+/* ================================================================
+   REDUCED MOTION
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
