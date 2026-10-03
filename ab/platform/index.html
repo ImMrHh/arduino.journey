@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Word Study Platform</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <style>
+    .landing-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: var(--spacing-lg);
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+    }
+
+    .logo {
+      font-size: 3rem;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .landing-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .landing-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .landing-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .form-section {
+      text-align: left;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: var(--spacing-md);
+      font-size: 1.05rem;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: var(--spacing-md);
+      font-size: 1.1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      text-align: center;
+      text-transform: capitalize;
+      min-height: 52px;
+      font-family: var(--font-family);
+    }
+
+    .name-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(124, 179, 66, 0.1);
+    }
+
+    .group-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .group-button {
+      padding: var(--spacing-lg);
+      font-size: 1.2rem;
+      font-weight: 600;
+      border: 3px solid var(--border);
+      background: var(--card);
+      color: var(--primary);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-base);
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .group-button:hover {
+      border-color: var(--accent);
+      background-color: rgba(124, 179, 66, 0.05);
+    }
+
+    .group-button.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(124, 179, 66, 0.3);
+    }
+
+    .group-button:active {
+      transform: scale(0.98);
+    }
+
+    .go-button {
+      width: 100%;
+      padding: var(--spacing-lg);
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      min-height: 56px;
+      box-shadow: 0 4px 12px rgba(124, 179, 66, 0.3);
+      transition: all var(--transition-base);
+    }
+
+    .go-button:hover {
+      background: var(--accent-dark);
+      box-shadow: 0 6px 16px rgba(124, 179, 66, 0.4);
+    }
+
+    .go-button:active {
+      box-shadow: 0 2px 6px rgba(124, 179, 66, 0.2);
+      transform: translateY(2px);
+    }
+
+    .go-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: var(--error);
+      font-size: 0.9rem;
+      margin-top: var(--spacing-sm);
+      display: none;
+      font-weight: 600;
+    }
+
+    .settings-link {
+      margin-top: var(--spacing-lg);
+      text-align: center;
+    }
+
+    .settings-link a {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      transition: color var(--transition-base);
+    }
+
+    .settings-link a:hover {
+      color: var(--accent);
+    }
+
+    /* Dark mode */
+    body.dark-mode .landing-container {
+      background: linear-gradient(135deg, #1a1a1a 0%, #242424 100%);
+    }
+
+    body.dark-mode .landing-card {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    body.dark-mode .group-button {
+      background: #2a2a2a;
+      border-color: #404040;
+    }
+
+    body.dark-mode .group-button:hover {
+      border-color: var(--accent);
+      background-color: rgba(124, 179, 66, 0.1);
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 767px) {
+      .landing-container {
+        padding: var(--spacing-md);
+      }
+
+      .landing-card {
+        padding: var(--spacing-lg);
+      }
+
+      .landing-title {
+        font-size: 1.6rem;
+      }
+
+      .logo {
+        font-size: 2.5rem;
+      }
+
+      .group-button {
+        font-size: 1rem;
+        min-height: 70px;
+        padding: var(--spacing-md);
+      }
+    }
+
+    /* Tablet adjustments */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .landing-container {
+        padding: var(--spacing-xl);
+      }
+
+      .landing-card {
+        max-width: 550px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-container">
+    <div class="landing-card">
+      <div class="logo">📚</div>
+      
+      <h1 class="landing-title">Word Study</h1>
+      <p class="landing-subtitle">Let's get started!</p>
+
+      <div class="form-section">
+        <label class="form-label" for="nameInput">What's your name?</label>
+        <input
+          type="text"
+          id="nameInput"
+          class="name-input"
+          placeholder="Enter your name"
+          autocomplete="off"
+          maxlength="50"
+          autofocus
+        >
+        <div class="error-message" id="nameError">Please enter your name</div>
+      </div>
+
+      <div class="form-section">
+        <label class="form-label">Which group are you in?</label>
+        <div class="group-selector">
+          <button class="group-button" id="groupABtn" onclick="selectGroup('A')">
+            Group A
+          </button>
+          <button class="group-button" id="groupBBtn" onclick="selectGroup('B')">
+            Group B
+          </button>
+        </div>
+        <div class="error-message" id="groupError">Please select your group</div>
+      </div>
+
+      <button class="go-button" id="goBtn" onclick="handleSubmit()">
+        Let's Go! 🚀
+      </button>
+
+      <div class="settings-link">
+        <a href="settings.html">⚙️ Settings</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/timer.js"></script>
+
+  <script>
+    let selectedGroup = null;
+
+    // Check if already logged in
+    window.addEventListener('load', () => {
+      const session = Storage.session.get();
+      if (session && session.name && session.group) {
+        // Skip to units selector
+        window.location.href = 'units-selector.html';
+      }
+
+      // Load dark mode setting
+      const isDarkMode = Storage.settings.getDarkMode();
+      if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+      }
+
+      // Auto-select group if coming back
+      if (session && session.group) {
+        selectGroup(session.group);
+      }
+    });
+
+    function selectGroup(group) {
+      selectedGroup = group;
+      
+      document.getElementById('groupABtn').classList.remove('active');
+      document.getElementById('groupBBtn').classList.remove('active');
+      
+      if (group === 'A') {
+        document.getElementById('groupABtn').classList.add('active');
+      } else if (group === 'B') {
+        document.getElementById('groupBBtn').classList.add('active');
+      }
+
+      document.getElementById('groupError').style.display = 'none';
+    }
+
+    function handleSubmit() {
+      const name = document.getElementById('nameInput').value.trim();
+      const nameError = document.getElementById('nameError');
+      const groupError = document.getElementById('groupError');
+      
+      let isValid = true;
+
+      // Validate name
+      if (!name || name.length === 0) {
+        nameError.style.display = 'block';
+        isValid = false;
+      } else {
+        nameError.style.display = 'none';
+      }
+
+      // Validate group
+      if (!selectedGroup) {
+        groupError.style.display = 'block';
+        isValid = false;
+      } else {
+        groupError.style.display = 'none';
+      }
+
+      if (!isValid) return;
+
+      // Save session
+      Storage.session.set(name, selectedGroup);
+
+      // Navigate to units selector
+      window.location.href = 'units-selector.html';
+    }
+
+    // Allow Enter key to submit
+    document.getElementById('nameInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        handleSubmit();
+      }
+    });
+
+    // Clear error on input
+    document.getElementById('nameInput').addEventListener('input', () => {
+      document.getElementById('nameError').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
