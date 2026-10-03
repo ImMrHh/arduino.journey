@@ -31,7 +31,7 @@
       padding: var(--spacing-xl);
       box-shadow: var(--shadow-lg);
       width: 100%;
-      max-width: 500px;
+      max-width: 1000px;
       text-align: center;
     }
 
@@ -48,112 +48,63 @@
       margin-bottom: var(--spacing-xl);
     }
 
-    .form-section {
-      text-align: left;
+    .groups-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-xl);
       margin-bottom: var(--spacing-lg);
     }
 
-    .form-label {
-      display: block;
-      font-weight: 600;
+    .group-section {
+      text-align: left;
+    }
+
+    .group-title {
+      font-size: 1.3rem;
+      font-weight: 700;
       color: var(--primary);
-      margin-bottom: var(--spacing-md);
-      font-size: 1.05rem;
-    }
-
-    .name-input {
-      width: 100%;
-      padding: var(--spacing-md);
-      font-size: 1.1rem;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-lg);
       text-align: center;
-      text-transform: capitalize;
-      min-height: 52px;
-      font-family: var(--font-family);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 3px solid var(--accent);
     }
 
-    .name-input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(124, 179, 66, 0.1);
-    }
-
-    .group-selector {
+    .students-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: var(--spacing-md);
-      margin-bottom: var(--spacing-xl);
     }
 
-    .group-button {
-      padding: var(--spacing-lg);
-      font-size: 1.2rem;
+    .student-btn {
+      padding: var(--spacing-md);
+      font-size: 0.95rem;
       font-weight: 600;
-      border: 3px solid var(--border);
+      border: 2px solid var(--border);
       background: var(--card);
       color: var(--primary);
       border-radius: var(--radius-md);
       cursor: pointer;
       transition: all var(--transition-base);
-      min-height: 80px;
+      min-height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
     }
 
-    .group-button:hover {
+    .student-btn:hover {
       border-color: var(--accent);
       background-color: rgba(124, 179, 66, 0.05);
+      transform: translateY(-2px);
     }
 
-    .group-button.active {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
-      box-shadow: 0 4px 12px rgba(124, 179, 66, 0.3);
-    }
-
-    .group-button:active {
+    .student-btn:active {
       transform: scale(0.98);
     }
 
-    .go-button {
-      width: 100%;
-      padding: var(--spacing-lg);
-      font-size: 1.2rem;
-      font-weight: 700;
-      background: var(--accent);
-      color: #ffffff;
-      border: none;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      min-height: 56px;
-      box-shadow: 0 4px 12px rgba(124, 179, 66, 0.3);
-      transition: all var(--transition-base);
-    }
-
-    .go-button:hover {
-      background: var(--accent-dark);
-      box-shadow: 0 6px 16px rgba(124, 179, 66, 0.4);
-    }
-
-    .go-button:active {
-      box-shadow: 0 2px 6px rgba(124, 179, 66, 0.2);
-      transform: translateY(2px);
-    }
-
-    .go-button:disabled {
-      opacity: 0.5;
+    .student-btn.loading {
+      opacity: 0.6;
       cursor: not-allowed;
-    }
-
-    .error-message {
-      color: var(--error);
-      font-size: 0.9rem;
-      margin-top: var(--spacing-sm);
-      display: none;
-      font-weight: 600;
     }
 
     .settings-link {
@@ -180,17 +131,17 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
 
-    body.dark-mode .group-button {
+    body.dark-mode .student-btn {
       background: #2a2a2a;
       border-color: #404040;
     }
 
-    body.dark-mode .group-button:hover {
+    body.dark-mode .student-btn:hover {
       border-color: var(--accent);
       background-color: rgba(124, 179, 66, 0.1);
     }
 
-    /* Mobile adjustments */
+    /* Mobile: Single column */
     @media (max-width: 767px) {
       .landing-container {
         padding: var(--spacing-md);
@@ -208,21 +159,45 @@
         font-size: 2.5rem;
       }
 
-      .group-button {
-        font-size: 1rem;
-        min-height: 70px;
-        padding: var(--spacing-md);
+      .groups-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
+
+      .students-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .student-btn {
+        font-size: 0.85rem;
+        padding: var(--spacing-sm);
+        min-height: 44px;
+      }
+
+      .group-title {
+        font-size: 1.1rem;
       }
     }
 
     /* Tablet adjustments */
     @media (min-width: 768px) and (max-width: 1023px) {
-      .landing-container {
-        padding: var(--spacing-xl);
+      .landing-card {
+        max-width: 900px;
       }
 
+      .students-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Desktop: Full width layout */
+    @media (min-width: 1024px) {
       .landing-card {
-        max-width: 550px;
+        max-width: 1000px;
+      }
+
+      .students-grid {
+        grid-template-columns: repeat(3, 1fr);
       }
     }
   </style>
@@ -233,38 +208,11 @@
       <div class="logo">📚</div>
       
       <h1 class="landing-title">Word Study</h1>
-      <p class="landing-subtitle">Let's get started!</p>
+      <p class="landing-subtitle">Select your name to get started</p>
 
-      <div class="form-section">
-        <label class="form-label" for="nameInput">What's your name?</label>
-        <input
-          type="text"
-          id="nameInput"
-          class="name-input"
-          placeholder="Enter your name"
-          autocomplete="off"
-          maxlength="50"
-          autofocus
-        >
-        <div class="error-message" id="nameError">Please enter your name</div>
+      <div class="groups-container" id="groupsContainer">
+        <!-- Dynamically generated: Group A and Group B sections -->
       </div>
-
-      <div class="form-section">
-        <label class="form-label">Which group are you in?</label>
-        <div class="group-selector">
-          <button class="group-button" id="groupABtn" onclick="selectGroup('A')">
-            Group A
-          </button>
-          <button class="group-button" id="groupBBtn" onclick="selectGroup('B')">
-            Group B
-          </button>
-        </div>
-        <div class="error-message" id="groupError">Please select your group</div>
-      </div>
-
-      <button class="go-button" id="goBtn" onclick="handleSubmit()">
-        Let's Go! 🚀
-      </button>
 
       <div class="settings-link">
         <a href="settings.html">⚙️ Settings</a>
@@ -272,14 +220,13 @@
     </div>
   </div>
 
+  <script src="assets/js/students.js"></script>
   <script src="assets/js/storage.js"></script>
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/timer.js"></script>
 
   <script>
-    let selectedGroup = null;
-
     // Check if already logged in
     window.addEventListener('load', () => {
       const session = Storage.session.get();
@@ -294,70 +241,64 @@
         document.body.classList.add('dark-mode');
       }
 
-      // Auto-select group if coming back
-      if (session && session.group) {
-        selectGroup(session.group);
-      }
+      // Render student buttons
+      renderStudents();
     });
 
-    function selectGroup(group) {
-      selectedGroup = group;
-      
-      document.getElementById('groupABtn').classList.remove('active');
-      document.getElementById('groupBBtn').classList.remove('active');
-      
-      if (group === 'A') {
-        document.getElementById('groupABtn').classList.add('active');
-      } else if (group === 'B') {
-        document.getElementById('groupBBtn').classList.add('active');
-      }
+    function renderStudents() {
+      const container = document.getElementById('groupsContainer');
+      container.innerHTML = '';
 
-      document.getElementById('groupError').style.display = 'none';
+      // Group A
+      const groupASection = document.createElement('div');
+      groupASection.className = 'group-section';
+      groupASection.innerHTML = '<h2 class="group-title">Group A</h2>';
+      const groupAGrid = document.createElement('div');
+      groupAGrid.className = 'students-grid';
+      
+      STUDENTS.A.forEach(student => {
+        const btn = document.createElement('button');
+        btn.className = 'student-btn';
+        btn.textContent = student.name;
+        btn.onclick = () => selectStudent(student.name, 'A');
+        groupAGrid.appendChild(btn);
+      });
+      
+      groupASection.appendChild(groupAGrid);
+      container.appendChild(groupASection);
+
+      // Group B
+      const groupBSection = document.createElement('div');
+      groupBSection.className = 'group-section';
+      groupBSection.innerHTML = '<h2 class="group-title">Group B</h2>';
+      const groupBGrid = document.createElement('div');
+      groupBGrid.className = 'students-grid';
+      
+      STUDENTS.B.forEach(student => {
+        const btn = document.createElement('button');
+        btn.className = 'student-btn';
+        btn.textContent = student.name;
+        btn.onclick = () => selectStudent(student.name, 'B');
+        groupBGrid.appendChild(btn);
+      });
+      
+      groupBSection.appendChild(groupBGrid);
+      container.appendChild(groupBSection);
     }
 
-    function handleSubmit() {
-      const name = document.getElementById('nameInput').value.trim();
-      const nameError = document.getElementById('nameError');
-      const groupError = document.getElementById('groupError');
-      
-      let isValid = true;
-
-      // Validate name
-      if (!name || name.length === 0) {
-        nameError.style.display = 'block';
-        isValid = false;
-      } else {
-        nameError.style.display = 'none';
+    function selectStudent(name, group) {
+      // Verify student exists in group
+      if (!isValidStudent(name, group)) {
+        console.error(`Invalid student: ${name} not in Group ${group}`);
+        return;
       }
-
-      // Validate group
-      if (!selectedGroup) {
-        groupError.style.display = 'block';
-        isValid = false;
-      } else {
-        groupError.style.display = 'none';
-      }
-
-      if (!isValid) return;
 
       // Save session
-      Storage.session.set(name, selectedGroup);
+      Storage.session.set(name, group);
 
       // Navigate to units selector
       window.location.href = 'units-selector.html';
     }
-
-    // Allow Enter key to submit
-    document.getElementById('nameInput').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        handleSubmit();
-      }
-    });
-
-    // Clear error on input
-    document.getElementById('nameInput').addEventListener('input', () => {
-      document.getElementById('nameError').style.display = 'none';
-    });
   </script>
 </body>
 </html>
