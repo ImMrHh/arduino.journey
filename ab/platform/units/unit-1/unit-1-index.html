@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiénes Somos — Unit 1</title>
+  <style>
+    /* ============================================
+       VARIABLES & RESET
+       ============================================ */
+    :root {
+      --primary-dark: #1a1a1a;
+      --primary-light: #ffffff;
+      --secondary-dark: #2a2a2a;
+      --secondary-light: #f5f5f5;
+      --text-dark: #333;
+      --text-light: #fafafa;
+      --accent-green: #7cb342;
+      --accent-purple: #5e35b1;
+      --border-light: #e0e0e0;
+      --border-dark: #424242;
+      --success: #4caf50;
+      --radius: 8px;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    body.dark-mode {
+      --primary-light: #1a1a1a;
+      --primary-dark: #ffffff;
+      --secondary-light: #2a2a2a;
+      --secondary-dark: #f5f5f5;
+      --text-light: #333;
+      --text-dark: #fafafa;
+      --border-light: #424242;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--primary-light);
+      color: var(--text-dark);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      gap: 20px;
+    }
+
+    .header-left {
+      flex-grow: 1;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      opacity: 0.6;
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .unit-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .unit-badge-large {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent-green), #9ccc65);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-back {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background-color: var(--secondary-light);
+      color: var(--text-dark);
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-back:hover {
+      background-color: var(--accent-purple);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* ============================================
+       PROGRESS BAR
+       ============================================ */
+    .progress-section {
+      background-color: var(--secondary-light);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: var(--border-light);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-green), #9ccc65);
+      transition: width 0.4s ease;
+      border-radius: 4px;
+    }
+
+    /* ============================================
+       SECTION HEADERS
+       ============================================ */
+    .section-header {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      margin-top: 32px;
+      opacity: 0.8;
+      letter-spacing: 0.5px;
+    }
+
+    .section-header:first-of-type {
+      margin-top: 0;
+    }
+
+    /* ============================================
+       GAMES/ACTIVITIES GRID
+       ============================================ */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .content-card {
+      background: var(--secondary-light);
+      border-radius: var(--radius);
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .content-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-green);
+    }
+
+    /* Badge in top-right (checkmark + score) */
+    .content-badges {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge-checkmark {
+      width: 28px;
+      height: 28px;
+      background-color: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .badge-score {
+      background-color: var(--accent-green);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    /* Card header (icon + title) */
+    .content-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px; /* Space for badges */
+    }
+
+    .content-icon {
+      font-size: 28px;
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--accent-green), #9ccc65);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .content-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .content-description {
+      font-size: 13px;
+      color: var(--text-dark);
+      opacity: 0.6;
+      line-height: 1.4;
+    }
+
+    /* Difficulty buttons */
+    .difficulty-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .btn-difficulty {
+      padding: 8px 12px;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      background-color: transparent;
+      color: var(--text-dark);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-difficulty:hover {
+      border-color: var(--accent-green);
+      background-color: var(--accent-green);
+      color: white;
+    }
+
+    .btn-difficulty:active {
+      transform: scale(0.95);
+    }
+
+    /* Hover detail (appears on tap/hover) */
+    .content-detail {
+      font-size: 12px;
+      opacity: 0;
+      max-height: 0;
+      transition: all 0.2s;
+      overflow: hidden;
+      color: var(--text-dark);
+      opacity: 0.6;
+      border-top: 1px solid var(--border-light);
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+
+    .content-card:hover .content-detail {
+      opacity: 1;
+      max-height: 100px;
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .container {
+        padding: 16px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 24px;
+      }
+
+      .unit-title {
+        font-size: 24px;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .content-card {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .unit-title {
+        font-size: 20px;
+      }
+
+      .content-title {
+        font-size: 14px;
+      }
+
+      .content-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 22px;
+      }
+
+      .difficulty-buttons {
+        gap: 6px;
+      }
+
+      .btn-difficulty {
+        padding: 6px 10px;
+        font-size: 11px;
+      }
+    }
+
+    /* ============================================
+       UTILITY
+       ============================================ */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <div class="breadcrumb">Unit 1 / Quiénes Somos</div>
+        <h1 class="unit-title">
+          <div class="unit-badge-large">🌱</div>
+          <span>Quiénes Somos</span>
+        </h1>
+      </div>
+      <button class="btn-back" id="backBtn" title="Back to units" aria-label="Back to units">←</button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-section">
+      <div class="progress-label">
+        <span>Progress</span>
+        <span id="progressText">0/6 items completed</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- Games Section -->
+    <h2 class="section-header">🎮 Games</h2>
+    <div class="content-grid" id="gamesGrid">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Activities Section -->
+    <h2 class="section-header">📝 Activities</h2>
+    <div class="content-grid" id="activitiesGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    // ============================================
+    // CONTENT DATA
+    // ============================================
+    const GAMES = [
+      {
+        id: 'grammar-master',
+        title: 'Grammar Master',
+        description: 'Reinforce verb tenses with interactive challenges.',
+        icon: '📖',
+        type: 'game'
+      },
+      {
+        id: 'vocabulary-vault',
+        title: 'Vocabulary Vault',
+        description: 'Unlock words and definitions through engaging games.',
+        icon: '🔑',
+        type: 'game'
+      },
+      {
+        id: 'spelling-blitz',
+        title: 'Spelling Blitz',
+        description: 'Speed through spelling challenges against the clock.',
+        icon: '⚡',
+        type: 'game'
+      }
+    ];
+
+    const ACTIVITIES = [
+      {
+        id: 'match-meaning',
+        title: 'Match Meaning',
+        description: 'Connect words to their definitions.',
+        icon: '🎯',
+        type: 'activity'
+      },
+      {
+        id: 'unscramble',
+        title: 'Unscramble Words',
+        description: 'Rearrange letters to form correct words.',
+        icon: '🔤',
+        type: 'activity'
+      },
+      {
+        id: 'wordsearch',
+        title: 'Word Search',
+        description: 'Find hidden words in the puzzle grid.',
+        icon: '🔍',
+        type: 'activity'
+      }
+    ];
+
+    const DIFFICULTIES = ['Easy', 'Medium', 'Challenge'];
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    function init() {
+      // Check session
+      const session = Storage.session.get();
+      if (!session) {
+        window.location.href = '../index.html';
+        return;
+      }
+
+      // Render content
+      renderGames();
+      renderActivities();
+
+      // Update progress
+      updateProgress();
+
+      // Event listeners
+      setupEventListeners();
+
+      // Apply dark mode if saved
+      if (Storage.settings.getDarkMode()) {
+        document.body.classList.add('dark-mode');
+      }
+    }
+
+    // ============================================
+    // RENDER GAMES
+    // ============================================
+    function renderGames() {
+      const grid = document.getElementById('gamesGrid');
+      grid.innerHTML = '';
+
+      GAMES.forEach(game => {
+        const card = createContentCard(game);
+        grid.appendChild(card);
+      });
+    }
+
+    // ============================================
+    // RENDER ACTIVITIES
+    // ============================================
+    function renderActivities() {
+      const grid = document.getElementById('activitiesGrid');
+      grid.innerHTML = '';
+
+      ACTIVITIES.forEach(activity => {
+        const card = createContentCard(activity);
+        grid.appendChild(card);
+      });
+    }
+
+    // ============================================
+    // CREATE CONTENT CARD
+    // ============================================
+    function createContentCard(content) {
+      const card = document.createElement('div');
+      card.className = 'content-card';
+      card.setAttribute('data-id', content.id);
+      card.setAttribute('data-type', content.type);
+
+      // Get completion status and best score
+      const session = Storage.session.get();
+      const bestScore = Storage.scores.getBestScore(
+        'unit-1',
+        content.type === 'game' ? 'games' : 'activities',
+        content.id,
+        session.name,
+        session.group
+      );
+
+      const isCompleted = !!bestScore;
+      const scorePercent = bestScore ? Math.round((bestScore.score / bestScore.total) * 100) : 0;
+      const lastAttempt = bestScore?.date ? formatDate(bestScore.date) : null;
+
+      // Badges HTML
+      let badgesHtml = '';
+      if (isCompleted) {
+        badgesHtml = `
+          <div class="content-badges">
+            <div class="badge-checkmark">✓</div>
+            <div class="badge-score">${scorePercent}%</div>
+          </div>
+        `;
+      }
+
+      // Difficulty buttons HTML
+      const difficultyHtml = `
+        <div class="difficulty-buttons">
+          ${DIFFICULTIES.map(diff => `
+            <button class="btn-difficulty" data-difficulty="${diff}" aria-label="Play ${content.title} on ${diff}">
+              ${diff}
+            </button>
+          `).join('')}
+        </div>
+      `;
+
+      // Detail line (appears on hover)
+      let detailHtml = '';
+      if (lastAttempt) {
+        detailHtml = `<div class="content-detail">Last attempt: ${lastAttempt}</div>`;
+      }
+
+      card.innerHTML = `
+        ${badgesHtml}
+        <div class="content-header">
+          <div class="content-icon">${content.icon}</div>
+          <h3 class="content-title">${content.title}</h3>
+        </div>
+        <p class="content-description">${content.description}</p>
+        ${difficultyHtml}
+        ${detailHtml}
+      `;
+
+      // Add click handlers to difficulty buttons
+      const diffButtons = card.querySelectorAll('.btn-difficulty');
+      diffButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const difficulty = btn.getAttribute('data-difficulty');
+          navigateToContent(content, difficulty);
+        });
+      });
+
+      return card;
+    }
+
+    // ============================================
+    // UPDATE PROGRESS
+    // ============================================
+    function updateProgress() {
+      const session = Storage.session.get();
+      const scores = Storage.scores.getUnitScores('unit-1');
+
+      let completed = 0;
+      const total = 6; // 3 games + 3 activities
+
+      if (scores.activities) {
+        if (scores.activities['match-meaning']?.length > 0) completed++;
+        if (scores.activities['unscramble']?.length > 0) completed++;
+        if (scores.activities['wordsearch']?.length > 0) completed++;
+      }
+
+      if (scores.games) {
+        if (scores.games['grammar-master']?.length > 0) completed++;
+        if (scores.games['vocabulary-vault']?.length > 0) completed++;
+        if (scores.games['spelling-blitz']?.length > 0) completed++;
+      }
+
+      const percentage = Math.round((completed / total) * 100);
+
+      document.getElementById('progressFill').style.width = `${percentage}%`;
+      document.getElementById('progressText').textContent = `${completed}/${total} items completed`;
+    }
+
+    // ============================================
+    // NAVIGATION
+    // ============================================
+    function navigateToContent(content, difficulty) {
+      // For Phase 2, this is placeholder
+      // Phase 5 will build actual game pages
+      console.log(`Would navigate to: ${content.id} (${difficulty})`);
+      
+      // Temporary: show alert
+      alert(`Loading ${content.title} — ${difficulty} mode\n\n(Coming in Phase 5: Game Build)`);
+    }
+
+    // ============================================
+    // UTILITIES
+    // ============================================
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      if (dateStr === today.toISOString().split('T')[0]) {
+        return 'Today';
+      } else if (dateStr === yesterday.toISOString().split('T')[0]) {
+        return 'Yesterday';
+      } else {
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
+    }
+
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+    function setupEventListeners() {
+      document.getElementById('backBtn').addEventListener('click', () => {
+        window.location.href = '../units-selector.html';
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          window.location.href = '../units-selector.html';
+        }
+      });
+    }
+
+    // ============================================
+    // RUN
+    // ============================================
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
