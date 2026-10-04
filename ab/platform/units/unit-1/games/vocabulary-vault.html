@@ -58,7 +58,11 @@
     .game-title {
       font-size: 24px;
       font-weight: 700;
-      color: var(--text-dark);
+      color: #000;
+    }
+
+    [data-theme="dark"] .game-title {
+      color: #fff;
     }
 
     .difficulty-badge {
@@ -632,13 +636,25 @@
       document.getElementById('leaderboardContent').innerHTML = html || '<p style="color: #999; font-size: 13px;">No scores yet</p>';
     }
 
+    // Listen for dark mode changes (from settings page)
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'ws_settings') {
+        const darkMode = Storage.settings.getDarkMode();
+        if (darkMode) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      }
+    });
+
     // Event listeners
     document.getElementById('retryBtn').addEventListener('click', () => {
       location.reload();
     });
 
     document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '../';
+      window.location.href = '../index.html';
     });
 
     // Start game
