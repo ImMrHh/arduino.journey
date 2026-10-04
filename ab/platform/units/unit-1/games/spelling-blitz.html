@@ -58,11 +58,11 @@
     .game-title {
       font-size: 24px;
       font-weight: 700;
-      color: #000;
+      color: #000 !important;
     }
 
     [data-theme="dark"] .game-title {
-      color: #fff;
+      color: #fff !important;
     }
 
     .difficulty-badge {
@@ -645,6 +645,20 @@
         }
       }
     });
+
+    // Monitor dark mode changes every 500ms (for same-tab updates)
+    let lastDarkMode = Storage.settings.getDarkMode();
+    setInterval(() => {
+      const currentDarkMode = Storage.settings.getDarkMode();
+      if (currentDarkMode !== lastDarkMode) {
+        lastDarkMode = currentDarkMode;
+        if (currentDarkMode) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      }
+    }, 500);
 
     // Event listeners
     document.getElementById('spellingInput').addEventListener('keypress', e => {
