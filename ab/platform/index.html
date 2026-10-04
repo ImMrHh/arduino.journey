@@ -376,10 +376,16 @@
     function filterAndRenderStudents(group) {
       activeGroup = group;
 
+      filteredStudents = [];
+
       if (group === 'all') {
-        filteredStudents = STUDENTS;
-      } else {
-        filteredStudents = STUDENTS.filter(s => s.group === group);
+        // Flatten both groups
+        if (STUDENTS.A) filteredStudents.push(...STUDENTS.A);
+        if (STUDENTS.B) filteredStudents.push(...STUDENTS.B);
+      } else if (group === 'A') {
+        filteredStudents = STUDENTS.A || [];
+      } else if (group === 'B') {
+        filteredStudents = STUDENTS.B || [];
       }
 
       renderStudents();
