@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Word Study Platform</title>
+  <style>
+    /* ============================================
+       VARIABLES & RESET
+       ============================================ */
+    :root {
+      --primary-dark: #1a1a1a;
+      --primary-light: #ffffff;
+      --secondary-dark: #2a2a2a;
+      --secondary-light: #f5f5f5;
+      --text-dark: #333;
+      --text-light: #fafafa;
+      --accent-green: #7cb342;
+      --accent-purple: #5e35b1;
+      --border-light: #e0e0e0;
+      --border-dark: #424242;
+      --radius: 8px;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    body.dark-mode {
+      --primary-light: #1a1a1a;
+      --primary-dark: #ffffff;
+      --secondary-light: #2a2a2a;
+      --secondary-dark: #f5f5f5;
+      --text-light: #333;
+      --text-dark: #fafafa;
+      --border-light: #424242;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--primary-light);
+      color: var(--text-dark);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border-light);
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .btn-back {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background-color: var(--secondary-light);
+      color: var(--text-dark);
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-back:hover {
+      background-color: var(--accent-purple);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .btn-back:active {
+      transform: scale(0.95);
+    }
+
+    /* ============================================
+       SETTINGS SECTIONS
+       ============================================ */
+    .settings-section {
+      background-color: var(--secondary-light);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .settings-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      opacity: 0.6;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ============================================
+       SETTING ITEM
+       ============================================ */
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+
+    .setting-label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .setting-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .setting-description {
+      font-size: 12px;
+      color: var(--text-dark);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       TOGGLE SWITCH
+       ============================================ */
+    .toggle {
+      position: relative;
+      width: 52px;
+      height: 32px;
+      background-color: #ccc;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle.active {
+      background-color: var(--accent-green);
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 26px;
+      height: 26px;
+      background-color: white;
+      border-radius: 50%;
+      transition: left 0.3s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toggle.active .toggle-slider {
+      left: 23px;
+    }
+
+    /* ============================================
+       SLIDER (VOLUME)
+       ============================================ */
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border-light);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      background: #9ccc65;
+      transform: scale(1.1);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .slider::-moz-range-thumb:hover {
+      background: #9ccc65;
+      transform: scale(1.1);
+    }
+
+    .volume-label {
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 32px;
+      text-align: right;
+    }
+
+    /* ============================================
+       ACTION BUTTONS
+       ============================================ */
+    .action-section {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border-light);
+    }
+
+    .btn-danger {
+      width: 100%;
+      padding: 12px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-danger:hover {
+      background-color: #d32f2f;
+      transform: scale(1.02);
+    }
+
+    .btn-danger:active {
+      transform: scale(0.98);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 480px) {
+      .container {
+        padding: 16px;
+      }
+
+      .header {
+        margin-bottom: 24px;
+      }
+
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .settings-section {
+        padding: 16px;
+      }
+
+      .setting-name {
+        font-size: 14px;
+      }
+    }
+
+    /* ============================================
+       UTILITY
+       ============================================ */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--primary-light);
+      border-radius: var(--radius);
+      padding: 24px;
+      max-width: 400px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+
+    .modal h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .modal p {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 12px;
+      background-color: var(--secondary-light);
+      color: var(--text-dark);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--border-light);
+    }
+
+    .btn-confirm {
+      flex: 1;
+      padding: 12px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-confirm:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Settings</h1>
+      <button class="btn-back" id="backBtn" title="Go back" aria-label="Go back">←</button>
+    </div>
+
+    <!-- Display Settings -->
+    <div class="settings-section">
+      <div class="settings-section-title">Display</div>
+      
+      <div class="setting-item">
+        <div class="setting-label">
+          <span class="setting-name">Dark Mode</span>
+          <span class="setting-description">Use dark theme for night reading</span>
+        </div>
+        <button class="toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+          <div class="toggle-slider"></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Audio Settings -->
+    <div class="settings-section">
+      <div class="settings-section-title">Audio</div>
+      
+      <div class="setting-item">
+        <div class="setting-label">
+          <span class="setting-name">Volume</span>
+          <span class="setting-description">Adjust sound level (0–100)</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="0" max="100" value="80" class="slider" id="volumeSlider" aria-label="Volume level">
+          <span class="volume-label" id="volumeLabel">80</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Section -->
+    <div class="action-section">
+      <button class="btn-danger" id="clearDataBtn">Clear All Data</button>
+    </div>
+  </div>
+
+  <!-- Clear Data Confirmation Modal -->
+  <div class="modal-overlay" id="clearModal">
+    <div class="modal">
+      <h2>Clear All Data?</h2>
+      <p>This will delete all scores, badges, and settings. You cannot undo this action.</p>
+      <div class="modal-buttons">
+        <button class="btn-secondary" id="cancelClear">Cancel</button>
+        <button class="btn-confirm" id="confirmClear">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script>
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    function init() {
+      // Check session
+      const session = Storage.session.get();
+      if (!session) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Load current settings
+      loadSettings();
+
+      // Event listeners
+      setupEventListeners();
+    }
+
+    // ============================================
+    // LOAD SETTINGS
+    // ============================================
+    function loadSettings() {
+      // Dark mode
+      const darkMode = Storage.settings.getDarkMode();
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      if (darkMode) {
+        darkModeToggle.classList.add('active');
+        document.body.classList.add('dark-mode');
+      }
+
+      // Volume
+      const volume = Storage.settings.getVolume();
+      document.getElementById('volumeSlider').value = volume;
+      document.getElementById('volumeLabel').textContent = volume;
+    }
+
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+    function setupEventListeners() {
+      // Dark mode toggle
+      document.getElementById('darkModeToggle').addEventListener('click', (e) => {
+        const toggle = e.currentTarget;
+        const isActive = toggle.classList.contains('active');
+        
+        toggle.classList.toggle('active');
+        document.body.classList.toggle('dark-mode');
+
+        Storage.settings.setDarkMode(!isActive);
+      });
+
+      // Volume slider
+      document.getElementById('volumeSlider').addEventListener('input', (e) => {
+        const volume = parseInt(e.target.value);
+        document.getElementById('volumeLabel').textContent = volume;
+        Storage.settings.setVolume(volume);
+      });
+
+      // Clear data button
+      document.getElementById('clearDataBtn').addEventListener('click', () => {
+        document.getElementById('clearModal').classList.add('active');
+      });
+
+      // Clear modal buttons
+      document.getElementById('cancelClear').addEventListener('click', () => {
+        document.getElementById('clearModal').classList.remove('active');
+      });
+
+      document.getElementById('confirmClear').addEventListener('click', () => {
+        Storage.clearAll();
+        document.getElementById('clearModal').classList.remove('active');
+        // Redirect to home
+        window.location.href = 'index.html';
+      });
+
+      // Close modal on overlay click
+      document.getElementById('clearModal').addEventListener('click', (e) => {
+        if (e.target.id === 'clearModal') {
+          document.getElementById('clearModal').classList.remove('active');
+        }
+      });
+
+      // Back button
+      document.getElementById('backBtn').addEventListener('click', () => {
+        window.history.back();
+      });
+
+      // Keyboard
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          window.history.back();
+        }
+      });
+    }
+
+    // ============================================
+    // RUN
+    // ============================================
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
