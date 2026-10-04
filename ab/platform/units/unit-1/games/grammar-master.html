@@ -58,7 +58,7 @@
     .game-title {
       font-size: 24px;
       font-weight: 700;
-      color: var(--accent-green);
+      color: var(--text-dark);
     }
 
     .difficulty-badge {
@@ -499,9 +499,7 @@
 
       gameState.questions = verbs.map(v => ({
         base: v.base,
-        present: v.base.includes(' ') 
-          ? v.base.split(' ')[0] + 's ' + v.base.split(' ').slice(1).join(' ')
-          : v.base + 's',
+        present: GAME_CONTENT.conjugatePresent(v.base),
         past: v.past
       }));
 
@@ -597,8 +595,12 @@
 
       checkAnswer();
 
-      const allCorrect = Object.values(gameState.answers[gameState.currentIndex]).every(v => v === true || v === null);
-      if (!allCorrect) {
+      // Only check correct flags (not attempts count)
+      const answer = gameState.answers[gameState.currentIndex];
+      const presentIsCorrect = presentInput === '' ? true : answer.presentCorrect === true;
+      const pastIsCorrect = pastInput === '' ? true : answer.pastCorrect === true;
+      
+      if (!presentIsCorrect || !pastIsCorrect) {
         gameState.attempts++;
         document.getElementById('presentInput').focus();
         return;
