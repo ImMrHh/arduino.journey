@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Units — Word Study Platform</title>
+  <style>
+    /* ============================================
+       VARIABLES & RESET
+       ============================================ */
+    :root {
+      --primary-dark: #1a1a1a;
+      --primary-light: #ffffff;
+      --secondary-dark: #2a2a2a;
+      --secondary-light: #f5f5f5;
+      --text-dark: #333;
+      --text-light: #fafafa;
+      --accent-green: #7cb342;
+      --accent-purple: #5e35b1;
+      --accent-blue: #1976d2;
+      --accent-red: #d32f2f;
+      --accent-orange: #f57c00;
+      --accent-teal: #00897b;
+      --border-light: #e0e0e0;
+      --border-dark: #424242;
+      --success: #4caf50;
+      --warning: #ff9800;
+      --error: #f44336;
+      --radius: 8px;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    body.dark-mode {
+      --primary-light: #1a1a1a;
+      --primary-dark: #ffffff;
+      --secondary-light: #2a2a2a;
+      --secondary-dark: #f5f5f5;
+      --text-light: #333;
+      --text-dark: #fafafa;
+      --border-light: #424242;
+      --border-dark: #e0e0e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--primary-light);
+      color: var(--text-dark);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border-light);
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background-color: var(--secondary-light);
+      color: var(--text-dark);
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-icon:hover {
+      background-color: var(--accent-purple);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .btn-icon:active {
+      transform: scale(0.95);
+    }
+
+    /* ============================================
+       UNITS GRID
+       ============================================ */
+    .units-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .unit-card {
+      background: var(--secondary-light);
+      border-radius: var(--radius);
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .unit-card:hover:not(.locked) {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-green);
+    }
+
+    .unit-card.locked {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .unit-card.locked:hover {
+      transform: none;
+    }
+
+    .unit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .unit-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-dark);
+      opacity: 0.3;
+    }
+
+    .unit-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .unit-badge.green {
+      background-color: var(--accent-green);
+    }
+
+    .unit-badge.purple {
+      background-color: var(--accent-purple);
+    }
+
+    .unit-badge.blue {
+      background-color: var(--accent-blue);
+    }
+
+    .unit-badge.red {
+      background-color: var(--accent-red);
+    }
+
+    .unit-badge.orange {
+      background-color: var(--accent-orange);
+    }
+
+    .unit-badge.teal {
+      background-color: var(--accent-teal);
+    }
+
+    .unit-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .unit-description {
+      font-size: 14px;
+      color: var(--text-dark);
+      opacity: 0.7;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    .unit-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      opacity: 0.7;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .unit-footer.coming-soon {
+      justify-content: center;
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .unit-footer-text {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .progress-small {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ============================================
+       USER INFO PILL
+       ============================================ */
+    .user-pill {
+      background-color: var(--secondary-light);
+      border-radius: 24px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .container {
+        padding: 16px;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 24px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .units-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .unit-card {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .unit-number {
+        font-size: 24px;
+      }
+
+      .unit-title {
+        font-size: 16px;
+      }
+
+      .unit-description {
+        font-size: 13px;
+      }
+    }
+
+    /* ============================================
+       UTILITY
+       ============================================ */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--primary-light);
+      border-radius: var(--radius);
+      padding: 24px;
+      max-width: 400px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+
+    .modal h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .modal p {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-green);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      background-color: #689f38;
+      transform: scale(1.02);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary-light);
+      color: var(--text-dark);
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--border-light);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <h1>Word Study Units</h1>
+      </div>
+      <div class="header-actions">
+        <div class="user-pill" id="userPill">
+          <div class="user-avatar" id="userAvatar">?</div>
+          <span id="userName">Loading...</span>
+        </div>
+        <button class="btn-icon" id="settingsBtn" title="Settings" aria-label="Open settings">⚙️</button>
+        <button class="btn-icon" id="logoutBtn" title="Logout" aria-label="Logout">🚪</button>
+      </div>
+    </div>
+
+    <!-- Units Grid -->
+    <div class="units-grid" id="unitsGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- Logout Confirmation Modal -->
+  <div class="modal-overlay" id="logoutModal">
+    <div class="modal">
+      <h2>Ready to leave?</h2>
+      <p>Your session will be cleared. You can log back in anytime.</p>
+      <div class="modal-buttons">
+        <button class="btn-secondary" id="cancelLogout">Cancel</button>
+        <button class="btn-primary" id="confirmLogout">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script>
+    // ============================================
+    // UNITS DATA
+    // ============================================
+    const UNITS = [
+      {
+        id: 'unit-1',
+        number: '1',
+        title: 'Quiénes Somos',
+        description: 'Identity, development, and adaptation across life stages.',
+        color: 'green',
+        badge: '🌱',
+        startDate: 'Sep 7',
+        status: 'in-progress',
+        progress: 0  // Will be calculated from localStorage
+      },
+      {
+        id: 'unit-2',
+        number: '2',
+        title: 'Coming Soon',
+        description: 'Unit 2 will explore connection and community.',
+        color: 'purple',
+        badge: '🤝',
+        startDate: 'Oct 21',
+        status: 'locked'
+      },
+      {
+        id: 'unit-3',
+        number: '3',
+        title: 'Coming Soon',
+        description: 'Unit 3 will focus on innovation and design.',
+        color: 'blue',
+        badge: '💡',
+        startDate: 'Nov 18',
+        status: 'locked'
+      },
+      {
+        id: 'unit-4',
+        number: '4',
+        title: 'Coming Soon',
+        description: 'Unit 4 will investigate shared responsibility.',
+        color: 'red',
+        badge: '🌍',
+        startDate: 'Dec 16',
+        status: 'locked'
+      },
+      {
+        id: 'unit-5',
+        number: '5',
+        title: 'Coming Soon',
+        description: 'Unit 5 will explore cultural perspectives.',
+        color: 'orange',
+        badge: '🎭',
+        startDate: 'Jan 20',
+        status: 'locked'
+      },
+      {
+        id: 'unit-6',
+        number: '6',
+        title: 'Coming Soon',
+        description: 'Unit 6 will focus on personal growth.',
+        color: 'teal',
+        badge: '🚀',
+        startDate: 'Feb 17',
+        status: 'locked'
+      }
+    ];
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    function init() {
+      // Check session
+      const session = Storage.session.get();
+      if (!session) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Render user pill
+      renderUserPill(session);
+
+      // Render units
+      renderUnits();
+
+      // Event listeners
+      setupEventListeners();
+
+      // Apply dark mode if saved
+      if (Storage.settings.getDarkMode()) {
+        document.body.classList.add('dark-mode');
+      }
+    }
+
+    // ============================================
+    // RENDER USER PILL
+    // ============================================
+    function renderUserPill(session) {
+      const nameEl = document.getElementById('userName');
+      const avatarEl = document.getElementById('userAvatar');
+
+      nameEl.textContent = session.name;
+      avatarEl.textContent = session.name.charAt(0).toUpperCase();
+    }
+
+    // ============================================
+    // RENDER UNITS
+    // ============================================
+    function renderUnits() {
+      const grid = document.getElementById('unitsGrid');
+      grid.innerHTML = '';
+
+      UNITS.forEach(unit => {
+        const card = createUnitCard(unit);
+        grid.appendChild(card);
+      });
+    }
+
+    function createUnitCard(unit) {
+      const card = document.createElement('div');
+      card.className = `unit-card ${unit.status === 'locked' ? 'locked' : ''}`;
+      card.setAttribute('data-unit-id', unit.id);
+
+      // Calculate progress for Unit 1
+      let progress = 0;
+      if (unit.id === 'unit-1') {
+        progress = calculateUnitProgress();
+      }
+
+      const isLocked = unit.status === 'locked';
+      const progressText = !isLocked ? `${progress}% complete` : 'Coming Soon';
+
+      card.innerHTML = `
+        <div class="unit-header">
+          <div class="unit-number">${unit.number}</div>
+          <div class="unit-badge ${unit.color}">${unit.badge}</div>
+        </div>
+        <h2 class="unit-title">${unit.title}</h2>
+        <p class="unit-description">${unit.description}</p>
+        <div class="unit-footer ${isLocked ? 'coming-soon' : ''}">
+          <div class="unit-footer-text">
+            <span class="progress-small">${progressText}</span>
+          </div>
+        </div>
+      `;
+
+      // Add click handler for unlocked units
+      if (!isLocked) {
+        card.addEventListener('click', () => navigateToUnit(unit.id));
+      }
+
+      return card;
+    }
+
+    function calculateUnitProgress() {
+      const scores = Storage.scores.getUnitScores('unit-1');
+      if (!scores || !scores.activities || !scores.games) {
+        return 0;
+      }
+
+      const activities = scores.activities;
+      const games = scores.games;
+
+      let completed = 0;
+      let total = 6; // 3 activities + 3 games
+
+      // Count completed activities (any score = completed)
+      if (activities['match-meaning']?.length > 0) completed++;
+      if (activities['unscramble']?.length > 0) completed++;
+      if (activities['wordsearch']?.length > 0) completed++;
+
+      // Count completed games (any score = completed)
+      if (games['grammar-master']?.length > 0) completed++;
+      if (games['vocabulary-vault']?.length > 0) completed++;
+      if (games['spelling-blitz']?.length > 0) completed++;
+
+      return Math.round((completed / total) * 100);
+    }
+
+    // ============================================
+    // NAVIGATION
+    // ============================================
+    function navigateToUnit(unitId) {
+      window.location.href = `units/unit-1/index.html`;
+    }
+
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+    function setupEventListeners() {
+      // Settings button
+      document.getElementById('settingsBtn').addEventListener('click', () => {
+        window.location.href = 'settings.html';
+      });
+
+      // Logout button
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        document.getElementById('logoutModal').classList.add('active');
+      });
+
+      // Modal buttons
+      document.getElementById('cancelLogout').addEventListener('click', () => {
+        document.getElementById('logoutModal').classList.remove('active');
+      });
+
+      document.getElementById('confirmLogout').addEventListener('click', () => {
+        Storage.session.clear();
+        window.location.href = 'index.html';
+      });
+
+      // Close modal on overlay click
+      document.getElementById('logoutModal').addEventListener('click', (e) => {
+        if (e.target.id === 'logoutModal') {
+          document.getElementById('logoutModal').classList.remove('active');
+        }
+      });
+    }
+
+    // ============================================
+    // RUN
+    // ============================================
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
