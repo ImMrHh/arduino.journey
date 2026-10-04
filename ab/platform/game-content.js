@@ -76,6 +76,27 @@ const GAME_CONTENT = {
     ]
   },
 
+  // Helper function for present tense conjugation
+  conjugatePresent: (base) => {
+    const mainVerb = base.includes(' ') ? base.split(' ')[0] : base;
+    const rest = base.includes(' ') ? ' ' + base.split(' ').slice(1).join(' ') : '';
+    
+    // Rules for adding 'es' vs just 's'
+    if (mainVerb.endsWith('ch') || mainVerb.endsWith('sh') || 
+        mainVerb.endsWith('s') || mainVerb.endsWith('x') || mainVerb.endsWith('z')) {
+      return mainVerb + 'es' + rest;
+    }
+    // If ends in consonant + y, change y to ies
+    if (mainVerb.endsWith('y') && mainVerb.length > 1) {
+      const beforeY = mainVerb[mainVerb.length - 2];
+      if (!'aeiou'.includes(beforeY)) {
+        return mainVerb.slice(0, -1) + 'ies' + rest;
+      }
+    }
+    // Default: just add 's'
+    return mainVerb + 's' + rest;
+  },
+
   // Difficulty configuration
   difficulties: {
     easy: { vocab: 5, spelling: 5, verbs: 5 },
