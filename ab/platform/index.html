@@ -2,303 +2,453 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Word Study Platform</title>
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/dark-mode.css">
-  <link rel="stylesheet" href="assets/css/responsive.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Study Platform — Login</title>
   <style>
-    .landing-container {
+    /* ============================================
+       VARIABLES & RESET
+       ============================================ */
+    :root {
+      --primary-dark: #1a1a1a;
+      --primary-light: #ffffff;
+      --secondary-dark: #2a2a2a;
+      --secondary-light: #f5f5f5;
+      --text-dark: #333;
+      --text-light: #fafafa;
+      --accent-green: #7cb342;
+      --accent-purple: #5e35b1;
+      --border-light: #e0e0e0;
+      --border-dark: #424242;
+      --radius: 8px;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    body.dark-mode {
+      --primary-light: #1a1a1a;
+      --primary-dark: #ffffff;
+      --secondary-light: #2a2a2a;
+      --secondary-dark: #f5f5f5;
+      --text-light: #333;
+      --text-dark: #fafafa;
+      --border-light: #424242;
+      --border-dark: #e0e0e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary-light) 100%);
+      color: var(--text-dark);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      height: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      padding: var(--spacing-lg);
-      background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+      align-items: center;
+      padding: 20px;
     }
 
-    .logo {
-      font-size: 3rem;
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .landing-card {
-      background: var(--card);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-xl);
-      box-shadow: var(--shadow-lg);
+    .card {
+      background-color: var(--primary-light);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      max-width: 800px;
       width: 100%;
-      max-width: 1000px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
       text-align: center;
+      margin-bottom: 32px;
     }
 
-    .landing-title {
-      font-size: 2rem;
+    .app-logo {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .app-title {
+      font-size: 28px;
       font-weight: 700;
-      color: var(--accent);
-      margin-bottom: var(--spacing-sm);
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
     }
 
-    .landing-subtitle {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      margin-bottom: var(--spacing-xl);
+    .app-subtitle {
+      font-size: 14px;
+      opacity: 0.6;
+      letter-spacing: 0.3px;
     }
 
-    .groups-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-xl);
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .group-section {
-      text-align: left;
-    }
-
-    .group-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: var(--spacing-lg);
+    /* ============================================
+       INSTRUCTIONS
+       ============================================ */
+    .instructions {
       text-align: center;
-      padding-bottom: var(--spacing-md);
-      border-bottom: 3px solid var(--accent);
+      margin-bottom: 32px;
+      font-size: 14px;
+      opacity: 0.7;
+      line-height: 1.6;
     }
 
+    /* ============================================
+       STUDENTS GRID
+       ============================================ */
     .students-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--spacing-md);
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    /* Scrollbar styling */
+    .students-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .students-grid::-webkit-scrollbar-track {
+      background: var(--border-light);
+      border-radius: 3px;
+    }
+
+    .students-grid::-webkit-scrollbar-thumb {
+      background: var(--accent-green);
+      border-radius: 3px;
+    }
+
+    .students-grid::-webkit-scrollbar-thumb:hover {
+      background: #9ccc65;
     }
 
     .student-btn {
-      padding: var(--spacing-md);
-      font-size: 0.95rem;
+      padding: 12px;
+      border: 2px solid var(--border-light);
+      background-color: var(--secondary-light);
+      color: var(--text-dark);
+      border-radius: var(--radius);
+      font-size: 13px;
       font-weight: 600;
-      border: 2px solid var(--border);
-      background: var(--card);
-      color: var(--primary);
-      border-radius: var(--radius-md);
       cursor: pointer;
-      transition: all var(--transition-base);
-      min-height: 50px;
+      transition: all 0.2s;
+      text-align: center;
+      word-break: break-word;
+      min-height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      box-shadow: var(--shadow-sm);
     }
 
     .student-btn:hover {
-      border-color: var(--accent);
-      background-color: rgba(124, 179, 66, 0.05);
+      border-color: var(--accent-green);
+      background-color: var(--accent-green);
+      color: white;
       transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
     .student-btn:active {
-      transform: scale(0.98);
+      transform: scale(0.95);
     }
 
-    .student-btn.loading {
-      opacity: 0.6;
-      cursor: not-allowed;
+    /* ============================================
+       GROUP FILTER
+       ============================================ */
+    .filter-section {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
-    .settings-link {
-      margin-top: var(--spacing-lg);
-      text-align: center;
+    .filter-btn {
+      padding: 8px 16px;
+      border: 2px solid var(--border-light);
+      background-color: transparent;
+      color: var(--text-dark);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .settings-link a {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      transition: color var(--transition-base);
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--accent-green);
+      background-color: var(--accent-green);
+      color: white;
     }
 
-    .settings-link a:hover {
-      color: var(--accent);
-    }
-
-    /* Dark mode */
-    body.dark-mode .landing-container {
-      background: linear-gradient(135deg, #1a1a1a 0%, #242424 100%);
-    }
-
-    body.dark-mode .landing-card {
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    body.dark-mode .student-btn {
-      background: #2a2a2a;
-      border-color: #404040;
-    }
-
-    body.dark-mode .student-btn:hover {
-      border-color: var(--accent);
-      background-color: rgba(124, 179, 66, 0.1);
-    }
-
-    /* Mobile: Single column */
-    @media (max-width: 767px) {
-      .landing-container {
-        padding: var(--spacing-md);
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .card {
+        padding: 24px 16px;
       }
 
-      .landing-card {
-        padding: var(--spacing-lg);
+      .card-header {
+        margin-bottom: 24px;
       }
 
-      .landing-title {
-        font-size: 1.6rem;
+      .app-title {
+        font-size: 24px;
       }
 
-      .logo {
-        font-size: 2.5rem;
-      }
-
-      .groups-container {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
+      .app-logo {
+        font-size: 40px;
       }
 
       .students-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px;
       }
 
       .student-btn {
-        font-size: 0.85rem;
-        padding: var(--spacing-sm);
-        min-height: 44px;
-      }
-
-      .group-title {
-        font-size: 1.1rem;
+        padding: 10px;
+        font-size: 12px;
+        min-height: 50px;
       }
     }
 
-    /* Tablet adjustments */
-    @media (min-width: 768px) and (max-width: 1023px) {
-      .landing-card {
-        max-width: 900px;
+    @media (max-width: 480px) {
+      .container {
+        padding: 16px;
+      }
+
+      .card {
+        padding: 20px 12px;
+        border-radius: 12px;
+      }
+
+      .app-title {
+        font-size: 20px;
+      }
+
+      .app-logo {
+        font-size: 32px;
+      }
+
+      .instructions {
+        font-size: 12px;
       }
 
       .students-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 8px;
+        max-height: 300px;
+      }
+
+      .student-btn {
+        padding: 8px;
+        font-size: 11px;
+        min-height: 45px;
+      }
+
+      .filter-btn {
+        padding: 6px 12px;
+        font-size: 12px;
       }
     }
 
-    /* Desktop: Full width layout */
-    @media (min-width: 1024px) {
-      .landing-card {
-        max-width: 1000px;
-      }
+    /* ============================================
+       UTILITY
+       ============================================ */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
-      .students-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: ' ...';
+      animation: dots 1s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0%, 20% { content: ' '; }
+      40% { content: ' .'; }
+      60% { content: ' ..'; }
+      80%, 100% { content: ' ...'; }
     }
   </style>
 </head>
 <body>
-  <div class="landing-container">
-    <div class="landing-card">
-      <div class="logo">📚</div>
-      
-      <h1 class="landing-title">Word Study</h1>
-      <p class="landing-subtitle">Select your name to get started</p>
-
-      <div class="groups-container" id="groupsContainer">
-        <!-- Dynamically generated: Group A and Group B sections -->
+  <div class="container">
+    <div class="card">
+      <!-- Header -->
+      <div class="card-header">
+        <div class="app-logo">📚</div>
+        <h1 class="app-title">Word Study Platform</h1>
+        <p class="app-subtitle">Unit 1: Quiénes Somos</p>
       </div>
 
-      <div class="settings-link">
-        <a href="settings.html">⚙️ Settings</a>
+      <!-- Instructions -->
+      <p class="instructions">Click your name to log in and start learning!</p>
+
+      <!-- Group Filter -->
+      <div class="filter-section">
+        <button class="filter-btn active" data-group="all">All Students</button>
+        <button class="filter-btn" data-group="A">Group A</button>
+        <button class="filter-btn" data-group="B">Group B</button>
+      </div>
+
+      <!-- Students Grid -->
+      <div class="students-grid" id="studentsGrid">
+        <!-- Populated by JS -->
       </div>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="assets/js/students.js"></script>
   <script src="assets/js/storage.js"></script>
-  <script src="assets/js/utils.js"></script>
-  <script src="assets/js/auth.js"></script>
-  <script src="assets/js/timer.js"></script>
-
   <script>
-    // Check if already logged in
-    window.addEventListener('load', () => {
+    // ============================================
+    // STATE
+    // ============================================
+    let activeGroup = 'all';
+    let filteredStudents = [];
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    function init() {
+      // Initialize storage
+      Storage.init();
+
+      // Check if already logged in
       const session = Storage.session.get();
-      if (session && session.name && session.group) {
-        // Skip to units selector
+      if (session) {
+        // Already have a session, go straight to units selector
         window.location.href = 'units-selector.html';
-      }
-
-      // Load dark mode setting
-      const isDarkMode = Storage.settings.getDarkMode();
-      if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-      }
-
-      // Render student buttons
-      renderStudents();
-    });
-
-    function renderStudents() {
-      const container = document.getElementById('groupsContainer');
-      container.innerHTML = '';
-
-      // Group A
-      const groupASection = document.createElement('div');
-      groupASection.className = 'group-section';
-      groupASection.innerHTML = '<h2 class="group-title">Group A</h2>';
-      const groupAGrid = document.createElement('div');
-      groupAGrid.className = 'students-grid';
-      
-      STUDENTS.A.forEach(student => {
-        const btn = document.createElement('button');
-        btn.className = 'student-btn';
-        btn.textContent = student.name;
-        btn.onclick = () => selectStudent(student.name, 'A');
-        groupAGrid.appendChild(btn);
-      });
-      
-      groupASection.appendChild(groupAGrid);
-      container.appendChild(groupASection);
-
-      // Group B
-      const groupBSection = document.createElement('div');
-      groupBSection.className = 'group-section';
-      groupBSection.innerHTML = '<h2 class="group-title">Group B</h2>';
-      const groupBGrid = document.createElement('div');
-      groupBGrid.className = 'students-grid';
-      
-      STUDENTS.B.forEach(student => {
-        const btn = document.createElement('button');
-        btn.className = 'student-btn';
-        btn.textContent = student.name;
-        btn.onclick = () => selectStudent(student.name, 'B');
-        groupBGrid.appendChild(btn);
-      });
-      
-      groupBSection.appendChild(groupBGrid);
-      container.appendChild(groupBSection);
-    }
-
-    function selectStudent(name, group) {
-      // Verify student exists in group
-      if (!isValidStudent(name, group)) {
-        console.error(`Invalid student: ${name} not in Group ${group}`);
         return;
       }
 
+      // Render students
+      filterAndRenderStudents('all');
+
+      // Event listeners
+      setupEventListeners();
+
+      // Apply dark mode if saved
+      if (Storage.settings.getDarkMode()) {
+        document.body.classList.add('dark-mode');
+      }
+    }
+
+    // ============================================
+    // FILTER & RENDER
+    // ============================================
+    function filterAndRenderStudents(group) {
+      activeGroup = group;
+
+      if (group === 'all') {
+        filteredStudents = STUDENTS;
+      } else {
+        filteredStudents = STUDENTS.filter(s => s.group === group);
+      }
+
+      renderStudents();
+    }
+
+    function renderStudents() {
+      const grid = document.getElementById('studentsGrid');
+      grid.innerHTML = '';
+
+      filteredStudents.forEach(student => {
+        const btn = document.createElement('button');
+        btn.className = 'student-btn';
+        btn.textContent = student.name;
+        btn.setAttribute('data-name', student.name);
+        btn.setAttribute('data-group', student.group);
+        btn.addEventListener('click', () => selectStudent(student));
+        grid.appendChild(btn);
+      });
+    }
+
+    // ============================================
+    // SELECT STUDENT
+    // ============================================
+    function selectStudent(student) {
+      // Disable button during transition
+      event.target.classList.add('loading');
+      event.target.disabled = true;
+
       // Save session
-      Storage.session.set(name, group);
+      Storage.session.set(student.name, student.group);
 
       // Navigate to units selector
-      window.location.href = 'units-selector.html';
+      setTimeout(() => {
+        window.location.href = 'units-selector.html';
+      }, 300);
     }
+
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+    function setupEventListeners() {
+      // Group filters
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          // Update active state
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+
+          // Filter
+          const group = e.target.getAttribute('data-group');
+          filterAndRenderStudents(group);
+        });
+      });
+
+      // Keyboard shortcut: search by typing first letter
+      document.addEventListener('keydown', (e) => {
+        if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
+          const matching = filteredStudents.find(s => s.name.toLowerCase().startsWith(e.key.toLowerCase()));
+          if (matching) {
+            selectStudent(matching);
+          }
+        }
+      });
+    }
+
+    // ============================================
+    // RUN
+    // ============================================
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
