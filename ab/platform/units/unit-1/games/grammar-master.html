@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grammar Master — Who We Are</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --accent-green: #7cb342;
+      --accent-purple: #5e35b1;
+      --text-dark: #333;
+      --text-light: #fafafa;
+      --border-light: #e0e0e0;
+      --bg-light: #fff;
+      --bg-dark: #1a1a1a;
+    }
+
+    [data-theme="dark"] {
+      --text-dark: #fafafa;
+      --text-light: #333;
+      --bg-light: #1a1a1a;
+      --bg-dark: #fff;
+      --border-light: #444;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .game-container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    /* Game Header */
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-light);
+    }
+
+    .game-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    .difficulty-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      background: var(--accent-green);
+      color: white;
+      margin-left: 10px;
+    }
+
+    .timer {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent-green);
+    }
+
+    /* Progress */
+    .progress-container {
+      margin-bottom: 25px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--border-light);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-green);
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* Game Content */
+    .game-content {
+      display: none;
+    }
+
+    .game-content.active {
+      display: block;
+    }
+
+    .verb-card {
+      background: var(--bg-dark);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .verb-display {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .verb-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .verb-word {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    .questions-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .question {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .question-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #999;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .question input {
+      padding: 12px;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      font-size: 14px;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      transition: border-color 0.2s;
+    }
+
+    .question input:focus {
+      outline: none;
+      border-color: var(--accent-green);
+    }
+
+    .question input.correct {
+      border-color: #4caf50;
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .question input.incorrect {
+      border-color: #f44336;
+      background: rgba(244, 67, 54, 0.1);
+    }
+
+    .feedback {
+      font-size: 11px;
+      margin-top: 4px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      color: #4caf50;
+    }
+
+    .feedback.incorrect {
+      color: #f44336;
+    }
+
+    /* End Screen */
+    .end-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .end-screen.active {
+      display: block;
+    }
+
+    .final-score {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent-green);
+      margin: 30px 0;
+    }
+
+    .score-message {
+      font-size: 18px;
+      margin-bottom: 25px;
+      color: var(--text-dark);
+    }
+
+    .breakdown {
+      background: var(--bg-dark);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .breakdown-item:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown-label {
+      font-weight: 600;
+      color: #999;
+    }
+
+    .breakdown-value {
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    .leaderboard-preview {
+      background: var(--bg-dark);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .leaderboard-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 12px;
+    }
+
+    .leaderboard-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 13px;
+    }
+
+    .leaderboard-entry:last-child {
+      border-bottom: none;
+    }
+
+    .leaderboard-rank {
+      font-weight: 700;
+      color: var(--accent-green);
+      min-width: 20px;
+    }
+
+    .leaderboard-name {
+      flex-grow: 1;
+      margin-left: 10px;
+    }
+
+    .leaderboard-score {
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent-green);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #6fa027;
+    }
+
+    .btn-secondary {
+      background: var(--border-light);
+      color: var(--text-dark);
+    }
+
+    .btn-secondary:hover {
+      background: #d0d0d0;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .game-title {
+        font-size: 20px;
+      }
+
+      .difficulty-badge {
+        display: block;
+        margin-left: 0;
+        margin-top: 8px;
+      }
+
+      .game-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .verb-word {
+        font-size: 28px;
+      }
+
+      .final-score {
+        font-size: 40px;
+      }
+
+      .questions-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <!-- Game Header -->
+    <div class="game-header">
+      <div>
+        <div class="game-title">
+          Grammar Master
+          <span class="difficulty-badge" id="difficultyBadge">Easy</span>
+        </div>
+      </div>
+      <div class="timer" id="timer">0:00</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text">
+        <span id="currentQuestion">1</span> / <span id="totalQuestions">5</span>
+      </div>
+    </div>
+
+    <!-- Game Content -->
+    <div class="game-content active" id="gameContent">
+      <div class="verb-card">
+        <div class="verb-display">
+          <div class="verb-label">Base Form</div>
+          <div class="verb-word" id="verbWord">ride</div>
+        </div>
+
+        <div class="questions-container">
+          <div class="question">
+            <label class="question-label">Present Simple<br>(he/she/it)</label>
+            <input type="text" id="presentInput" placeholder="e.g., plays" autocomplete="off">
+            <div class="feedback" id="presentFeedback"></div>
+          </div>
+
+          <div class="question">
+            <label class="question-label">Past Simple</label>
+            <input type="text" id="pastInput" placeholder="e.g., played" autocomplete="off">
+            <div class="feedback" id="pastFeedback"></div>
+          </div>
+        </div>
+
+        <div class="button-group" style="margin-top: 25px;">
+          <button class="btn-primary" id="nextBtn">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Screen -->
+    <div class="end-screen" id="endScreen">
+      <div class="score-message" id="scoreMessage"></div>
+      <div class="final-score" id="finalScore">85</div>
+
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <span class="breakdown-label">Correct Answers</span>
+          <span class="breakdown-value"><span id="correctCount">0</span>/<span id="totalCount">0</span></span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Total Attempts</span>
+          <span class="breakdown-value" id="attemptsCount">1</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Base Score (no penalty)</span>
+          <span class="breakdown-value" id="baseScoreValue">100%</span>
+        </div>
+        <div class="breakdown-item">
+          <span class="breakdown-label">Attempt Penalty</span>
+          <span class="breakdown-value" id="penaltyValue">0%</span>
+        </div>
+      </div>
+
+      <div class="leaderboard-preview" id="leaderboardPreview">
+        <div class="leaderboard-title">Leaderboard (Easy)</div>
+        <div id="leaderboardContent"></div>
+      </div>
+
+      <div class="button-group">
+        <button class="btn-secondary" id="retryBtn">Retry</button>
+        <button class="btn-primary" id="backBtn">Back to Unit 1</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../../assets/js/storage.js"></script>
+  <script src="../../game-content.js"></script>
+  <script>
+    // Game State
+    let gameState = {
+      difficulty: 'easy',
+      currentIndex: 0,
+      questions: [],
+      answers: [],
+      attempts: 0,
+      startTime: Date.now(),
+      timerInterval: null,
+      session: null
+    };
+
+    // Initialize
+    function init() {
+      gameState.session = Storage.session.get();
+      if (!gameState.session) {
+        window.location.href = '../../';
+        return;
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      gameState.difficulty = urlParams.get('difficulty') || 'easy';
+
+      // Apply dark mode
+      const darkMode = Storage.settings.getDarkMode();
+      if (darkMode) document.documentElement.setAttribute('data-theme', 'dark');
+
+      // Generate questions
+      generateQuestions();
+      displayQuestion();
+      startTimer();
+    }
+
+    function generateQuestions() {
+      const count = GAME_CONTENT.difficulties[gameState.difficulty].verbs || 5;
+      const verbs = getRandomItems(GAME_CONTENT.verbs.irregular, count);
+
+      gameState.questions = verbs.map(v => ({
+        base: v.base,
+        present: v.base.includes(' ') 
+          ? v.base.split(' ')[0] + 's ' + v.base.split(' ').slice(1).join(' ')
+          : v.base + 's',
+        past: v.past
+      }));
+
+      gameState.answers = Array(gameState.questions.length).fill({
+        presentCorrect: false,
+        pastCorrect: false,
+        presentAttempts: 0,
+        pastAttempts: 0
+      });
+
+      document.getElementById('totalQuestions').textContent = gameState.questions.length;
+    }
+
+    function displayQuestion() {
+      if (gameState.currentIndex >= gameState.questions.length) {
+        endGame();
+        return;
+      }
+
+      const q = gameState.questions[gameState.currentIndex];
+      document.getElementById('verbWord').textContent = q.base;
+      document.getElementById('currentQuestion').textContent = gameState.currentIndex + 1;
+
+      const progressPercent = ((gameState.currentIndex + 1) / gameState.questions.length) * 100;
+      document.getElementById('progressFill').style.width = progressPercent + '%';
+
+      document.getElementById('presentInput').value = '';
+      document.getElementById('pastInput').value = '';
+      document.getElementById('presentInput').className = '';
+      document.getElementById('pastInput').className = '';
+      document.getElementById('presentFeedback').className = 'feedback';
+      document.getElementById('pastFeedback').className = 'feedback';
+      document.getElementById('presentInput').focus();
+
+      document.getElementById('difficultyBadge').textContent = gameState.difficulty.charAt(0).toUpperCase() + gameState.difficulty.slice(1);
+    }
+
+    function checkAnswer() {
+      const q = gameState.questions[gameState.currentIndex];
+      const presentInput = document.getElementById('presentInput').value.trim().toLowerCase();
+      const pastInput = document.getElementById('pastInput').value.trim().toLowerCase();
+      const expectedPresent = q.present.toLowerCase();
+      const expectedPast = q.past.toLowerCase();
+
+      let presentCorrect = presentInput === expectedPresent;
+      let pastCorrect = pastInput === expectedPast;
+
+      if (presentInput !== '') {
+        const presentFeedback = document.getElementById('presentFeedback');
+        presentFeedback.classList.add('show');
+        if (presentCorrect) {
+          document.getElementById('presentInput').classList.add('correct');
+          presentFeedback.classList.add('correct');
+          presentFeedback.textContent = '✓ Correct!';
+        } else {
+          document.getElementById('presentInput').classList.add('incorrect');
+          presentFeedback.classList.add('incorrect');
+          presentFeedback.textContent = `✗ Expected: ${q.present}`;
+        }
+      }
+
+      if (pastInput !== '') {
+        const pastFeedback = document.getElementById('pastFeedback');
+        pastFeedback.classList.add('show');
+        if (pastCorrect) {
+          document.getElementById('pastInput').classList.add('correct');
+          pastFeedback.classList.add('correct');
+          pastFeedback.textContent = '✓ Correct!';
+        } else {
+          document.getElementById('pastInput').classList.add('incorrect');
+          pastFeedback.classList.add('incorrect');
+          pastFeedback.textContent = `✗ Expected: ${q.past}`;
+        }
+      }
+
+      // Store answer attempt
+      gameState.answers[gameState.currentIndex] = {
+        presentCorrect: presentInput === '' ? null : presentCorrect,
+        pastCorrect: pastInput === '' ? null : pastCorrect,
+        presentAttempts: presentInput !== '' ? (gameState.answers[gameState.currentIndex].presentAttempts || 0) + 1 : 0,
+        pastAttempts: pastInput !== '' ? (gameState.answers[gameState.currentIndex].pastAttempts || 0) + 1 : 0
+      };
+    }
+
+    function nextQuestion() {
+      const presentInput = document.getElementById('presentInput').value.trim();
+      const pastInput = document.getElementById('pastInput').value.trim();
+
+      if (!presentInput && !pastInput) {
+        alert('Please answer at least one question!');
+        return;
+      }
+
+      checkAnswer();
+
+      const allCorrect = Object.values(gameState.answers[gameState.currentIndex]).every(v => v === true || v === null);
+      if (!allCorrect) {
+        gameState.attempts++;
+        document.getElementById('presentInput').focus();
+        return;
+      }
+
+      gameState.currentIndex++;
+      gameState.attempts = 0;
+      displayQuestion();
+    }
+
+    function startTimer() {
+      gameState.timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - gameState.startTime) / 1000);
+        document.getElementById('timer').textContent = formatTime(elapsed);
+      }, 100);
+    }
+
+    function endGame() {
+      clearInterval(gameState.timerInterval);
+
+      // Calculate score
+      let correct = 0;
+      let totalQuestions = 0;
+      gameState.answers.forEach(a => {
+        if (a.presentCorrect === true) { correct++; totalQuestions++; }
+        if (a.pastCorrect === true) { correct++; totalQuestions++; }
+      });
+
+      const totalAnswered = gameState.answers.filter(a => a.presentAttempts > 0 || a.pastAttempts > 0).length;
+      const avgAttempts = totalAnswered > 0 ? Math.ceil((gameState.answers.reduce((sum, a) => sum + (a.presentAttempts || 0) + (a.pastAttempts || 0), 0)) / (totalAnswered * 2)) : 1;
+
+      const scoring = calculateScore(correct, totalQuestions, avgAttempts);
+
+      // Save score
+      const totalTime = Math.floor((Date.now() - gameState.startTime) / 1000);
+      Storage.scores.addScore('unit-1', 'games', 'grammar-master', {
+        name: gameState.session.name,
+        group: gameState.session.group,
+        difficulty: gameState.difficulty,
+        score: scoring.finalScore,
+        baseScore: scoring.baseScore,
+        attempts: avgAttempts,
+        correct: correct,
+        total: totalQuestions,
+        time: totalTime
+      });
+
+      // Display end screen
+      document.getElementById('gameContent').classList.remove('active');
+      document.getElementById('endScreen').classList.add('active');
+      document.getElementById('finalScore').textContent = scoring.finalScore;
+      document.getElementById('scoreMessage').textContent = 
+        scoring.finalScore >= 80 ? '🎉 Great job!' : 
+        scoring.finalScore >= 60 ? '👍 Good effort!' : 
+        '💪 Keep practicing!';
+
+      document.getElementById('correctCount').textContent = correct;
+      document.getElementById('totalCount').textContent = totalQuestions;
+      document.getElementById('attemptsCount').textContent = avgAttempts;
+      document.getElementById('baseScoreValue').textContent = scoring.baseScore + '%';
+      document.getElementById('penaltyValue').textContent = ((1 - scoring.attemptPenalty) * 100).toFixed(0) + '%';
+
+      // Leaderboard preview
+      displayLeaderboardPreview();
+    }
+
+    function displayLeaderboardPreview() {
+      const allScores = Storage.scores.getGameScores('unit-1', 'grammar-master');
+      const filtered = allScores.filter(s => s.difficulty === gameState.difficulty && s.group === gameState.session.group);
+      
+      const grouped = {};
+      filtered.forEach(s => {
+        if (!grouped[s.name]) grouped[s.name] = [];
+        grouped[s.name].push(s);
+      });
+
+      const ranked = Object.entries(grouped).map(([name, scores]) => ({
+        name,
+        best: scores.reduce((best, s) => s.score > best.score ? s : best)
+      })).sort((a, b) => b.best.score - a.best.score).slice(0, 5);
+
+      let html = '';
+      ranked.forEach((entry, idx) => {
+        const isCurrent = entry.name === gameState.session.name;
+        html += `<div class="leaderboard-entry" style="${isCurrent ? 'background: rgba(124, 179, 66, 0.1); border-radius: 6px; padding-left: 8px; padding-right: 8px;' : ''}">
+          <span class="leaderboard-rank">#${idx + 1}</span>
+          <span class="leaderboard-name">${entry.name}</span>
+          <span class="leaderboard-score">${entry.best.score}%</span>
+        </div>`;
+      });
+
+      document.getElementById('leaderboardContent').innerHTML = html || '<p style="color: #999; font-size: 13px;">No scores yet</p>';
+    }
+
+    // Event listeners
+    document.getElementById('presentInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') {
+        document.getElementById('pastInput').focus();
+      }
+    });
+
+    document.getElementById('pastInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') nextQuestion();
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+    document.getElementById('retryBtn').addEventListener('click', () => {
+      location.reload();
+    });
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+      window.location.href = '../';
+    });
+
+    // Start game
+    init();
+  </script>
+</body>
+</html>
