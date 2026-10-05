@@ -170,6 +170,9 @@
       transition: all 0.2s;
       text-align: left;
       font-weight: 500;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
     }
 
     .definition-btn:hover {
@@ -462,7 +465,8 @@
       currentAttempts: 0,
       startTime: Date.now(),
       timerInterval: null,
-      session: null
+      session: null,
+      allVocab: null
     };
 
     // Initialize
@@ -488,14 +492,11 @@
 
     function generateQuestions() {
       const count = GAME_CONTENT.difficulties[gameState.difficulty].vocab || 5;
-      const allVocab = GAME_CONTENT.vocabulary.week1;
-      const selected = getRandomItems(allVocab, count);
+      gameState.allVocab = GAME_CONTENT.vocabulary.week1;
+      const selected = getRandomItems(gameState.allVocab, count);
 
-      gameState.questions = selected.map(vocab => ({
-        word: vocab.word,
-        correctDef: vocab.def,
-        allVocab: allVocab
-      }));
+      // Store the full vocab objects as questions
+      gameState.questions = selected;
 
       gameState.answers = Array(gameState.questions.length).fill({
         correct: false,
@@ -511,15 +512,15 @@
         return;
       }
 
-      const q = gameState.questions[gameState.currentIndex];
-      document.getElementById('currentWord').textContent = q.word;
+      const vocab = gameState.questions[gameState.currentIndex];
+      document.getElementById('currentWord').textContent = vocab.word;
       document.getElementById('currentQuestion').textContent = gameState.currentIndex + 1;
 
       const progressPercent = ((gameState.currentIndex + 1) / gameState.questions.length) * 100;
       document.getElementById('progressFill').style.width = progressPercent + '%';
 
-      // Generate definition options
-      const options = getDefinitionOptions(q, q.allVocab);
+      // Generate definition options using the vocab object
+      const options = getDefinitionOptions(vocab, gameState.allVocab);
       
       const optionsContainer = document.getElementById('definitionOptions');
       optionsContainer.innerHTML = '';
@@ -528,7 +529,7 @@
         const btn = document.createElement('button');
         btn.className = 'definition-btn';
         btn.textContent = def;
-        btn.onclick = () => selectDefinition(btn, def, q.correctDef);
+        btn.onclick = () => selectDefinition(btn, def, vocab.def);
         optionsContainer.appendChild(btn);
       });
 
