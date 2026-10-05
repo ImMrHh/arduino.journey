@@ -494,10 +494,36 @@
       document.getElementById('logoutModal').classList.remove('active');
     });
 
-    document.getElementById('confirmLogoutBtn').addEventListener('click', () => {
+        document.getElementById('confirmLogoutBtn').addEventListener('click', () => {
       Storage.session.clear();
       window.location.href = '../../';
     });
+
+    // Listen for dark mode changes (from settings page)
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'ws_settings') {
+        const darkMode = Storage.settings.getDarkMode();
+        if (darkMode) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      }
+    });
+
+    // Monitor dark mode changes every 500ms (for same-tab updates)
+    let lastDarkMode = Storage.settings.getDarkMode();
+    setInterval(() => {
+      const currentDarkMode = Storage.settings.getDarkMode();
+      if (currentDarkMode !== lastDarkMode) {
+        lastDarkMode = currentDarkMode;
+        if (currentDarkMode) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      }
+    }, 500);
 
     // Start
     init();
