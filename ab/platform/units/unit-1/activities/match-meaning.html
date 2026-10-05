@@ -544,28 +544,28 @@
       const allButtons = document.querySelectorAll('.definition-btn');
       const isCorrect = selectedDef === correctDef;
 
-      allButtons.forEach(b => {
-        b.disabled = true;
-        if (b === btn) {
-          if (isCorrect) {
-            b.classList.add('correct');
-            gameState.answers[gameState.currentIndex].correct = true;
-            document.getElementById('nextBtn').disabled = false;
-          } else {
-            b.classList.add('incorrect');
-            gameState.currentAttempts++;
-          }
-        }
-      });
-
-      // Show correct answer if wrong
-      if (!isCorrect) {
+      if (isCorrect) {
+        // Correct answer - disable all buttons and enable next
+        allButtons.forEach(b => b.disabled = true);
+        btn.classList.add('correct');
+        gameState.answers[gameState.currentIndex].correct = true;
+        gameState.answers[gameState.currentIndex].attempts = gameState.currentAttempts + 1;
+        gameState.attempts += (gameState.currentAttempts + 1);
+        document.getElementById('nextBtn').disabled = false;
+      } else {
+        // Incorrect answer - only disable this button, let them try others
+        btn.disabled = true;
+        btn.classList.add('incorrect');
+        gameState.currentAttempts++;
+        
+        // Show the correct answer so they can see it
         allButtons.forEach(b => {
           if (b.textContent === correctDef) {
             b.classList.add('correct');
           }
         });
       }
+    }
 
       gameState.answers[gameState.currentIndex].attempts = gameState.currentAttempts + 1;
       gameState.attempts += (gameState.currentAttempts + 1);
