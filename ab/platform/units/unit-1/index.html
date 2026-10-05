@@ -457,8 +457,12 @@
     }
 
     function playGame(gameId, difficulty) {
-      // Games go to /games/ folder
-      window.location.href = `games/${gameId}.html?difficulty=${difficulty}`;
+      // Check if it's a game or activity
+      const isGame = UNIT_1_ITEMS.games.some(g => g.id === gameId);
+      const isActivity = UNIT_1_ITEMS.activities.some(a => a.id === gameId);
+      
+      let folder = isGame ? 'games' : isActivity ? 'activities' : 'games';
+      window.location.href = `${folder}/${gameId}.html?difficulty=${difficulty}`;
     }
 
     function updateProgress() {
@@ -494,7 +498,7 @@
       document.getElementById('logoutModal').classList.remove('active');
     });
 
-        document.getElementById('confirmLogoutBtn').addEventListener('click', () => {
+    document.getElementById('confirmLogoutBtn').addEventListener('click', () => {
       Storage.session.clear();
       window.location.href = '../../';
     });
