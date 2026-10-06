@@ -485,12 +485,12 @@
 
     function generateQuestions() {
       const count = GAME_CONTENT.difficulties[gameState.difficulty].spelling || 5;
-      const allSpelling = GAME_CONTENT.spelling.week1;
+      const allSpelling = getSpellingPool(gameState.difficulty).map(s => s.word); // all weeks, matching the difficulty
       const selected = getRandomItems(allSpelling, count);
 
       gameState.questions = selected.map(word => ({
         correct: word,
-        scrambled: shuffleArray(word.split('')).join('')
+        scrambled: scrambleWord(word)
       }));
 
       gameState.answers = Array(gameState.questions.length).fill({

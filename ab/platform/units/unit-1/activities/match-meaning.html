@@ -471,8 +471,8 @@
 
     function generateQuestions() {
       const count = GAME_CONTENT.difficulties[gameState.difficulty].vocab || 5;
-      gameState.allVocab = GAME_CONTENT.vocabulary.week1;
-      const selected = getRandomItems(gameState.allVocab, count);
+      gameState.allVocab = GAME_CONTENT.vocabulary.all; // wrong options come from every word
+      const selected = getRandomItems(getVocabPool(gameState.difficulty), count); // questions match the difficulty
 
       gameState.questions = selected;
       gameState.answers = Array(gameState.questions.length).fill({
@@ -591,7 +591,7 @@
     }
 
     function displayLeaderboardPreview() {
-      const allScores = Storage.scores.getGameScores('unit-1', 'match-meaning') || [];
+      const allScores = Storage.scores.getActivityScores('unit-1', 'match-meaning') || [];
       const filtered = allScores.filter(s => s.difficulty === gameState.difficulty && s.group === gameState.session.group);
       
       const grouped = {};

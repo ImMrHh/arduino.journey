@@ -484,7 +484,7 @@
 
     function generateQuestions() {
       const count = GAME_CONTENT.difficulties[gameState.difficulty].vocab || 5;
-      const allVocab = GAME_CONTENT.vocabulary.week1;
+      const allVocab = getVocabPool(gameState.difficulty); // all weeks, matching the difficulty
       gameState.questions = getRandomItems(allVocab, count);
 
       gameState.answers = Array(gameState.questions.length).fill({
@@ -509,7 +509,7 @@
       document.getElementById('progressFill').style.width = progressPercent + '%';
 
       // Generate options
-      const options = getDefinitionOptions(q, GAME_CONTENT.vocabulary.week1);
+      const options = getDefinitionOptions(q, GAME_CONTENT.vocabulary.all);
       const container = document.getElementById('optionsContainer');
       container.innerHTML = '';
 
