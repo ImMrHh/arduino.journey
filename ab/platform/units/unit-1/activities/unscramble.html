@@ -612,6 +612,9 @@
     // ---------- Rendering ----------
 
     function render() {
+      // Safety net: never leave a floating tile or a half-finished drag behind
+      if (drag) endDrag();
+      removeGhosts();
       const slotsEl = document.getElementById('slots');
       const bankEl = document.getElementById('bank');
       slotsEl.innerHTML = '';
@@ -697,8 +700,9 @@
     // ---------- Pointer dragging (mouse, finger, and Apple Pencil) ----------
 
     function onTilePointerDown(e) {
-      if (gameState.solved || drag) return;
+      if (gameState.solved || !e.isPrimary) return;
       if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (drag) endDrag(); // a previous drag never finished, so start clean
 
       const tile = e.currentTarget;
       const rect = tile.getBoundingClientRect();
@@ -714,10 +718,12 @@
         ghost: null
       };
 
-      tile.setPointerCapture(e.pointerId);
-      tile.addEventListener('pointermove', onTilePointerMove);
-      tile.addEventListener('pointerup', onTilePointerUp);
-      tile.addEventListener('pointercancel', onTilePointerCancel);
+      // Listen on the window, not the tile. The tile can be rebuilt or removed
+      // mid-drag, and window listeners still fire so the drag always ends.
+      window.addEventListener('pointermove', onTilePointerMove);
+      window.addEventListener('pointerup', onTilePointerUp);
+      window.addEventListener('pointercancel', onTilePointerCancel);
+      window.addEventListener('blur', onTilePointerCancel);
     }
 
     function onTilePointerMove(e) {
@@ -767,16 +773,20 @@
       render();
     }
 
+    function removeGhosts() {
+      document.querySelectorAll('.tile.ghost').forEach(g => g.remove());
+    }
+
     function endDrag() {
       if (!drag) return;
       const tile = drag.tile;
-      tile.removeEventListener('pointermove', onTilePointerMove);
-      tile.removeEventListener('pointerup', onTilePointerUp);
-      tile.removeEventListener('pointercancel', onTilePointerCancel);
-      try { tile.releasePointerCapture(drag.pointerId); } catch (err) { /* already released */ }
-      if (drag.ghost) drag.ghost.remove();
+      window.removeEventListener('pointermove', onTilePointerMove);
+      window.removeEventListener('pointerup', onTilePointerUp);
+      window.removeEventListener('pointercancel', onTilePointerCancel);
+      window.removeEventListener('blur', onTilePointerCancel);
       tile.classList.remove('dragging');
       drag = null;
+      removeGhosts();
     }
 
     // ---------- Checking answers ----------
