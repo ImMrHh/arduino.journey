@@ -1,48 +1,54 @@
 /* ================================================================
    STUDENTS.JS - Student Roster
-   Groups A & B with test user (Henrik)
+   Groups A & B (names as shown on the class login screens)
+   Group T is the hidden teacher test group. It never shows on the
+   normal login screen and is separate from the A and B leaderboards.
+   To use it, open the login page with ?teacher at the end of the URL.
    ================================================================ */
 
 const STUDENTS = {
   A: [
-    { name: "Henrik", group: "A" },  // TEST USER
-    { name: "Sofia", group: "A" },
-    { name: "Juan", group: "A" },
-    { name: "María", group: "A" },
-    { name: "Carlos", group: "A" },
-    { name: "Alejandro", group: "A" },
-    { name: "Valentina", group: "A" },
-    { name: "Diego", group: "A" },
-    { name: "Lucia", group: "A" },
-    { name: "Manuel", group: "A" },
-    { name: "Andrea", group: "A" },
-    { name: "Felipe", group: "A" },
-    { name: "Camila", group: "A" },
-    { name: "Miguel", group: "A" },
-    { name: "Isabela", group: "A" },
-    { name: "Javier", group: "A" },
-    { name: "Paloma", group: "A" },
-    { name: "Víctor", group: "A" }
+    { name: "Fatima", group: "A" },
+    { name: "Iker", group: "A" },
+    { name: "Jules", group: "A" },
+    { name: "JoseL", group: "A" },
+    { name: "DiegoG", group: "A" },
+    { name: "Cons", group: "A" },
+    { name: "Gabo", group: "A" },
+    { name: "Pau", group: "A" },
+    { name: "SantiL", group: "A" },
+    { name: "Alonso", group: "A" },
+    { name: "Diego2nd", group: "A" },
+    { name: "Emi", group: "A" },
+    { name: "Oli", group: "A" },
+    { name: "Arthur", group: "A" },
+    { name: "Emma", group: "A" },
+    { name: "JP", group: "A" },
+    { name: "SantiS", group: "A" },
+    { name: "Majo", group: "A" }
   ],
   B: [
-    { name: "María José", group: "B" },
-    { name: "Franco", group: "B" },
-    { name: "Sofía", group: "B" },
-    { name: "Ricardo", group: "B" },
-    { name: "Catalina", group: "B" },
-    { name: "Andrés", group: "B" },
-    { name: "Martina", group: "B" },
-    { name: "Pablo", group: "B" },
-    { name: "Gabriela", group: "B" },
-    { name: "Guillermo", group: "B" },
-    { name: "Nicolás", group: "B" },
-    { name: "Valentina", group: "B" },
-    { name: "Leonardo", group: "B" },
-    { name: "Mariana", group: "B" },
-    { name: "Tomás", group: "B" },
-    { name: "Paula", group: "B" },
-    { name: "Raúl", group: "B" },
-    { name: "Marisol", group: "B" },
-    { name: "Roberto", group: "B" }
+    { name: "Rodri", group: "B" },
+    { name: "JuanA", group: "B" },
+    { name: "Alex", group: "B" },
+    { name: "EmiB", group: "B" },
+    { name: "Jero", group: "B" },
+    { name: "Thomas", group: "B" },
+    { name: "Thiago", group: "B" },
+    { name: "Nats", group: "B" },
+    { name: "Pato", group: "B" },
+    { name: "Bruno", group: "B" },
+    { name: "Max", group: "B" },
+    { name: "Anto", group: "B" },
+    { name: "Aitana", group: "B" },
+    { name: "Juan2nd", group: "B" },
+    { name: "Sil", group: "B" },
+    { name: "Anya", group: "B" },
+    { name: "Luka", group: "B" },
+    { name: "Ian", group: "B" },
+    { name: "Xime", group: "B" }
+  ],
+  T: [
+    { name: "Henrik", group: "T" }  // TEACHER TEST USER (hidden)
   ]
 };

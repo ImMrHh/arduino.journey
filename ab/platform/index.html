@@ -361,6 +361,15 @@
       // Render students
       filterAndRenderStudents('all');
 
+      // Hidden teacher test login: only shows when the URL ends in ?teacher
+      if (new URLSearchParams(window.location.search).has('teacher')) {
+        const teacherBtn = document.createElement('button');
+        teacherBtn.className = 'filter-btn';
+        teacherBtn.setAttribute('data-group', 'T');
+        teacherBtn.textContent = 'Teacher';
+        document.querySelector('.filter-section').appendChild(teacherBtn);
+      }
+
       // Event listeners
       setupEventListeners();
 
@@ -386,6 +395,8 @@
         filteredStudents = STUDENTS.A || [];
       } else if (group === 'B') {
         filteredStudents = STUDENTS.B || [];
+      } else if (group === 'T') {
+        filteredStudents = STUDENTS.T || [];
       }
 
       renderStudents();
