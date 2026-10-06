@@ -93,7 +93,17 @@ const Storage = (() => {
       });
 
       localStorage.setItem(KEYS.scores, JSON.stringify(allScores));
-      return allScores[unitId][category][subcategory];
+
+      // Also send it to the class leaderboard (Google Sheet).
+      // This can never block or break the game: failures just wait in a queue.
+      const saved = allScores[unitId][category][subcategory];
+      try {
+        sync.submit(unitId, subcategory, saved[saved.length - 1]);
+      } catch (err) {
+        console.warn('Score sync could not start:', err);
+      }
+
+      return saved;
     },
 
     getUnitScores: (unitId) => {
@@ -343,6 +353,114 @@ const Storage = (() => {
   };
 
   /**
+   * CLASS LEADERBOARD SYNC (Google Sheet through Apps Script)
+   * Scores are always saved on this device first. Sending to the Sheet is
+   * best effort: anything that fails waits in a queue and retries later.
+   */
+
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbz6HwVtI8LEzfZUUKNvkSShTT26YWwexM6hBUfRlGqsH7GbQsj6zpVzp9dEuPYyd-aj/exec';
+  const QUEUE_KEY = 'ws_syncQueue';
+  const MAX_QUEUE = 200;
+  let flushing = false;
+
+  const sync = {
+    getQueue: () => {
+      try {
+        const q = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+        return Array.isArray(q) ? q : [];
+      } catch (err) {
+        return [];
+      }
+    },
+
+    saveQueue: (q) => {
+      try {
+        localStorage.setItem(QUEUE_KEY, JSON.stringify(q.slice(-MAX_QUEUE)));
+      } catch (err) {
+        console.warn('Could not save sync queue:', err);
+      }
+    },
+
+    pendingCount: () => sync.getQueue().length,
+
+    // Add a finished game to the queue and try to send it right away
+    submit: (unitId, activity, record) => {
+      if (!record || !record.name) return;
+      if (record.group === 'T') return; // the hidden teacher test user is never sent
+      if (!record.difficulty || typeof record.score !== 'number') return;
+
+      // One unique id per score, so a retry can never create a duplicate row
+      const scoreId = [
+        record.gameId || (unitId + '-' + activity),
+        record.name,
+        record.group,
+        Math.random().toString(36).slice(2, 8)
+      ].join('-');
+
+      const q = sync.getQueue();
+      q.push({
+        type: 'platform_score',
+        scoreId: scoreId,
+        unit: unitId,
+        activity: activity,
+        name: record.name,
+        group: record.group,
+        difficulty: record.difficulty,
+        score: record.score,
+        baseScore: record.baseScore,
+        attempts: record.attempts,
+        correct: record.correct,
+        total: record.total,
+        time: record.time
+      });
+      sync.saveQueue(q);
+      sync.flush();
+    },
+
+    // Send everything waiting in the queue, oldest first. Stops if offline.
+    flush: async () => {
+      if (flushing) return;
+      flushing = true;
+      try {
+        const tried = new Set();
+        while (true) {
+          const next = sync.getQueue().find(item => !tried.has(item.scoreId));
+          if (!next) break;
+          tried.add(next.scoreId);
+
+          try {
+            // no-cors: the browser sends it but we cannot read the reply
+            await fetch(SHEET_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              keepalive: true,
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify(next)
+            });
+          } catch (err) {
+            break; // offline: keep the queue and try again later
+          }
+
+          sync.saveQueue(sync.getQueue().filter(item => item.scoreId !== next.scoreId));
+        }
+      } finally {
+        flushing = false;
+      }
+    },
+
+    // Read the class leaderboards (whole generation)
+    fetchLeaderboards: async (unitId, limit) => {
+      const url = SHEET_URL + '?action=leaderboards&unit=' +
+        encodeURIComponent(unitId || 'unit-1') + '&limit=' + (limit === 10 ? 10 : 5);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Leaderboard request failed (' + res.status + ')');
+      const data = await res.json();
+      if (data.status !== 'ok') throw new Error('Leaderboard unavailable');
+      return data;
+    }
+  };
+
+  /**
    * EXPORT PUBLIC API
    */
 
@@ -351,6 +469,7 @@ const Storage = (() => {
     scores,
     badges,
     settings,
+    sync,
 
     // Initialization
     init: () => {
@@ -391,4 +510,9 @@ const Storage = (() => {
 // Initialize storage on load
 document.addEventListener('DOMContentLoaded', () => {
   Storage.init();
+  Storage.sync.flush(); // send any scores that were waiting for a connection
+});
+
+window.addEventListener('online', () => {
+  Storage.sync.flush();
 });

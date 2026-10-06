@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Leaderboard - Who We Are</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --accent-green: #7cb342;
+      --text-dark: #333;
+      --text-light: #fafafa;
+      --border-light: #e0e0e0;
+      --bg-light: #fff;
+      --bg-dark: #1a1a1a;
+    }
+
+    [data-theme="dark"] {
+      --text-dark: #fafafa;
+      --text-light: #333;
+      --bg-light: #1a1a1a;
+      --bg-dark: #fff;
+      --border-light: #444;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-light);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .back-btn,
+    .icon-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-dark);
+      padding: 4px 8px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      color: var(--accent-green);
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* Tabs */
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      padding: 8px 14px;
+      border: 2px solid var(--border-light);
+      background: var(--bg-light);
+      color: var(--text-dark);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--accent-green);
+    }
+
+    .tab-btn.active {
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+      color: #fff;
+    }
+
+    .difficulty-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .difficulty-row .tab-btn {
+      flex: 1;
+      border-radius: 8px;
+      text-transform: capitalize;
+    }
+
+    /* Board */
+    .board {
+      background: var(--bg-dark);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 10px 18px;
+      min-height: 120px;
+    }
+
+    .board-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #999;
+      padding: 10px 0 8px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-light);
+      font-size: 15px;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .row.me {
+      background: rgba(124, 179, 66, 0.18);
+      border-radius: 8px;
+    }
+
+    .rank {
+      width: 38px;
+      font-weight: 700;
+      font-size: 17px;
+      text-align: center;
+      color: var(--accent-green);
+    }
+
+    .player {
+      flex: 1;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .time {
+      font-size: 12px;
+      opacity: 0.6;
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .points {
+      min-width: 54px;
+      text-align: right;
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    .message {
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 14px;
+      color: #999;
+    }
+
+    .message.error {
+      color: #f44336;
+    }
+
+    .message button {
+      margin-top: 12px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent-green);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .footer {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+      min-height: 18px;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 20px;
+      }
+
+      .row {
+        gap: 8px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <button class="back-btn" id="backBtn" aria-label="Back to Unit 1">←</button>
+        <div>
+          <h1>🏆 Class Leaderboard</h1>
+          <div class="subtitle">Whole generation · Unit 1: Who We Are</div>
+        </div>
+      </div>
+      <button class="icon-btn" id="refreshBtn" aria-label="Refresh" title="Refresh">🔄</button>
+    </div>
+
+    <div class="section-label">Game</div>
+    <div class="tabs" id="tabs"></div>
+
+    <div class="section-label">Difficulty</div>
+    <div class="difficulty-row" id="difficultyRow"></div>
+
+    <div class="board" id="board"></div>
+    <div class="footer" id="footer"></div>
+  </div>
+
+  <script src="../../assets/js/storage.js"></script>
+  <script>
+    const ACTIVITIES = [
+      { id: 'grammar-master', name: 'Grammar Master', icon: '📝' },
+      { id: 'vocabulary-vault', name: 'Vocabulary Vault', icon: '🔓' },
+      { id: 'spelling-blitz', name: 'Spelling Blitz', icon: '⚡' },
+      { id: 'match-meaning', name: 'Match Meaning', icon: '🎯' },
+      { id: 'unscramble', name: 'Unscramble', icon: '🔤' },
+      { id: 'wordsearch', name: 'Word Search', icon: '🔍' }
+    ];
+    const DIFFICULTIES = ['easy', 'medium', 'challenge'];
+    const MEDALS = ['🥇', '🥈', '🥉'];
+
+    let state = {
+      activity: 'grammar-master',
+      difficulty: 'easy',
+      data: null,
+      loading: false,
+      error: null,
+      session: null,
+      refreshTimer: null
+    };
+
+    function init() {
+      state.session = Storage.session.get();
+      if (!state.session) {
+        window.location.href = '../../';
+        return;
+      }
+
+      if (Storage.settings.getDarkMode()) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+
+      // Optional links like leaderboard.html?activity=wordsearch&difficulty=medium
+      const params = new URLSearchParams(window.location.search);
+      const a = params.get('activity');
+      const d = params.get('difficulty');
+      if (ACTIVITIES.some(x => x.id === a)) state.activity = a;
+      if (DIFFICULTIES.indexOf(d) !== -1) state.difficulty = d;
+
+      buildTabs();
+      render();
+
+      // Make sure this device's waiting scores are sent, then load
+      const hadPending = Storage.sync.pendingCount() > 0;
+      Storage.sync.flush().then(() => {
+        if (hadPending) setTimeout(load, 1500);
+      });
+      load();
+
+      // Refresh every minute while the page is visible
+      state.refreshTimer = setInterval(() => {
+        if (!document.hidden) load();
+      }, 60000);
+    }
+
+    function buildTabs() {
+      const tabs = document.getElementById('tabs');
+      tabs.innerHTML = '';
+      ACTIVITIES.forEach(act => {
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn';
+        btn.dataset.activity = act.id;
+        btn.textContent = act.icon + ' ' + act.name;
+        btn.addEventListener('click', () => {
+          state.activity = act.id;
+          render();
+        });
+        tabs.appendChild(btn);
+      });
+
+      const row = document.getElementById('difficultyRow');
+      row.innerHTML = '';
+      DIFFICULTIES.forEach(diff => {
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn';
+        btn.dataset.difficulty = diff;
+        btn.textContent = diff;
+        btn.addEventListener('click', () => {
+          state.difficulty = diff;
+          render();
+        });
+        row.appendChild(btn);
+      });
+    }
+
+    async function load() {
+      if (state.loading) return;
+      state.loading = true;
+      if (!state.data) render();
+
+      try {
+        state.data = await Storage.sync.fetchLeaderboards('unit-1', 10);
+        state.error = null;
+      } catch (err) {
+        console.warn('Leaderboard load failed:', err);
+        state.error = 'Could not load the leaderboard. Check your Wi-Fi and try again.';
+      } finally {
+        state.loading = false;
+        render();
+      }
+    }
+
+    function formatSeconds(s) {
+      const n = Math.max(0, Number(s) || 0);
+      return Math.floor(n / 60) + ':' + String(n % 60).padStart(2, '0');
+    }
+
+    function render() {
+      // Highlight the selected tabs
+      document.querySelectorAll('#tabs .tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.activity === state.activity);
+      });
+      document.querySelectorAll('#difficultyRow .tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.difficulty === state.difficulty);
+      });
+
+      const board = document.getElementById('board');
+      board.innerHTML = '';
+
+      const act = ACTIVITIES.find(x => x.id === state.activity);
+      const title = document.createElement('div');
+      title.className = 'board-title';
+      title.textContent = act.name + ' (' + state.difficulty + ')';
+      board.appendChild(title);
+
+      if (!state.data && state.loading) {
+        board.appendChild(makeMessage('Loading...', false));
+      } else if (!state.data && state.error) {
+        const msg = makeMessage(state.error, true);
+        const retry = document.createElement('button');
+        retry.textContent = 'Try again';
+        retry.addEventListener('click', load);
+        msg.appendChild(document.createElement('br'));
+        msg.appendChild(retry);
+        board.appendChild(msg);
+      } else if (state.data) {
+        const boards = state.data.boards || {};
+        const list = (boards[state.activity] && boards[state.activity][state.difficulty]) || [];
+
+        if (list.length === 0) {
+          board.appendChild(makeMessage('No scores yet. Be the first!', false));
+        } else {
+          list.forEach((entry, idx) => {
+            board.appendChild(makeRow(entry, idx));
+          });
+        }
+      }
+
+      renderFooter();
+    }
+
+    function makeMessage(text, isError) {
+      const div = document.createElement('div');
+      div.className = 'message' + (isError ? ' error' : '');
+      div.appendChild(document.createTextNode(text));
+      return div;
+    }
+
+    function makeRow(entry, idx) {
+      const row = document.createElement('div');
+      row.className = 'row';
+      if (entry.name === state.session.name && entry.group === state.session.group) {
+        row.classList.add('me');
+      }
+
+      const rank = document.createElement('span');
+      rank.className = 'rank';
+      rank.textContent = idx < 3 ? MEDALS[idx] : '#' + (idx + 1);
+
+      const player = document.createElement('span');
+      player.className = 'player';
+      player.textContent = entry.name;
+
+      const time = document.createElement('span');
+      time.className = 'time';
+      time.textContent = formatSeconds(entry.time);
+
+      const points = document.createElement('span');
+      points.className = 'points';
+      points.textContent = entry.score + '%';
+
+      row.appendChild(rank);
+      row.appendChild(player);
+      row.appendChild(time);
+      row.appendChild(points);
+      return row;
+    }
+
+    function renderFooter() {
+      const footer = document.getElementById('footer');
+      const parts = [];
+
+      if (state.data && state.data.updated) {
+        const t = new Date(state.data.updated);
+        parts.push('Updated ' + t.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+      }
+      if (state.data && state.error) {
+        parts.push('Could not refresh, showing the last results');
+      }
+
+      const pending = Storage.sync.pendingCount();
+      if (pending > 0) {
+        parts.push(pending + ' of your scores ' + (pending === 1 ? 'is' : 'are') + ' waiting to upload');
+      }
+
+      footer.textContent = parts.join(' · ');
+    }
+
+    // Events
+    document.getElementById('backBtn').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+    document.getElementById('refreshBtn').addEventListener('click', load);
+
+    // Keep dark mode in sync with the Settings page
+    let lastDarkMode = Storage.settings.getDarkMode();
+    setInterval(() => {
+      const current = Storage.settings.getDarkMode();
+      if (current !== lastDarkMode) {
+        lastDarkMode = current;
+        if (current) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      }
+    }, 500);
+
+    init();
+  </script>
+</body>
+</html>
