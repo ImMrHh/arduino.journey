@@ -479,12 +479,12 @@
       {
         id: 'unit-2',
         number: '2',
-        title: 'Coming Soon',
-        description: 'Unit 2 will explore connection and community.',
+        title: 'How the World Works',
+        description: 'Technology, innovation, and how people care for the planet.',
         color: 'purple',
-        badge: '🤝',
+        badge: '💡',
         startDate: 'Oct 21',
-        status: 'locked'
+        status: 'in-progress'
       },
       {
         id: 'unit-3',
@@ -583,10 +583,10 @@
       card.className = `unit-card ${unit.status === 'locked' ? 'locked' : ''}`;
       card.setAttribute('data-unit-id', unit.id);
 
-      // Calculate progress for Unit 1
+      // Calculate progress for the unlocked units
       let progress = 0;
-      if (unit.id === 'unit-1') {
-        progress = calculateUnitProgress();
+      if (unit.status !== 'locked') {
+        progress = calculateUnitProgress(unit.id);
       }
 
       const isLocked = unit.status === 'locked';
@@ -614,8 +614,8 @@
       return card;
     }
 
-    function calculateUnitProgress() {
-      const scores = Storage.scores.getUnitScores('unit-1');
+    function calculateUnitProgress(unitId) {
+      const scores = Storage.scores.getUnitScores(unitId);
       if (!scores || !scores.activities || !scores.games) {
         return 0;
       }
@@ -643,7 +643,7 @@
     // NAVIGATION
     // ============================================
     function navigateToUnit(unitId) {
-      window.location.href = `units/unit-1/index.html`;
+      window.location.href = `units/unit-1/index.html?unit=${unitId}`;
     }
 
     // ============================================

@@ -408,13 +408,13 @@
 
         <div class="questions-container">
           <div class="question">
-            <label class="question-label">Present Simple<br>(he/she/it)</label>
+            <label class="question-label" id="presentLabel">Present Simple<br>(he/she/it)</label>
             <input type="text" id="presentInput" placeholder="e.g., plays" autocomplete="off">
             <div class="feedback" id="presentFeedback"></div>
           </div>
 
           <div class="question">
-            <label class="question-label">Past Simple</label>
+            <label class="question-label" id="pastLabel">Past Simple</label>
             <input type="text" id="pastInput" placeholder="e.g., played" autocomplete="off">
             <div class="feedback" id="pastFeedback"></div>
           </div>
@@ -501,13 +501,18 @@
 
     function generateQuestions() {
       const count = GAME_CONTENT.difficulties[gameState.difficulty].verbs || 5;
-      const verbs = getRandomItems(GAME_CONTENT.verbs.irregular, count);
-
-      gameState.questions = verbs.map(v => ({
-        base: v.base,
-        present: GAME_CONTENT.conjugatePresent(v.base),
-        past: v.past
-      }));
+      if (GAME_CONTENT.grammarMode === 'continuous') {
+        // Unit 2: continuous tenses with mixed subjects
+        const pool = getRandomItems(getVerbPool(gameState.difficulty), count);
+        gameState.questions = pool.map(v => buildContinuousQuestion(v, gameState.difficulty));
+      } else {
+        const verbs = getRandomItems(GAME_CONTENT.verbs.irregular, count);
+        gameState.questions = verbs.map(v => ({
+          base: v.base,
+          present: GAME_CONTENT.conjugatePresent(v.base),
+          past: v.past
+        }));
+      }
 
       gameState.answers = Array(gameState.questions.length).fill({
         presentCorrect: false,
@@ -532,6 +537,12 @@
       const progressPercent = ((gameState.currentIndex + 1) / gameState.questions.length) * 100;
       document.getElementById('progressFill').style.width = progressPercent + '%';
 
+      if (GAME_CONTENT.grammarMode === 'continuous') {
+        document.getElementById('presentLabel').innerHTML = 'Present Continuous<br>' + q.presentSubject + ' ...';
+        document.getElementById('pastLabel').innerHTML = 'Past Continuous<br>' + q.pastSubject + ' ...';
+        document.getElementById('presentInput').placeholder = 'e.g., is playing';
+        document.getElementById('pastInput').placeholder = 'e.g., were playing';
+      }
       document.getElementById('presentInput').value = '';
       document.getElementById('pastInput').value = '';
       document.getElementById('presentInput').className = '';
@@ -642,7 +653,7 @@
 
       // Save score
       const totalTime = Math.floor((Date.now() - gameState.startTime) / 1000);
-      Storage.scores.addScore('unit-1', 'games', 'grammar-master', {
+      Storage.scores.addScore(UNIT_ID, 'games', 'grammar-master', {
         name: gameState.session.name,
         group: gameState.session.group,
         difficulty: gameState.difficulty,
@@ -674,7 +685,7 @@
     }
 
     function displayLeaderboardPreview() {
-      const allScores = Storage.scores.getGameScores('unit-1', 'grammar-master');
+      const allScores = Storage.scores.getGameScores(UNIT_ID, 'grammar-master');
       const filtered = allScores.filter(s => s.difficulty === gameState.difficulty && s.group === gameState.session.group);
       
       const grouped = {};
@@ -745,7 +756,7 @@
     });
 
     document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = '../index.html?unit=' + UNIT_ID;
     });
 
     // Start game

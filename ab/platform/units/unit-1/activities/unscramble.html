@@ -888,7 +888,7 @@
       const scoring = calculateScore(correct, total, avgAttempts);
 
       const totalTime = Math.floor((Date.now() - gameState.startTime) / 1000);
-      Storage.scores.addScore('unit-1', 'activities', 'unscramble', {
+      Storage.scores.addScore(UNIT_ID, 'activities', 'unscramble', {
         name: gameState.session.name,
         group: gameState.session.group,
         difficulty: gameState.difficulty,
@@ -918,7 +918,7 @@
     }
 
     function displayLeaderboardPreview() {
-      const allScores = Storage.scores.getActivityScores('unit-1', 'unscramble') || [];
+      const allScores = Storage.scores.getActivityScores(UNIT_ID, 'unscramble') || [];
       const filtered = allScores.filter(s => s.difficulty === gameState.difficulty && s.group === gameState.session.group);
 
       const grouped = {};
@@ -999,7 +999,7 @@
     document.getElementById('clearBtn').addEventListener('click', clearBoard);
     document.getElementById('retryBtn').addEventListener('click', () => location.reload());
     document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = '../index.html?unit=' + UNIT_ID;
     });
 
     init();

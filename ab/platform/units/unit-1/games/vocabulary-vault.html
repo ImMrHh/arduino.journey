@@ -582,7 +582,7 @@
 
       // Save score
       const totalTime = Math.floor((Date.now() - gameState.startTime) / 1000);
-      Storage.scores.addScore('unit-1', 'games', 'vocabulary-vault', {
+      Storage.scores.addScore(UNIT_ID, 'games', 'vocabulary-vault', {
         name: gameState.session.name,
         group: gameState.session.group,
         difficulty: gameState.difficulty,
@@ -614,7 +614,7 @@
     }
 
     function displayLeaderboardPreview() {
-      const allScores = Storage.scores.getGameScores('unit-1', 'vocabulary-vault');
+      const allScores = Storage.scores.getGameScores(UNIT_ID, 'vocabulary-vault');
       const filtered = allScores.filter(s => s.difficulty === gameState.difficulty && s.group === gameState.session.group);
       
       const grouped = {};
@@ -673,7 +673,7 @@
     });
 
     document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = '../index.html?unit=' + UNIT_ID;
     });
 
     // Start game

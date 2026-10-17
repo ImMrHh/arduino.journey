@@ -242,11 +242,14 @@
         <button class="back-btn" id="backBtn" aria-label="Back to Unit 1">←</button>
         <div>
           <h1>🏆 Class Leaderboard</h1>
-          <div class="subtitle">Whole generation · Unit 1: Who We Are</div>
+          <div class="subtitle" id="subtitle">Whole generation · Unit 1: Who We Are</div>
         </div>
       </div>
       <button class="icon-btn" id="refreshBtn" aria-label="Refresh" title="Refresh">🔄</button>
     </div>
+
+    <div class="section-label">Unit</div>
+    <div class="difficulty-row" id="unitRow"></div>
 
     <div class="section-label">Game</div>
     <div class="tabs" id="tabs"></div>
@@ -269,9 +272,14 @@
       { id: 'wordsearch', name: 'Word Search', icon: '🔍' }
     ];
     const DIFFICULTIES = ['easy', 'medium', 'challenge'];
+    const UNITS = [
+      { id: 'unit-1', label: 'Unit 1', title: 'Who We Are' },
+      { id: 'unit-2', label: 'Unit 2', title: 'How the World Works' }
+    ];
     const MEDALS = ['🥇', '🥈', '🥉'];
 
     let state = {
+      unit: 'unit-1',
       activity: 'grammar-master',
       difficulty: 'easy',
       data: null,
@@ -296,6 +304,8 @@
       const params = new URLSearchParams(window.location.search);
       const a = params.get('activity');
       const d = params.get('difficulty');
+      const u = params.get('unit');
+      if (UNITS.some(x => x.id === u)) state.unit = u;
       if (ACTIVITIES.some(x => x.id === a)) state.activity = a;
       if (DIFFICULTIES.indexOf(d) !== -1) state.difficulty = d;
 
@@ -330,6 +340,25 @@
         tabs.appendChild(btn);
       });
 
+      const unitRow = document.getElementById('unitRow');
+      unitRow.innerHTML = '';
+      UNITS.forEach(un => {
+        const btn = document.createElement('button');
+        btn.className = 'tab-btn';
+        btn.dataset.unit = un.id;
+        btn.textContent = un.label;
+        btn.style.textTransform = 'none';
+        btn.addEventListener('click', () => {
+          if (state.unit === un.id) return;
+          state.unit = un.id;
+          state.data = null;
+          state.loading = false; // let the new unit load even if a request is in flight
+          render();
+          load();
+        });
+        unitRow.appendChild(btn);
+      });
+
       const row = document.getElementById('difficultyRow');
       row.innerHTML = '';
       DIFFICULTIES.forEach(diff => {
@@ -351,7 +380,10 @@
       if (!state.data) render();
 
       try {
-        state.data = await Storage.sync.fetchLeaderboards('unit-1', 10);
+        const requested = state.unit;
+        const result = await Storage.sync.fetchLeaderboards(requested, 10);
+        if (requested !== state.unit) return; // the unit changed while loading
+        state.data = result;
         state.error = null;
       } catch (err) {
         console.warn('Leaderboard load failed:', err);
@@ -368,6 +400,13 @@
     }
 
     function render() {
+      const un = UNITS.find(x => x.id === state.unit);
+      document.getElementById('subtitle').textContent = 'Whole generation · ' + un.label + ': ' + un.title;
+      document.title = 'Class Leaderboard - ' + un.title;
+      document.querySelectorAll('#unitRow .tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.unit === state.unit);
+      });
+
       // Highlight the selected tabs
       document.querySelectorAll('#tabs .tab-btn').forEach(b => {
         b.classList.toggle('active', b.dataset.activity === state.activity);
@@ -470,7 +509,7 @@
 
     // Events
     document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = 'index.html';
+      window.location.href = 'index.html?unit=' + state.unit;
     });
     document.getElementById('refreshBtn').addEventListener('click', load);
 

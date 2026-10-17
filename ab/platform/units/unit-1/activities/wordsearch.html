@@ -587,15 +587,22 @@
 
     function startPuzzle() {
       const d = gameState.difficulty;
-      const size = GRID_SIZE[d];
+      const MAX_SIZE = 22;
       const count = GAME_CONTENT.difficulties[d].vocab || 5;
 
       // Vocabulary from all weeks, matching the difficulty.
       // Multi-word terms go in the grid written together, e.g. PEERPRESSURE.
       const pool = getVocabPool(d)
         .map(v => ({ display: v.word, text: cleanWord(v.word) }))
-        .filter(w => w.text.length <= size);
+        .filter(w => w.text.length <= MAX_SIZE);
       const chosen = getRandomItems(pool, count);
+
+      // The grid grows to fit the longest word (up to 22 x 22)
+      const longest = chosen.reduce((m, w) => Math.max(m, w.text.length), 0);
+      const size = Math.min(MAX_SIZE, Math.max(GRID_SIZE[d], longest));
+
+      // Wider card for big grids so the letters stay readable
+      if (size > 14) document.querySelector('.game-container').style.maxWidth = '780px';
 
       const puzzle = buildPuzzle(chosen, size, DIRECTIONS[d]);
       gameState.size = size;
@@ -775,7 +782,7 @@
       const scoring = calculateScore(correct, total, avgAttempts);
 
       const totalTime = Math.floor((Date.now() - gameState.startTime) / 1000);
-      Storage.scores.addScore('unit-1', 'activities', 'wordsearch', {
+      Storage.scores.addScore(UNIT_ID, 'activities', 'wordsearch', {
         name: gameState.session.name,
         group: gameState.session.group,
         difficulty: gameState.difficulty,
@@ -805,7 +812,7 @@
     }
 
     function displayLeaderboardPreview() {
-      const allScores = Storage.scores.getActivityScores('unit-1', 'wordsearch') || [];
+      const allScores = Storage.scores.getActivityScores(UNIT_ID, 'wordsearch') || [];
       const filtered = allScores.filter(s => s.difficulty === gameState.difficulty && s.group === gameState.session.group);
 
       const grouped = {};
@@ -894,7 +901,7 @@
 
     document.getElementById('retryBtn').addEventListener('click', () => location.reload());
     document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = '../index.html?unit=' + UNIT_ID;
     });
 
     init();
