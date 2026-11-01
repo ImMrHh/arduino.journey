@@ -181,7 +181,7 @@ const UNIT_DATA = {
 
   /* ------------------------------------------------------------
      UNIT 2: How the World Works
-     Weeks 1 and 2 confirmed. Add week3 / week4 here when confirmed.
+     Weeks 1 to 4 confirmed.
      ------------------------------------------------------------ */
   'unit-2': {
     grammarMode: 'continuous', // present continuous (W1) + past continuous (W2)
@@ -224,6 +224,43 @@ const UNIT_DATA = {
         { word: "carbon footprint", def: "The amount of harmful gas that your actions put into the air.", difficulty: "challenge" },
         { word: "greenhouse effect", def: "When gases trap the sun's heat around Earth and make the planet warmer.", difficulty: "challenge" },
         { word: "sustainable development", def: "Growing and improving our world without using up or harming what future people need.", difficulty: "challenge" }
+      ],
+
+      // Week 3 (meanings from the approved Week 3 list; difficulty set by the teacher's packet)
+      week3: [
+        { word: "research", def: "Careful study to discover new information.", difficulty: "easy" },
+        { word: "materials", def: "What things are made of, such as wood, metal, or plastic.", difficulty: "easy" },
+        { word: "pattern", def: "A repeated design or order.", difficulty: "easy" },
+        { word: "renewal", def: "Making something new or fresh again.", difficulty: "easy" },
+        { word: "eco-friendly", def: "Not harmful to the environment.", difficulty: "easy" },
+        { word: "robotics", def: "The science and design of robots.", difficulty: "medium" },
+        { word: "engineering", def: "Using science and math to design and build things.", difficulty: "medium" },
+        { word: "reduction", def: "Making something smaller or less.", difficulty: "medium" },
+        { word: "manufacture", def: "To make products, usually in a factory.", difficulty: "medium" },
+        { word: "pollutant", def: "A substance that dirties air, water, or soil.", difficulty: "medium" },
+        { word: "artificial intelligence", def: "Computer systems that can learn and make decisions in ways similar to people.", difficulty: "challenge" },
+        { word: "innovation hub", def: "A place where new ideas and inventions are developed.", difficulty: "challenge" },
+        { word: "technology device", def: "A tool, like a phone or computer, that uses technology.", difficulty: "challenge" },
+        { word: "innovation cycle", def: "The process of ideas, testing, and improvement that leads to new products.", difficulty: "challenge" },
+        { word: "ecosystem balance", def: "The healthy relationship between living things and their environment.", difficulty: "challenge" }
+      ],
+
+      // Week 4 (meanings from the approved Week 4 list; "wind turbine" is not repeated here)
+      week4: [
+        { word: "drone", def: "A small flying machine that has no pilot inside.", difficulty: "easy" },
+        { word: "satellite", def: "An object that orbits Earth or another planet.", difficulty: "easy" },
+        { word: "smartwatch", def: "A watch with computer features.", difficulty: "easy" },
+        { word: "solar panel", def: "A device that turns sunlight into electricity.", difficulty: "easy" },
+        { word: "robot vacuum", def: "A small machine that cleans floors by itself.", difficulty: "easy" },
+        { word: "robotic arm", def: "A machine arm that moves and performs tasks.", difficulty: "medium" },
+        { word: "3D printer", def: "A machine that builds objects layer by layer from a digital design.", difficulty: "medium" },
+        { word: "electric car", def: "A car powered by electricity instead of gasoline.", difficulty: "medium" },
+        { word: "virtual reality", def: "A computer-made world you see and feel through a headset.", difficulty: "medium" },
+        { word: "recycling machine", def: "A machine that processes materials so they can be reused.", difficulty: "medium" },
+        { word: "washing machine", def: "A machine that cleans clothes.", difficulty: "medium" },
+        { word: "factory robot", def: "A robot that works on a production line.", difficulty: "challenge" },
+        { word: "space rover", def: "A vehicle that drives across a planet's surface to explore it.", difficulty: "challenge" },
+        { word: "smart home system", def: "Connected devices that control things in a house, often from a phone or with voice commands.", difficulty: "challenge" }
       ]
     },
 
@@ -237,6 +274,17 @@ const UNIT_DATA = {
         "here", "hero", "herself", "hide", "him", "himself", "hip", "hire",
         "his", "hit", "hobby", "hold", "holiday", "home", "homework", "honest",
         "horse", "hospital", "host", "hot"
+      ],
+      week3: [
+        "house", "however", "huge", "human", "humorous", "hundred", "hungry", "hunt",
+        "hurry", "hurt", "husband", "ice", "ice cream", "idea", "identify", "idiot",
+        "if", "ignore", "ill", "illegal"
+      ],
+      week4: [
+        "illustrate", "image", "imagine", "immediately", "immigrant", "impossible",
+        "impress", "improve", "in", "include", "income", "increase", "incredible",
+        "independent", "individual", "industry", "influence", "inform", "ingredient",
+        "injure"
       ]
     },
 
