@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Units 1 and 2 Review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#f6f4ee; --fg:#1d2a24; --muted:#5b6b63; --accent:#1f6b4f;
+  --ok:#2e7d4f; --bad:#b3412e; --line:#d9d6cb; --card:#ffffff;
+  font-family:Inter,system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141a17; --fg:#e7ede9; --muted:#9fb1a7; --accent:#7fd1b0;
+    --ok:#6fcf97; --bad:#f08a78; --line:#2c3a34; --card:#1c2420; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141a17; --fg:#e7ede9; --muted:#9fb1a7; --accent:#7fd1b0;
+  --ok:#6fcf97; --bad:#f08a78; --line:#2c3a34; --card:#1c2420; color-scheme:dark;
+}
+body{
+  margin:0 auto; max-width:760px; background:var(--bg); color:var(--fg); line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:24px 56px;
+}
+h1{font-family:"Space Grotesk",Inter,sans-serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
+h2{font-family:"Space Grotesk",Inter,sans-serif;font-size:20px;margin:28px 0 6px;color:var(--accent);text-wrap:balance}
+h3{font-size:16px;margin:0 0 6px}
+p{margin:6px 0}
+.lede{color:var(--muted)}
+.period{border-top:3px solid var(--accent);margin-top:40px;padding-top:6px}
+.tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0}
+.row{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.row:last-of-type{border-bottom:0}
+.defs{list-style:none;padding:0;margin:8px 0 12px;display:grid;gap:4px;font-size:15px}
+select,input,textarea{font:inherit;font-size:16px;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);min-width:0}
+select#student{width:100%;box-sizing:border-box;min-height:44px}
+input.v{width:100%;box-sizing:border-box}
+textarea{width:100%;box-sizing:border-box;min-height:180px}
+button{font:inherit;font-weight:600;background:var(--accent);color:var(--bg);border:0;border-radius:8px;padding:10px 16px;min-height:44px;cursor:pointer;margin-top:8px}
+button:disabled{opacity:.5;cursor:default}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.score{font-weight:600;margin:8px 0 0}
+.ok{color:var(--ok)} .bad{color:var(--bad)}
+.opts label{display:block;padding:9px 10px;border:1px solid var(--line);border-radius:8px;margin:6px 0;cursor:pointer}
+.opts input{margin-right:8px}
+.opts label.right{border-color:var(--ok);color:var(--ok)}
+.opts label.wrong{border-color:var(--bad);color:var(--bad)}
+.q{font-weight:600;margin:12px 0 0}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0}
+.check-list{margin:6px 0 0 18px;padding:0}
+.vgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:center}
+.vgrid .hd{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.submit-box{border-top:3px solid var(--accent);margin-top:40px;padding-top:6px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (max-width:480px){ .vgrid{grid-template-columns:1fr} .vgrid .hd{display:none} }
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="tag">5th grade English · Review</p>
+  <h1>Units 1 and 2 Review</h1>
+  <p class="lede">Two class periods. Choose your name first. Work through Period 1, then Period 2. Tap <strong>Check</strong> in each part to see your answers. When you finish everything, tap <strong>Submit my score</strong> at the bottom.</p>
+  <div class="card">
+    <label for="student"><strong>Who are you?</strong></label>
+    <select id="student" aria-label="Choose your name"></select>
+  </div>
+</header>
+
+<!-- ============================ PERIOD 1 ============================ -->
+<section class="period" aria-labelledby="p1">
+  <h2 id="p1">Period 1 · Unit 1 (Who We Are)</h2>
+  <p class="lede">Vocabulary, verb forms, and grammar from Unit 1.</p>
+
+  <h2>Part 1 · Unit 1 Vocabulary</h2>
+  <p class="lede">Match each word with its meaning. Each letter is used once.</p>
+  <div id="u1-vocab"></div>
+
+  <h2>Part 2 · Verb Forms</h2>
+  <p class="lede">All Unit 1 verbs. Study the table, then practice with the random set below.</p>
+  <details class="card">
+    <summary>Open the Unit 1 verb table</summary>
+    <div class="wrap" id="u1-table"></div>
+  </details>
+  <div class="card">
+    <h3>Practice: write the past simple and past participle</h3>
+    <p class="tag">Type the answer, then tap Check.</p>
+    <div id="u1-verb-practice"></div>
+    <button class="ghost" id="u1-verb-new">New verbs</button>
+  </div>
+
+  <h2>Part 3 · Unit 1 Grammar</h2>
+  <p class="lede">Present simple, past simple, infinitives, and gerunds.</p>
+  <div id="g1-quiz"></div>
+  <button id="g1-check">Check grammar</button>
+  <p class="score" id="g1-score" aria-live="polite"></p>
+</section>
+
+<!-- ============================ PERIOD 2 ============================ -->
+<section class="period" aria-labelledby="p2">
+  <h2 id="p2">Period 2 · Unit 2 (How the World Works)</h2>
+  <p class="lede">Vocabulary and grammar from Unit 2, then a short writing task.</p>
+
+  <h2>Part 4 · Unit 2 Vocabulary</h2>
+  <p class="lede">Match each word with its meaning. Each letter is used once per week.</p>
+  <div id="u2-vocab"></div>
+
+  <h2>Part 5 · Unit 2 Grammar</h2>
+  <p class="lede">Present continuous, past continuous, punctuation, and sentence fragments.</p>
+  <div id="g2-quiz"></div>
+  <button id="g2-check">Check grammar</button>
+  <p class="score" id="g2-score" aria-live="polite"></p>
+
+  <h2>Part 6 · Writing Task</h2>
+  <p class="lede">Your teacher will grade this in your notebook. It is not part of the score.</p>
+  <div class="card">
+    <p>Write 5 or 6 sentences about how you have changed or adapted. Your writing must include:</p>
+    <ul class="check-list">
+      <li>at least 2 Unit 1 vocabulary words</li>
+      <li>at least 2 Unit 2 vocabulary words</li>
+      <li>one sentence in the past continuous</li>
+      <li>one sentence with an infinitive (to + verb)</li>
+      <li>one sentence with a gerund (verb + -ing)</li>
+      <li>one sentence with a colon (:)</li>
+    </ul>
+    <textarea id="prod" aria-label="Your writing" placeholder="Start writing here..."></textarea>
+    <p class="tag" id="wc">Words: 0</p>
+  </div>
+</section>
+
+<!-- ============================ SUBMIT ============================ -->
+<section class="submit-box" aria-labelledby="sub">
+  <h2 id="sub">Submit my score</h2>
+  <p class="lede">Choose your name at the top, answer all the questions, then tap the button once.</p>
+  <div class="card">
+    <button id="submit">Submit my score</button>
+    <p class="score" id="submit-msg" aria-live="polite"></p>
+  </div>
+</section>
+
+<script>
+/* ---------- CONFIG ---------- */
+
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbz6HwVtI8LEzfZUUKNvkSShTT26YWwexM6hBUfRlGqsH7GbQsj6zpVzp9dEuPYyd-aj/exec";
+const ACTIVITY_NAME = "Units 1-2 Review";
+
+/* Student IDs follow the roster: Group A is 1 to 18, Group B continues from 19 to 37. */
+const GROUP_A = ["Fatima","Iker","Jules","JoseL","DiegoG","Cons","Gabo","Pau","SantiL","Alonso","Diego2nd","Emi","Oli","Arthur","Emma","JP","SantiS","Majo"];
+const GROUP_B = ["Rodri","JuanA","Alex","EmiB","Jero","Thomas","Thiago","Nats","Pato","Bruno","Max","Anto","Aitana","Juan2nd","Sil","Anya","Luka","Ian","Xime"];
+const STUDENTS = [
+  ...GROUP_A.map((name, i) => ({ name, id: i + 1, group: "A" })),
+  ...GROUP_B.map((name, i) => ({ name, id: GROUP_A.length + i + 1, group: "B" }))
+];
+
+/* ---------- DATA ---------- */
+
+const U1_SETS = [
+  { id:"u1w1", title:"Unit 1 · Week 1", items:[
+    ["grow","To become bigger or more developed over time."],
+    ["development","The process of growing, changing, and improving."],
+    ["change","To become different, or to make something different."],
+    ["adaptation","A change you make to fit a new situation or environment."],
+    ["identity","Who you are; what makes you different from other people."],
+    ["puberty","The stage when a child's body starts changing into an adult's body."],
+    ["milestone","An important event that marks a stage in someone's life or development."],
+    ["health","The condition of your body and mind; being well or sick."],
+    ["emotion","A strong feeling, like happiness, sadness, or anger."],
+    ["responsibility","A duty or job that you are expected to do."],
+    ["resilience","The ability to recover quickly from difficulties; being able to bounce back."],
+    ["self-awareness","Understanding your own feelings, thoughts, and actions."],
+    ["learning","Gaining new knowledge or skills."],
+    ["independence","Being able to do things by yourself, without needing help."],
+    ["social skills","The abilities you use to communicate and interact with other people."]
+  ]},
+  { id:"u1w2", title:"Unit 1 · Week 2", items:[
+    ["belonging","The feeling of being part of a group."],
+    ["autonomy","The ability to make your own decisions."],
+    ["vulnerability","The state of being easy to hurt or affect."],
+    ["integrity","Doing what is right, even when no one is watching."],
+    ["empathy","Understanding how someone else feels."],
+    ["assertiveness","Saying what you think or need in a calm, respectful way."],
+    ["resistance","The ability to stay strong against something, like pressure or illness."],
+    ["acceptance","Welcoming someone as they are, without judging them."],
+    ["beliefs","Things that you think are true."],
+    ["self-worth","The feeling that you are valuable as a person."],
+    ["curiosity","A strong wish to learn or know more."],
+    ["adaptability","The ability to change and adjust to new situations."]
+  ]},
+  { id:"u1w3", title:"Unit 1 · Week 3", items:[
+    ["maturity","Thinking and acting in a grown-up, responsible way."],
+    ["transition","A change from one stage or place to another."],
+    ["peer pressure","Feeling that you must do what your friends do."],
+    ["habit","Something you do often, usually without thinking."],
+    ["wisdom","Good judgment that comes from experience and knowledge."],
+    ["generation","All the people born around the same time."],
+    ["retirement","Stopping work after many years of working."],
+    ["challenge","Something difficult that tests you."],
+    ["goal","Something you want to achieve."],
+    ["support","Help and encouragement from other people."],
+    ["role","The job or part that someone has in a group or family."],
+    ["decision","A choice you make after thinking."],
+    ["expectation","What you believe will happen, or what someone wants from you."]
+  ]}
+];
+
+const U2_SETS = [
+  { id:"u2w1", title:"Unit 2 · Week 1", items:[
+    ["design","To plan how something will look or work."],
+    ["sustainability","Using resources in a way that lasts for the future."],
+    ["conservation","Protecting nature and natural resources."],
+    ["renewable energy","Energy from sources that will not run out, like the sun and wind."],
+    ["discovery","Finding something new."],
+    ["function","The job or purpose of something."],
+    ["connection","A link between things or people."],
+    ["recycle","To use materials again to make something new."],
+    ["invention","A new device or idea that is created for the first time."],
+    ["impact","An effect that something has on something else."],
+    ["technology","Tools, machines, and systems made with science."],
+    ["innovation","A new idea or a new way of doing something."],
+    ["ecosystem","Living things and their environment, working together."],
+    ["biodiversity","The variety of plants and animals in an area."],
+    ["pollution","Harmful substances that dirty the air, water, or land."]
+  ]},
+  { id:"u2w2", title:"Unit 2 · Week 2", items:[
+    ["machine","A device with parts that work together to do a job."],
+    ["electricity","Energy that powers lights and devices."],
+    ["energy","The power to do work or make things move."],
+    ["solar power","Energy that comes from the sun."],
+    ["wind turbine","A tall machine that turns wind into electricity."],
+    ["environment","The natural world around us."],
+    ["resources","Things we use, like water, wood, and oil."],
+    ["waste","Things we throw away because we do not need them."],
+    ["biodegradable","Able to break down naturally in the environment."],
+    ["carbon footprint","The amount of carbon gases that a person or activity produces."],
+    ["greenhouse effect","Gases that trap heat around the Earth."],
+    ["sustainable development","Growth that meets today's needs without harming the future."],
+    ["prototype","The first model of a new product."],
+    ["balance","A state where things are equal or in harmony."]
+  ]},
+  { id:"u2w3", title:"Unit 2 · Week 3", items:[
+    ["robotics","The science of designing and using robots."],
+    ["artificial intelligence","Computer systems that can learn and make decisions."],
+    ["engineering","Designing and building machines, bridges, and other structures."],
+    ["innovation hub","A place where people create new ideas and products."],
+    ["eco-friendly","Good for the environment."],
+    ["research","Careful study to find out new information."],
+    ["reduction","Making something smaller or less."],
+    ["manufacture","To make products, usually in a factory."],
+    ["technology device","A tool that uses technology, like a phone or a tablet."],
+    ["innovation cycle","The process of making, testing, and improving new ideas."],
+    ["pollutant","A substance that causes pollution."],
+    ["materials","Things that are used to make something."],
+    ["ecosystem balance","A healthy relationship between living things in an ecosystem."],
+    ["renewal","Making something new or fresh again."],
+    ["pattern","A repeated arrangement or order."]
+  ]},
+  { id:"u2w4", title:"Unit 2 · Week 4", items:[
+    ["robotic arm","An arm-shaped machine that moves and does tasks."],
+    ["drone","A small flying machine with no pilot inside."],
+    ["3D printer","A machine that makes objects layer by layer."],
+    ["solar panel","A device that turns sunlight into electricity."],
+    ["satellite","An object that orbits the Earth to collect data or send signals."],
+    ["electric car","A car powered by electricity instead of gasoline."],
+    ["smartwatch","A watch with computer features."],
+    ["virtual reality","A computer-made world that you can see and interact with."],
+    ["robot vacuum","A small robot that cleans floors."],
+    ["recycling machine","A machine that processes materials so they can be reused."],
+    ["washing machine","A machine that cleans clothes."],
+    ["factory robot","A robot that works on a production line."],
+    ["space rover","A vehicle that drives on other planets to explore them."],
+    ["smart home system","Devices in a house that are connected and controlled by technology."]
+  ]}
+];
+
+/* Verb forms: [base, past simple, past participle]. "/" = accepted alternatives. */
+const VERBS = [
+  ["Ride","rode","ridden"],["Sit down","sat down","sat down"],["Stand up","stood up","stood up"],
+  ["Fight","fought","fought"],["Laugh","laughed","laughed"],["Read","read","read"],
+  ["Play","played","played"],["Listen","listened","listened"],["Cry","cried","cried"],
+  ["Think","thought","thought"],["Sing","sang","sung"],["Watch TV","watched TV","watched TV"],
+  ["Dance","danced","danced"],["Turn on","turned on","turned on"],["Turn off","turned off","turned off"],
+  ["Win","won","won"],["Fly","flew","flown"],["Cut","cut","cut"],["Throw away","threw away","thrown away"],
+  ["Sleep","slept","slept"],["Close","closed","closed"],["Open","opened","opened"],["Write","wrote","written"],
+  ["Give","gave","given"],["Jump","jumped","jumped"],["Eat","ate","eaten"],["Drink","drank","drunk"],
+  ["Cook","cooked","cooked"],["Wash","washed","washed"],["Wait","waited","waited"],["Climb","climbed","climbed"],
+  ["Talk","talked","talked"],["Crawl","crawled","crawled"],
+  ["Dream","dreamed/dreamt","dreamed/dreamt"],["Dig","dug","dug"],["Clap","clapped","clapped"],
+  ["Knit","knitted","knitted"],["Sew","sewed","sewn/sewed"],["Smell","smelled/smelt","smelled/smelt"],
+  ["Kiss","kissed","kissed"],["Hug","hugged","hugged"],["Snore","snored","snored"],["Bathe","bathed","bathed"],
+  ["Bow","bowed","bowed"],["Paint","painted","painted"],["Dive","dived/dove","dived"],["Ski","skied","skied"],
+  ["Stack","stacked","stacked"],["Buy","bought","bought"],["Shake","shook","shaken"],["Bend","bent","bent"],
+  ["Lift","lifted","lifted"],["Carry","carried","carried"],["Kneel","knelt/kneeled","knelt/kneeled"],
+  ["Hold","held","held"],["Sit","sat","sat"],["Drag","dragged","dragged"],["Leap","leapt/leaped","leapt/leaped"],
+  ["Pick up","picked up","picked up"],["Punch","punched","punched"],["Pull","pulled","pulled"],
+  ["Push","pushed","pushed"],["Run","ran","run"],["Lean","leaned/leant","leaned/leant"]
+];
+const U1_VERB_COUNT = 33; /* first 33 entries are Unit 1 */
+
+/* Grammar: q = question, o = options, a = index of correct option */
+const G1 = [
+  {q:"1. Yesterday, Maria ___ to the park.", o:["go","goes","went","going"], a:2},
+  {q:"2. My brother usually ___ soccer on Saturdays.", o:["play","plays","played","playing"], a:1},
+  {q:"3. We ___ a great movie last night.", o:["watch","watches","watched","watching"], a:2},
+  {q:"4. She ___ to the gym every day.", o:["go","goes","went","going"], a:1},
+  {q:"5. I enjoy ___ books before bed.", o:["read","to read","reading","reads"], a:2},
+  {q:"6. She wants ___ a doctor when she grows up.", o:["become","becoming","to become","became"], a:2},
+  {q:"7. They decided ___ the park after school.", o:["visit","visiting","to visit","visited"], a:2},
+  {q:"8. He finished ___ his homework.", o:["do","to do","doing","did"], a:2},
+  {q:"9. We hope ___ the competition.", o:["win","winning","to win","won"], a:2}
+];
+const G2 = [
+  {q:"10. Look! The children ___ in the park.", o:["play","are playing","plays","played"], a:1},
+  {q:"11. Right now, my mom ___ dinner.", o:["cooks","is cooking","cooked","cook"], a:1},
+  {q:"12. They ___ a new robot at the moment.", o:["design","are designing","designs","designed"], a:1},
+  {q:"13. At 8 p.m. yesterday, I ___ my homework.", o:["did","was doing","were doing","do"], a:1},
+  {q:"14. While we ___ lunch, the teacher came in.", o:["ate","were eating","was eating","eat"], a:1},
+  {q:"15. She was reading when the lights ___ off.", o:["went","were going","was going","go"], a:0},
+  {q:"16. Which sentence uses punctuation correctly?", o:["We need three things, water, food, and a tent.","We need three things: water, food, and a tent.","We need three things; water food, and a tent."], a:1},
+  {q:"17. Which sentence uses parentheses correctly?", o:["The robot (which we built worked perfectly.","The robot (which we built) worked perfectly.","The robot which we built) worked perfectly."], a:1},
+  {q:"18. Which one is a complete sentence?", o:["Running in the park.","The solar panel produces energy.","After the storm."], a:1},
+  {q:"19. Which is the best fix for the fragment: \"Because the sun was hot.\"", o:["Because the sun was hot.","We stayed inside because the sun was hot.","Because the sun was hot, inside."], a:1}
+];
+
+/* ---------- HELPERS ---------- */
+
+const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+function shuffle(a){ const b=a.slice(); for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; }
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+const startedAt = Date.now();
+let submitted = false;
+
+/* ---------- MATCHING ---------- */
+
+function renderMatch(set, mount){
+  const n = set.items.length;
+  const order = shuffle([...Array(n).keys()]);
+  set.pos = [];
+  order.forEach((ix,k)=>{ set.pos[ix] = LETTERS[k]; });
+
+  const card = el("div","card");
+  card.id = set.id;
+  card.appendChild(el("h3","", set.title));
+  card.appendChild(el("p","tag","Choose the letter of the meaning."));
+
+  const defs = el("ol","defs");
+  order.forEach((ix,k)=>{ defs.appendChild(el("li","", LETTERS[k]+". "+set.items[ix][1])); });
+  card.appendChild(defs);
+
+  const opts = '<option value="">-</option>' + LETTERS.slice(0,n).split("").map(l=>`<option value="${l}">${l}</option>`).join("");
+  set.items.forEach((it,i)=>{
+    const row = el("div","row");
+    row.appendChild(el("span","", it[0]));
+    row.appendChild(el("span","", `<select data-i="${i}" aria-label="Meaning for ${it[0]}">${opts}</select>`));
+    card.appendChild(row);
+  });
+
+  const btn = el("button","", "Check");
+  const res = el("p","score"); res.setAttribute("aria-live","polite");
+  btn.addEventListener("click", ()=>{
+    let c=0;
+    card.querySelectorAll("select").forEach(s=>{
+      const i=+s.dataset.i;
+      const ok = s.value === set.pos[i];
+      s.style.borderColor = ok ? "var(--ok)" : "var(--bad)";
+      if(ok) c++;
+    });
+    res.textContent = `${c} / ${n} correct`;
+    res.className = "score " + (c===n ? "ok" : "");
+  });
+  card.appendChild(btn);
+  card.appendChild(res);
+  mount.appendChild(card);
+}
+
+/* ---------- VERBS ---------- */
+
+function parseForms(s){ return s.split("/").map(x=>x.trim().toLowerCase()); }
+
+function renderVerbTable(mount){
+  let html = '<table><thead><tr><th>Base form</th><th>Past simple</th><th>Past participle</th></tr></thead><tbody>';
+  VERBS.slice(0,U1_VERB_COUNT).forEach(v=>{ html += `<tr><td>${v[0]}</td><td>${v[1].replace("/", " or ")}</td><td>${v[2].replace("/", " or ")}</td></tr>`; });
+  html += '</tbody></table>';
+  mount.innerHTML = html;
+}
+
+let verbPractice = [];
+function renderVerbPractice(){
+  const mount = document.getElementById("u1-verb-practice");
+  mount.innerHTML = "";
+  verbPractice = shuffle(VERBS.slice(0,U1_VERB_COUNT)).slice(0,10);
+  const grid = el("div","vgrid");
+  grid.appendChild(el("div","hd","Base form"));
+  grid.appendChild(el("div","hd","Past simple"));
+  grid.appendChild(el("div","hd","Past participle"));
+  verbPractice.forEach((v,k)=>{
+    grid.appendChild(el("div","", v[0]));
+    grid.appendChild(el("div","", `<input class="v" data-k="${k}" data-f="1" aria-label="Past simple of ${v[0]}" autocomplete="off" autocapitalize="off">`));
+    grid.appendChild(el("div","", `<input class="v" data-k="${k}" data-f="2" aria-label="Past participle of ${v[0]}" autocomplete="off" autocapitalize="off">`));
+  });
+  mount.appendChild(grid);
+  const btn = el("button","", "Check verbs");
+  const res = el("p","score"); res.setAttribute("aria-live","polite");
+  btn.addEventListener("click", ()=>{
+    let c=0;
+    mount.querySelectorAll("input").forEach(inp=>{
+      const k=+inp.dataset.k, f=+inp.dataset.f;
+      const forms = parseForms(verbPractice[k][f]);
+      const ok = forms.includes(inp.value.trim().toLowerCase());
+      inp.style.borderColor = ok ? "var(--ok)" : "var(--bad)";
+      if(ok) c++;
+    });
+    res.textContent = `${c} / ${verbPractice.length*2} correct`;
+    res.className = "score " + (c===verbPractice.length*2 ? "ok" : "");
+  });
+  mount.appendChild(btn);
+  mount.appendChild(res);
+}
+
+/* ---------- MULTIPLE CHOICE GRAMMAR ---------- */
+
+function renderQuiz(qs, mount, prefix){
+  qs.forEach((item,i)=>{
+    const block = el("div","");
+    block.appendChild(el("p","q", item.q));
+    const opts = el("div","opts");
+    item.o.forEach((text,k)=>{
+      const lab = el("label","");
+      lab.innerHTML = `<input type="radio" name="${prefix}${i}" value="${k}">${text}`;
+      opts.appendChild(lab);
+    });
+    block.appendChild(opts);
+    mount.appendChild(block);
+  });
+}
+
+function countQuiz(qs, prefix){
+  let c=0;
+  qs.forEach((item,i)=>{
+    const picked = document.querySelector(`input[name="${prefix}${i}"]:checked`);
+    if(picked && +picked.value === item.a) c++;
+  });
+  return c;
+}
+
+function checkQuiz(qs, prefix, scoreEl){
+  qs.forEach((item,i)=>{
+    document.querySelectorAll(`input[name="${prefix}${i}"]`).forEach(inp=>{
+      const lab = inp.closest("label");
+      lab.classList.remove("right","wrong");
+      if(+inp.value === item.a) lab.classList.add("right");
+      else if(inp.checked) lab.classList.add("wrong");
+    });
+  });
+  const c = countQuiz(qs, prefix);
+  scoreEl.textContent = `${c} / ${qs.length} correct`;
+  scoreEl.className = "score " + (c===qs.length ? "ok" : "");
+}
+
+/* ---------- SCORING AND SUBMIT ---------- */
+
+/* Every question counts once. Unanswered questions count as wrong. */
+function gradeAll(){
+  let correct = 0, total = 0;
+  [...U1_SETS, ...U2_SETS].forEach(set=>{
+    const card = document.getElementById(set.id);
+    total += set.items.length;
+    card.querySelectorAll("select").forEach(s=>{
+      if(s.value === set.pos[+s.dataset.i]) correct++;
+    });
+  });
+  document.querySelectorAll("#u1-verb-practice input.v").forEach(inp=>{
+    total++;
+    const k=+inp.dataset.k, f=+inp.dataset.f;
+    if(parseForms(verbPractice[k][f]).includes(inp.value.trim().toLowerCase())) correct++;
+  });
+  correct += countQuiz(G1, "g1_") + countQuiz(G2, "g2_");
+  total += G1.length + G2.length;
+  return { correct, total };
+}
+
+function submitScore(){
+  const msg = document.getElementById("submit-msg");
+  const btn = document.getElementById("submit");
+  const sel = document.getElementById("student");
+  const st = STUDENTS.find(s => String(s.id) === sel.value);
+
+  if(!st){ msg.textContent = "Choose your name at the top of the page first."; msg.className = "score bad"; return; }
+  if(submitted) return;
+
+  const { correct, total } = gradeAll();
+  const grade = Math.round((correct / total) * 10 * 10) / 10;
+  const payload = {
+    studentId: st.id,
+    studentName: st.name,
+    group: st.group,
+    activity: ACTIVITY_NAME,
+    score: correct,
+    quizQuestions: total,
+    quizCorrect: correct,
+    duration: Math.round((Date.now() - startedAt) / 1000),
+    sessionId: Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,8)
+  };
+
+  submitted = true;
+  btn.disabled = true;
+  sel.disabled = true;
+  try {
+    fetch(SHEET_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+    msg.textContent = `Sent! Your grade is ${grade} / 10 (${correct} of ${total} correct).`;
+    msg.className = "score ok";
+  } catch(e) {
+    submitted = false;
+    btn.disabled = false;
+    sel.disabled = false;
+    msg.textContent = "Something went wrong. Tell your teacher and try again.";
+    msg.className = "score bad";
+  }
+}
+
+/* ---------- BUILD PAGE ---------- */
+
+const sel = document.getElementById("student");
+sel.appendChild(el("option","", "Choose your name"));
+sel.firstChild.value = "";
+STUDENTS.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(s=>{
+  const o = el("option","", s.name);
+  o.value = String(s.id);
+  sel.appendChild(o);
+});
+
+U1_SETS.forEach(s=>renderMatch(s, document.getElementById("u1-vocab")));
+U2_SETS.forEach(s=>renderMatch(s, document.getElementById("u2-vocab")));
+
+renderVerbTable(document.getElementById("u1-table"));
+renderVerbPractice();
+document.getElementById("u1-verb-new").addEventListener("click", renderVerbPractice);
+
+renderQuiz(G1, document.getElementById("g1-quiz"), "g1_");
+document.getElementById("g1-check").addEventListener("click", ()=>checkQuiz(G1, "g1_", document.getElementById("g1-score")));
+
+renderQuiz(G2, document.getElementById("g2-quiz"), "g2_");
+document.getElementById("g2-check").addEventListener("click", ()=>checkQuiz(G2, "g2_", document.getElementById("g2-score")));
+
+const prod = document.getElementById("prod");
+prod.addEventListener("input", ()=>{
+  const words = prod.value.trim() ? prod.value.trim().split(/\s+/).length : 0;
+  document.getElementById("wc").textContent = `Words: ${words}`;
+});
+
+document.getElementById("submit").addEventListener("click", submitScore);
+</script>
+</body>
+</html>
