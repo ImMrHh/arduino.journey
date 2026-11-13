@@ -51,6 +51,21 @@
   #lives svg { width: 22px; height: 22px; fill: #ff4d6d; stroke: #ffd0d8; stroke-width: 1.2; transition: transform 0.2s, fill 0.2s; }
   #lives svg.lost { fill: rgba(255,255,255,0.1); stroke: rgba(255,255,255,0.35); transform: scale(0.85); }
 
+  #mute-btn, #mute-btn-start {
+    pointer-events: auto; background: rgba(255,255,255,0.1); color: #fff; border: 1.5px solid rgba(255,255,255,0.35);
+    border-radius: 999px; cursor: pointer; font-weight: 700;
+  }
+  #mute-btn { width: 44px; height: 44px; font-size: 20px; padding: 0; flex: none; }
+  #mute-btn-start { padding: 10px 18px; min-height: 44px; font-size: 16px; margin: 0 0 18px; }
+  #status-row {
+    position: absolute; left: 16px; top: calc(66px + env(safe-area-inset-top)); z-index: 5;
+    display: flex; flex-wrap: wrap; gap: 8px; pointer-events: none;
+  }
+  .pill {
+    background: rgba(8,14,40,0.75); border: 1.5px solid rgba(255,204,51,0.7); color: #ffe9a8;
+    border-radius: 999px; padding: 5px 12px; font-size: 15px; font-weight: 800;
+  }
+
   /* ---------- Overlays ---------- */
   .overlay {
     position: absolute; inset: 0; z-index: 10;
@@ -68,6 +83,16 @@
   .how .ico { flex: none; width: 30px; text-align: center; font-size: 20px; }
   .pilot { font-size: 16px; color: #9fb4e6; margin: 0 0 18px; }
   .pilot b { color: #fff; }
+
+  .rank-box {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); border-radius: 14px;
+    padding: 12px 16px; margin: 0 auto 16px; max-width: 440px;
+  }
+  .rank-name { font-size: 22px; font-weight: 800; color: #ffcc33; margin: 0 0 8px; }
+  .rank-name small { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #9fb4e6; margin-right: 8px; }
+  .rank-bar { height: 12px; border-radius: 6px; background: rgba(255,255,255,0.14); overflow: hidden; }
+  #rank-fill { height: 100%; width: 0; border-radius: 6px; background: linear-gradient(to right, #40c057, #8ce99a); transition: width 0.4s; }
+  #rank-text { font-size: 16px; color: #d7e0f7; margin: 8px 0 0; }
 
   .btn {
     background: #ffcc33; color: #1a1408; border: none; border-radius: 14px;
@@ -130,6 +155,9 @@
   .fb-card.right .tag { color: #8ce99a; }
   .fb-card.picked { background: rgba(224,49,49,0.18); border-color: #f06565; }
   .fb-card.picked .tag { color: #ffa8a8; }
+  .stars { font-size: 22px; letter-spacing: 3px; color: #ffcc33; margin: 6px 0 0; }
+  .stars span { font-size: 16px; letter-spacing: 0; font-weight: 800; margin-left: 8px; color: #8ce99a; }
+  .fb-bonus { font-size: 19px; font-weight: 800; color: #ffcc33; margin: 0 0 14px; }
   .fb-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; margin-top: 16px; }
   .pop { animation: pop 0.35s ease-out; }
   @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
@@ -142,6 +170,8 @@
   .stat .v small { font-size: 16px; font-weight: 700; color: #9fb4e6; }
   .stat.grade .v { color: #ffcc33; }
   #new-best-msg { color: #ffcc33; font-size: 18px; font-weight: 800; margin: 6px 0 0; }
+  #mastery-line { font-size: 17px; color: #d7e0f7; margin: 8px 0 0; font-weight: 700; }
+  #rank-up { font-size: 20px; color: #ffcc33; font-weight: 800; margin: 6px 0 0; }
   #save-status { font-size: 16px; min-height: 22px; margin: 10px 0 14px; color: #9fb4e6; font-weight: 700; }
   #save-status.ok { color: #8ce99a; }
   #save-status.warn { color: #ffd43b; }
@@ -163,19 +193,31 @@
     <div class="hud-item hud-ammo"><span class="hud-label">AMMO</span><div id="ammo-bar"><div id="ammo-fill"></div></div></div>
     <div class="hud-item"><span class="hud-label">LIVES</span><div id="lives"></div></div>
     <div class="hud-item right"><span class="hud-label">BEST</span><span id="best" class="hud-num">0</span></div>
+    <button id="mute-btn" aria-label="Sound on or off">&#128266;</button>
   </div>
+  <div id="status-row"></div>
 
   <!-- Start -->
   <div id="start-overlay" class="overlay">
     <div class="panel">
       <h1>Word Ace <span class="accent">Jet</span></h1>
       <p class="pilot" id="pilot-line"></p>
+      <div class="rank-box hidden" id="rank-box">
+        <p class="rank-name"><small>Rank</small><span id="rank-name">Cadet</span></p>
+        <div class="rank-bar"><div id="rank-fill"></div></div>
+        <p id="rank-text"></p>
+      </div>
+      <p class="pilot hidden" id="practice-line"></p>
       <ul class="how">
         <li><span class="ico">&#128070;</span><span>Drag to move your jet. It shoots by itself.</span></li>
         <li><span class="ico">&#128165;</span><span>Every shot uses ammo. Hit the rocks and drones for points.</span></li>
         <li><span class="ico">&#128218;</span><span>Out of ammo? Pick the word that matches the meaning to reload.</span></li>
         <li><span class="ico">&#10084;&#65039;</span><span>You get 1 try per question. A wrong answer costs a life.</span></li>
+        <li><span class="ico">&#128293;</span><span>3 right in a row gives you a shield. 5 gives you a double shot.</span></li>
+        <li><span class="ico">&#11088;</span><span>Get a word right 3 times to master it and climb the ranks.</span></li>
+        <li class="hidden" id="min-rule"><span class="ico">&#9989;</span><span id="min-rule-text"></span></li>
       </ul>
+      <div><button id="mute-btn-start">Sound: on</button></div>
       <p id="bank-error" class="lead hidden" style="color:#ffa8a8;">The word list did not load. Make sure <b>words.js</b> is in the same folder as this page.</p>
       <button class="btn" id="start-btn">Start game</button>
     </div>
@@ -185,7 +227,7 @@
   <div id="quiz-overlay" class="overlay hidden">
     <div class="panel">
       <div class="quiz-box" id="quiz-question">
-        <p class="quiz-kicker">Out of ammo! Which word means this?</p>
+        <p class="quiz-kicker" id="quiz-kicker">Out of ammo! Which word means this?</p>
         <p id="quiz-def"></p>
         <button class="speak-btn" id="speak-def">&#128266; Read aloud</button>
         <div id="quiz-options"></div>
@@ -194,9 +236,11 @@
       <div class="quiz-box hidden" id="quiz-correct">
         <p class="fb-title good pop">&#11088; Correct!</p>
         <p class="fb-sub">Ammo reloaded. Keep flying!</p>
+        <p class="fb-bonus hidden" id="fbc-bonus"></p>
         <div class="fb-card right">
           <p class="word" id="fbc-word"></p>
           <p class="def" id="fbc-def"></p>
+          <p class="stars" id="fbc-stars"></p>
         </div>
         <div class="fb-actions">
           <button class="speak-btn" id="speak-correct">&#128266; Hear it</button>
@@ -235,6 +279,8 @@
         <div class="stat"><div class="k">Quiz</div><div class="v" id="final-quiz">0/0</div></div>
         <div class="stat grade"><div class="k">Grade</div><div class="v"><span id="final-grade">0</span><small> /10</small></div></div>
       </div>
+      <p id="mastery-line"></p>
+      <p id="rank-up" class="hidden"></p>
       <p id="save-status"></p>
       <div id="review">
         <h2>Words to review</h2>
@@ -278,47 +324,66 @@
   var MAX_PARTICLES = 140;
   var CORRECT_AUTO_MS = 3000;
 
+  // Grade rule: a game's grade is sent only when at least this many
+  // questions were answered. 0 = always send.
+  var MIN_QUESTIONS_TO_SAVE = 5;
+
+  // Learning extras
+  var STARS_TO_MASTER = 3;             // correct answers needed to master a word
+  var RETRY_AFTER = 3;                 // a missed word comes back this many questions later
+  var CARRY_MAX = 6;                   // missed words from earlier games asked first, at most
+  var RANKS = [                        // share of the word bank mastered
+    { name: "Cadet", at: 0 }, { name: "Pilot", at: 0.10 }, { name: "Captain", at: 0.40 }, { name: "Ace", at: 0.80 }
+  ];
+  var SHIELD_AT = 3;                   // answers in a row for a shield
+  var DOUBLE_AT = 5;                   // answers in a row for a double shot
+  var DOUBLE_SHOT_TIME = 1200;         // 20 seconds
+  var BOSS_EVERY = 5;                  // a boss arrives every 5 questions
+  var BOSS_HP = 12;
+
   // One line per student. The picker shows every name on one screen, A to Z.
-  // "group" is only what gets written to column D of Results. When groups
-  // change, update the letter here (or leave it as "" to send it blank).
+  // "group" is only what gets written to column D of Results. It is left
+  // blank because groups change every month. To send a letter again, put
+  // it between the quotes, for example group: "A".
   var ROSTER = [
-    { id: "001", name: "Fatima",   group: "A" },
-    { id: "002", name: "Iker",     group: "A" },
-    { id: "003", name: "Jules",    group: "A" },
-    { id: "004", name: "JoseL",    group: "A" },
-    { id: "005", name: "DiegoG",   group: "A" },
-    { id: "006", name: "Cons",     group: "A" },
-    { id: "007", name: "Gabo",     group: "A" },
-    { id: "008", name: "Pau",      group: "A" },
-    { id: "009", name: "SantiL",   group: "A" },
-    { id: "010", name: "Alonso",   group: "A" },
-    { id: "011", name: "Diego2nd", group: "A" },
-    { id: "012", name: "Emi",      group: "A" },
-    { id: "013", name: "Oli",      group: "A" },
-    { id: "014", name: "Arthur",   group: "A" },
-    { id: "015", name: "Emma",     group: "A" },
-    { id: "016", name: "JP",       group: "A" },
-    { id: "017", name: "SantiS",   group: "A" },
-    { id: "018", name: "Majo",     group: "A" },
-    { id: "019", name: "Rodri",    group: "B" },
-    { id: "020", name: "JuanA",    group: "B" },
-    { id: "021", name: "Alex",     group: "B" },
-    { id: "022", name: "EmiB",     group: "B" },
-    { id: "023", name: "Jero",     group: "B" },
-    { id: "024", name: "Thomas",   group: "B" },
-    { id: "025", name: "Thiago",   group: "B" },
-    { id: "026", name: "Nats",     group: "B" },
-    { id: "027", name: "Pato",     group: "B" },
-    { id: "028", name: "Bruno",    group: "B" },
-    { id: "029", name: "Max",      group: "B" },
-    { id: "030", name: "Anto",     group: "B" },
-    { id: "031", name: "Aitana",   group: "B" },
-    { id: "032", name: "Juan2nd",  group: "B" },
-    { id: "033", name: "Sil",      group: "B" },
-    { id: "034", name: "Anya",     group: "B" },
-    { id: "035", name: "Luka",     group: "B" },
-    { id: "036", name: "Ian",      group: "B" },
-    { id: "037", name: "Xime",     group: "B" }
+    { id: "001", name: "Fatima",   group: "" },
+    { id: "002", name: "Iker",     group: "" },
+    { id: "003", name: "Jules",    group: "" },
+    { id: "004", name: "JoseL",    group: "" },
+    { id: "005", name: "DiegoG",   group: "" },
+    { id: "006", name: "Cons",     group: "" },
+    { id: "007", name: "Gabo",     group: "" },
+    { id: "008", name: "Pau",      group: "" },
+    { id: "009", name: "SantiL",   group: "" },
+    { id: "010", name: "Alonso",   group: "" },
+    { id: "011", name: "Diego2nd", group: "" },
+    { id: "012", name: "Emi",      group: "" },
+    { id: "013", name: "Oli",      group: "" },
+    { id: "014", name: "Arthur",   group: "" },
+    { id: "015", name: "Emma",     group: "" },
+    { id: "016", name: "JP",       group: "" },
+    { id: "017", name: "SantiS",   group: "" },
+    { id: "018", name: "Majo",     group: "" },
+    { id: "019", name: "Rodri",    group: "" },
+    { id: "020", name: "JuanA",    group: "" },
+    { id: "021", name: "Alex",     group: "" },
+    { id: "022", name: "EmiB",     group: "" },
+    { id: "023", name: "Jero",     group: "" },
+    { id: "024", name: "Thomas",   group: "" },
+    { id: "025", name: "Thiago",   group: "" },
+    { id: "026", name: "Nats",     group: "" },
+    { id: "027", name: "Pato",     group: "" },
+    { id: "028", name: "Bruno",    group: "" },
+    { id: "029", name: "Max",      group: "" },
+    { id: "030", name: "Anto",     group: "" },
+    { id: "031", name: "Aitana",   group: "" },
+    { id: "032", name: "Juan2nd",  group: "" },
+    { id: "033", name: "Sil",      group: "" },
+    { id: "034", name: "Anya",     group: "" },
+    { id: "035", name: "Luka",     group: "" },
+    { id: "036", name: "Ian",      group: "" },
+    { id: "037", name: "Xime",     group: "" },
+    { id: "099", name: "Henrik",   group: "" }    // teacher
   ];
 
   function $(id) { return document.getElementById(id); }
@@ -346,6 +411,32 @@
     return out;
   })();
 
+  // Optional practice link: word-ace-jet.html?unit=2&week=3 (either one, or both).
+  // Add &sound=off to start with the sound off.
+  var LINK = (function () {
+    var o = { unit: null, week: null, soundOff: false };
+    try {
+      var q = new URLSearchParams(window.location.search);
+      var u = parseInt(q.get("unit"), 10), w = parseInt(q.get("week"), 10);
+      if (!isNaN(u)) o.unit = u;
+      if (!isNaN(w)) o.week = w;
+      o.soundOff = q.get("sound") === "off";
+    } catch (e) {}
+    return o;
+  })();
+  var POOL = BANK.filter(function (it) {
+    return (LINK.unit === null || Number(it.unit) === LINK.unit) && (LINK.week === null || Number(it.week) === LINK.week);
+  });
+  var practiceOn = (LINK.unit !== null || LINK.week !== null) && POOL.length > 0;
+  if (!POOL.length) POOL = BANK;      // a link that matches no words falls back to the whole bank
+  if (practiceOn) {
+    var bits = [];
+    if (LINK.unit !== null) bits.push("Unit " + LINK.unit);
+    if (LINK.week !== null) bits.push("Week " + LINK.week);
+    $("practice-line").textContent = "Practice set: " + bits.join(", ") + " (" + POOL.length + " words)";
+    show($("practice-line"));
+  }
+
   /* ================================================================
      STUDENT + ROSTER PICKER
      ================================================================ */
@@ -361,6 +452,9 @@
     b.textContent = s.name;
     b.addEventListener("click", function () {
       student = { id: s.id, name: s.name, group: s.group || "" };
+      initAudio();
+      loadProgress();
+      renderRank();
       var line = $("pilot-line");
       line.innerHTML = "";
       line.appendChild(document.createTextNode("Pilot: "));
@@ -466,6 +560,122 @@
   flushQueue(); // anything left from an earlier game on this device
 
   /* ================================================================
+     PROGRESS (stars per word, words to review)
+     Kept on this iPad, separately for each student.
+     ================================================================ */
+  var PROGRESS_KEY = "wordAceJet_progress";
+  var progress = { stars: {}, review: [] };
+
+  function readAllProgress() {
+    try { var a = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}"); return (a && typeof a === "object") ? a : {}; }
+    catch (e) { return {}; }
+  }
+  function loadProgress() {
+    var p = (student && readAllProgress()[student.id]) || {};
+    progress = { stars: (p.stars && typeof p.stars === "object") ? p.stars : {}, review: Array.isArray(p.review) ? p.review : [] };
+  }
+  function saveProgress() {
+    if (!student) return;
+    try { var a = readAllProgress(); a[student.id] = progress; localStorage.setItem(PROGRESS_KEY, JSON.stringify(a)); } catch (e) {}
+  }
+  function wkey(item) { return item.word.toLowerCase(); }
+  function starsOf(item) { return Math.max(0, Math.min(STARS_TO_MASTER, progress.stars[wkey(item)] || 0)); }
+  function isMastered(item) { return starsOf(item) >= STARS_TO_MASTER; }
+  function masteredCount() { return BANK.filter(isMastered).length; }
+  function rankNeed(r) { return Math.ceil(r.at * BANK.length); }
+  function rankFor(n) {
+    var r = RANKS[0];
+    for (var i = 0; i < RANKS.length; i++) if (n >= rankNeed(RANKS[i])) r = RANKS[i];
+    return r;
+  }
+  function nextRank(n) {
+    for (var i = 0; i < RANKS.length; i++) if (n < rankNeed(RANKS[i])) return RANKS[i];
+    return null;
+  }
+  function renderRank() {
+    var n = masteredCount(), total = BANK.length, nx = nextRank(n);
+    $("rank-name").textContent = rankFor(n).name;
+    $("rank-fill").style.width = (total ? (n / total) * 100 : 0) + "%";
+    $("rank-text").textContent = n + " of " + total + " words mastered. " +
+      (nx ? (rankNeed(nx) - n) + " more to reach " + nx.name + "." : "Top rank!");
+    show($("rank-box"));
+  }
+  function starText(n) {
+    var t = "";
+    for (var i = 0; i < STARS_TO_MASTER; i++) t += (i < n ? "\u2605" : "\u2606");
+    return t;
+  }
+
+  /* ================================================================
+     SOUND (made in the browser, no audio files)
+     ================================================================ */
+  var AC = window.AudioContext || window.webkitAudioContext;
+  var actx = null, noiseBuf = null;
+  var MUTE_KEY = "wordAceJet_muted";
+  var muted = LINK.soundOff;
+  if (!muted) { try { muted = localStorage.getItem(MUTE_KEY) === "1"; } catch (e) {} }
+
+  function initAudio() {       // must be called from a tap
+    if (!AC) return;
+    try {
+      if (!actx) {
+        actx = new AC();
+        noiseBuf = actx.createBuffer(1, Math.floor(actx.sampleRate * 0.4), actx.sampleRate);
+        var d = noiseBuf.getChannelData(0);
+        for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      }
+      if (actx.state === "suspended") actx.resume();
+    } catch (e) {}
+  }
+  function tone(freq, dur, type, vol, slideTo, delay) {
+    if (muted || !actx) return;
+    try {
+      var t = actx.currentTime + (delay || 0);
+      var o = actx.createOscillator(), g = actx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, t);
+      if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.connect(g); g.connect(actx.destination);
+      o.start(t); o.stop(t + dur + 0.02);
+    } catch (e) {}
+  }
+  function noise(dur, vol) {
+    if (muted || !actx || !noiseBuf) return;
+    try {
+      var t = actx.currentTime, src = actx.createBufferSource(), g = actx.createGain();
+      src.buffer = noiseBuf;
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      src.connect(g); g.connect(actx.destination);
+      src.start(t); src.stop(t + dur);
+    } catch (e) {}
+  }
+  var sfx = {
+    shoot:   function () { tone(880, 0.07, "square", 0.02, 440); },
+    boom:    function () { noise(0.22, 0.16); tone(140, 0.2, "sine", 0.1, 50); },
+    hit:     function () { noise(0.35, 0.28); tone(110, 0.35, "sawtooth", 0.12, 40); },
+    shield:  function () { tone(900, 0.22, "sine", 0.1, 300); },
+    bounce:  function () { tone(1500, 0.05, "sine", 0.04); },
+    correct: function () { tone(660, 0.12, "triangle", 0.15); tone(880, 0.12, "triangle", 0.15, 0, 0.11); tone(1320, 0.2, "triangle", 0.15, 0, 0.22); },
+    wrong:   function () { tone(220, 0.18, "sawtooth", 0.1, 160); tone(160, 0.3, "sawtooth", 0.1, 110, 0.16); },
+    power:   function () { tone(520, 0.1, "square", 0.06, 1040, 0.35); tone(1040, 0.18, "square", 0.06, 1560, 0.45); },
+    boss:    function () { tone(200, 0.3, "sawtooth", 0.12, 90); tone(200, 0.3, "sawtooth", 0.12, 90, 0.35); },
+    win:     function () { [523, 659, 784, 1047].forEach(function (f, i) { tone(f, 0.16, "triangle", 0.15, 0, i * 0.12); }); }
+  };
+  function showMute() {
+    $("mute-btn").innerHTML = muted ? "&#128263;" : "&#128266;";
+    $("mute-btn-start").textContent = muted ? "Sound: off" : "Sound: on";
+  }
+  function toggleMute() {
+    muted = !muted;
+    try { localStorage.setItem(MUTE_KEY, muted ? "1" : "0"); } catch (e) {}
+    initAudio(); showMute();
+    if (!muted) sfx.bounce();
+  }
+  $("mute-btn").addEventListener("click", toggleMute);
+  $("mute-btn-start").addEventListener("click", toggleMute);
+  showMute();
+
+  /* ================================================================
      READ ALOUD (Web Speech API)
      ================================================================ */
   var canSpeak = ("speechSynthesis" in window) && (typeof SpeechSynthesisUtterance !== "undefined");
@@ -565,6 +775,11 @@
   var time = 0, spawnTimer = 0, fireTimer = 0, shake = 0, hurt = 0;
   var quizCorrect = 0, quizTotal = 0, matchStartTime = 0, sessionId = null;
   var usedRecently = [], missed = [];
+  var retryQueue = [], carry = [];                       // missed words coming back
+  var streak = 0, shield = false, doubleShot = 0;        // power-ups
+  var lastCorrect = true;                                // shots are powered after a correct answer
+  var boss = null, bossShots = [], bossesBeaten = 0, nextBossAt = BOSS_EVERY, banner = null;
+  var masteredAtStart = 0, rankAtStart = "";
 
   var BEST_KEY = "wordAceJet_best";
   try { best = parseInt(localStorage.getItem(BEST_KEY) || "0", 10) || 0; } catch (e) { best = 0; }
@@ -586,6 +801,19 @@
       Array.prototype.forEach.call(livesBox.children, function (el, i) { el.classList.toggle("lost", i >= lives); });
       hudCache.lives = lives;
     }
+    var parts = [];
+    if (state === "playing") {
+      if (streak >= 2) parts.push("\uD83D\uDD25 " + streak + " in a row");
+      if (shield) parts.push("\uD83D\uDEE1 Shield");
+      if (doubleShot > 0) parts.push("\u26A1 Double shot " + Math.ceil(doubleShot / 60) + "s");
+    }
+    var sk = parts.join("|");
+    if (hudCache.status !== sk) {
+      var row = $("status-row");
+      row.innerHTML = "";
+      parts.forEach(function (t) { var el = document.createElement("span"); el.className = "pill"; el.textContent = t; row.appendChild(el); });
+      hudCache.status = sk;
+    }
   }
 
   function resetGame() {
@@ -595,6 +823,11 @@
     spawnTimer = 0; fireTimer = 0; shake = 0; hurt = 0;
     quizActive = false; quizCorrect = 0; quizTotal = 0;
     usedRecently = []; missed = [];
+    retryQueue = []; streak = 0; shield = false; doubleShot = 0; lastCorrect = true;
+    boss = null; bossShots = []; bossesBeaten = 0; nextBossAt = BOSS_EVERY; banner = null;
+    // Words missed in earlier games on this iPad are asked first
+    carry = shuffle(POOL.filter(function (it) { return progress.review.indexOf(wkey(it)) !== -1; })).slice(0, CARRY_MAX);
+    masteredAtStart = masteredCount(); rankAtStart = rankFor(masteredAtStart).name;
     updateHud();
   }
 
@@ -660,7 +893,13 @@
 
   function fireBullet() {
     if (ammo <= 0) return;
-    bullets.push({ x: jet.x, y: jet.y - jet.h / 2, r: 4, speed: 8 });
+    if (doubleShot > 0) {
+      bullets.push({ x: jet.x - 10, y: jet.y - jet.h / 2 + 8, r: 4, speed: 8, charged: lastCorrect });
+      bullets.push({ x: jet.x + 10, y: jet.y - jet.h / 2 + 8, r: 4, speed: 8, charged: lastCorrect });
+    } else {
+      bullets.push({ x: jet.x, y: jet.y - jet.h / 2, r: 4, speed: 8, charged: lastCorrect });
+    }
+    sfx.shoot();
     ammo--;
     if (ammo <= 0) triggerQuiz();
   }
@@ -674,6 +913,40 @@
         size: 1.5 + Math.random() * 2.5, color: colors[Math.floor(Math.random() * colors.length)] });
     }
   }
+  // The ship takes a hit. Returns true when the game ended.
+  function hitShip() {
+    if (shield) {
+      shield = false;
+      addParticles(jet.x, jet.y, ["#7ee0ff", "#ffffff"], 16, 4);
+      addRing(jet.x, jet.y, 40, "126,224,255");
+      shake = 6; sfx.shield();
+      return false;
+    }
+    addParticles(jet.x, jet.y, ["#ff6b6b", "#ffa94d", "#ffffff"], 22, 4.5);
+    addRing(jet.x, jet.y, 34, "255,107,107");
+    lives--; shake = 14; hurt = 1; sfx.hit();
+    if (lives <= 0) { updateHud(); endGame(); return true; }
+    return false;
+  }
+
+  function spawnBoss() {
+    boss = { x: W / 2, y: -80, targetY: Math.min(170, H * 0.24), r: Math.min(48, W * 0.09 + 14),
+             hp: BOSS_HP + bossesBeaten * 4, max: BOSS_HP + bossesBeaten * 4, t: 0, fire: 0, flash: 0 };
+    banner = { text: "BOSS DRONE!", life: 110, max: 110, color: "255,120,170" };
+    sfx.boss();
+  }
+  function defeatBoss() {
+    addParticles(boss.x, boss.y, ["#ff4d6d", "#c9b8ff", "#ffffff", "#ffcc33"], 40, 6);
+    addRing(boss.x, boss.y, boss.r, "255,120,170"); addRing(boss.x, boss.y, boss.r * 1.6, "255,204,51");
+    shake = 12; score += 100; bossesBeaten++;
+    var extra = lives < LIVES_START;
+    if (extra) lives++;
+    banner = { text: extra ? "Boss down! +100 and +1 life" : "Boss down! +100", life: 130, max: 130, color: "140,233,154" };
+    boss = null; bossShots = [];
+    nextBossAt = quizTotal + BOSS_EVERY;
+    sfx.win();
+  }
+
   function addRing(x, y, r, color) { if (rings.length < 12) rings.push({ x: x, y: y, r: r * 0.5, grow: r * 0.12, life: 14, max: 14, color: color }); }
 
   /* ================================================================
@@ -688,12 +961,30 @@
     return a;
   }
 
+  var currentIsReview = false;
   function pickWord() {
-    var pool = BANK.filter(function (it) { return usedRecently.indexOf(it.word) === -1; });
-    if (pool.length === 0) { usedRecently = []; pool = BANK.slice(); }
-    var pick = pool[Math.floor(Math.random() * pool.length)];
+    var pick = null, i;
+    currentIsReview = false;
+    // 1. a word missed earlier in this game, once enough questions have passed
+    for (i = 0; i < retryQueue.length; i++) retryQueue[i].wait--;
+    for (i = 0; i < retryQueue.length; i++) {
+      if (retryQueue[i].wait <= 0) { pick = retryQueue.splice(i, 1)[0].item; currentIsReview = true; break; }
+    }
+    // 2. a word missed in an earlier game
+    if (!pick && carry.length) { pick = carry.shift(); currentIsReview = true; }
+    // 3. a random word, not one of the last 12; words not mastered yet come up 3 times as often
+    if (!pick) {
+      var pool = POOL.filter(function (it) { return usedRecently.indexOf(it.word) === -1; });
+      if (pool.length === 0) { usedRecently = []; pool = POOL.slice(); }
+      var total = 0, weights = pool.map(function (it) { var w = isMastered(it) ? 1 : 3; total += w; return w; });
+      var roll = Math.random() * total;
+      pick = pool[pool.length - 1];
+      for (i = 0; i < pool.length; i++) { roll -= weights[i]; if (roll < 0) { pick = pool[i]; break; } }
+    }
+    var at = usedRecently.indexOf(pick.word);
+    if (at !== -1) usedRecently.splice(at, 1);
     usedRecently.push(pick.word);
-    var limit = Math.min(RECENT_LIMIT, BANK.length - 1);
+    var limit = Math.min(RECENT_LIMIT, POOL.length - 1);
     while (usedRecently.length > limit) usedRecently.shift();
     return pick;
   }
@@ -718,6 +1009,7 @@
     current = pickWord();
     var options = shuffle([current].concat(pickDistractors(current)));
     $("quiz-def").textContent = current.def;
+    $("quiz-kicker").textContent = currentIsReview ? "Review word! Which word means this?" : "Out of ammo! Which word means this?";
     var wrap = $("quiz-options");
     wrap.innerHTML = "";
     options.forEach(function (opt) {
@@ -736,9 +1028,36 @@
     answered = true;
     stopSpeaking();
     quizTotal++;
+    var k = wkey(current);
     if (opt.word === current.word) {
       quizCorrect++;
       ammo = AMMO_CORRECT;
+      lastCorrect = true;
+      streak++;
+
+      // stars and review list
+      var before = starsOf(current);
+      progress.stars[k] = Math.min(STARS_TO_MASTER, before + 1);
+      var rv = progress.review.indexOf(k);
+      if (rv !== -1) progress.review.splice(rv, 1);
+      retryQueue = retryQueue.filter(function (q) { return q.item.word !== current.word; });
+      var now = starsOf(current);
+      $("fbc-stars").textContent = starText(now);
+      if (now >= STARS_TO_MASTER && before < STARS_TO_MASTER) {
+        var tag = document.createElement("span"); tag.textContent = "Word mastered!";
+        $("fbc-stars").appendChild(tag);
+      }
+
+      // streak rewards: 3, 8, 13... shield. 5, 10, 15... double shot.
+      var bonus = "";
+      if (streak % DOUBLE_AT === 0) { doubleShot = DOUBLE_SHOT_TIME; bonus = "\u26A1 " + streak + " in a row! Double shot for 20 seconds."; }
+      else if (streak % DOUBLE_AT === SHIELD_AT) { shield = true; bonus = "\uD83D\uDEE1 " + streak + " in a row! Shield on."; }
+      else if (streak >= 2) { bonus = "\uD83D\uDD25 " + streak + " in a row!"; }
+      $("fbc-bonus").textContent = bonus;
+      $("fbc-bonus").classList.toggle("hidden", !bonus);
+      sfx.correct();
+      if (bonus && streak % DOUBLE_AT !== 1 && (streak % DOUBLE_AT === 0 || streak % DOUBLE_AT === SHIELD_AT)) sfx.power();
+
       $("fbc-word").textContent = current.word;
       $("fbc-def").textContent = current.def;
       showQuizPane("quiz-correct");
@@ -746,6 +1065,14 @@
     } else {
       lives--;
       shake = 10;
+      lastCorrect = false;
+      streak = 0;
+      sfx.wrong();
+      progress.stars[k] = Math.max(0, starsOf(current) - 1);          // a miss takes one star back
+      if (progress.review.indexOf(k) === -1) progress.review.push(k);  // asked first next game
+      if (!retryQueue.some(function (q) { return q.item.word === current.word; })) {
+        retryQueue.push({ item: current, wait: RETRY_AFTER });         // and again later in this game
+      }
       if (!missed.some(function (m) { return m.word === current.word; })) missed.push(current);
       $("fbw-picked-word").textContent = opt.word;
       $("fbw-picked-def").textContent = opt.def;
@@ -757,6 +1084,7 @@
       if (lives > 0) ammo = AMMO_WRONG;
       showQuizPane("quiz-wrong");   // stays until "Got it" is tapped
     }
+    saveProgress();
     updateHud();
   }
 
@@ -767,7 +1095,8 @@
     hide($("quiz-overlay"));
     quizActive = false;
     fireTimer = 0;
-    if (lives <= 0) endGame();
+    if (lives <= 0) { endGame(); return; }
+    if (!boss && quizTotal >= nextBossAt) spawnBoss();
   }
 
   $("speak-def").addEventListener("click", function () { if (current) speak(current.def); });
@@ -813,6 +1142,7 @@
     }
     if (shake > 0) shake = Math.max(0, shake - 0.8 * dt);
     if (hurt > 0) hurt = Math.max(0, hurt - 0.05 * dt);
+    if (banner) { banner.life -= dt; if (banner.life <= 0) banner = null; }
 
     if (state !== "playing" || quizActive) return;
 
@@ -822,11 +1152,14 @@
     jet.tilt += (targetTilt - jet.tilt) * Math.min(1, 0.2 * dt);
     jet.lastX = jet.x;
 
+    if (doubleShot > 0) doubleShot = Math.max(0, doubleShot - dt);
+
     fireTimer += dt;
     if (fireTimer > 20) { fireTimer = 0; fireBullet(); if (quizActive) { updateHud(); return; } }
 
     spawnTimer += dt;
     var spawnRate = Math.max(35, 70 - Math.floor(score / 40));
+    if (boss) spawnRate *= 2.5;      // fewer rocks while the boss is here
     if (spawnTimer > spawnRate) { spawnTimer = 0; spawnEnemy(); }
 
     for (var b = bullets.length - 1; b >= 0; b--) {
@@ -848,7 +1181,7 @@
           else addParticles(en.x, en.y, ["#ff4d6d", "#c9b8ff", "#ffffff"], 12, 3.4);
           addRing(en.x, en.y, en.r, en.kind === "rock" ? "255,204,51" : "255,120,170");
           enemies.splice(i, 1); bullets.splice(j, 1);
-          score += 10;
+          score += 10; sfx.boom();
           destroyed = true;
           break;
         }
@@ -856,13 +1189,47 @@
       if (destroyed) continue;
 
       if (circleHit(en.x, en.y, en.r, jet.x, jet.y, jet.w / 2.4)) {
-        addParticles(jet.x, jet.y, ["#ff6b6b", "#ffa94d", "#ffffff"], 22, 4.5);
-        addRing(jet.x, jet.y, 34, "255,107,107");
         enemies.splice(i, 1);
-        lives--; shake = 14; hurt = 1;
-        if (lives <= 0) { updateHud(); endGame(); return; }
+        if (hitShip()) return;
       } else if (en.y - en.r > H) {
         enemies.splice(i, 1);
+      }
+    }
+
+    // ----- Boss: only powered shots (after a correct answer) hurt it -----
+    if (boss) {
+      boss.t += dt;
+      boss.y += (boss.targetY - boss.y) * Math.min(1, 0.04 * dt);
+      boss.x = W / 2 + Math.sin(boss.t * 0.018) * Math.max(0, Math.min(W * 0.36, W / 2 - boss.r - 10));
+      if (boss.flash > 0) boss.flash -= dt;
+      boss.fire += dt;
+      if (boss.fire > 170 && boss.y > boss.targetY - 25) {
+        boss.fire = 0;
+        var dx = jet.x - boss.x, dy = jet.y - boss.y, len = Math.sqrt(dx * dx + dy * dy) || 1;
+        bossShots.push({ x: boss.x, y: boss.y + boss.r * 0.6, vx: (dx / len) * 2.2, vy: (dy / len) * 2.2, r: 8 });
+      }
+      for (var bb = bullets.length - 1; bb >= 0 && boss; bb--) {
+        var sb = bullets[bb];
+        if (circleHit(boss.x, boss.y, boss.r, sb.x, sb.y, sb.r)) {
+          bullets.splice(bb, 1);
+          if (sb.charged) {
+            boss.hp--; boss.flash = 5;
+            addParticles(sb.x, sb.y, ["#ffcc33", "#ffffff"], 4, 2.5);
+            if (boss.hp <= 0) defeatBoss();
+          } else {
+            addParticles(sb.x, sb.y, ["#7ee0ff"], 3, 2); sfx.bounce();
+          }
+        }
+      }
+    }
+    for (var s2 = bossShots.length - 1; s2 >= 0; s2--) {
+      var sh = bossShots[s2];
+      sh.x += sh.vx * dt; sh.y += sh.vy * dt;
+      if (circleHit(sh.x, sh.y, sh.r, jet.x, jet.y, jet.w / 2.6)) {
+        bossShots.splice(s2, 1);
+        if (hitShip()) return;
+      } else if (sh.y > H + 20 || sh.x < -20 || sh.x > W + 20) {
+        bossShots.splice(s2, 1);
       }
     }
     updateHud();
@@ -992,6 +1359,46 @@
     ctx.restore();
   }
 
+  function drawBoss() {
+    var r = boss.r, x = boss.x, y = boss.y, pulse = 0.5 + 0.5 * Math.sin(time * 0.12);
+    drawGlow(GLOW_DRONE, x, y, r * 2.3, 0.4 + pulse * 0.2);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.fillStyle = "#2c1f52";   // wings
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.6, -r * 0.3); ctx.lineTo(-r * 1.5, -r * 0.75); ctx.lineTo(-r * 1.3, r * 0.55); ctx.lineTo(-r * 0.6, r * 0.35);
+    ctx.moveTo(r * 0.6, -r * 0.3); ctx.lineTo(r * 1.5, -r * 0.75); ctx.lineTo(r * 1.3, r * 0.55); ctx.lineTo(r * 0.6, r * 0.35);
+    ctx.fill();
+    ctx.fillStyle = boss.flash > 0 ? "#ffffff" : "#5a3fa8";   // body flashes when hurt
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.82, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = boss.flash > 0 ? "#ffffff" : "#8a6fe0";
+    ctx.beginPath(); ctx.arc(-r * 0.1, -r * 0.18, r * 0.62, Math.PI * 0.95, Math.PI * 1.9); ctx.fill();
+    ctx.strokeStyle = "#d8ccff"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.82, 0, Math.PI * 2); ctx.stroke();
+    for (var sx = -1; sx <= 1; sx += 2) {   // two eyes
+      ctx.fillStyle = "#2a0b1f";
+      ctx.beginPath(); ctx.arc(sx * r * 0.32, -r * 0.05, r * 0.22, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#ff4d6d";
+      ctx.beginPath(); ctx.arc(sx * r * 0.32, -r * 0.05, r * (0.12 + pulse * 0.05), 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = "#2a0b1f";
+    ctx.fillRect(-r * 0.3, r * 0.34, r * 0.6, r * 0.12);
+    ctx.restore();
+
+    // health bar
+    ctx.fillStyle = "rgba(255,255,255,0.2)"; ctx.fillRect(x - r, y - r - 20, r * 2, 8);
+    ctx.fillStyle = "#ff4d6d"; ctx.fillRect(x - r, y - r - 20, r * 2 * Math.max(0, boss.hp / boss.max), 8);
+
+    // force field while the shots are not powered
+    if (!lastCorrect) {
+      ctx.strokeStyle = "rgba(126,224,255," + (0.5 + pulse * 0.4) + ")"; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(x, y, r * 1.6, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = "#bfefff"; ctx.textAlign = "center";
+      ctx.font = "700 18px ui-rounded, -apple-system, 'Segoe UI', Arial, sans-serif";
+      ctx.fillText("Answer correctly to power up your shots!", W / 2, boss.targetY + r * 1.6 + 30);
+    }
+  }
+
   function render() {
     ctx.save();
     if (shake > 0) ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
@@ -1002,13 +1409,26 @@
       for (var b = 0; b < bullets.length; b++) {
         var bl = bullets[b];
         drawGlow(GLOW_BULLET, bl.x, bl.y, 12, 0.8);
-        ctx.fillStyle = "#fff6c2";
+        ctx.fillStyle = bl.charged ? "#fff6c2" : "#bfefff";
         ctx.fillRect(bl.x - 2, bl.y - 7, 4, 14);
+      }
+      if (boss) drawBoss();
+      for (var q = 0; q < bossShots.length; q++) {
+        drawGlow(GLOW_DRONE, bossShots[q].x, bossShots[q].y, 20, 0.9);
+        ctx.fillStyle = "#ffd0dc";
+        ctx.beginPath(); ctx.arc(bossShots[q].x, bossShots[q].y, 5, 0, Math.PI * 2); ctx.fill();
       }
       for (var e = 0; e < enemies.length; e++) {
         if (enemies[e].kind === "rock") drawRock(enemies[e]); else drawDrone(enemies[e]);
       }
-      if (state === "playing") drawJet();
+      if (state === "playing") {
+        drawJet();
+        if (shield) {
+          ctx.strokeStyle = "rgba(126,224,255," + (0.65 + 0.25 * Math.sin(time * 0.15)) + ")"; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.arc(jet.x, jet.y, 40, 0, Math.PI * 2); ctx.stroke();
+          ctx.fillStyle = "rgba(126,224,255,0.1)"; ctx.fill();
+        }
+      }
     }
 
     for (var r = 0; r < rings.length; r++) {
@@ -1024,6 +1444,12 @@
       ctx.fillRect(pt.x - pt.size / 2, pt.y - pt.size / 2, pt.size, pt.size);
     }
     ctx.globalAlpha = 1;
+    if (banner && state === "playing") {
+      var ba = Math.min(1, banner.life / 30, (banner.max - banner.life) / 12 + 0.2);
+      ctx.fillStyle = "rgba(" + banner.color + "," + ba + ")"; ctx.textAlign = "center";
+      ctx.font = "800 " + Math.round(Math.min(44, W * 0.075)) + "px ui-rounded, -apple-system, 'Segoe UI', Arial, sans-serif";
+      ctx.fillText(banner.text, W / 2, H * 0.42);
+    }
     ctx.restore();
 
     if (hurt > 0) { ctx.fillStyle = "rgba(255,50,70," + (hurt * 0.28) + ")"; ctx.fillRect(0, 0, W, H); }
@@ -1080,10 +1506,20 @@
       show(none);
     }
 
+    // mastery and rank after this game
+    var mNow = masteredCount(), gained = mNow - masteredAtStart, rNow = rankFor(mNow).name;
+    $("mastery-line").textContent = "\u2B50 Words mastered: " + mNow + " of " + BANK.length + (gained > 0 ? " (+" + gained + " this game)" : "");
+    $("rank-up").textContent = "New rank: " + rNow + "!";
+    $("rank-up").classList.toggle("hidden", rNow === rankAtStart || gained <= 0);
+    renderRank();
+
     var over = $("gameover-overlay");
     show(over); over.scrollTop = 0;
 
-    if (student) {
+    if (student && quizTotal < MIN_QUESTIONS_TO_SAVE) {
+      $("save-status").className = "warn";
+      $("save-status").textContent = "Answer at least " + MIN_QUESTIONS_TO_SAVE + " questions for your grade to count.";
+    } else if (student) {
       queueAndSend({
         studentId: student.id,
         studentName: student.name,
@@ -1103,6 +1539,7 @@
   function startGame() {
     if (BANK.length < 4) return;
     hide($("start-overlay")); hide($("gameover-overlay")); hide($("quiz-overlay"));
+    initAudio();
     resize();
     resetGame();
     sessionId = makeSessionId();     // one id per game played
@@ -1115,12 +1552,17 @@
   $("restart-btn").addEventListener("click", startGame);
   $("change-player-btn").addEventListener("click", function () {
     state = "idle";
+    updateHud();
     hide($("gameover-overlay"));
     show($("start-overlay"));
     picker.scrollTop = 0;
     show(picker);
   });
 
+  if (MIN_QUESTIONS_TO_SAVE > 0) {
+    $("min-rule-text").textContent = "Answer at least " + MIN_QUESTIONS_TO_SAVE + " questions for your grade to count.";
+    show($("min-rule"));
+  }
   if (BANK.length < 4) {
     show($("bank-error"));
     $("start-btn").disabled = true;
@@ -1131,7 +1573,10 @@
   requestAnimationFrame(loop);
 
   // Small hook used only for testing from the browser console
-  window.__waj = { bank: BANK, calcGrade: calcGrade };
+  window.__waj = { bank: BANK, calcGrade: calcGrade, peek: function () {
+    return { streak: streak, shield: shield, doubleShot: doubleShot, boss: boss ? boss.hp : null, bossesBeaten: bossesBeaten,
+             lives: lives, score: score, pool: POOL.length, mastered: masteredCount(), review: progress.review.slice(), retry: retryQueue.length };
+  } };
 })();
 </script>
 </body>
