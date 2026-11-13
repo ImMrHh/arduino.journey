@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Word Ace Jet</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    overflow: hidden; position: fixed; inset: 0;
+    background: #070b1d; color: #fff;
+    font-family: ui-rounded, "SF Pro Rounded", -apple-system, "Segoe UI", Arial, sans-serif;
+    -webkit-user-select: none; user-select: none;
+  }
+  button { font-family: inherit; }
+  .hidden { display: none !important; }
+
+  #game-container { position: relative; width: 100%; height: 100%; }
+  #game { display: block; width: 100%; height: 100%; touch-action: none; }
+
+  /* ---------- HUD ---------- */
+  #hud {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(4,8,24,0.75), rgba(4,8,24,0));
+  }
+  .hud-item { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 56px; }
+  .hud-item.right { align-items: flex-end; }
+  .hud-label { font-size: 11px; letter-spacing: 0.12em; color: #9fb4e6; font-weight: 700; }
+  .hud-num { font-size: 22px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+  #best { color: #ffcc33; }
+  .hud-ammo { flex: 1; max-width: 260px; }
+  #ammo-bar {
+    position: relative; width: 100%; height: 16px; border-radius: 8px; overflow: hidden;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+  }
+  #ammo-fill {
+    height: 100%; width: 100%; border-radius: 7px;
+    background: linear-gradient(to right, #ffb703, #ffe066);
+    transition: width 0.12s linear;
+  }
+  #ammo-bar::after {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(to right, transparent 0, transparent calc(100% / 12 - 2px), rgba(4,8,24,0.55) calc(100% / 12 - 2px), rgba(4,8,24,0.55) calc(100% / 12));
+  }
+  #ammo-bar.low #ammo-fill { background: linear-gradient(to right, #ff4d6d, #ff8fa3); }
+  #lives { display: flex; gap: 4px; height: 22px; align-items: center; }
+  #lives svg { width: 22px; height: 22px; fill: #ff4d6d; stroke: #ffd0d8; stroke-width: 1.2; transition: transform 0.2s, fill 0.2s; }
+  #lives svg.lost { fill: rgba(255,255,255,0.1); stroke: rgba(255,255,255,0.35); transform: scale(0.85); }
+
+  /* ---------- Overlays ---------- */
+  .overlay {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(5, 9, 28, 0.84); text-align: center;
+    padding: calc(24px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  .overlay > .panel { margin: auto 0; width: 100%; max-width: 560px; }
+  .overlay h1 { font-size: 40px; margin: 0 0 6px; letter-spacing: 0.01em; line-height: 1.1; }
+  .overlay h1 .accent { color: #ffcc33; }
+  .lead { font-size: 18px; line-height: 1.5; color: #d7e0f7; margin: 10px auto 22px; max-width: 460px; }
+  .how { list-style: none; padding: 0; margin: 0 auto 24px; max-width: 440px; text-align: left; font-size: 18px; line-height: 1.45; color: #e6ecfb; }
+  .how li { display: flex; gap: 12px; align-items: flex-start; padding: 7px 0; }
+  .how .ico { flex: none; width: 30px; text-align: center; font-size: 20px; }
+  .pilot { font-size: 16px; color: #9fb4e6; margin: 0 0 18px; }
+  .pilot b { color: #fff; }
+
+  .btn {
+    background: #ffcc33; color: #1a1408; border: none; border-radius: 14px;
+    padding: 16px 36px; min-height: 56px; font-size: 20px; font-weight: 800; cursor: pointer;
+    box-shadow: 0 5px 0 #b88a12;
+  }
+  .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #b88a12; }
+  .btn:disabled { opacity: 0.45; }
+  .btn-ghost {
+    background: transparent; color: #c9d6f7; border: 2px solid rgba(201,214,247,0.45); border-radius: 12px;
+    padding: 12px 22px; min-height: 48px; font-size: 17px; font-weight: 700; cursor: pointer;
+  }
+  .btn-ghost:active { background: rgba(255,255,255,0.1); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: center; }
+
+  /* ---------- Roster picker ---------- */
+  #picker { z-index: 30; background: #070b1d; }
+  #picker h1 { font-size: 32px; }
+  .pick-btn {
+    background: rgba(255,204,51,0.06); color: #fff; border: 2px solid #e8b54d; border-radius: 14px;
+    padding: 14px 20px; min-height: 52px; font-size: 18px; font-weight: 700; cursor: pointer;
+  }
+  .pick-btn:active { background: rgba(255,204,51,0.25); }
+  #picker > .panel { max-width: 760px; }
+  #picker .lead { margin: 6px auto 16px; }
+  #picker-names { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+  #picker-names .pick-btn { padding: 12px 6px; }
+
+  /* ---------- Quiz ---------- */
+  #quiz-overlay { background: rgba(5, 9, 28, 0.9); }
+  .quiz-box {
+    background: #111c44; border: 2px solid #4169c9; border-radius: 20px;
+    padding: 22px 20px 24px; box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+  }
+  .quiz-kicker { font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: #9fc0ff; font-weight: 800; margin: 0 0 12px; }
+  #quiz-def { font-size: 24px; font-weight: 700; line-height: 1.35; margin: 0 0 14px; }
+  .speak-btn {
+    background: rgba(159,192,255,0.14); color: #dbe7ff; border: 1.5px solid rgba(159,192,255,0.5); border-radius: 999px;
+    padding: 10px 18px; min-height: 44px; font-size: 16px; font-weight: 700; cursor: pointer;
+  }
+  .speak-btn:active { background: rgba(159,192,255,0.3); }
+  #quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  .opt-btn {
+    background: #1d3270; border: 2px solid #4a74d6; color: #fff; border-radius: 14px;
+    padding: 14px 10px; min-height: 72px; font-size: 21px; font-weight: 700; line-height: 1.2; cursor: pointer;
+    overflow-wrap: anywhere;
+  }
+  .opt-btn:active { background: #2b4796; }
+  @media (max-width: 440px) { #quiz-options { grid-template-columns: 1fr; } .opt-btn { min-height: 60px; } }
+
+  .fb-title { font-size: 34px; font-weight: 800; margin: 0 0 4px; }
+  .fb-title.good { color: #69db7c; }
+  .fb-title.bad { color: #ff8787; }
+  .fb-sub { font-size: 18px; color: #d7e0f7; margin: 0 0 16px; }
+  .fb-card { text-align: left; border-radius: 14px; padding: 14px 16px; margin: 0 0 12px; border: 2px solid; }
+  .fb-card .tag { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 800; margin: 0 0 4px; }
+  .fb-card .word { font-size: 24px; font-weight: 800; margin: 0 0 4px; }
+  .fb-card .def { font-size: 19px; line-height: 1.4; margin: 0; color: #eef2ff; }
+  .fb-card.right { background: rgba(47,158,68,0.2); border-color: #40c057; }
+  .fb-card.right .tag { color: #8ce99a; }
+  .fb-card.picked { background: rgba(224,49,49,0.18); border-color: #f06565; }
+  .fb-card.picked .tag { color: #ffa8a8; }
+  .fb-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; margin-top: 16px; }
+  .pop { animation: pop 0.35s ease-out; }
+  @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
+
+  /* ---------- Game over ---------- */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0 8px; }
+  .stat { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.16); border-radius: 14px; padding: 12px 6px; }
+  .stat .k { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #9fb4e6; font-weight: 800; }
+  .stat .v { font-size: 30px; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .stat .v small { font-size: 16px; font-weight: 700; color: #9fb4e6; }
+  .stat.grade .v { color: #ffcc33; }
+  #new-best-msg { color: #ffcc33; font-size: 18px; font-weight: 800; margin: 6px 0 0; }
+  #save-status { font-size: 16px; min-height: 22px; margin: 10px 0 14px; color: #9fb4e6; font-weight: 700; }
+  #save-status.ok { color: #8ce99a; }
+  #save-status.warn { color: #ffd43b; }
+  #review { text-align: left; margin: 6px 0 18px; }
+  #review h2 { font-size: 20px; margin: 0 0 8px; color: #ffcc33; text-align: center; }
+  #review ul { list-style: none; margin: 0; padding: 0; }
+  #review li { background: rgba(255,255,255,0.07); border-left: 5px solid #ff8787; border-radius: 10px; padding: 10px 14px; margin: 0 0 8px; font-size: 18px; line-height: 1.4; }
+  #review li b { display: block; font-size: 20px; }
+  #review .none { text-align: center; font-size: 18px; color: #8ce99a; font-weight: 700; margin: 0; }
+</style>
+</head>
+<body>
+
+<div id="game-container">
+  <canvas id="game"></canvas>
+
+  <div id="hud">
+    <div class="hud-item"><span class="hud-label">SCORE</span><span id="score" class="hud-num">0</span></div>
+    <div class="hud-item hud-ammo"><span class="hud-label">AMMO</span><div id="ammo-bar"><div id="ammo-fill"></div></div></div>
+    <div class="hud-item"><span class="hud-label">LIVES</span><div id="lives"></div></div>
+    <div class="hud-item right"><span class="hud-label">BEST</span><span id="best" class="hud-num">0</span></div>
+  </div>
+
+  <!-- Start -->
+  <div id="start-overlay" class="overlay">
+    <div class="panel">
+      <h1>Word Ace <span class="accent">Jet</span></h1>
+      <p class="pilot" id="pilot-line"></p>
+      <ul class="how">
+        <li><span class="ico">&#128070;</span><span>Drag to move your jet. It shoots by itself.</span></li>
+        <li><span class="ico">&#128165;</span><span>Every shot uses ammo. Hit the rocks and drones for points.</span></li>
+        <li><span class="ico">&#128218;</span><span>Out of ammo? Pick the word that matches the meaning to reload.</span></li>
+        <li><span class="ico">&#10084;&#65039;</span><span>You get 1 try per question. A wrong answer costs a life.</span></li>
+      </ul>
+      <p id="bank-error" class="lead hidden" style="color:#ffa8a8;">The word list did not load. Make sure <b>words.js</b> is in the same folder as this page.</p>
+      <button class="btn" id="start-btn">Start game</button>
+    </div>
+  </div>
+
+  <!-- Quiz -->
+  <div id="quiz-overlay" class="overlay hidden">
+    <div class="panel">
+      <div class="quiz-box" id="quiz-question">
+        <p class="quiz-kicker">Out of ammo! Which word means this?</p>
+        <p id="quiz-def"></p>
+        <button class="speak-btn" id="speak-def">&#128266; Read aloud</button>
+        <div id="quiz-options"></div>
+      </div>
+
+      <div class="quiz-box hidden" id="quiz-correct">
+        <p class="fb-title good pop">&#11088; Correct!</p>
+        <p class="fb-sub">Ammo reloaded. Keep flying!</p>
+        <div class="fb-card right">
+          <p class="word" id="fbc-word"></p>
+          <p class="def" id="fbc-def"></p>
+        </div>
+        <div class="fb-actions">
+          <button class="speak-btn" id="speak-correct">&#128266; Hear it</button>
+          <button class="btn" id="continue-btn">Keep flying</button>
+        </div>
+      </div>
+
+      <div class="quiz-box hidden" id="quiz-wrong">
+        <p class="fb-title bad">Not this time</p>
+        <p class="fb-sub" id="fbw-sub">You lost a life. Read these two words before you go on.</p>
+        <div class="fb-card picked">
+          <p class="tag">You picked</p>
+          <p class="word" id="fbw-picked-word"></p>
+          <p class="def" id="fbw-picked-def"></p>
+        </div>
+        <div class="fb-card right">
+          <p class="tag">The answer was</p>
+          <p class="word" id="fbw-right-word"></p>
+          <p class="def" id="fbw-right-def"></p>
+        </div>
+        <div class="fb-actions">
+          <button class="speak-btn" id="speak-wrong">&#128266; Hear the answer</button>
+          <button class="btn" id="gotit-btn">Got it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game over -->
+  <div id="gameover-overlay" class="overlay hidden">
+    <div class="panel">
+      <h1>Game over</h1>
+      <p id="new-best-msg" class="hidden">New best score!</p>
+      <div class="stats">
+        <div class="stat"><div class="k">Score</div><div class="v" id="final-score">0</div></div>
+        <div class="stat"><div class="k">Quiz</div><div class="v" id="final-quiz">0/0</div></div>
+        <div class="stat grade"><div class="k">Grade</div><div class="v"><span id="final-grade">0</span><small> /10</small></div></div>
+      </div>
+      <p id="save-status"></p>
+      <div id="review">
+        <h2>Words to review</h2>
+        <ul id="review-list"></ul>
+        <p class="none hidden" id="review-none"></p>
+      </div>
+      <div class="btn-row">
+        <button class="btn" id="restart-btn">Play again</button>
+        <button class="btn-ghost" id="change-player-btn">Change player</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Roster picker -->
+  <div id="picker" class="overlay">
+    <div class="panel">
+      <h1>Who's playing?</h1>
+      <p class="lead">Tap your name</p>
+      <div id="picker-names"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Word bank: add words in words.js, no changes needed here -->
+<script src="words.js"></script>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ================================================================
+     SETTINGS
+     ================================================================ */
+  var SHEET_URL = "https://script.google.com/macros/s/AKfycbz6HwVtI8LEzfZUUKNvkSShTT26YWwexM6hBUfRlGqsH7GbQsj6zpVzp9dEuPYyd-aj/exec";
+  var ACTIVITY = "Word Ace Jet";       // must match the sheet exactly
+  var AMMO_START = 24;
+  var AMMO_CORRECT = 18;
+  var AMMO_WRONG = 8;
+  var LIVES_START = 3;
+  var RECENT_LIMIT = 12;               // do not repeat a word within the last 12 questions
+  var MAX_PARTICLES = 140;
+  var CORRECT_AUTO_MS = 3000;
+
+  // One line per student. The picker shows every name on one screen, A to Z.
+  // "group" is only what gets written to column D of Results. When groups
+  // change, update the letter here (or leave it as "" to send it blank).
+  var ROSTER = [
+    { id: "001", name: "Fatima",   group: "A" },
+    { id: "002", name: "Iker",     group: "A" },
+    { id: "003", name: "Jules",    group: "A" },
+    { id: "004", name: "JoseL",    group: "A" },
+    { id: "005", name: "DiegoG",   group: "A" },
+    { id: "006", name: "Cons",     group: "A" },
+    { id: "007", name: "Gabo",     group: "A" },
+    { id: "008", name: "Pau",      group: "A" },
+    { id: "009", name: "SantiL",   group: "A" },
+    { id: "010", name: "Alonso",   group: "A" },
+    { id: "011", name: "Diego2nd", group: "A" },
+    { id: "012", name: "Emi",      group: "A" },
+    { id: "013", name: "Oli",      group: "A" },
+    { id: "014", name: "Arthur",   group: "A" },
+    { id: "015", name: "Emma",     group: "A" },
+    { id: "016", name: "JP",       group: "A" },
+    { id: "017", name: "SantiS",   group: "A" },
+    { id: "018", name: "Majo",     group: "A" },
+    { id: "019", name: "Rodri",    group: "B" },
+    { id: "020", name: "JuanA",    group: "B" },
+    { id: "021", name: "Alex",     group: "B" },
+    { id: "022", name: "EmiB",     group: "B" },
+    { id: "023", name: "Jero",     group: "B" },
+    { id: "024", name: "Thomas",   group: "B" },
+    { id: "025", name: "Thiago",   group: "B" },
+    { id: "026", name: "Nats",     group: "B" },
+    { id: "027", name: "Pato",     group: "B" },
+    { id: "028", name: "Bruno",    group: "B" },
+    { id: "029", name: "Max",      group: "B" },
+    { id: "030", name: "Anto",     group: "B" },
+    { id: "031", name: "Aitana",   group: "B" },
+    { id: "032", name: "Juan2nd",  group: "B" },
+    { id: "033", name: "Sil",      group: "B" },
+    { id: "034", name: "Anya",     group: "B" },
+    { id: "035", name: "Luka",     group: "B" },
+    { id: "036", name: "Ian",      group: "B" },
+    { id: "037", name: "Xime",     group: "B" }
+  ];
+
+  function $(id) { return document.getElementById(id); }
+  function show(el) { el.classList.remove("hidden"); }
+  function hide(el) { el.classList.add("hidden"); }
+
+  /* ================================================================
+     WORD BANK (from words.js)
+     A row plays when it has a word, a definition, and is not "off".
+     ================================================================ */
+  var BANK = (function () {
+    var raw = (typeof WORD_BANK !== "undefined" && WORD_BANK && WORD_BANK.length) ? WORD_BANK : [];
+    var seen = {};
+    var out = [];
+    for (var i = 0; i < raw.length; i++) {
+      var r = raw[i] || {};
+      var word = String(r.word || "").trim();
+      var def = String(r.definition || "").trim();
+      var status = String(r.status || "").trim().toLowerCase();
+      var key = word.toLowerCase();
+      if (!word || !def || status === "off" || seen[key]) continue;
+      seen[key] = true;
+      out.push({ unit: r.unit, week: r.week, word: word, def: def });
+    }
+    return out;
+  })();
+
+  /* ================================================================
+     STUDENT + ROSTER PICKER
+     ================================================================ */
+  var student = null;
+  var picker = $("picker");
+  var namesBox = $("picker-names");
+
+  ROSTER.slice().sort(function (a, b) {
+    return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
+  }).forEach(function (s) {
+    var b = document.createElement("button");
+    b.className = "pick-btn";
+    b.textContent = s.name;
+    b.addEventListener("click", function () {
+      student = { id: s.id, name: s.name, group: s.group || "" };
+      var line = $("pilot-line");
+      line.innerHTML = "";
+      line.appendChild(document.createTextNode("Pilot: "));
+      var bold = document.createElement("b");
+      bold.textContent = s.name;
+      line.appendChild(bold);
+      hide(picker);
+    });
+    namesBox.appendChild(b);
+  });
+
+  function makeSessionId() {
+    return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8);
+  }
+
+  /* ================================================================
+     SENDING THE GRADE (with a retry queue)
+     Same payload the sheet script already accepts (Results path).
+     A result stays in the queue on this device until it is sent.
+     ================================================================ */
+  var QUEUE_KEY = "wordAceJet_queue";
+  var corsOk = null;      // true: we can read the script's reply. false: send without reading it.
+  var flushing = null;
+
+  function loadQueue() {
+    try { var q = JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]"); return Array.isArray(q) ? q : []; }
+    catch (e) { return []; }
+  }
+  function saveQueue(q) {
+    try { localStorage.setItem(QUEUE_KEY, JSON.stringify(q.slice(-40))); } catch (e) {}
+  }
+
+  function probe() {
+    if (corsOk !== null) return Promise.resolve(corsOk);
+    return fetch(SHEET_URL, { method: "GET" })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { corsOk = !!(j && j.status); return corsOk; })
+      .catch(function () {
+        // Offline: stay undecided. Online but unreadable: fall back to sending blind.
+        corsOk = (navigator.onLine === false) ? null : false;
+        return corsOk;
+      });
+  }
+
+  // Resolves to "saved" (confirmed by the sheet), "sent" (sent, cannot confirm) or "failed".
+  function sendOne(payload) {
+    var body = JSON.stringify(payload);
+    var headers = { "Content-Type": "text/plain;charset=utf-8" };
+    return probe().then(function (ok) {
+      if (ok === true) {
+        return fetch(SHEET_URL, { method: "POST", headers: headers, body: body })
+          .then(function (r) { return r.json(); })
+          .then(function (j) { return (j && j.status === "ok") ? "saved" : "failed"; })
+          .catch(function () { return "failed"; });
+      }
+      if (ok === false) {
+        return fetch(SHEET_URL, { method: "POST", mode: "no-cors", headers: headers, body: body })
+          .then(function () { return "sent"; })
+          .catch(function () { return "failed"; });
+      }
+      return "failed";
+    });
+  }
+
+  // Sends everything waiting. Resolves to a map: sessionId -> result.
+  function flushQueue() {
+    if (flushing) return flushing;
+    var results = {};
+    var items = loadQueue();
+    var chain = Promise.resolve();
+    items.forEach(function (item) {
+      chain = chain.then(function () {
+        return sendOne(item).then(function (res) {
+          results[item.sessionId] = res;
+          if (res !== "failed") {
+            saveQueue(loadQueue().filter(function (q) { return q.sessionId !== item.sessionId; }));
+          }
+        });
+      });
+    });
+    flushing = chain.then(function () { flushing = null; return results; },
+                          function () { flushing = null; return results; });
+    return flushing;
+  }
+
+  function queueAndSend(payload) {
+    var q = loadQueue(); q.push(payload); saveQueue(q);
+    var el = $("save-status");
+    el.className = ""; el.textContent = "Saving your grade...";
+    var after = function () {
+      return flushQueue().then(function (results) {
+        var res = results[payload.sessionId];
+        if (res === "saved") { el.className = "ok"; el.textContent = "✓ Grade saved"; }
+        else if (res === "sent") { el.className = "ok"; el.textContent = "✓ Grade sent"; }
+        else { el.className = "warn"; el.textContent = "Not saved yet. It will try again on the next game."; }
+      });
+    };
+    // If a flush is already running, wait for it, then run ours so this result is included.
+    (flushing ? flushing.then(after) : after());
+  }
+
+  window.addEventListener("online", function () { corsOk = (corsOk === true) ? true : null; flushQueue(); });
+  flushQueue(); // anything left from an earlier game on this device
+
+  /* ================================================================
+     READ ALOUD (Web Speech API)
+     ================================================================ */
+  var canSpeak = ("speechSynthesis" in window) && (typeof SpeechSynthesisUtterance !== "undefined");
+  function speak(text) {
+    if (!canSpeak) return;
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US"; u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  function stopSpeaking() { if (canSpeak) { try { window.speechSynthesis.cancel(); } catch (e) {} } }
+  if (!canSpeak) {
+    Array.prototype.forEach.call(document.querySelectorAll(".speak-btn"), hide);
+  }
+
+  /* ================================================================
+     CANVAS + BACKGROUND
+     ================================================================ */
+  var canvas = $("game");
+  var ctx = canvas.getContext("2d");
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0;
+  var nebula = document.createElement("canvas");
+
+  function buildNebula() {
+    // Painted once at low resolution, then stretched: cheap to draw every frame.
+    var nw = Math.max(64, Math.round(W / 3)), nh = Math.max(64, Math.round(H / 3));
+    nebula.width = nw; nebula.height = nh;
+    var n = nebula.getContext("2d");
+    var g = n.createLinearGradient(0, 0, 0, nh);
+    g.addColorStop(0, "#0d1440"); g.addColorStop(0.55, "#090d2a"); g.addColorStop(1, "#05071a");
+    n.fillStyle = g; n.fillRect(0, 0, nw, nh);
+    var blobs = [
+      [0.22, 0.24, 0.55, "110,70,220", 0.38],
+      [0.82, 0.42, 0.50, "30,150,190", 0.26],
+      [0.45, 0.78, 0.60, "190,60,150", 0.20],
+      [0.95, 0.05, 0.35, "80,110,255", 0.22]
+    ];
+    blobs.forEach(function (b) {
+      var r = b[2] * Math.max(nw, nh);
+      var rg = n.createRadialGradient(b[0] * nw, b[1] * nh, 0, b[0] * nw, b[1] * nh, r);
+      rg.addColorStop(0, "rgba(" + b[3] + "," + b[4] + ")");
+      rg.addColorStop(1, "rgba(" + b[3] + ",0)");
+      n.fillStyle = rg; n.fillRect(0, 0, nw, nh);
+    });
+  }
+
+  // Three star layers: far (slow, dim) to near (fast, bright)
+  var STAR_LAYERS = [
+    { n: 70, speed: 0.25, size: 1.1, alpha: 0.45, stars: [] },
+    { n: 38, speed: 0.6,  size: 1.7, alpha: 0.7,  stars: [] },
+    { n: 16, speed: 1.3,  size: 2.5, alpha: 0.95, stars: [] }
+  ];
+  STAR_LAYERS.forEach(function (L) {
+    for (var i = 0; i < L.n; i++) L.stars.push({ x: Math.random(), y: Math.random(), tw: Math.random() * 6.28 });
+  });
+
+  function makeGlow(rgb) {
+    var c = document.createElement("canvas"); c.width = c.height = 64;
+    var g = c.getContext("2d");
+    var rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    rg.addColorStop(0, "rgba(" + rgb + ",0.85)");
+    rg.addColorStop(0.4, "rgba(" + rgb + ",0.3)");
+    rg.addColorStop(1, "rgba(" + rgb + ",0)");
+    g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
+    return c;
+  }
+  var GLOW_BULLET = makeGlow("255,220,90");
+  var GLOW_FLAME = makeGlow("255,150,60");
+  var GLOW_DRONE = makeGlow("255,70,140");
+  var GLOW_ROCK = makeGlow("150,170,255");
+  function drawGlow(sprite, x, y, r, alpha) {
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(sprite, x - r, y - r, r * 2, r * 2);
+    ctx.globalAlpha = 1;
+  }
+
+  function resize() {
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    buildNebula();
+    if (jet) { jet.y = H - 90; jet.x = Math.max(jet.w / 2, Math.min(W - jet.w / 2, jet.x)); }
+  }
+  window.addEventListener("resize", resize);
+  window.addEventListener("orientationchange", function () { setTimeout(resize, 200); });
+
+  /* ================================================================
+     GAME STATE
+     ================================================================ */
+  var jet = null, bullets = [], enemies = [], particles = [], rings = [];
+  var score = 0, ammo = AMMO_START, lives = LIVES_START, best = 0;
+  var state = "idle";          // idle | playing | over
+  var quizActive = false;
+  var time = 0, spawnTimer = 0, fireTimer = 0, shake = 0, hurt = 0;
+  var quizCorrect = 0, quizTotal = 0, matchStartTime = 0, sessionId = null;
+  var usedRecently = [], missed = [];
+
+  var BEST_KEY = "wordAceJet_best";
+  try { best = parseInt(localStorage.getItem(BEST_KEY) || "0", 10) || 0; } catch (e) { best = 0; }
+
+  // HUD (only touches the page when a value changes)
+  var HEART = '<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.3 8.300 2 4.500 5.600 4.500c2 0 3.400 1 4.400 2.300 1-1.300 2.400-2.300 4.400-2.300 3.600 0 5.300 3.800 3.600 7.200C19.500 16.400 12 21 12 21z"/></svg>';
+  var livesBox = $("lives");
+  for (var h = 0; h < LIVES_START; h++) livesBox.insertAdjacentHTML("beforeend", HEART);
+  var hudCache = {};
+  function updateHud() {
+    if (hudCache.score !== score) { $("score").textContent = score; hudCache.score = score; }
+    if (hudCache.best !== best) { $("best").textContent = best; hudCache.best = best; }
+    if (hudCache.ammo !== ammo) {
+      $("ammo-fill").style.width = Math.max(0, Math.min(100, (ammo / AMMO_START) * 100)) + "%";
+      $("ammo-bar").classList.toggle("low", ammo <= 5);
+      hudCache.ammo = ammo;
+    }
+    if (hudCache.lives !== lives) {
+      Array.prototype.forEach.call(livesBox.children, function (el, i) { el.classList.toggle("lost", i >= lives); });
+      hudCache.lives = lives;
+    }
+  }
+
+  function resetGame() {
+    jet = { x: W / 2, y: H - 90, w: 46, h: 58, tilt: 0, lastX: W / 2 };
+    bullets = []; enemies = []; particles = []; rings = [];
+    score = 0; ammo = AMMO_START; lives = LIVES_START;
+    spawnTimer = 0; fireTimer = 0; shake = 0; hurt = 0;
+    quizActive = false; quizCorrect = 0; quizTotal = 0;
+    usedRecently = []; missed = [];
+    updateHud();
+  }
+
+  /* ================================================================
+     INPUT: drag, mouse, or arrow keys
+     ================================================================ */
+  var pointerActive = false;
+  function setJetX(clientX) {
+    if (!jet) return;
+    var rect = canvas.getBoundingClientRect();
+    jet.x = Math.max(jet.w / 2, Math.min(W - jet.w / 2, clientX - rect.left));
+  }
+  canvas.addEventListener("touchstart", function (e) { pointerActive = true; setJetX(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
+  canvas.addEventListener("touchmove", function (e) { if (pointerActive) setJetX(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
+  canvas.addEventListener("touchend", function () { pointerActive = false; });
+  canvas.addEventListener("touchcancel", function () { pointerActive = false; });
+  canvas.addEventListener("mousedown", function (e) { pointerActive = true; setJetX(e.clientX); });
+  window.addEventListener("mousemove", function (e) { if (pointerActive) setJetX(e.clientX); });
+  window.addEventListener("mouseup", function () { pointerActive = false; });
+
+  var keys = {};
+  window.addEventListener("keydown", function (e) {
+    keys[e.key] = true;
+    if (quizActive && !$("quiz-question").classList.contains("hidden") && /^[1-4]$/.test(e.key)) {
+      var btn = $("quiz-options").children[parseInt(e.key, 10) - 1];
+      if (btn) btn.click();
+    }
+  });
+  window.addEventListener("keyup", function (e) { keys[e.key] = false; });
+
+  /* ================================================================
+     SPAWNING
+     ================================================================ */
+  var ROCK_COLORS = [["#c9b59b", "#5a4636", "#3b2d22"], ["#aab4c8", "#434c63", "#2a3042"], ["#cf9a78", "#643a28", "#40241a"]];
+
+  function spawnEnemy() {
+    var size = 30 + Math.random() * 16;
+    var r = size / 2;
+    var en = {
+      x: size + Math.random() * Math.max(1, W - size * 2),
+      y: -size, r: r,
+      speed: 1.2 + Math.random() * 1.3 + Math.min(score / 300, 2),
+      rot: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.06,
+      kind: Math.random() < 0.35 ? "drone" : "rock"
+    };
+    if (en.kind === "rock") {
+      var n = 9 + Math.floor(Math.random() * 3);
+      en.shape = [];
+      for (var i = 0; i < n; i++) en.shape.push(0.78 + Math.random() * 0.34);
+      en.craters = [];
+      var c = 2 + Math.floor(Math.random() * 2);
+      for (var k = 0; k < c; k++) en.craters.push({ a: Math.random() * 6.28, d: Math.random() * 0.5, s: 0.14 + Math.random() * 0.14 });
+      var col = ROCK_COLORS[Math.floor(Math.random() * ROCK_COLORS.length)];
+      var g = ctx.createLinearGradient(-r, -r, r, r);
+      g.addColorStop(0, col[0]); g.addColorStop(1, col[1]);
+      en.fill = g; en.edge = col[2];
+    } else {
+      en.baseX = en.x; en.phase = Math.random() * 6.28; en.sway = 14 + Math.random() * 18;
+    }
+    enemies.push(en);
+  }
+
+  function fireBullet() {
+    if (ammo <= 0) return;
+    bullets.push({ x: jet.x, y: jet.y - jet.h / 2, r: 4, speed: 8 });
+    ammo--;
+    if (ammo <= 0) triggerQuiz();
+  }
+
+  function addParticles(x, y, colors, count, power) {
+    for (var i = 0; i < count; i++) {
+      if (particles.length >= MAX_PARTICLES) return;
+      var a = Math.random() * 6.28, sp = (0.4 + Math.random()) * power;
+      var life = 18 + Math.random() * 16;
+      particles.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: life, max: life,
+        size: 1.5 + Math.random() * 2.5, color: colors[Math.floor(Math.random() * colors.length)] });
+    }
+  }
+  function addRing(x, y, r, color) { if (rings.length < 12) rings.push({ x: x, y: y, r: r * 0.5, grow: r * 0.12, life: 14, max: 14, color: color }); }
+
+  /* ================================================================
+     QUIZ
+     ================================================================ */
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function pickWord() {
+    var pool = BANK.filter(function (it) { return usedRecently.indexOf(it.word) === -1; });
+    if (pool.length === 0) { usedRecently = []; pool = BANK.slice(); }
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    usedRecently.push(pick.word);
+    var limit = Math.min(RECENT_LIMIT, BANK.length - 1);
+    while (usedRecently.length > limit) usedRecently.shift();
+    return pick;
+  }
+
+  // 3 wrong choices: same unit first, never the answer itself, never a twin definition.
+  function pickDistractors(correct) {
+    var ok = function (it) { return it.word !== correct.word && it.def !== correct.def; };
+    var same = shuffle(BANK.filter(function (it) { return ok(it) && it.unit === correct.unit; }));
+    var other = shuffle(BANK.filter(function (it) { return ok(it) && it.unit !== correct.unit; }));
+    return same.concat(other).slice(0, 3);
+  }
+
+  var current = null, answered = false, autoTimer = null;
+
+  function showQuizPane(id) {
+    ["quiz-question", "quiz-correct", "quiz-wrong"].forEach(function (p) { $(p).classList.toggle("hidden", p !== id); });
+    $("quiz-overlay").scrollTop = 0;
+  }
+
+  function triggerQuiz() {
+    quizActive = true; answered = false; pointerActive = false;
+    current = pickWord();
+    var options = shuffle([current].concat(pickDistractors(current)));
+    $("quiz-def").textContent = current.def;
+    var wrap = $("quiz-options");
+    wrap.innerHTML = "";
+    options.forEach(function (opt) {
+      var btn = document.createElement("button");
+      btn.className = "opt-btn";
+      btn.textContent = opt.word;
+      btn.addEventListener("click", function () { answer(opt); });
+      wrap.appendChild(btn);
+    });
+    showQuizPane("quiz-question");
+    show($("quiz-overlay"));
+  }
+
+  function answer(opt) {
+    if (answered) return;      // 1 try per question
+    answered = true;
+    stopSpeaking();
+    quizTotal++;
+    if (opt.word === current.word) {
+      quizCorrect++;
+      ammo = AMMO_CORRECT;
+      $("fbc-word").textContent = current.word;
+      $("fbc-def").textContent = current.def;
+      showQuizPane("quiz-correct");
+      autoTimer = setTimeout(closeQuiz, CORRECT_AUTO_MS);
+    } else {
+      lives--;
+      shake = 10;
+      if (!missed.some(function (m) { return m.word === current.word; })) missed.push(current);
+      $("fbw-picked-word").textContent = opt.word;
+      $("fbw-picked-def").textContent = opt.def;
+      $("fbw-right-word").textContent = current.word;
+      $("fbw-right-def").textContent = current.def;
+      $("fbw-sub").textContent = lives > 0
+        ? "You lost a life. Read these two words before you go on."
+        : "That was your last life. Read these two words before you go on.";
+      if (lives > 0) ammo = AMMO_WRONG;
+      showQuizPane("quiz-wrong");   // stays until "Got it" is tapped
+    }
+    updateHud();
+  }
+
+  function closeQuiz() {
+    if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+    if (!quizActive) return;
+    stopSpeaking();
+    hide($("quiz-overlay"));
+    quizActive = false;
+    fireTimer = 0;
+    if (lives <= 0) endGame();
+  }
+
+  $("speak-def").addEventListener("click", function () { if (current) speak(current.def); });
+  $("speak-correct").addEventListener("click", function () {
+    if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }   // let them listen, then tap to go on
+    if (current) speak(current.word + ". " + current.def);
+  });
+  $("speak-wrong").addEventListener("click", function () { if (current) speak(current.word + ". " + current.def); });
+  $("continue-btn").addEventListener("click", closeQuiz);
+  $("gotit-btn").addEventListener("click", closeQuiz);
+
+  /* ================================================================
+     UPDATE
+     dt is measured in 60ths of a second, so speed is the same on
+     60 Hz and 120 Hz iPads.
+     ================================================================ */
+  function circleHit(ax, ay, ar, bx, by, br) {
+    var dx = ax - bx, dy = ay - by, rr = ar + br;
+    return dx * dx + dy * dy < rr * rr;
+  }
+
+  function update(dt) {
+    time += dt;
+
+    // Background always drifts, even behind the menus
+    STAR_LAYERS.forEach(function (L) {
+      var step = (L.speed * dt) / Math.max(H, 1);
+      for (var i = 0; i < L.stars.length; i++) {
+        var s = L.stars[i];
+        s.y += step;
+        if (s.y > 1) { s.y -= 1; s.x = Math.random(); }
+      }
+    });
+
+    for (var p = particles.length - 1; p >= 0; p--) {
+      var pt = particles[p];
+      pt.x += pt.vx * dt; pt.y += pt.vy * dt; pt.vx *= 0.97; pt.vy *= 0.97; pt.life -= dt;
+      if (pt.life <= 0) particles.splice(p, 1);
+    }
+    for (var q = rings.length - 1; q >= 0; q--) {
+      rings[q].r += rings[q].grow * dt; rings[q].life -= dt;
+      if (rings[q].life <= 0) rings.splice(q, 1);
+    }
+    if (shake > 0) shake = Math.max(0, shake - 0.8 * dt);
+    if (hurt > 0) hurt = Math.max(0, hurt - 0.05 * dt);
+
+    if (state !== "playing" || quizActive) return;
+
+    if (keys["ArrowLeft"] || keys["a"] || keys["A"]) jet.x = Math.max(jet.w / 2, jet.x - 5 * dt);
+    if (keys["ArrowRight"] || keys["d"] || keys["D"]) jet.x = Math.min(W - jet.w / 2, jet.x + 5 * dt);
+    var targetTilt = Math.max(-0.35, Math.min(0.35, (jet.x - jet.lastX) * 0.04 / Math.max(dt, 0.01)));
+    jet.tilt += (targetTilt - jet.tilt) * Math.min(1, 0.2 * dt);
+    jet.lastX = jet.x;
+
+    fireTimer += dt;
+    if (fireTimer > 20) { fireTimer = 0; fireBullet(); if (quizActive) { updateHud(); return; } }
+
+    spawnTimer += dt;
+    var spawnRate = Math.max(35, 70 - Math.floor(score / 40));
+    if (spawnTimer > spawnRate) { spawnTimer = 0; spawnEnemy(); }
+
+    for (var b = bullets.length - 1; b >= 0; b--) {
+      bullets[b].y -= bullets[b].speed * dt;
+      if (bullets[b].y < -12) bullets.splice(b, 1);
+    }
+
+    for (var i = enemies.length - 1; i >= 0; i--) {
+      var en = enemies[i];
+      en.y += en.speed * dt;
+      if (en.kind === "rock") en.rot += en.spin * dt;
+      else en.x = Math.max(en.r, Math.min(W - en.r, en.baseX + Math.sin(time * 0.04 + en.phase) * en.sway));
+
+      var destroyed = false;
+      for (var j = bullets.length - 1; j >= 0; j--) {
+        var bl = bullets[j];
+        if (circleHit(en.x, en.y, en.r, bl.x, bl.y, bl.r)) {
+          if (en.kind === "rock") addParticles(en.x, en.y, ["#ffcc33", "#ff9f1c", "#d9c2a3"], 12, 3);
+          else addParticles(en.x, en.y, ["#ff4d6d", "#c9b8ff", "#ffffff"], 12, 3.4);
+          addRing(en.x, en.y, en.r, en.kind === "rock" ? "255,204,51" : "255,120,170");
+          enemies.splice(i, 1); bullets.splice(j, 1);
+          score += 10;
+          destroyed = true;
+          break;
+        }
+      }
+      if (destroyed) continue;
+
+      if (circleHit(en.x, en.y, en.r, jet.x, jet.y, jet.w / 2.4)) {
+        addParticles(jet.x, jet.y, ["#ff6b6b", "#ffa94d", "#ffffff"], 22, 4.5);
+        addRing(jet.x, jet.y, 34, "255,107,107");
+        enemies.splice(i, 1);
+        lives--; shake = 14; hurt = 1;
+        if (lives <= 0) { updateHud(); endGame(); return; }
+      } else if (en.y - en.r > H) {
+        enemies.splice(i, 1);
+      }
+    }
+    updateHud();
+  }
+
+  /* ================================================================
+     DRAWING
+     ================================================================ */
+  function drawBackground() {
+    ctx.drawImage(nebula, 0, -12 + Math.sin(time * 0.004) * 10, W, H + 24);
+    for (var l = 0; l < STAR_LAYERS.length; l++) {
+      var L = STAR_LAYERS[l];
+      ctx.fillStyle = l === 2 ? "#ffffff" : (l === 1 ? "#cfe0ff" : "#9fb4e6");
+      for (var i = 0; i < L.stars.length; i++) {
+        var s = L.stars[i];
+        ctx.globalAlpha = L.alpha * (0.75 + 0.25 * Math.sin(time * 0.05 + s.tw));
+        ctx.fillRect(s.x * W, s.y * H, L.size, L.size);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  var shipBody = null, flameGrad = null;
+  function drawJet() {
+    var w = jet.w, hh = jet.h;
+    ctx.save();
+    ctx.translate(jet.x, jet.y);
+    ctx.rotate(jet.tilt);
+
+    if (!shipBody) {
+      shipBody = ctx.createLinearGradient(-w * 0.2, 0, w * 0.2, 0);
+      shipBody.addColorStop(0, "#e8f6ff"); shipBody.addColorStop(0.5, "#86c8ff"); shipBody.addColorStop(1, "#2c78cf");
+      flameGrad = ctx.createLinearGradient(0, hh * 0.3, 0, hh * 0.9);
+      flameGrad.addColorStop(0, "#fff3b0"); flameGrad.addColorStop(0.45, "#ff9f1c"); flameGrad.addColorStop(1, "rgba(255,60,40,0)");
+    }
+
+    // engine flame (flickers)
+    var fl = 20 + Math.sin(time * 0.8) * 5 + Math.random() * 6;
+    drawGlow(GLOW_FLAME, 0, hh * 0.46, 20, 0.7);
+    ctx.fillStyle = flameGrad;
+    ctx.beginPath();
+    ctx.moveTo(-7, hh * 0.32);
+    ctx.quadraticCurveTo(0, hh * 0.32 + fl * 1.5, 7, hh * 0.32);
+    ctx.closePath(); ctx.fill();
+
+    // wings
+    ctx.fillStyle = "#1c4f9c";
+    ctx.beginPath();
+    ctx.moveTo(0, -hh * 0.08);
+    ctx.lineTo(w * 0.52, hh * 0.34); ctx.lineTo(w * 0.52, hh * 0.46); ctx.lineTo(0, hh * 0.3);
+    ctx.lineTo(-w * 0.52, hh * 0.46); ctx.lineTo(-w * 0.52, hh * 0.34);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#3d86e0";   // wing highlight
+    ctx.beginPath();
+    ctx.moveTo(0, -hh * 0.08); ctx.lineTo(w * 0.52, hh * 0.34); ctx.lineTo(0, hh * 0.16); ctx.lineTo(-w * 0.52, hh * 0.34);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#ff4d6d";   // wing tips
+    ctx.fillRect(w * 0.44, hh * 0.3, w * 0.08, hh * 0.18);
+    ctx.fillRect(-w * 0.52, hh * 0.3, w * 0.08, hh * 0.18);
+
+    // fuselage
+    ctx.fillStyle = shipBody;
+    ctx.beginPath();
+    ctx.moveTo(0, -hh / 2);
+    ctx.quadraticCurveTo(w * 0.26, -hh * 0.18, w * 0.17, hh * 0.36);
+    ctx.lineTo(-w * 0.17, hh * 0.36);
+    ctx.quadraticCurveTo(-w * 0.26, -hh * 0.18, 0, -hh / 2);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#12305c";   // engine block
+    ctx.fillRect(-w * 0.13, hh * 0.3, w * 0.26, hh * 0.08);
+
+    // cockpit
+    ctx.fillStyle = "#0e2a55";
+    ctx.beginPath(); ctx.ellipse(0, -hh * 0.14, w * 0.1, hh * 0.14, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#7ee0ff";
+    ctx.beginPath(); ctx.ellipse(-w * 0.025, -hh * 0.18, w * 0.045, hh * 0.07, 0, 0, Math.PI * 2); ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawRock(en) {
+    drawGlow(GLOW_ROCK, en.x, en.y, en.r * 1.9, 0.22);
+    ctx.save();
+    ctx.translate(en.x, en.y);
+    var n = en.shape.length;
+    ctx.beginPath();
+    for (var i = 0; i < n; i++) {
+      var a = en.rot + (i / n) * Math.PI * 2, rad = en.r * en.shape[i];
+      var px = Math.cos(a) * rad, py = Math.sin(a) * rad;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fillStyle = en.fill; ctx.fill();          // light stays top-left while the rock spins
+    ctx.strokeStyle = en.edge; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = "rgba(0,0,0,0.24)";
+    for (var c = 0; c < en.craters.length; c++) {
+      var cr = en.craters[c], ca = en.rot + cr.a;
+      ctx.beginPath();
+      ctx.arc(Math.cos(ca) * cr.d * en.r, Math.sin(ca) * cr.d * en.r, cr.s * en.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawDrone(en) {
+    var r = en.r, pulse = 0.5 + 0.5 * Math.sin(time * 0.15 + en.phase);
+    drawGlow(GLOW_DRONE, en.x, en.y, r * 2.1, 0.3 + pulse * 0.25);
+    ctx.save();
+    ctx.translate(en.x, en.y);
+    ctx.fillStyle = "#3b2a66";   // side fins
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.55, -r * 0.2); ctx.lineTo(-r * 1.05, -r * 0.55); ctx.lineTo(-r * 0.95, r * 0.45); ctx.lineTo(-r * 0.55, r * 0.3);
+    ctx.moveTo(r * 0.55, -r * 0.2); ctx.lineTo(r * 1.05, -r * 0.55); ctx.lineTo(r * 0.95, r * 0.45); ctx.lineTo(r * 0.55, r * 0.3);
+    ctx.fill();
+    ctx.fillStyle = "#6b56b0";   // body
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.74, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#9d8be0";   // top light
+    ctx.beginPath(); ctx.arc(-r * 0.12, -r * 0.16, r * 0.56, Math.PI * 0.95, Math.PI * 1.9); ctx.fill();
+    ctx.strokeStyle = "#d8ccff"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.74, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = "#2a0b1f";   // eye socket
+    ctx.beginPath(); ctx.arc(0, r * 0.08, r * 0.38, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#ff4d6d";   // eye
+    ctx.beginPath(); ctx.arc(0, r * 0.08, r * (0.22 + pulse * 0.08), 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#ffe3ea";
+    ctx.beginPath(); ctx.arc(-r * 0.07, 0, r * 0.07, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  function render() {
+    ctx.save();
+    if (shake > 0) ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
+
+    drawBackground();
+
+    if (state !== "idle" && jet) {
+      for (var b = 0; b < bullets.length; b++) {
+        var bl = bullets[b];
+        drawGlow(GLOW_BULLET, bl.x, bl.y, 12, 0.8);
+        ctx.fillStyle = "#fff6c2";
+        ctx.fillRect(bl.x - 2, bl.y - 7, 4, 14);
+      }
+      for (var e = 0; e < enemies.length; e++) {
+        if (enemies[e].kind === "rock") drawRock(enemies[e]); else drawDrone(enemies[e]);
+      }
+      if (state === "playing") drawJet();
+    }
+
+    for (var r = 0; r < rings.length; r++) {
+      var ring = rings[r];
+      ctx.strokeStyle = "rgba(" + ring.color + "," + Math.max(0, ring.life / ring.max) + ")";
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI * 2); ctx.stroke();
+    }
+    for (var p = 0; p < particles.length; p++) {
+      var pt = particles[p];
+      ctx.globalAlpha = Math.max(0, pt.life / pt.max);
+      ctx.fillStyle = pt.color;
+      ctx.fillRect(pt.x - pt.size / 2, pt.y - pt.size / 2, pt.size, pt.size);
+    }
+    ctx.globalAlpha = 1;
+    ctx.restore();
+
+    if (hurt > 0) { ctx.fillStyle = "rgba(255,50,70," + (hurt * 0.28) + ")"; ctx.fillRect(0, 0, W, H); }
+  }
+
+  var lastTs = 0;
+  function loop(ts) {
+    var dt = lastTs ? (ts - lastTs) / 16.667 : 1;
+    lastTs = ts;
+    if (dt > 3) dt = 3;         // after a pause, do not jump
+    if (dt < 0) dt = 0;
+    update(dt);
+    render();
+    requestAnimationFrame(loop);
+  }
+  document.addEventListener("visibilitychange", function () { lastTs = 0; });
+
+  /* ================================================================
+     START / END
+     ================================================================ */
+  function calcGrade(correct, total) {
+    return total > 0 ? Math.round((correct / total) * 100) / 10 : 0;   // correct / total x 10, one decimal
+  }
+
+  function endGame() {
+    state = "over";
+    stopSpeaking();
+    var newBest = false;
+    if (score > best) {
+      best = score; newBest = true;
+      try { localStorage.setItem(BEST_KEY, String(best)); } catch (e) {}
+    }
+    updateHud();
+
+    $("final-score").textContent = score;
+    $("final-quiz").textContent = quizCorrect + "/" + quizTotal;
+    $("final-grade").textContent = calcGrade(quizCorrect, quizTotal).toFixed(1).replace(/\.0$/, "");
+    $("new-best-msg").classList.toggle("hidden", !newBest);
+
+    var list = $("review-list"), none = $("review-none");
+    list.innerHTML = "";
+    if (missed.length) {
+      hide(none);
+      missed.forEach(function (m) {
+        var li = document.createElement("li");
+        var b = document.createElement("b"); b.textContent = m.word;
+        li.appendChild(b);
+        li.appendChild(document.createTextNode(m.def));
+        list.appendChild(li);
+      });
+    } else {
+      none.textContent = quizTotal > 0 ? "No missed words. Great flying!" : "You did not answer any questions this time.";
+      none.style.color = quizTotal > 0 ? "" : "#9fb4e6";
+      show(none);
+    }
+
+    var over = $("gameover-overlay");
+    show(over); over.scrollTop = 0;
+
+    if (student) {
+      queueAndSend({
+        studentId: student.id,
+        studentName: student.name,
+        group: student.group,
+        activity: ACTIVITY,
+        score: score,
+        quizQuestions: quizTotal,
+        quizCorrect: quizCorrect,
+        duration: matchStartTime ? Math.round((Date.now() - matchStartTime) / 1000) : "",
+        sessionId: sessionId
+      });
+    } else {
+      $("save-status").textContent = "";
+    }
+  }
+
+  function startGame() {
+    if (BANK.length < 4) return;
+    hide($("start-overlay")); hide($("gameover-overlay")); hide($("quiz-overlay"));
+    resize();
+    resetGame();
+    sessionId = makeSessionId();     // one id per game played
+    matchStartTime = Date.now();
+    state = "playing";
+    flushQueue();                    // retry anything that did not send earlier
+  }
+
+  $("start-btn").addEventListener("click", startGame);
+  $("restart-btn").addEventListener("click", startGame);
+  $("change-player-btn").addEventListener("click", function () {
+    state = "idle";
+    hide($("gameover-overlay"));
+    show($("start-overlay"));
+    picker.scrollTop = 0;
+    show(picker);
+  });
+
+  if (BANK.length < 4) {
+    show($("bank-error"));
+    $("start-btn").disabled = true;
+  }
+
+  resize();
+  updateHud();
+  requestAnimationFrame(loop);
+
+  // Small hook used only for testing from the browser console
+  window.__waj = { bank: BANK, calcGrade: calcGrade };
+})();
+</script>
+</body>
+</html>
