@@ -661,6 +661,81 @@
     boss:    function () { tone(200, 0.3, "sawtooth", 0.12, 90); tone(200, 0.3, "sawtooth", 0.12, 90, 0.35); },
     win:     function () { [523, 659, 784, 1047].forEach(function (f, i) { tone(f, 0.16, "triangle", 0.15, 0, i * 0.12); }); }
   };
+  /* ----- Background space ambience: a deep hum, soft wind, and far-off pings.
+     Made live in the browser. It gets quieter during questions and adds a
+     low pulse while a boss is on screen. ----- */
+  var amb = null;
+  var PING_NOTES = [523.3, 587.3, 659.3, 784, 880, 1046.5, 1174.7];
+  function startAmbience() {
+    if (!actx || amb) { setAmbience(); return; }
+    try {
+      var master = actx.createGain(); master.gain.value = 0; master.connect(actx.destination);
+
+      var lp = actx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 220; lp.Q.value = 4; lp.connect(master);
+      [[55, "sawtooth", 0.10], [55.5, "sawtooth", 0.10], [82.4, "triangle", 0.08], [110.3, "sine", 0.05]].forEach(function (v) {
+        var o = actx.createOscillator(), g = actx.createGain();
+        o.type = v[1]; o.frequency.value = v[0]; g.gain.value = v[2];
+        o.connect(g); g.connect(lp); o.start();
+      });
+      var lfo = actx.createOscillator(), lfoG = actx.createGain();
+      lfo.frequency.value = 0.07; lfoG.gain.value = 120; lfo.connect(lfoG); lfoG.connect(lp.frequency); lfo.start();
+
+      var wb = actx.createBuffer(1, actx.sampleRate * 2, actx.sampleRate), wd = wb.getChannelData(0);
+      for (var i = 0; i < wd.length; i++) wd[i] = Math.random() * 2 - 1;
+      var wind = actx.createBufferSource(); wind.buffer = wb; wind.loop = true;
+      var bp = actx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 700; bp.Q.value = 1.2;
+      var wg = actx.createGain(); wg.gain.value = 0.035;
+      var wl = actx.createOscillator(), wlg = actx.createGain();
+      wl.frequency.value = 0.05; wlg.gain.value = 400; wl.connect(wlg); wlg.connect(bp.frequency); wl.start();
+      wind.connect(bp); bp.connect(wg); wg.connect(master); wind.start();
+
+      var bossGain = actx.createGain(); bossGain.gain.value = 0; bossGain.connect(master);
+      var bo = actx.createOscillator(); bo.type = "sawtooth"; bo.frequency.value = 41.2;
+      var blp = actx.createBiquadFilter(); blp.type = "lowpass"; blp.frequency.value = 260;
+      var trem = actx.createGain(); trem.gain.value = 0.5;
+      var tl = actx.createOscillator(), tlg = actx.createGain();
+      tl.frequency.value = 3.2; tlg.gain.value = 0.5; tl.connect(tlg); tlg.connect(trem.gain); tl.start();
+      bo.connect(blp); blp.connect(trem); trem.connect(bossGain); bo.start();
+
+      amb = { master: master, bossGain: bossGain, timer: null };
+      schedulePing();
+    } catch (e) { amb = null; }
+    setAmbience();
+  }
+  function setAmbience() {
+    if (!amb) return;
+    try {
+      var t = actx.currentTime;
+      var level = muted ? 0 : (quizActive ? 0.2 : 0.5);
+      amb.master.gain.cancelScheduledValues(t);
+      amb.master.gain.setTargetAtTime(level, t, 0.4);
+      amb.bossGain.gain.setTargetAtTime(boss ? 0.55 : 0, t, 0.5);
+    } catch (e) {}
+  }
+  function ping(freq, delay, vol) {
+    try {
+      var t = actx.currentTime + delay, o = actx.createOscillator(), g = actx.createGain();
+      o.type = "sine"; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.8);
+      o.connect(g); g.connect(amb.master); o.start(t); o.stop(t + 1.9);
+    } catch (e) {}
+  }
+  function schedulePing() {
+    amb.timer = setTimeout(function () {
+      if (!amb) return;
+      if (!muted && !document.hidden && actx.state === "running") {
+        var f = PING_NOTES[Math.floor(Math.random() * PING_NOTES.length)];
+        ping(f, 0, 0.07); ping(f, 0.32, 0.03); ping(f * 1.5, 0.64, 0.015);   // a note and two fading echoes
+      }
+      schedulePing();
+    }, 2500 + Math.random() * 4000);
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (!actx) return;
+    try { if (document.hidden) actx.suspend(); else actx.resume(); } catch (e) {}
+  });
+
   function showMute() {
     $("mute-btn").innerHTML = muted ? "&#128263;" : "&#128266;";
     $("mute-btn-start").textContent = muted ? "Sound: off" : "Sound: on";
@@ -668,7 +743,7 @@
   function toggleMute() {
     muted = !muted;
     try { localStorage.setItem(MUTE_KEY, muted ? "1" : "0"); } catch (e) {}
-    initAudio(); showMute();
+    initAudio(); showMute(); setAmbience();
     if (!muted) sfx.bounce();
   }
   $("mute-btn").addEventListener("click", toggleMute);
@@ -749,6 +824,17 @@
   var GLOW_FLAME = makeGlow("255,150,60");
   var GLOW_DRONE = makeGlow("255,70,140");
   var GLOW_ROCK = makeGlow("150,170,255");
+  var GLOW_TITAN = makeGlow("255,150,60");
+  var GLOW_SAUCER = makeGlow("120,255,150");
+  var GLOW_JELLY = makeGlow("90,220,255");
+
+  // Bosses take turns in this order, then start again with more health.
+  var BOSS_TYPES = [
+    { key: "drone",  name: "DRONE KING",   r: 48, sweep: 0.018, fire: 170, glow: GLOW_DRONE,  shot: "#ffd0dc" },
+    { key: "titan",  name: "ROCK TITAN",   r: 58, sweep: 0.010, fire: 220, glow: GLOW_TITAN,  shot: "#ffe0b0" },
+    { key: "saucer", name: "STAR SAUCER",  r: 46, sweep: 0.030, fire: 125, glow: GLOW_SAUCER, shot: "#d6ffd0" },
+    { key: "jelly",  name: "NEBULA JELLY", r: 50, sweep: 0.014, fire: 200, glow: GLOW_JELLY,  shot: "#c9f6ff" }
+  ];
   function drawGlow(sprite, x, y, r, alpha) {
     ctx.globalAlpha = alpha;
     ctx.drawImage(sprite, x - r, y - r, r * 2, r * 2);
@@ -930,10 +1016,31 @@
   }
 
   function spawnBoss() {
-    boss = { x: W / 2, y: -80, targetY: Math.min(170, H * 0.24), r: Math.min(48, W * 0.09 + 14),
-             hp: BOSS_HP + bossesBeaten * 4, max: BOSS_HP + bossesBeaten * 4, t: 0, fire: 0, flash: 0 };
-    banner = { text: "BOSS DRONE!", life: 110, max: 110, color: "255,120,170" };
-    sfx.boss();
+    var type = BOSS_TYPES[bossesBeaten % BOSS_TYPES.length];
+    var hp = BOSS_HP + bossesBeaten * 4;
+    boss = { type: type, x: W / 2, y: -90, baseY: -90, targetY: Math.min(175, H * 0.25), r: Math.min(type.r, W * 0.14),
+             hp: hp, max: hp, t: 0, fire: 0, flash: 0 };
+    if (type.key === "titan") {
+      boss.shape = [];
+      for (var i = 0; i < 12; i++) boss.shape.push(0.84 + Math.random() * 0.24);
+    }
+    banner = { text: "BOSS: " + type.name + "!", life: 120, max: 120, color: "255,120,170" };
+    sfx.boss(); setAmbience();
+  }
+  // Each boss attacks in its own way
+  function bossFire() {
+    var k = boss.type.key, bx = boss.x, by = boss.y + boss.r * 0.6, base = { glow: boss.type.glow, color: boss.type.shot };
+    function add(o) { o.glow = base.glow; o.color = base.color; bossShots.push(o); }
+    if (k === "drone") {                       // one shot aimed at the jet
+      var dx = jet.x - bx, dy = jet.y - by, len = Math.sqrt(dx * dx + dy * dy) || 1;
+      add({ x: bx, y: by, vx: (dx / len) * 2.2, vy: (dy / len) * 2.2, r: 8 });
+    } else if (k === "titan") {                // three rocks in a fan
+      [-0.38, 0, 0.38].forEach(function (a) { add({ x: bx, y: by, vx: Math.sin(a) * 2, vy: Math.cos(a) * 2, r: 9 }); });
+    } else if (k === "saucer") {               // quick drops straight down
+      add({ x: bx, y: by, vx: 0, vy: 2.7, r: 7 });
+    } else {                                   // two slow bubbles that weave
+      [-1, 1].forEach(function (sd) { add({ x: bx, y: by, cx: bx + sd * boss.r * 0.5, vx: 0, vy: 1.7, r: 8, wave: sd > 0 ? 0 : Math.PI }); });
+    }
   }
   function defeatBoss() {
     addParticles(boss.x, boss.y, ["#ff4d6d", "#c9b8ff", "#ffffff", "#ffcc33"], 40, 6);
@@ -944,7 +1051,7 @@
     banner = { text: extra ? "Boss down! +100 and +1 life" : "Boss down! +100", life: 130, max: 130, color: "140,233,154" };
     boss = null; bossShots = [];
     nextBossAt = quizTotal + BOSS_EVERY;
-    sfx.win();
+    sfx.win(); setAmbience();
   }
 
   function addRing(x, y, r, color) { if (rings.length < 12) rings.push({ x: x, y: y, r: r * 0.5, grow: r * 0.12, life: 14, max: 14, color: color }); }
@@ -1006,6 +1113,7 @@
 
   function triggerQuiz() {
     quizActive = true; answered = false; pointerActive = false;
+    setAmbience();
     current = pickWord();
     var options = shuffle([current].concat(pickDistractors(current)));
     $("quiz-def").textContent = current.def;
@@ -1095,6 +1203,7 @@
     hide($("quiz-overlay"));
     quizActive = false;
     fireTimer = 0;
+    setAmbience();
     if (lives <= 0) { endGame(); return; }
     if (!boss && quizTotal >= nextBossAt) spawnBoss();
   }
@@ -1199,15 +1308,13 @@
     // ----- Boss: only powered shots (after a correct answer) hurt it -----
     if (boss) {
       boss.t += dt;
-      boss.y += (boss.targetY - boss.y) * Math.min(1, 0.04 * dt);
-      boss.x = W / 2 + Math.sin(boss.t * 0.018) * Math.max(0, Math.min(W * 0.36, W / 2 - boss.r - 10));
+      boss.baseY += (boss.targetY - boss.baseY) * Math.min(1, 0.04 * dt);
+      var bk = boss.type.key;
+      boss.y = boss.baseY + (bk === "saucer" ? Math.sin(boss.t * 0.05) * 16 : bk === "jelly" ? Math.sin(boss.t * 0.03) * 22 : 0);
+      boss.x = W / 2 + Math.sin(boss.t * boss.type.sweep) * Math.max(0, Math.min(W * 0.36, W / 2 - boss.r - 10));
       if (boss.flash > 0) boss.flash -= dt;
       boss.fire += dt;
-      if (boss.fire > 170 && boss.y > boss.targetY - 25) {
-        boss.fire = 0;
-        var dx = jet.x - boss.x, dy = jet.y - boss.y, len = Math.sqrt(dx * dx + dy * dy) || 1;
-        bossShots.push({ x: boss.x, y: boss.y + boss.r * 0.6, vx: (dx / len) * 2.2, vy: (dy / len) * 2.2, r: 8 });
-      }
+      if (boss.fire > boss.type.fire && boss.baseY > boss.targetY - 25) { boss.fire = 0; bossFire(); }
       for (var bb = bullets.length - 1; bb >= 0 && boss; bb--) {
         var sb = bullets[bb];
         if (circleHit(boss.x, boss.y, boss.r, sb.x, sb.y, sb.r)) {
@@ -1225,6 +1332,7 @@
     for (var s2 = bossShots.length - 1; s2 >= 0; s2--) {
       var sh = bossShots[s2];
       sh.x += sh.vx * dt; sh.y += sh.vy * dt;
+      if (sh.wave !== undefined) { sh.wave += 0.06 * dt; sh.x = sh.cx + Math.sin(sh.wave) * 46; }
       if (circleHit(sh.x, sh.y, sh.r, jet.x, jet.y, jet.w / 2.6)) {
         bossShots.splice(s2, 1);
         if (hitShip()) return;
@@ -1359,23 +1467,19 @@
     ctx.restore();
   }
 
-  function drawBoss() {
-    var r = boss.r, x = boss.x, y = boss.y, pulse = 0.5 + 0.5 * Math.sin(time * 0.12);
-    drawGlow(GLOW_DRONE, x, y, r * 2.3, 0.4 + pulse * 0.2);
-    ctx.save();
-    ctx.translate(x, y);
+  function bossDrone(r, pulse, hot) {
     ctx.fillStyle = "#2c1f52";   // wings
     ctx.beginPath();
     ctx.moveTo(-r * 0.6, -r * 0.3); ctx.lineTo(-r * 1.5, -r * 0.75); ctx.lineTo(-r * 1.3, r * 0.55); ctx.lineTo(-r * 0.6, r * 0.35);
     ctx.moveTo(r * 0.6, -r * 0.3); ctx.lineTo(r * 1.5, -r * 0.75); ctx.lineTo(r * 1.3, r * 0.55); ctx.lineTo(r * 0.6, r * 0.35);
     ctx.fill();
-    ctx.fillStyle = boss.flash > 0 ? "#ffffff" : "#5a3fa8";   // body flashes when hurt
+    ctx.fillStyle = hot ? "#ffffff" : "#5a3fa8";
     ctx.beginPath(); ctx.arc(0, 0, r * 0.82, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = boss.flash > 0 ? "#ffffff" : "#8a6fe0";
+    ctx.fillStyle = hot ? "#ffffff" : "#8a6fe0";
     ctx.beginPath(); ctx.arc(-r * 0.1, -r * 0.18, r * 0.62, Math.PI * 0.95, Math.PI * 1.9); ctx.fill();
     ctx.strokeStyle = "#d8ccff"; ctx.lineWidth = 3;
     ctx.beginPath(); ctx.arc(0, 0, r * 0.82, 0, Math.PI * 2); ctx.stroke();
-    for (var sx = -1; sx <= 1; sx += 2) {   // two eyes
+    for (var sx = -1; sx <= 1; sx += 2) {
       ctx.fillStyle = "#2a0b1f";
       ctx.beginPath(); ctx.arc(sx * r * 0.32, -r * 0.05, r * 0.22, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = "#ff4d6d";
@@ -1383,19 +1487,115 @@
     }
     ctx.fillStyle = "#2a0b1f";
     ctx.fillRect(-r * 0.3, r * 0.34, r * 0.6, r * 0.12);
+  }
+
+  function bossTitan(r, pulse, hot) {
+    var n = boss.shape.length, rot = Math.sin(boss.t * 0.01) * 0.12, i, a;
+    ctx.beginPath();
+    for (i = 0; i < n; i++) {
+      a = rot + (i / n) * Math.PI * 2;
+      var px = Math.cos(a) * r * boss.shape[i], py = Math.sin(a) * r * boss.shape[i];
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    var g = ctx.createLinearGradient(-r, -r, r, r);
+    g.addColorStop(0, hot ? "#ffffff" : "#b08a6a"); g.addColorStop(1, hot ? "#ffffff" : "#4a2f22");
+    ctx.fillStyle = g; ctx.fill();
+    ctx.strokeStyle = "#2b1a12"; ctx.lineWidth = 3; ctx.stroke();
+    ctx.strokeStyle = "rgba(255,150,50," + (0.55 + pulse * 0.45) + ")"; ctx.lineWidth = 3;   // glowing cracks
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.7, -r * 0.5); ctx.lineTo(-r * 0.4, -r * 0.55); ctx.lineTo(-r * 0.25, -r * 0.75);
+    ctx.moveTo(r * 0.75, r * 0.1); ctx.lineTo(r * 0.5, r * 0.3); ctx.lineTo(r * 0.55, r * 0.6);
+    ctx.moveTo(-r * 0.6, r * 0.5); ctx.lineTo(-r * 0.3, r * 0.62);
+    ctx.stroke();
+    for (var sx = -1; sx <= 1; sx += 2) {          // angry eyes
+      ctx.fillStyle = "#1c0f0a";
+      ctx.beginPath();
+      ctx.moveTo(sx * r * 0.12, -r * 0.12); ctx.lineTo(sx * r * 0.52, -r * 0.3); ctx.lineTo(sx * r * 0.5, r * 0.04); ctx.lineTo(sx * r * 0.14, r * 0.04);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#ff9f1c";
+      ctx.beginPath(); ctx.arc(sx * r * 0.32, -r * 0.07, r * (0.07 + pulse * 0.03), 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.strokeStyle = "#1c0f0a"; ctx.lineWidth = 4;   // jagged mouth
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.32, r * 0.38); ctx.lineTo(-r * 0.16, r * 0.3); ctx.lineTo(0, r * 0.4); ctx.lineTo(r * 0.16, r * 0.3); ctx.lineTo(r * 0.32, r * 0.38);
+    ctx.stroke();
+  }
+
+  function bossSaucer(r, pulse, hot) {
+    ctx.fillStyle = "rgba(120,255,150," + (0.1 + pulse * 0.08) + ")";   // beam under the ship
+    ctx.beginPath(); ctx.moveTo(-r * 0.3, r * 0.25); ctx.lineTo(r * 0.3, r * 0.25); ctx.lineTo(r * 0.7, r * 1.3); ctx.lineTo(-r * 0.7, r * 1.3); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = hot ? "#ffffff" : "rgba(150,235,255,0.85)";         // glass dome
+    ctx.beginPath(); ctx.ellipse(0, -r * 0.12, r * 0.52, r * 0.55, 0, Math.PI, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#1d3b2a";                                          // pilot
+    ctx.beginPath(); ctx.arc(0, -r * 0.28, r * 0.17, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#9dffb0";
+    ctx.beginPath(); ctx.arc(-r * 0.06, -r * 0.3, r * 0.04, 0, Math.PI * 2); ctx.arc(r * 0.06, -r * 0.3, r * 0.04, 0, Math.PI * 2); ctx.fill();
+    var g = ctx.createLinearGradient(0, -r * 0.2, 0, r * 0.35);
+    g.addColorStop(0, hot ? "#ffffff" : "#c9d6e2"); g.addColorStop(1, hot ? "#ffffff" : "#56677a");
+    ctx.fillStyle = g;                                                  // disc
+    ctx.beginPath(); ctx.ellipse(0, r * 0.05, r * 1.35, r * 0.34, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = "#e8f1f8"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(0, r * 0.05, r * 1.35, r * 0.34, 0, 0, Math.PI * 2); ctx.stroke();
+    for (var i = -3; i <= 3; i++) {                                     // running lights
+      var on = (Math.floor(boss.t * 0.12) + i + 30) % 3 === 0;
+      ctx.fillStyle = on ? "#aaff9e" : "#2f6b3a";
+      ctx.beginPath(); ctx.arc(i * r * 0.36, r * 0.1 + Math.abs(i) * r * 0.012, r * 0.07, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  function bossJelly(r, pulse, hot) {
+    ctx.strokeStyle = "rgba(140,230,255,0.85)"; ctx.lineWidth = 5; ctx.lineCap = "round";   // tentacles
+    for (var i = -2; i <= 2; i++) {
+      var tx = i * r * 0.34, sway = Math.sin(boss.t * 0.06 + i) * r * 0.3;
+      ctx.beginPath(); ctx.moveTo(tx, r * 0.2);
+      ctx.quadraticCurveTo(tx + sway, r * 0.75, tx - sway * 0.6, r * 1.25);
+      ctx.stroke();
+    }
+    var g = ctx.createLinearGradient(0, -r, 0, r * 0.4);
+    g.addColorStop(0, hot ? "#ffffff" : "#b58cff"); g.addColorStop(1, hot ? "#ffffff" : "#2fb8d6");
+    ctx.fillStyle = g;                                                  // bell
+    ctx.beginPath();
+    ctx.moveTo(-r, r * 0.25);
+    ctx.bezierCurveTo(-r * 1.05, -r * 1.15, r * 1.05, -r * 1.15, r, r * 0.25);
+    ctx.quadraticCurveTo(r * 0.75, r * 0.05, r * 0.5, r * 0.3);
+    ctx.quadraticCurveTo(r * 0.25, r * 0.05, 0, r * 0.3);
+    ctx.quadraticCurveTo(-r * 0.25, r * 0.05, -r * 0.5, r * 0.3);
+    ctx.quadraticCurveTo(-r * 0.75, r * 0.05, -r, r * 0.25);
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = "rgba(230,245,255,0.9)"; ctx.lineWidth = 2.5; ctx.stroke();
+    ctx.fillStyle = "rgba(255,255,255,0.25)";                           // shine
+    ctx.beginPath(); ctx.ellipse(-r * 0.4, -r * 0.5, r * 0.22, r * 0.12, -0.6, 0, Math.PI * 2); ctx.fill();
+    for (var sx = -1; sx <= 1; sx += 2) {                               // eyes
+      ctx.fillStyle = "#14204a";
+      ctx.beginPath(); ctx.arc(sx * r * 0.3, -r * 0.18, r * 0.15, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath(); ctx.arc(sx * r * 0.3 - r * 0.04, -r * 0.22, r * 0.05, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  function drawBoss() {
+    var r = boss.r, x = boss.x, y = boss.y, pulse = 0.5 + 0.5 * Math.sin(time * 0.12), k = boss.type.key, hot = boss.flash > 0;
+    drawGlow(boss.type.glow, x, y, r * 2.4, 0.4 + pulse * 0.2);
+    ctx.save();
+    ctx.translate(x, y);
+    if (k === "drone") bossDrone(r, pulse, hot);
+    else if (k === "titan") bossTitan(r, pulse, hot);
+    else if (k === "saucer") bossSaucer(r, pulse, hot);
+    else bossJelly(r, pulse, hot);
     ctx.restore();
 
     // health bar
-    ctx.fillStyle = "rgba(255,255,255,0.2)"; ctx.fillRect(x - r, y - r - 20, r * 2, 8);
-    ctx.fillStyle = "#ff4d6d"; ctx.fillRect(x - r, y - r - 20, r * 2 * Math.max(0, boss.hp / boss.max), 8);
+    ctx.fillStyle = "rgba(255,255,255,0.2)"; ctx.fillRect(x - r, y - r - 22, r * 2, 8);
+    ctx.fillStyle = "#ff4d6d"; ctx.fillRect(x - r, y - r - 22, r * 2 * Math.max(0, boss.hp / boss.max), 8);
 
     // force field while the shots are not powered
     if (!lastCorrect) {
       ctx.strokeStyle = "rgba(126,224,255," + (0.5 + pulse * 0.4) + ")"; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.arc(x, y, r * 1.6, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(x, y, r * 1.65, 0, Math.PI * 2); ctx.stroke();
       ctx.fillStyle = "#bfefff"; ctx.textAlign = "center";
       ctx.font = "700 18px ui-rounded, -apple-system, 'Segoe UI', Arial, sans-serif";
-      ctx.fillText("Answer correctly to power up your shots!", W / 2, boss.targetY + r * 1.6 + 30);
+      ctx.fillText("Answer correctly to power up your shots!", W / 2, boss.targetY + r * 1.65 + 34);
     }
   }
 
@@ -1414,8 +1614,8 @@
       }
       if (boss) drawBoss();
       for (var q = 0; q < bossShots.length; q++) {
-        drawGlow(GLOW_DRONE, bossShots[q].x, bossShots[q].y, 20, 0.9);
-        ctx.fillStyle = "#ffd0dc";
+        drawGlow(bossShots[q].glow, bossShots[q].x, bossShots[q].y, 20, 0.9);
+        ctx.fillStyle = bossShots[q].color;
         ctx.beginPath(); ctx.arc(bossShots[q].x, bossShots[q].y, 5, 0, Math.PI * 2); ctx.fill();
       }
       for (var e = 0; e < enemies.length; e++) {
@@ -1476,6 +1676,8 @@
 
   function endGame() {
     state = "over";
+    boss = null; bossShots = [];
+    setAmbience();
     stopSpeaking();
     var newBest = false;
     if (score > best) {
@@ -1540,6 +1742,7 @@
     if (BANK.length < 4) return;
     hide($("start-overlay")); hide($("gameover-overlay")); hide($("quiz-overlay"));
     initAudio();
+    startAmbience();
     resize();
     resetGame();
     sessionId = makeSessionId();     // one id per game played
@@ -1574,7 +1777,7 @@
 
   // Small hook used only for testing from the browser console
   window.__waj = { bank: BANK, calcGrade: calcGrade, peek: function () {
-    return { streak: streak, shield: shield, doubleShot: doubleShot, boss: boss ? boss.hp : null, bossesBeaten: bossesBeaten,
+    return { amb: !!amb, audio: actx ? actx.state : "none", bossType: boss ? boss.type.key : null, streak: streak, shield: shield, doubleShot: doubleShot, boss: boss ? boss.hp : null, bossesBeaten: bossesBeaten,
              lives: lives, score: score, pool: POOL.length, mastered: masteredCount(), review: progress.review.slice(), retry: retryQueue.length };
   } };
 })();
